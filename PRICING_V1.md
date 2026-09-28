@@ -1,5 +1,7 @@
 # RetroNomad Pricing v1
 
+Last updated: 29 September 2026
+
 ## Current automatic provider status
 
 RetroTechCollector Developer/Data API was the first Pricing v1 automatic-provider pilot.
@@ -19,6 +21,8 @@ The single safe exact identifier hit was Rez on Dreamcast.
 RetroTechCollector may remain as a **limited exact-identifier supplemental source**, but RetroNomad must not use its title-only values when release region is unknown.
 
 Provider documentation states that its market values come from PriceCharting. The v3 results showed that title fallback frequently resolved to a different regional product record than RetroNomad's PAL identifier, so those values are not release-safe for the current product.
+
+PriceCharting is now the approved primary provider candidate for the next UK/PAL pricing and Marketplace validation stage. Public-use permission has been obtained for the described RetroNomad launch use, but real coverage, inventory depth and exact-release accuracy are still unproven and must be benchmarked before production use.
 
 ## Beta mode: BYOK
 
@@ -76,48 +80,103 @@ The runner:
 - paces calls below the documented provider burst limit
 - exports a JSON report that never contains the developer key
 
-Real-key coverage validation is complete for the launch scope. The three diagnostic passes established that RetroTechCollector has only one release-safe exact-identifier price match in the current 100-title PAL launch set, so it is not the primary provider path going forward.
+Real-key coverage validation is complete for the RetroTechCollector launch pilot. The three diagnostic passes established that RetroTechCollector has only one release-safe exact-identifier price match in the current 100-title PAL launch set, so it is not the primary provider path going forward.
+
+The same 100-title benchmark methodology must now be adapted/run against PriceCharting after the server-side integration is ready for real API validation.
 
 ## Production mode
 
-A public shared provider key must never be embedded in analyze.html.
+A public shared provider key must never be embedded in analyze.html or any other browser-delivered asset.
 
-A serverless proxy template lives at:
-backend/rtc-pricing-worker.js
+A serverless RetroTechCollector proxy template lives at:
+`backend/rtc-pricing-worker.js`
 
-Before deploying it with one shared RetroNomad provider key:
-1. obtain/confirm provider permission for RetroNomad's public user-facing price display/use
-2. store RTC_API_KEY as a server-side secret
-3. restrict allowed origin
-4. add rate limits/cache
+A server-side PriceCharting provider scaffold now lives at:
+`backend/pricecharting-provider.js`
+
+Before deploying any shared provider key:
+1. confirm the intended provider and approved use
+2. store its API token only as a server-side secret
+3. restrict allowed origin where applicable
+4. preserve provider rate limits and caching requirements
 5. log provider-match failures without logging secrets
-6. keep ambiguous matching as an error, not a guess
+6. keep ambiguous matching as an error/review state, not a guess
 
-## PriceCharting
+## PriceCharting approval
 
-PriceCharting is now the strongest candidate to investigate for the next UK/PAL pricing route.
+The authoritative approval record is:
+`PRICECHARTING_APPROVAL.md`
 
-Why:
-- its public catalogue has dedicated PAL platform namespaces
-- PAL product pages expose EAN/GTIN/model metadata
-- examples in the launch scope show PAL-specific product records for games such as Silent Hill, Silent Hill 2 and Rez
-- its condition model maps closely to RetroNomad's loose/CIB/new/box/manual buckets
+PriceCharting explicitly approved RetroNomad's described public pricing use and display/linking of PriceCharting Marketplace offers.
 
-Constraint:
-PriceCharting's API documentation says subscriber API/CSV data are licensed for internal use by default. Sharing price data inside an application used by third parties requires a commercial licence and express written permission.
+Approved launch arrangement:
+- until RetroNomad reaches **$1,000/month in total RetroNomad revenue**, use a **PriceCharting Legendary subscription ($50/month)** for API access
+- attribute PriceCharting in the product with an icon or text link back to the relevant PriceCharting product page
+- once RetroNomad reaches **$1,000/month in total revenue**, PriceCharting intends to move RetroNomad to a formal Commercial Agreement using a small revenue share
+- the exact later commercial terms are not yet documented and must not be invented
 
-Decision:
-- do not use a normal subscriber token in RetroNomad
-- do not scrape PriceCharting as a substitute for permission
-- next step is to ask PriceCharting about a commercial agreement for a public application that identifies exact PAL releases and displays attributed current guide prices
+Approved pricing language includes descriptive comparison of release-safe PriceCharting values, such as:
+- below reference
+- near reference
+- above reference
 
-MyPlayersVault is also worth monitoring because it publicly separates UK/PAL, NTSC-U and NTSC-J values, but no documented developer API suitable for RetroNomad has been established yet.
+PriceCharting also approved RetroNomad displaying/linking Marketplace offers returned by the Marketplace API, including `/api/offers`, with appropriate attribution.
+
+Approval removes the permission/licensing blocker for the described launch use. It does **not** prove:
+- 100-title UK/PAL coverage
+- exact-release match quality
+- condition/completeness mapping quality
+- Marketplace offer depth
+- practical UK usefulness
+- eBay-equivalent inventory supply
+
+Those must be measured before production claims or enabling autonomous monitoring.
+
+## PriceCharting server-side scaffold
+
+Implementation record:
+`PRICECHARTING_PROVIDER_V1.md`
+
+Current scaffold:
+- uses the dedicated PAL namespaces for PS1, PS2 and Dreamcast
+- discovers candidate products through `/api/products`
+- fetches product detail through `/api/product`
+- supports exact UPC/EAN lookup through `/api/product?upc=...`
+- fetches available Marketplace offers through `/api/offers`
+- preserves PriceCharting product IDs, UPC/EAN, include/completeness wording and condition wording as evidence
+- returns normalised Marketplace rows for the existing PALScout -> matcher pipeline
+- does not let the provider decide release identity
+- throttles/caches calls according to the documented API constraints
+- never exposes the private token in returned data or errors
+
+Fixture QA on 29 September 2026: **6/6 passed**.
+
+This is contract/logic QA only. No real PriceCharting token has been used and no real coverage result is claimed yet.
+
+Important price boundary:
+PriceCharting Marketplace offers are retained as USD item prices. The scaffold does not fabricate postage, delivered totals or delivered GBP. A Hunt with a delivered-GBP ceiling must therefore remain unresolved/review until RetroNomad has source-backed delivered-price handling for that offer.
+
+## Next PriceCharting validation sequence
+
+1. Add user-visible PriceCharting attribution support to pricing/result UI.
+2. Keep public Worker provider mode disabled while fixture work is being completed.
+3. When ready for real validation, purchase the approved Legendary subscription.
+4. Store `PRICECHARTING_TOKEN` only as a Cloudflare Worker secret.
+5. Run the 100-title release-safe PriceCharting pricing benchmark.
+6. Separately run the 100-title PriceCharting Marketplace offer-coverage benchmark.
+7. Measure exact identifier/product-ID matching, PAL safety, completeness mapping, current-offer volume and UK usefulness.
+8. Only after those benchmarks decide whether PriceCharting should be enabled in the public Deal Finder / scheduled Saved Hunt monitor.
+9. Do not assume PriceCharting Marketplace replaces eBay unless the measured inventory supports that conclusion.
+
+MyPlayersVault remains a possible research candidate because it publicly separates UK/PAL, NTSC-U and NTSC-J values, but no documented developer API suitable for RetroNomad has been established yet.
 
 ## FX
 
 RetroTechCollector price snapshots are documented in USD.
 
 Pricing v1 converts them to GBP with Frankfurter daily reference rates. This is suitable for reference-price comparison, not live FX trading.
+
+PriceCharting reference values and Marketplace offers are also USD-based in the current API contract. Exact release matching must happen before any reference-price conversion. Marketplace delivered-price handling must remain separate from reference-price FX conversion because postage/delivery information cannot be invented.
 
 ## Product-language rule
 
