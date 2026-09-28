@@ -21,7 +21,7 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
 .resultshead{display:flex;justify-content:space-between;gap:14px;align-items:end;margin-bottom:13px}.resultshead h2{margin:0}.sourcebadge{font-size:10px;font-weight:900;color:var(--amber);border:1px solid #5d532d;border-radius:999px;padding:4px 7px}
 .cardpreview{display:none;border:1px solid var(--line);border-radius:14px;background:#0d141d;overflow:hidden}.cardtop{padding:15px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.cardtop b{font-size:16px}.cardbody{padding:15px}.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.fact{border:1px solid var(--line);border-radius:9px;background:#0a1017;padding:10px}.fact span{display:block;color:#758398;font-size:10px;text-transform:uppercase;letter-spacing:.07em}.fact b{display:block;margin-top:3px;font-size:12px}.muted{color:var(--muted)}
 .cardfoot{padding:12px 15px;border-top:1px solid var(--line);color:#7d8a9c;font-size:11px}
-.saved{display:none;margin-top:10px;color:var(--green);font-size:12px}.live-results{display:grid;gap:10px;margin-bottom:15px}.live-card{border:1px solid var(--line);border-radius:12px;background:#0d141d;padding:14px}.live-card.match{border-color:#315b43}.live-card.review{border-color:#5d532d}.live-card.filtered{border-color:#60404a;opacity:.72}.live-card h3{margin:0 0 5px;font-size:16px}.live-meta{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:11px}.live-state{font-size:10px;font-weight:900;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:3px 6px}.live-card.match .live-state{color:var(--green);border-color:#315b43}.live-card.review .live-state{color:var(--amber);border-color:#5d532d}.live-card.filtered .live-state{color:var(--red);border-color:#60404a}.live-reasons{margin-top:8px;color:var(--muted);font-size:12px}
+.saved{display:none;margin-top:10px;color:var(--green);font-size:12px}.live-results{display:grid;gap:10px;margin-bottom:15px}.live-card{border:1px solid var(--line);border-radius:12px;background:#0d141d;padding:14px}.live-card.match{border-color:#315b43}.live-card.review{border-color:#5d532d}.live-card.filtered{border-color:#60404a;opacity:.72}.live-card h3{margin:0 0 5px;font-size:16px}.live-meta{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:11px}.live-state{font-size:10px;font-weight:900;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:3px 6px}.live-card.match .live-state{color:var(--green);border-color:#315b43}.live-card.review .live-state{color:var(--amber);border-color:#5d532d}.live-card.filtered .live-state{color:var(--red);border-color:#60404a}.live-reasons{margin-top:8px;color:var(--muted);font-size:12px}.live-links{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:9px;font-size:12px}.provider-attribution{color:#aeb9c8;font-size:11px}.provider-attribution a{color:#cbd6e5}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}}@media(max-width:560px){.row,.facts{grid-template-columns:1fr}nav{height:auto;min-height:70px;flex-wrap:wrap;padding:12px 0;gap:8px}.navlinks{display:flex;width:100%;overflow-x:auto;gap:16px;padding:2px 0 6px;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}}
 </style>
 </head>
@@ -147,7 +147,7 @@ RetroNomad will turn your choices into a structured buying target. Live listings
 <div class="fact"><span>Price position</span><b>Pending licensed pricing</b></div>
 </div>
 </div>
-<div class="cardfoot">The matching engine is ready to classify future candidates as Match, Review or Filtered. When a marketplace source is connected, each card will also carry the source listing ID, canonical URL, item price, postage, currency, image, timestamps and evidence used for classification.</div>
+<div class="cardfoot">The matching engine is ready to classify future candidates as Match, Review or Filtered. When a marketplace source is connected, each card will also carry the source listing ID, canonical URL, item price, postage, currency, image, timestamps, provider attribution where required and evidence used for classification.</div>
 </div>
 </section>
 </div>
@@ -220,7 +220,11 @@ function renderLiveResults(rows){
   const card=document.createElement("div");card.className="live-card "+row.match.state.toLowerCase();
   const title=document.createElement("h3");title.textContent=row.title||"Untitled listing";
   const meta=document.createElement("div");meta.className="live-meta";
-  const price=row.match.deliveredGbp!=null?"£"+row.match.deliveredGbp.toFixed(2)+" delivered":(row.total!=null&&row.currency?row.currency+" "+Number(row.total).toFixed(2):"price unavailable");
+  const price=row.match.deliveredGbp!=null
+   ?"£"+row.match.deliveredGbp.toFixed(2)+" delivered"
+   :(row.total!=null&&row.currency
+      ?row.currency+" "+Number(row.total).toFixed(2)+" total"
+      :(row.itemPrice!=null&&row.currency?row.currency+" "+Number(row.itemPrice).toFixed(2)+" item price":"price unavailable"));
   const bits=[row.source,price,row.classification.game,row.classification.platform,row.classification.marketBucket||"release unresolved"].filter(Boolean);
   bits.forEach(x=>{const s=document.createElement("span");s.textContent=x;meta.appendChild(s);});
   const state=document.createElement("span");state.className="live-state";state.textContent=row.match.state;
@@ -228,7 +232,17 @@ function renderLiveResults(rows){
   card.appendChild(title);card.appendChild(meta);
   const reasons=[...(row.match.reasons||[]),...(row.match.notes||[])];
   if(reasons.length){const r=document.createElement("div");r.className="live-reasons";r.textContent=reasons.join(" · ");card.appendChild(r);}
-  if(row.canonicalUrl){const a=document.createElement("a");a.href=row.canonicalUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Open source listing";a.style.display="inline-block";a.style.marginTop="8px";a.style.fontSize="12px";card.appendChild(a);}
+  const links=document.createElement("div");links.className="live-links";
+  if(row.canonicalUrl){const a=document.createElement("a");a.href=row.canonicalUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Open source listing";links.appendChild(a);}
+  const attrText=row.itemSpecifics?.priceChartingAttributionText;
+  const attrUrl=row.itemSpecifics?.priceChartingProductUrl;
+  if(attrText&&attrUrl){
+   const attr=document.createElement("span");attr.className="provider-attribution";
+   attr.append("Data/offer via ");
+   const a=document.createElement("a");a.href=attrUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="PriceCharting";
+   attr.appendChild(a);links.appendChild(attr);
+  }
+  if(links.childNodes.length)card.appendChild(links);
   box.appendChild(card);
  }
 }
