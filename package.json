@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "node --test",
     "build:cloudflare": "node scripts/build-cloudflare.mjs",
     "prepare:cloudflare": "node scripts/prepare-cloudflare.mjs",
     "db:migrate": "wrangler d1 migrations apply DB --remote --config .wrangler.deploy.jsonc",
