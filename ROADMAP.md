@@ -1,3 +1,38 @@
+# Current continuation — 29 September 2026
+
+PriceCharting's 28 September approval supersedes the older roadmap entries that describe commercial permission as pending.
+
+Completed in this continuation:
+- [x] Record PriceCharting's approved RetroNomad launch arrangement in `PRICECHARTING_APPROVAL.md`
+- [x] Confirm the documented PAL console namespaces for launch platforms
+- [x] Build `backend/pricecharting-provider.js` without a real subscription token
+- [x] Keep PriceCharting as an evidence provider; PALScout/shared matcher remain release authorities
+- [x] Add strict PAL-console and exact title-family candidate filtering
+- [x] Add `/api/product` UPC/EAN enrichment and `/api/offers` Marketplace normalization
+- [x] Preserve USD offer price without inventing postage, delivered total or delivered GBP
+- [x] Add provider throttling and short-lived cache behavior for documented API constraints
+- [x] Add PriceCharting attribution metadata to normalized provider output
+- [x] Add fixture regression suite; initial result 6/6 passed
+- [x] Document the scaffold in `PRICECHARTING_PROVIDER_V1.md`
+- [x] Update `PRICING_V1.md` to reflect approval and the new scaffold
+
+Still required before real/public PriceCharting use:
+- [ ] Add visible PriceCharting attribution/linkback to pricing/result UI
+- [ ] Adapt/build the 100-title PriceCharting pricing coverage harness
+- [ ] Build a separate 100-title PriceCharting Marketplace offer-coverage harness
+- [ ] Only when ready for real validation, purchase the approved Legendary subscription
+- [ ] Store `PRICECHARTING_TOKEN` only as a Cloudflare Worker secret
+- [ ] Run the 100-title UK/PAL pricing benchmark
+- [ ] Run the 100-title Marketplace offer benchmark
+- [ ] Audit exact identifier/product-ID matches, PAL safety, completeness mapping and UK usefulness
+- [ ] Decide from measured results whether to wire PriceCharting into the public Deal Finder and scheduled Saved Hunt monitor
+- [ ] Keep eBay independent; do not assume PriceCharting Marketplace replaces eBay without coverage evidence
+
+Immediate engineering action after this handoff:
+**Add the PriceCharting attribution/result presentation contract, then build the real-token benchmark harnesses while keeping the live Worker marketplace provider disabled.**
+
+---
+
 # Search-first product direction
 
 ## Phase 1 — Deal Finder + Wishlist alerts
@@ -83,7 +118,7 @@
 
 # RetroNomad Roadmap
 
-Last updated: 23 September 2026
+Last updated: 29 September 2026
 
 This file tracks completed work, the active milestone, blockers and the order of future development.
 
@@ -173,21 +208,15 @@ The order matters. Discovery and alerts are not useful if release identity is un
 
 ---
 
-# Active milestone — Pricing v1 provider validation
+# Completed milestone — RetroTechCollector Pricing v1 provider validation
 
 ## Goal
 Determine whether RetroTechCollector is sufficiently complete and reliable for RetroNomad's initial 100-title PAL launch scope.
 
-## Step 1 — obtain test API access
-- [ ] Create/sign into a RetroTechCollector account controlled by the user
-- [ ] Check current Developer API access/trial options before purchasing anything
-- [ ] Create a limited RetroNomad beta key with:
-  - [ ] `catalogue:read`
-  - [ ] `prices:read`
-- [ ] Do not paste the key into ChatGPT
-- [ ] Do not commit the key to GitHub
+## Step 1 — test API access
+The real-key pilot was completed without exposing or committing the key.
 
-## Step 2 — run coverage lab
+## Step 2 — coverage lab
 Open:
 `pricing-coverage.html`
 
@@ -228,16 +257,9 @@ Rules:
 - [x] record final launch-scope coverage statistics in PROJECT_STATE.md
 - [x] preserve strict ambiguity/region rules instead of forcing coverage
 
-### Exit criteria for active milestone
-Proceed only when:
-- every one of the 100 launch titles has an understood outcome
-- there are no known unsafe auto-match paths
-- successful matches have been manually spot-checked
-- remaining missing/ambiguous cases are documented rather than hidden
-
 ---
 
-# Product clarity work while pricing response is pending
+# Product clarity work
 
 - [x] Add a dedicated PALScout compatibility verdict to the analyser
 - [x] Separate PAL hardware compatibility from UK-market/country classification
@@ -261,84 +283,92 @@ Proceed only when:
 - [x] Replace eBay direct browser fetch with immediate URL-only fallback
 - [x] Re-test the public analyser with a real eBay link: immediate recognition worked and item ID was recovered; title remains unavailable when the URL itself contains no usable title slug
 
-# Active milestone — Find a release-safe licensed pricing source
+# Active milestone — PriceCharting release-safe pricing + Marketplace validation
 
-## PriceCharting commercial route
+## Commercial route
 - [x] Confirm public PAL product catalogue exists with dedicated PAL platform namespaces and PAL EAN/GTIN records
-- [x] Confirm standard API/CSV terms are internal-use only
-- [x] Identify PriceCharting's official commercial-permission route in its current Terms/API documentation
-- [x] Draft the RetroNomad commercial-data enquiry
-- [x] Send PriceCharting the commercial agreement / express written permission enquiry (23 Sep 2026)
-- [ ] Ask specifically about attributed public display of current PAL loose/CIB/new/box/manual guide prices
-- [ ] Ask about API quota, caching, attribution, redistribution and launch-stage pricing
-
-## Other candidates
-- [x] Note MyPlayersVault as a region-aware public-price candidate
-- [ ] Establish whether it offers a documented developer API or commercial data feed
-- [ ] Research additional UK/PAL physical-game pricing providers with legitimate API/licensing paths
+- [x] Confirm standard API/CSV terms are internal-use only without commercial approval
+- [x] Identify PriceCharting's official commercial-permission route
+- [x] Draft and send the RetroNomad commercial-data enquiry (23 Sep 2026)
+- [x] Obtain explicit approval for the described public pricing use and Marketplace-offer display/linking (recorded 28 Sep 2026)
+- [x] Record approved launch arrangement and attribution requirement in `PRICECHARTING_APPROVAL.md`
+- [x] Build the server-side provider scaffold without purchasing a subscription/token
+- [x] Add fixture QA and provider implementation handoff
+- [ ] Add visible attribution/linkback UI
+- [ ] Purchase Legendary only when ready for real validation
+- [ ] Store the token only as a server-side Cloudflare secret
 
 ## Provider acceptance test
-Any replacement provider must:
-- distinguish PAL from NTSC-U/NTSC-J
+PriceCharting must still:
+- distinguish PAL from NTSC-U/NTSC-J in real results
 - support enough of the 100-title launch set to be useful
-- expose exact identifiers or release-specific product IDs
-- provide a documented public-app/licensing path
+- expose exact identifiers or release-specific product IDs often enough to be safe
+- preserve the approved public-app/licensing path and attribution terms
 - survive the 100-title coverage benchmark before production use
+
+## Pricing benchmark
+- [ ] adapt the existing coverage lab to PriceCharting's contract
+- [ ] attempt all 100 launch titles
+- [ ] prefer exact UPC/EAN/product-ID evidence
+- [ ] measure loose/CIB/new/box/manual field coverage
+- [ ] record ambiguous or region-unsafe matches as such rather than forcing coverage
+- [ ] manually spot-check successful release matches
+
+## Marketplace offer benchmark
+- [ ] build a separate offer-coverage runner
+- [ ] query available offers only through the approved API
+- [ ] classify every offer through PALScout/shared matcher
+- [ ] measure current offer volume by launch title/platform
+- [ ] measure how often UPC/EAN/product identity is strong enough for MATCH vs REVIEW
+- [ ] measure completeness/condition usefulness
+- [ ] measure practical usefulness for UK buyers
+- [ ] do not equate USD item price with delivered GBP
 
 # Later milestone — End-to-end listing → price validation
 
-After a provider passes the launch benchmark:
+After PriceCharting passes the launch benchmark:
 
 - [ ] take a sample of real listing inputs
-- [ ] classify through the normal analyser
+- [ ] classify through the normal analyser/search pipeline
 - [ ] verify exact release/completeness key
 - [ ] verify provider release match
 - [ ] verify correct completeness price field
-- [ ] verify GBP conversion
+- [ ] verify GBP reference conversion
 - [ ] verify ambiguous listings do not receive automatic prices
 - [ ] verify foreign-region listings remain blocked from UK comparison paths
 
 Exit criterion:
 A representative sample must complete the full chain without known identity-to-price mismatches.
 
-# Provider production decision
-
-## Terms/permission
-- [ ] contact/confirm RetroTechCollector terms for RetroNomad's intended public third-party display/use
-- [ ] confirm whether a shared production integration is permitted
-- [ ] document any attribution/caching/redistribution requirements
-
-Do not deploy a shared key until permission is clear.
-
-## If approved
-- [ ] deploy serverless pricing proxy
-- [ ] store provider key only as server-side secret
-- [ ] restrict allowed origin
-- [ ] add rate limiting
-- [ ] add caching
-- [ ] add provider-failure logging without secrets
-- [ ] preserve ambiguity gates server-side
-- [ ] remove need for ordinary users to provide their own key
-
 ---
 
 # Wishlist + target-price alerts
 
-Only after a backend/serverless layer exists:
+Backend/account persistence now exists, but live autonomous alerts still require validated authorised inventory and a real notification-delivery provider.
 
-- [ ] define wishlist data model
-- [ ] store exact wanted release, not only game title
-- [ ] allow target item price and/or landed price
-- [ ] allow completeness preference
-- [ ] support alert state
-- [ ] avoid alerts when listing identity is unresolved
-- [ ] add notification channel(s)
-
-Static GitHub Pages alone is not sufficient for scheduled alerts.
+- [x] define Saved Hunt data model
+- [x] store exact wanted release/constraints rather than only game title
+- [x] allow target delivered price
+- [x] allow completeness preference
+- [x] support alert-requested state without falsely claiming delivery
+- [x] avoid alerts when listing identity is unresolved
+- [ ] validate a live authorised marketplace provider
+- [ ] add real notification channel(s)
+- [ ] enable autonomous scheduled monitoring only after those dependencies are ready
 
 ---
 
 # Marketplace discovery
+
+## PriceCharting Marketplace
+Current state:
+**Commercial/public-use approval obtained; server-side adapter scaffold built; no real token/coverage benchmark yet; public provider remains disabled.**
+
+Next:
+- [ ] attribution UI
+- [ ] real-token offer coverage benchmark
+- [ ] measured UK usefulness review
+- [ ] production wiring only if benchmark supports it
 
 ## eBay
 Current state:
@@ -385,17 +415,18 @@ Potential future systems should not be added merely to inflate catalogue size.
 
 # Accounts and cloud persistence
 
-Deferred until a backend exists.
+Current state:
+- [x] passwordless email sign-in deployed
+- [x] secure same-origin session flow deployed
+- [x] Saved Hunts sync deployed
+- [x] cross-device sync verified
+- [x] deletion/tombstone propagation verified
 
-Possible future account features:
-- [ ] cloud wishlist
-- [ ] saved target prices
-- [ ] alert history
-- [ ] saved listing checks
-- [ ] user preferences
-- [ ] cross-device persistence
-
-Do not bolt authentication onto the static prototype before there is a real server-side need.
+Before broader public launch:
+- [ ] verify a RetroNomad-owned sending domain
+- [ ] add stronger abuse protection
+- [ ] update privacy/account-data policy
+- [ ] later move to a production/custom domain when appropriate
 
 ---
 
@@ -414,8 +445,6 @@ At every milestone:
 
 # Immediate next action
 
-**The first live account loop is complete. Next, move toward real Deal Finder data by evaluating legitimate authorised marketplace/inventory sources while the PriceCharting commercial-permission response is pending.**
+**Add visible PriceCharting attribution support, then build the PriceCharting pricing and Marketplace coverage harnesses. Keep the live Worker marketplace provider disabled until the real-token benchmarks have been run and audited.**
 
-Do not fabricate inventory, scrape around marketplace restrictions, or weaken release identity rules merely to make results appear live.
-
-Do not purchase a normal PriceCharting API subscription for RetroNomad public use unless a suitable commercial agreement is confirmed.
+Do not fabricate inventory, scrape around marketplace restrictions, weaken release-identity rules, or buy the subscription earlier than needed for real validation.
