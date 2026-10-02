@@ -2,6 +2,11 @@ import { execFileSync } from "node:child_process";
 import { readFile, writeFile } from "node:fs/promises";
 
 const brand=JSON.parse(await readFile("brand.json","utf8"));
+const PUBLIC_BRAND_NAME=String(brand.name||"").trim();
+if(!PUBLIC_BRAND_NAME||!/^[A-Za-z0-9 .&'’-]+$/.test(PUBLIC_BRAND_NAME)){
+  throw new Error("brand.json contains an invalid public brand name");
+}
+
 const DB_NAME=process.env.RETRONOMAD_D1_NAME||"retronomad-prod";
 const WORKER_NAME=process.env.RETRONOMAD_WORKER_NAME||"retronomad-app";
 
@@ -35,9 +40,17 @@ if(!db)throw new Error("Could not resolve D1 database after creation/list");
 const databaseId=db.uuid||db.id||db.database_id;
 if(!databaseId)throw new Error("D1 database result did not include an ID");
 
+// Keep the source Worker brand-neutral/legacy-compatible. Generate the deployed
+// copy from the central public-brand configuration so another rename does not
+// require editing authentication/monitor logic.
+const workerSource=await readFile("backend/alerts-worker.js","utf8");
+const generatedWorker=workerSource.split("RetroNomad").join(PUBLIC_BRAND_NAME);
+const generatedWorkerPath="backend/alerts-worker.generated.js";
+await writeFile(generatedWorkerPath,generatedWorker,"utf8");
+
 const vars={
   APP_ORIGIN:"self",
-  PUBLIC_BRAND_NAME:String(brand.name||"App"),
+  PUBLIC_BRAND_NAME,
   PUBLIC_BRAND_DOMAIN:String(brand.domain||""),
   PUBLIC_CONTACT_EMAIL:String(brand.contactEmail||""),
   MARKETPLACE_PROVIDER:"disabled",
@@ -50,7 +63,7 @@ if(process.env.AUTH_EMAIL_WEBHOOK_URL)vars.AUTH_EMAIL_WEBHOOK_URL=process.env.AU
 const config={
   "$schema":"./node_modules/wrangler/config-schema.json",
   name:WORKER_NAME,
-  main:"./backend/alerts-worker.js",
+  main:"./"+generatedWorkerPath,
   compatibility_date:"2026-09-23",
   workers_dev:true,
   assets:{
@@ -70,4 +83,4 @@ const config={
 };
 
 await writeFile(".wrangler.deploy.jsonc",JSON.stringify(config,null,2)+"\n","utf8");
-console.log("Prepared .wrangler.deploy.jsonc for "+WORKER_NAME+" using D1 "+DB_NAME+" and public brand "+vars.PUBLIC_BRAND_NAME);
+console.log("Prepared .wrangler.deploy.jsonc for "+WORKER_NAME+" using D1 "+DB_NAME+" and public brand "+PUBLIC_BRAND_NAME);
