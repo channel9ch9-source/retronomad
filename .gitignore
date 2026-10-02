@@ -2,6 +2,7 @@ node_modules/
 dist/
 .wrangler/
 .wrangler.deploy.jsonc
+backend/alerts-worker.generated.js
 .dev.vars
 .env
 .env.*
