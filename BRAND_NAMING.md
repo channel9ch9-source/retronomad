@@ -1,36 +1,53 @@
 # Brand / Naming Context
 
-Last updated: 28 September 2026
+Last updated: 2 October 2026
 
-This file records the stable naming context for the project so a separate brainstorming chat can start fresh without losing product requirements.
+This file records the stable naming context for the project so branding decisions do not require renaming core product architecture.
 
-## Current working name
+## Current public brand
 
-The current working product name remains **RetroNomad** until a replacement is deliberately chosen.
+The current public-facing product name is **GrailRaven**.
 
-Do not rename code, infrastructure, repository identifiers, storage keys, Cloudflare resources, emails or public copy merely because alternatives are being brainstormed.
+Owned domain:
+- `grailraven.com`
 
-## Why a rename is being considered
+Primary human/business mailbox:
+- `contact@grailraven.com`
 
-RetroNomad is not known to be categorically unusable. The rename discussion is driven by long-term brand/domain quality rather than a confirmed prohibition.
+**GrailRaven is the current brand, but it is intentionally not treated as a permanent internal codename.** The name was difficult to secure and may be replaced later if a materially better brand becomes available.
 
-Relevant concerns:
-- `retronomad.com` is already registered and is not currently available for normal registration.
-- the product is intended to become a global app/site, so owning the exact `.com` is strongly preferred.
-- there are some unrelated or adjacent uses of the RetroNomad/Nomad name online.
-- preliminary trademark-oriented research did not establish a definite bar to RetroNomad, but the NOMAD element has some software/gaming-adjacent use, so the name is not perfectly clean.
-- because the product is still early, this is the lowest-cost point to choose a stronger global name if one is found.
+## Rebrand architecture rule
 
-## Naming requirements
+Future brand changes should be presentation/infrastructure changes rather than product rebuilds.
 
-A replacement should fit the actual product, not just sound retro.
+Therefore:
+- keep core modules, schemas, database concepts, API routes and classifier/matcher logic brand-neutral wherever practical
+- do not rename stable internal identifiers merely to remove an older brand name
+- existing `retronomad-*` infrastructure names, browser storage keys and code namespaces may remain as legacy implementation identifiers when changing them would add migration risk without customer benefit
+- do not introduce new `grailraven-*` internal identifiers unless a branded identifier is actually required
+- public brand metadata should come from the central `brand.json` configuration wherever the deployment path allows it
+- if the public brand changes again, update the central brand configuration, presentation assets, domain/email configuration and only the infrastructure that genuinely needs a customer-facing rename
+
+This deliberately separates **brand identity** from **product architecture**.
+
+## Previous public/working name
+
+The project was previously developed under **RetroNomad**.
+
+Historical project records, commit messages, repository paths, storage keys and infrastructure names may continue to contain `RetroNomad` / `retronomad`. Those references are not evidence that the old name remains the public brand.
+
+The GitHub repository may remain `channel9ch9-source/retronomad` for now. Renaming the repository, D1 database, Worker, storage keys or existing namespaces is not required for the GrailRaven public rebrand.
+
+## Product naming requirements
+
+The parent brand must fit the actual product, not just sound retro.
 
 Product purpose:
-- retro-game buying/deal-finder assistant
+- exact-copy hunting assistant for physical game collectors
 - search authorised marketplace inventory
 - identify the exact physical release/region/edition/completeness
-- filter wrong copies
-- compare against trusted reference pricing
+- filter wrong copies rather than matching only by game title
+- compare against trusted release-safe reference pricing
 - save hunts and alert when matching copies appear
 
 Core proposition:
@@ -41,32 +58,39 @@ Product flow:
 
 PALScout remains the UK/European release-intelligence layer underneath the global parent product unless a later product decision changes that.
 
-Preferred brand qualities:
-- suitable for a global consumer app/site
-- memorable and reasonably distinctive
-- professional enough for marketplace/API partners such as eBay and PriceCharting
-- not locked to PAL, the UK, one console generation or one marketplace
-- ideally the exact `.com` is available at normal registration cost
-- avoid obvious existing retro-gaming businesses, marketplace services or software products using the same/confusingly similar name
-- avoid choosing solely because a `.co.uk` is available if the exact `.com` is permanently unavailable and the goal is a global brand
+## Product differentiation to preserve in the brand
 
-## Current process
+Marketplace search, pricing and alerts are enabling features, not the main moat. Competing products already offer variants of those capabilities.
 
-A separate ChatGPT thread may be used purely for fresh naming brainstorms.
+The intended differentiation is **exact physical-release intelligence**:
+- compatibility
+- region
+- exact release / country-market identity
+- edition / reissue
+- completeness
+- language / packaging evidence
+- evidence/confidence and REVIEW rather than invented certainty
 
-That thread should treat this file and `PRODUCT_VISION.md` as the product brief. It does not need to preserve every historical brainstorm. Only a serious finalist or final naming decision needs to be written back into the durable project records.
+The product should be positioned closer to:
 
-Before buying a domain or rebranding the product:
+> Tell us exactly which physical release you want. We find the right copy, filter out the wrong ones, compare the price and watch the market for you.
+
+rather than merely "a retro-game deal finder."
+
+## If another rename is considered
+
+Before replacing GrailRaven:
 1. confirm exact `.com` availability/ownership situation
 2. check obvious web/business conflicts
-3. perform a focused UK/EU trademark search in relevant software/online-service/gaming-adjacent classes
-4. then choose the final brand
+3. perform a focused trademark search in relevant software/online-service/gaming-adjacent classes
+4. judge the name against the exact-copy hunting proposition
+5. make the change through the brand/configuration layer rather than renaming core internals
 
 ## Rebrand impact
 
-A customer-facing rename at the current stage is manageable and does not require rebuilding the product.
+A customer-facing rename at the current stage remains manageable and does not require rebuilding the product.
 
-Core systems can remain intact:
+Core systems should remain intact:
 - release evidence
 - PALScout classifier
 - marketplace adapters
@@ -76,4 +100,4 @@ Core systems can remain intact:
 - search/matching logic
 - pricing logic
 
-Internal identifiers such as local-storage keys or code namespaces do not need to be renamed immediately; if they are changed later, migrations should preserve existing user data.
+Internal identifiers such as local-storage keys or code namespaces do not need to be renamed; if they are changed later, migrations must preserve existing user data.
