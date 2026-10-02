@@ -1,4 +1,4 @@
-name: Deploy RetroNomad Cloudflare scaffold
+name: Deploy app to Cloudflare
 
 on:
   workflow_dispatch:
