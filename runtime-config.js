@@ -1,9 +1,12 @@
-// RetroNomad runtime configuration.
+// Runtime configuration for the static/GitHub Pages build.
 // Keep secrets OUT of this file.
 //
 // The account API remains disabled until the backend is deployed on a suitable
 // same-site/custom-domain setup.
-window.RETRONOMAD_CONFIG = Object.freeze({
-  accountSyncEnabled: false,
-  apiBase: ""
+const config=Object.freeze({
+  accountSyncEnabled:false,
+  apiBase:""
 });
+window.APP_CONFIG=config;
+// Legacy alias retained so existing browser code keeps working during/after rebrands.
+window.RETRONOMAD_CONFIG=config;
