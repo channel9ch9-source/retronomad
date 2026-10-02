@@ -1,25 +1,33 @@
 # PriceCharting Approval
 
-Last updated: 28 September 2026
+Last updated: 2 October 2026
 
-This file records the business-development approval received from PriceCharting for RetroNomad's intended public use of PriceCharting data and Marketplace offers.
+This file records the business-development approval received from PriceCharting for the project's intended public use of PriceCharting data and Marketplace offers.
+
+## Brand-name note — 2 October 2026
+
+The written approval described below was obtained while the project was publicly/working under the name **RetroNomad**.
+
+The current public brand is now **GrailRaven** (`grailraven.com`). The underlying product, use case and intended PriceCharting integration have not changed.
+
+Do **not** rewrite the historical approval as though PriceCharting originally approved the GrailRaven name. Before production PriceCharting data/Marketplace use under the new public brand, notify the PriceCharting business-development contact of the rename and confirm that the existing approved arrangement continues under GrailRaven. Do not invent or assume any new commercial terms.
 
 ## Approved launch arrangement
 
 PriceCharting confirmed that RetroNomad's described use case is supported.
 
-Until RetroNomad reaches **$1,000/month in total RetroNomad revenue**:
-- RetroNomad may use a **PriceCharting Legendary subscription ($50/month)** to access PriceCharting data via API.
-- RetroNomad must **cite/attribute PriceCharting in the product**, using an icon or text with a link back to PriceCharting's product page.
+Until the project reaches **$1,000/month in total project revenue**:
+- the project may use a **PriceCharting Legendary subscription ($50/month)** to access PriceCharting data via API under the approved arrangement.
+- the product must **cite/attribute PriceCharting**, using an icon or text with a link back to PriceCharting's product page.
 
-Once RetroNomad reaches **$1,000/month in total revenue**:
-- PriceCharting intends to move RetroNomad to a **formal Commercial Agreement**.
-- The commercial structure is expected to use a **small revenue share**.
-- Exact future commercial terms are not yet documented here and must not be invented.
+Once the project reaches **$1,000/month in total revenue**:
+- PriceCharting intends to move the project to a **formal Commercial Agreement**.
+- the commercial structure is expected to use a **small revenue share**.
+- exact future commercial terms are not yet documented here and must not be invented.
 
 ## Public pricing use
 
-PriceCharting explicitly approved RetroNomad calculating descriptive comparisons from licensed PriceCharting values, including:
+PriceCharting explicitly approved the described product calculating descriptive comparisons from licensed PriceCharting values, including:
 - below reference
 - near reference
 - above reference
@@ -28,9 +36,9 @@ This means Pricing v1 can use PriceCharting as the reference-value source after 
 
 ## Marketplace offers
 
-PriceCharting explicitly approved RetroNomad displaying and linking to **PriceCharting Marketplace offers** returned by the Marketplace API, including `/api/offers`, with appropriate PriceCharting attribution.
+PriceCharting explicitly approved the described product displaying and linking to **PriceCharting Marketplace offers** returned by the Marketplace API, including `/api/offers`, with appropriate PriceCharting attribution.
 
-This gives RetroNomad a legitimate first live-inventory source independent of eBay developer access.
+This gives the project a legitimate first live-inventory source independent of eBay developer access, subject to the brand-name confirmation noted above.
 
 Important limitation:
 - approval does not establish how much useful UK/PAL inventory the PriceCharting Marketplace actually contains.
@@ -68,32 +76,40 @@ Target architecture:
 
 Authorised marketplace inventory
 -> PALScout exact-release classification
--> RetroNomad target matching
+-> target matching
 -> PriceCharting release-safe reference pricing
 -> descriptive below/near/above-reference comparison
 -> Saved Hunts / alerts
 
-PriceCharting Marketplace can now serve as one authorised inventory provider:
+PriceCharting Marketplace can serve as one authorised inventory provider after real validation:
 
 PriceCharting `/api/offers`
 -> normalised marketplace listing
 -> PALScout classifier
 -> MATCH / REVIEW / FILTERED
 -> PriceCharting pricing reference
--> RetroNomad result card / alert
+-> result card / alert
 
-## Next implementation steps
+## Current implementation status
 
-1. Finish the product/brand/domain decision before creating long-lived branded infrastructure.
-2. Build a server-side PriceCharting provider adapter against the documented API contract without using a real token yet.
-3. Add PriceCharting attribution support to relevant result/pricing UI.
-4. When the adapter is ready, subscribe to Legendary and store the API token only as a Cloudflare Worker secret.
-5. Run the existing 100-title UK/PAL release-safe pricing benchmark against PriceCharting.
-6. Separately benchmark current PriceCharting Marketplace offer coverage for the same launch catalogue.
-7. Measure exact identifier/product-ID matching, PAL/region safety, completeness mapping, available-offer volume and UK usefulness.
-8. Do not assume PriceCharting Marketplace replaces eBay unless the coverage benchmark supports that conclusion.
-9. Use the legitimate PriceCharting integration as supporting evidence in a future transparent eBay developer-account reconsideration/reapplication.
+Completed before paying for real access:
+1. product/brand/domain decision reached for the current GrailRaven brand
+2. server-side PriceCharting provider adapter built against the documented API contract
+3. PriceCharting attribution-ready result rendering added
+4. 100-title pricing benchmark harness added
+5. separate Marketplace-offer benchmark mode added
+
+Still required:
+1. notify PriceCharting of the RetroNomad -> GrailRaven rename and confirm the existing arrangement carries over
+2. finish public-domain/Resend deployment setup
+3. subscribe to Legendary only when ready for real API calls
+4. store the API token only as a Cloudflare Worker secret
+5. run the 100-title UK/PAL pricing benchmark
+6. run the separate 100-title Marketplace offer-coverage benchmark
+7. measure exact identifier/product-ID matching, PAL/region safety, completeness mapping, available-offer volume and UK usefulness
+8. do not assume PriceCharting Marketplace replaces eBay unless the coverage benchmark supports that conclusion
+9. use the legitimate integration as supporting evidence in a future transparent eBay developer-account reconsideration/reapplication
 
 ## Accuracy rule
 
-PriceCharting approval solves the permission/licensing blocker for the described launch use. It does **not** prove coverage quality, inventory depth, exact-release matching accuracy or eBay-equivalent marketplace supply. Those must be measured before making product claims.
+PriceCharting approval solves the permission/licensing blocker for the described launch use under the recorded arrangement. It does **not** prove coverage quality, inventory depth, exact-release matching accuracy or eBay-equivalent marketplace supply. Those must be measured before making product claims.
