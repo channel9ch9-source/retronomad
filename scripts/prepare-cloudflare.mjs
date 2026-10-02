@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
+const brand=JSON.parse(await readFile("brand.json","utf8"));
 const DB_NAME=process.env.RETRONOMAD_D1_NAME||"retronomad-prod";
 const WORKER_NAME=process.env.RETRONOMAD_WORKER_NAME||"retronomad-app";
 
@@ -36,6 +37,9 @@ if(!databaseId)throw new Error("D1 database result did not include an ID");
 
 const vars={
   APP_ORIGIN:"self",
+  PUBLIC_BRAND_NAME:String(brand.name||"App"),
+  PUBLIC_BRAND_DOMAIN:String(brand.domain||""),
+  PUBLIC_CONTACT_EMAIL:String(brand.contactEmail||""),
   MARKETPLACE_PROVIDER:"disabled",
   NOTIFICATION_PROVIDER:"disabled",
   CHECK_INTERVAL_MINUTES:"60"
@@ -66,4 +70,4 @@ const config={
 };
 
 await writeFile(".wrangler.deploy.jsonc",JSON.stringify(config,null,2)+"\n","utf8");
-console.log("Prepared .wrangler.deploy.jsonc for "+WORKER_NAME+" using D1 "+DB_NAME);
+console.log("Prepared .wrangler.deploy.jsonc for "+WORKER_NAME+" using D1 "+DB_NAME+" and public brand "+vars.PUBLIC_BRAND_NAME);
