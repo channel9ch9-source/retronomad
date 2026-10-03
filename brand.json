@@ -3,5 +3,6 @@
   "mark": "GR",
   "domain": "grailraven.com",
   "contactEmail": "contact@grailraven.com",
+  "transactionalEmail": "accounts@grailraven.com",
   "legacyPublicName": "RetroNomad"
 }
