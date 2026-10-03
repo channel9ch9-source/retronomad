@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GrailRaven UI v2 design preview. Example data only; not live marketplace results.">
+<title>GrailRaven — UI V2 Preview</title>
+<link rel="stylesheet" href="ui-v2.css">
+</head>
+<body>
+<div class="v2-topbar">
+  <div class="v2-shell v2-nav">
+    <a class="v2-brand" href="design-preview.html" aria-label="GrailRaven design preview home">
+      <span class="v2-raven" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img">
+          <path fill="currentColor" d="M50 9c-5 1-9 3-12 7-5-3-12-3-18 1-7 5-9 14-6 22 2 7 8 11 15 12l-5 6 13-4 8 5-2-9c7-5 10-12 9-20 4-3 7-7 8-12-4 2-7 3-11 2 2-3 2-7 1-10Zm-25 15c4-3 9-3 13 0-4 1-8 3-11 6-1-2-2-4-2-6Zm8 20c-6 0-11-4-12-10 4 3 8 4 13 3 4-1 8-4 11-7 0 8-4 14-12 14Z"/>
+        </svg>
+      </span>
+      <span><span class="v2-wordmark">GrailRaven</span><span class="v2-tagline">Collect · Verify · Own</span></span>
+    </a>
+    <div class="v2-links">
+      <a class="active" href="#search">Search</a>
+      <a href="wishlist.html">Saved Hunts</a>
+      <a href="#catalogue">Catalogue</a>
+      <a href="account.html">Account</a>
+      <a href="analyze.html">Listing checker</a>
+    </div>
+    <div class="v2-meta">games · data · collectors · higher standards</div>
+  </div>
+</div>
+
+<div class="v2-demo-banner"><strong>DESIGN PREVIEW:</strong> all listings, prices, artwork blocks and result counts below are example UI data only. No live marketplace source is being represented.</div>
+
+<header class="v2-hero" id="search">
+  <div class="v2-shell v2-hero-inner">
+    <div>
+      <div class="v2-eyebrow">Collector intelligence · UI v2 preview</div>
+      <h1>Find the exact copy.</h1>
+      <p>Search by game, region, release, edition and condition. GrailRaven is being designed to filter the wrong physical copies before you compare price.</p>
+      <div class="v2-searchrow">
+        <label class="v2-searchbox" aria-label="Example game search"><span>⌕</span><input id="previewSearch" value="Silent Hill" placeholder="Search Silent Hill, Final Fantasy VII, Shenmue..."></label>
+        <div class="v2-platforms" aria-label="Example platform filters">
+          <button class="v2-platform active" type="button">PS1</button>
+          <button class="v2-platform" type="button">PS2</button>
+          <button class="v2-platform" type="button">Dreamcast</button>
+        </div>
+      </div>
+    </div>
+    <div class="v2-art-panel" aria-label="Decorative collector-art placeholder"></div>
+  </div>
+</header>
+
+<main class="v2-shell v2-main">
+  <div class="v2-grid">
+    <aside class="v2-filterpanel" aria-label="Example search filters">
+      <div class="v2-filterhead"><h2>Filters</h2><button class="v2-reset" type="button" id="resetPreview">Reset</button></div>
+      <div class="v2-filtergroup">
+        <h3>Region</h3>
+        <label class="v2-check"><input type="checkbox" checked> UK PAL</label>
+        <label class="v2-check"><input type="checkbox"> NTSC-U (US)</label>
+        <label class="v2-check"><input type="checkbox"> NTSC-J (Japan)</label>
+        <label class="v2-check"><input type="checkbox"> Other Europe</label>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Release</h3>
+        <label class="v2-check"><input type="checkbox" checked> Original release</label>
+        <label class="v2-check"><input type="checkbox"> Platinum / budget</label>
+        <label class="v2-check"><input type="checkbox"> Re-release</label>
+        <label class="v2-check"><input type="checkbox"> Limited edition</label>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Edition</h3>
+        <label class="v2-check"><input type="checkbox" checked> Standard</label>
+        <label class="v2-check"><input type="checkbox"> Collector's edition</label>
+        <label class="v2-check"><input type="checkbox"> Demo / promo</label>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Completeness</h3>
+        <label class="v2-check"><input type="checkbox" checked> CIB (complete in box)</label>
+        <label class="v2-check"><input type="checkbox"> Box + disc</label>
+        <label class="v2-check"><input type="checkbox"> Disc only</label>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Condition</h3>
+        <select class="v2-select"><option>Any usable condition</option><option>No major damage</option><option>Collector quality</option></select>
+      </div>
+      <div class="v2-filtergroup">
+        <div class="v2-toggle"><span>English packaging only</span><span class="v2-switch on" aria-hidden="true"></span></div>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Max delivered price</h3>
+        <input class="v2-price" value="£100" aria-label="Example maximum delivered price">
+      </div>
+    </aside>
+
+    <section>
+      <div class="v2-resultshead">
+        <h2><span id="previewCount">3</span> example results for “<span id="previewTerm">Silent Hill</span>”</h2>
+        <select class="v2-sort"><option>Sort by: Best match</option><option>Price: Low to high</option><option>Newest</option></select>
+      </div>
+
+      <div class="v2-cards">
+        <article class="v2-card">
+          <div class="v2-cover" aria-label="Example cover-art placeholder">
+            <div class="v2-cover-main">SILENT<br>HILL</div>
+            <div class="v2-thumbs"><span class="v2-thumb">CASE</span><span class="v2-thumb">DISC</span><span class="v2-thumb">SERIAL</span></div>
+          </div>
+          <div class="v2-cardbody">
+            <div class="v2-chips"><span class="v2-chip match">MATCH</span><span class="v2-chip">UK PAL</span><span class="v2-chip">Original release</span><span class="v2-chip">CIB</span><span class="v2-chip">DEMO UI</span></div>
+            <h3 class="v2-title">Silent Hill · PlayStation</h3>
+            <div class="v2-meta-line">UK PAL · Original release · SLES-01514</div>
+            <p class="v2-desc">Example of the intended evidence-first result card: correct release family, complete copy and strong identifier evidence.</p>
+            <div class="v2-evidence"><span>Manual shown</span><span>Disc shown</span><span>Case shown</span><span>SLES-01514</span></div>
+          </div>
+          <div class="v2-pricecol">
+            <div><div class="v2-price">£67.50 <small>delivered</small></div><div class="v2-reference">Example reference: £60–£80</div><div class="v2-market">Example: within target range</div></div>
+            <div class="v2-source"><span class="v2-source-dot">SRC</span><span>Example marketplace<small>not a live listing</small></span></div>
+          </div>
+        </article>
+
+        <article class="v2-card">
+          <div class="v2-cover" aria-label="Example cover-art placeholder">
+            <div class="v2-cover-main alt">SILENT<br>HILL</div>
+            <div class="v2-thumbs"><span class="v2-thumb">CASE</span><span class="v2-thumb">DISC</span><span class="v2-thumb">BARCODE</span></div>
+          </div>
+          <div class="v2-cardbody">
+            <div class="v2-chips"><span class="v2-chip review">REVIEW</span><span class="v2-chip">UK PAL</span><span class="v2-chip">Platinum</span><span class="v2-chip">CIB</span><span class="v2-chip">DEMO UI</span></div>
+            <h3 class="v2-title">Silent Hill · Platinum release</h3>
+            <div class="v2-meta-line">PAL · Budget/reissue family · identifier needs confirmation</div>
+            <p class="v2-desc">A visually similar listing can remain in review when GrailRaven has not proved that it is the exact edition the collector asked for.</p>
+            <div class="v2-evidence"><span>Manual shown</span><span>Disc shown</span><span>Platinum case</span><span>Check barcode</span></div>
+          </div>
+          <div class="v2-pricecol">
+            <div><div class="v2-price">£42.00 <small>delivered</small></div><div class="v2-reference">Example reference: £35–£50</div><div class="v2-market" style="color:var(--amber)">Review before comparing</div></div>
+            <div class="v2-source"><span class="v2-source-dot">SRC</span><span>Example marketplace<small>not a live listing</small></span></div>
+          </div>
+        </article>
+
+        <article class="v2-card">
+          <div class="v2-cover" aria-label="Example cover-art placeholder">
+            <div class="v2-cover-main jp">サイレント<br>ヒル</div>
+            <div class="v2-thumbs"><span class="v2-thumb">OBI</span><span class="v2-thumb">DISC</span><span class="v2-thumb">SLPS</span></div>
+          </div>
+          <div class="v2-cardbody">
+            <div class="v2-chips"><span class="v2-chip filtered">FILTERED</span><span class="v2-chip">NTSC-J</span><span class="v2-chip">Original release</span><span class="v2-chip">CIB</span><span class="v2-chip">DEMO UI</span></div>
+            <h3 class="v2-title">Silent Hill · Japanese release</h3>
+            <div class="v2-meta-line">NTSC-J · Japan · SLPS-family identifier</div>
+            <p class="v2-desc">The interface should make it immediately obvious when a listing is a valid game copy but fails the user's PAL/UK hunt requirements.</p>
+            <div class="v2-evidence"><span>Japanese text</span><span>Obi shown</span><span>Disc shown</span><span>NTSC-J</span></div>
+          </div>
+          <div class="v2-pricecol">
+            <div><div class="v2-price">£58.90 <small>delivered</small></div><div class="v2-reference">No UK comparison applied</div><div class="v2-market" style="color:var(--red)">Filtered from UK PAL hunt</div></div>
+            <div class="v2-source"><span class="v2-source-dot">SRC</span><span>Example marketplace<small>not a live listing</small></span></div>
+          </div>
+        </article>
+      </div>
+      <div class="v2-preview-note">This page is intentionally isolated from the live Deal Finder. Once the visual direction is approved, the same components can be applied to the working Search page without replacing its existing PALScout, Saved Hunts or account logic.</div>
+    </section>
+  </div>
+</main>
+
+<script>
+const platforms=[...document.querySelectorAll('.v2-platform')];
+platforms.forEach(button=>button.addEventListener('click',()=>{platforms.forEach(x=>x.classList.remove('active'));button.classList.add('active');}));
+const search=document.querySelector('#previewSearch');
+const term=document.querySelector('#previewTerm');
+search.addEventListener('input',()=>{term.textContent=search.value.trim()||'your search';});
+document.querySelector('#resetPreview').addEventListener('click',()=>{
+  document.querySelectorAll('.v2-filterpanel input[type="checkbox"]').forEach((box,index)=>box.checked=[0,4,8,11].includes(index));
+  search.value='Silent Hill';term.textContent='Silent Hill';platforms.forEach((x,i)=>x.classList.toggle('active',i===0));
+});
+</script>
+</body>
+</html>
