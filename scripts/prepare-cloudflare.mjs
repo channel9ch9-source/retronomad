@@ -3,8 +3,12 @@ import { readFile, writeFile } from "node:fs/promises";
 
 const brand=JSON.parse(await readFile("brand.json","utf8"));
 const PUBLIC_BRAND_NAME=String(brand.name||"").trim();
+const TRANSACTIONAL_EMAIL=String(brand.transactionalEmail||"").trim();
 if(!PUBLIC_BRAND_NAME||!/^[A-Za-z0-9 .&'’-]+$/.test(PUBLIC_BRAND_NAME)){
   throw new Error("brand.json contains an invalid public brand name");
+}
+if(!TRANSACTIONAL_EMAIL||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(TRANSACTIONAL_EMAIL)){
+  throw new Error("brand.json contains an invalid transactional email address");
 }
 
 const DB_NAME=process.env.RETRONOMAD_D1_NAME||"retronomad-prod";
@@ -53,11 +57,11 @@ const vars={
   PUBLIC_BRAND_NAME,
   PUBLIC_BRAND_DOMAIN:String(brand.domain||""),
   PUBLIC_CONTACT_EMAIL:String(brand.contactEmail||""),
+  AUTH_EMAIL_FROM:process.env.AUTH_EMAIL_FROM||`${PUBLIC_BRAND_NAME} <${TRANSACTIONAL_EMAIL}>`,
   MARKETPLACE_PROVIDER:"disabled",
   NOTIFICATION_PROVIDER:"disabled",
   CHECK_INTERVAL_MINUTES:"60"
 };
-if(process.env.AUTH_EMAIL_FROM)vars.AUTH_EMAIL_FROM=process.env.AUTH_EMAIL_FROM;
 if(process.env.AUTH_EMAIL_WEBHOOK_URL)vars.AUTH_EMAIL_WEBHOOK_URL=process.env.AUTH_EMAIL_WEBHOOK_URL;
 
 const config={
