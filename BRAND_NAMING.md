@@ -1,6 +1,6 @@
 # Brand / Naming Context
 
-Last updated: 2 October 2026
+Last updated: 3 October 2026
 
 This file records the stable naming context for the project so branding decisions do not require renaming core product architecture.
 
@@ -14,6 +14,11 @@ Owned domain:
 Primary human/business mailbox:
 - `contact@grailraven.com`
 
+Transactional/account sender:
+- `accounts@grailraven.com`
+- sent through Resend after domain verification
+- should also exist as a Purelymail alias/route to `contact@grailraven.com` so replies are not lost
+
 **GrailRaven is the current brand, but it is intentionally not treated as a permanent internal codename.** The name was difficult to secure and may be replaced later if a materially better brand becomes available.
 
 ## Rebrand architecture rule
@@ -26,6 +31,7 @@ Therefore:
 - existing `retronomad-*` infrastructure names, browser storage keys and code namespaces may remain as legacy implementation identifiers when changing them would add migration risk without customer benefit
 - do not introduce new `grailraven-*` internal identifiers unless a branded identifier is actually required
 - public brand metadata should come from the central `brand.json` configuration wherever the deployment path allows it
+- `brand.json` also owns the current human contact and transactional email addresses
 - if the public brand changes again, update the central brand configuration, presentation assets, domain/email configuration and only the infrastructure that genuinely needs a customer-facing rename
 
 This deliberately separates **brand identity** from **product architecture**.
