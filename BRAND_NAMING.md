@@ -17,9 +17,28 @@ Primary human/business mailbox:
 Transactional/account sender:
 - `accounts@grailraven.com`
 - sent through Resend after domain verification
-- should also exist as a Purelymail alias/route to `contact@grailraven.com` so replies are not lost
+- routed in Purelymail to `contact@grailraven.com` so replies are not lost
 
 **GrailRaven is the current brand, but it is intentionally not treated as a permanent internal codename.** The name was difficult to secure and may be replaced later if a materially better brand becomes available.
+
+## Live rebrand status — completed 3 October 2026
+
+The customer-facing migration from RetroNomad to GrailRaven is now live and smoke-tested.
+
+Confirmed:
+- `grailraven.com` is attached to the existing Cloudflare Worker as the production custom domain
+- homepage and main app pages load successfully on `grailraven.com`
+- public UI displays GrailRaven rather than RetroNomad through the central brand layer
+- `contact@grailraven.com` sends and receives successfully through Purelymail
+- Purelymail SPF/DKIM/DMARC configuration is in place
+- Resend has verified `grailraven.com` for transactional sending
+- Resend receiving remains disabled; Purelymail remains the inbound-mail provider
+- `accounts@grailraven.com` routes to `contact@grailraven.com`
+- passwordless sign-in emails send as `GrailRaven <accounts@grailraven.com>`
+- the sign-in email body uses GrailRaven branding
+- magic-link sign-in returns to the `grailraven.com` deployment successfully
+
+Legacy/internal infrastructure names remain intentionally unchanged, including the `retronomad` repository, Worker/D1 names and compatibility identifiers.
 
 ## Rebrand architecture rule
 
