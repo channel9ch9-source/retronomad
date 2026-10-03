@@ -1,0 +1,64 @@
+name: Run PriceCharting benchmarks
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Benchmark to run
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - pricing
+          - offers
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Confirm API token is configured
+        shell: bash
+        run: |
+          if [ -z "$PRICECHARTING_TOKEN" ]; then
+            echo "PRICECHARTING_TOKEN repository secret is missing."
+            exit 1
+          fi
+
+      - name: Run PriceCharting provider fixture tests
+        run: node --test tests/pricecharting-provider.test.mjs
+
+      - name: Create report directory
+        run: mkdir -p benchmarks
+
+      - name: Run 100-title pricing benchmark
+        if: ${{ inputs.mode == 'all' || inputs.mode == 'pricing' }}
+        run: node scripts/pricecharting-benchmark.mjs --mode=pricing --out=benchmarks/pricecharting-pricing.json
+
+      - name: Run 100-title Marketplace offer benchmark
+        if: ${{ inputs.mode == 'all' || inputs.mode == 'offers' }}
+        run: node scripts/pricecharting-benchmark.mjs --mode=offers --out=benchmarks/pricecharting-offers.json
+
+      - name: Upload benchmark reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pricecharting-benchmark-${{ github.run_id }}
+          path: benchmarks/*.json
+          if-no-files-found: warn
+          retention-days: 30
