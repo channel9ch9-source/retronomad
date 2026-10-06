@@ -1288,3 +1288,36 @@ Result:
 - Saved Hunts, Account and Listing Checker remain on the shared GrailRaven v2 shell
 
 The v2 Search visual migration is therefore considered complete. Future changes should preserve the screenshot-parity contract recorded in `UI_V2_DESIGN.md`.
+
+
+## Catalogue promotion + D1 sync pipeline ready — 6 October 2026
+
+Built the post-approval full-catalogue promotion infrastructure while keeping publication blocked.
+
+Architecture:
+- immutable versioned D1 datasets
+- SHA-256 manifest/checksum
+- separate staging and activation
+- single active-dataset pointer
+- previous datasets retained for rollback
+- existing D1 catalogue tables preserved
+
+New migration:
+- `backend/migrations/0003_catalogue_datasets.sql`
+
+New tooling:
+- `scripts/catalogue-promotion-core.mjs`
+- `scripts/prepare-catalogue-promotion.mjs`
+- `scripts/export-catalogue-d1.mjs`
+- `scripts/verify-d1-catalogue.mjs`
+- `scripts/activate-catalogue-dataset.mjs`
+- `scripts/rollback-catalogue-dataset.mjs`
+
+New workflows:
+- `Validate catalogue promotion pipeline` — safe isolated local-D1 end-to-end test; may run now
+- `Promote approved IGDB catalogue` — hard-gated by repository variable + typed confirmation
+- `Roll back active D1 catalogue dataset` — emergency D1 pointer rollback
+
+The approved remote promotion workflow remains inoperative until `IGDB_COMMERCIAL_APPROVED=true` is explicitly configured after the IGDB commercial-use question is resolved.
+
+Detailed design: `CATALOGUE_PROMOTION_PIPELINE.md`.
