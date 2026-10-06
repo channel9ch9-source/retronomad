@@ -25,18 +25,18 @@ The user preferred the first visual mockup, combined with the more elegant raven
 ## Locked colour decisions
 
 Current requested accents:
-- MATCH / selected / active green: `#00FF41`
-- REVIEW orange: `#FF5F1F`
-- FILTERED / rejected red: `#880808`
+- MATCH status green: `#00FF41`
+- REVIEW orange: `#FF5C00`
+- FILTERED / rejected red: `#FF0023`
 
 The previous murky dark-blue base is rejected.
 
 Base direction:
-- page background: near-black
-- panels: charcoal / graphite black
-- borders: neutral graphite greys
+- page background: plain black for the current pass
+- panels: plain black with neutral grey borders
 - blue should not be the primary interaction accent
-- checked controls, selected filters, active platform states and active navigation should use the green system
+- search focus, checked controls, selected platform states and navigation highlights should be neutral white/grey for now
+- green is reserved primarily for positive MATCH status while the broader accent system remains open
 
 The exact neutral black/charcoal shades may still be refined visually, but the overall direction is locked.
 
@@ -49,7 +49,7 @@ Direction:
 - body text, controls, filters and dense evidence: clean readable sans-serif
 - readability takes priority over using a decorative font everywhere
 
-The V2 preview currently uses a Cinzel/Palatino-style display stack as a first pass. This is not necessarily the final typeface.
+The V2 preview currently keeps a display-serif experiment, but typography is explicitly **not final**. Do not spend more time selecting a final typeface during the current product-development pass.
 
 ## Logo
 
@@ -58,7 +58,7 @@ Preferred direction:
 - bird + GrailRaven wordmark treatment
 - more distinctive and premium than the first simple placeholder mark
 
-The inline SVG in the preview is an implementation approximation for iteration. The final production logo asset is not yet locked and should be refined after the overall page design is approved.
+The prior inline SVG approximation was rejected. The preview now uses the raven mark isolated from the preferred second visual mockup so the intended silhouette is represented accurately. This extracted preview asset is still not the final production logo file; final vector cleanup can happen later.
 
 ## Desktop structure
 
@@ -144,3 +144,27 @@ Therefore:
 - whether the homepage uses real licensed game art/box art and from which source
 - final density of evidence thumbnails on desktop
 - final mobile expanded-evidence interaction
+
+
+## Search hero artwork behavior
+
+The original mockup intent is restored: the hero/search area should visually respond to the game being searched.
+
+Target production behavior:
+- once the catalogue has a legitimate artwork/cover source, searching/selecting a game should populate the hero background with that game's cover/artwork
+- a dark overlay must preserve text/search readability
+- artwork is presentation only; it must not change matching logic
+- the preview currently uses a structured placeholder layer because the project has not yet selected a licensed/authorised full-catalogue artwork source
+- do not scrape or hotlink arbitrary copyrighted box art just to fill the preview
+
+## Visual work pause
+
+After the current cleanup pass, visual design is intentionally parked so development can return to catalogue/product work.
+
+Still open for a later design session:
+- final typeface
+- final vector/production raven logo asset
+- exact hero-art treatment once an artwork source is selected
+- any further aesthetic polish not required for usability
+
+Do not allow these open visual questions to block full-catalogue architecture or core product development.
