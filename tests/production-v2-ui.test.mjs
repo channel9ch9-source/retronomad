@@ -25,6 +25,7 @@ test("production homepage and search use GrailRaven v2 shell",()=>{
   }
 });
 
-test("user-facing search explains forgiving title lookup",()=>{
-  assert.ok(search.includes("abbreviation or alternate name"));
+test("production search supports alternate-name lookup without changing the approved preview copy",()=>{
+  assert.ok(search.includes("(x.aliases||[]).some"));
+  assert.ok(search.includes("Search Silent Hill, Final Fantasy VII, Shenmue..."));
 });
