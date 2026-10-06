@@ -6,7 +6,7 @@ import { rankCatalogueMatches, resolveCatalogueQuery } from "../shared/catalogue
 
 const document=JSON.parse(await fs.readFile(new URL("../catalogue/base-catalogue.json",import.meta.url),"utf8"));
 const aliases=JSON.parse(await fs.readFile(new URL("../catalogue/search-aliases.json",import.meta.url),"utf8"));
-const index=buildCatalogueSearchIndex(document,aliases.aliases||{});
+const index=buildCatalogueSearchIndex(document,aliases.aliases||{},aliases.suppressAliases||{});
 
 function top(query,platform=""){
   return rankCatalogueMatches(index,query,{platform,limit:5});
