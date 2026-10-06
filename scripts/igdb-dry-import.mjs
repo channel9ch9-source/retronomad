@@ -121,6 +121,17 @@ function intersects(a,b){
   const set=new Set(a);
   return b.some(x=>set.has(x));
 }
+function seedMatchScore(seed,row){
+  const seedTitle=normalizeCatalogueTitle(seed.title);
+  const seedAliases=(seed.aliases||[]).map(normalizeCatalogueTitle);
+  const providerTitle=normalizeCatalogueTitle(row.name);
+  const providerAliases=(row.alternativeNames||[]).map(normalizeCatalogueTitle);
+  if(providerTitle===seedTitle) return 100;
+  if(seedAliases.includes(providerTitle)) return 95;
+  if(providerAliases.includes(seedTitle)) return 90;
+  if(seedAliases.some(alias=>providerAliases.includes(alias))) return 85;
+  return 0;
+}
 function addAliases(existing,candidates,title){
   const titleKey=normalizeCatalogueTitle(title);
   const byKey=new Map((existing||[]).map(x=>[normalizeCatalogueTitle(x),x]));
@@ -215,6 +226,9 @@ for(const [platformLabel,names] of Object.entries(platformNames)){
     }
   }
 
+  const rowsBySeed=new Map();
+  const newRows=[];
+
   for(const row of selected){
     const providerNames=namesForProvider(row);
     const seedMatches=seedByPlatform[platformLabel].filter(seed=>intersects(providerNames,namesForSeed(seed)));
@@ -224,30 +238,70 @@ for(const [platformLabel,names] of Object.entries(platformNames)){
         platform:platformLabel,
         igdbId:row.igdbId,
         providerTitle:row.name,
-        seedMatches:seedMatches.map(g=>({id:g.id,title:g.title}))
+        reason:"PROVIDER_ROW_MATCHES_MULTIPLE_SEEDS",
+        seedMatches:seedMatches.map(g=>({id:g.id,title:g.title,score:seedMatchScore(g,row)}))
       });
       heldProviderRecords++;
       continue;
     }
 
     if(seedMatches.length===1){
-      const seed=proposedById.get(seedMatches[0].id);
-      mappedSeedIds.add(seed.id);
-      seed.aliases=addAliases(seed.aliases,[row.name,...row.alternativeNames],seed.title);
-      if(seed.releaseYear==null&&row.releaseYear) seed.releaseYear=row.releaseYear;
-      if(seed.developer==null&&row.developers.length) seed.developer=row.developers[0];
-      if(seed.publisher==null&&row.publishers.length) seed.publisher=row.publishers[0];
-      if((seed.genres||[]).length===0&&row.genres.length) seed.genres=[...row.genres];
-      seed.externalRefs={...(seed.externalRefs||{}),igdb:row.igdbId};
-      seed.provenance=[
-        ...(seed.provenance||[]),
-        {source:"IGDB_DRY_RUN",sourceKey:row.igdbId,importedAt:new Date().toISOString().slice(0,10)}
-      ];
-      // Never modify PALScout coverage here. Artwork remains null/pending.
-      enrichedSeedGames++;
+      const seed=seedMatches[0];
+      if(!rowsBySeed.has(seed.id)) rowsBySeed.set(seed.id,[]);
+      rowsBySeed.get(seed.id).push({row,seed,score:seedMatchScore(seed,row)});
       continue;
     }
 
+    newRows.push(row);
+  }
+
+  for(const entries of rowsBySeed.values()){
+    entries.sort((a,b)=>b.score-a.score||a.row.igdbId.localeCompare(b.row.igdbId));
+    const bestScore=entries[0].score;
+    const best=entries.filter(x=>x.score===bestScore);
+
+    if(best.length!==1){
+      report.review.seedAmbiguities.push({
+        platform:platformLabel,
+        seedId:entries[0].seed.id,
+        seedTitle:entries[0].seed.title,
+        reason:"MULTIPLE_PROVIDER_ROWS_TIED_FOR_SEED",
+        providerRows:entries.map(x=>({igdbId:x.row.igdbId,title:x.row.name,score:x.score,gameType:x.row.gameType}))
+      });
+      heldProviderRecords+=entries.length;
+      continue;
+    }
+
+    const winner=best[0];
+    const seed=proposedById.get(winner.seed.id);
+    mappedSeedIds.add(seed.id);
+    seed.aliases=addAliases(seed.aliases,[winner.row.name,...winner.row.alternativeNames],seed.title);
+    if(seed.releaseYear==null&&winner.row.releaseYear) seed.releaseYear=winner.row.releaseYear;
+    if(seed.developer==null&&winner.row.developers.length) seed.developer=winner.row.developers[0];
+    if(seed.publisher==null&&winner.row.publishers.length) seed.publisher=winner.row.publishers[0];
+    if((seed.genres||[]).length===0&&winner.row.genres.length) seed.genres=[...winner.row.genres];
+    seed.externalRefs={...(seed.externalRefs||{}),igdb:winner.row.igdbId};
+    seed.provenance=[
+      ...(seed.provenance||[]),
+      {source:"IGDB_DRY_RUN",sourceKey:winner.row.igdbId,importedAt:new Date().toISOString().slice(0,10)}
+    ];
+    enrichedSeedGames++;
+
+    const losers=entries.filter(x=>x!==winner);
+    if(losers.length){
+      heldProviderRecords+=losers.length;
+      report.review.seedAmbiguities.push({
+        platform:platformLabel,
+        seedId:seed.id,
+        seedTitle:seed.title,
+        reason:"LOWER_CONFIDENCE_PROVIDER_ALIAS_ROWS_HELD",
+        selected:{igdbId:winner.row.igdbId,title:winner.row.name,score:winner.score},
+        held:losers.map(x=>({igdbId:x.row.igdbId,title:x.row.name,score:x.score,gameType:x.row.gameType}))
+      });
+    }
+  }
+
+  for(const row of newRows){
     const id=makeCatalogueId(platformLabel,row.name);
     if(proposedById.has(id)){
       report.review.idCollisions.push({platform:platformLabel,id,igdbId:row.igdbId,title:row.name});
