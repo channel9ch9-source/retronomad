@@ -12,7 +12,17 @@
 .v2-inline-status{margin-top:10px;color:#94a0aa;font-size:12px}
 .v2-inline-status a,.v2-inline-status button{color:#fff;text-decoration:underline;background:none;border:0;padding:0;cursor:pointer;font:inherit}
 .v2-toggle-button{border:0;background:transparent;padding:0;width:100%;text-align:left;cursor:pointer}
-@media(max-width:760px){.v2-demo-banner{display:none}}
+.v2-searchbox-wrap{position:relative;min-width:0}
+.v2-searchbox-wrap .v2-searchbox{width:100%}
+.v2-suggestions{position:absolute;z-index:45;left:0;right:0;top:calc(100% + 7px);background:#050505;border:1px solid #3b4652;border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.55)}
+.v2-suggestions[hidden]{display:none}
+.v2-suggestion{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border:0;border-top:1px solid #202830;background:#050505;color:#f5f1e8;text-align:left;cursor:pointer}
+.v2-suggestion:first-child{border-top:0}
+.v2-suggestion:hover,.v2-suggestion.active{background:#101419}
+.v2-suggestion-title{min-width:0;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v2-suggestion-meta{flex:0 0 auto;color:#8f9ba5;font-size:11px}
+.v2-suggestion-match{display:block;color:#77838d;font-size:10px;font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:760px){.v2-demo-banner{display:none}.v2-suggestions{top:calc(100% + 6px)}}
 </style>
 </head>
 <body>
@@ -44,7 +54,10 @@
       <h1>Find the exact copy.</h1>
       <p>Search by game, region, release, edition and condition. GrailRaven is being designed to filter the wrong physical copies before you compare price.</p>
       <div class="v2-searchrow">
-        <label class="v2-searchbox" aria-label="Game search"><span>⌕</span><input id="game" list="games" value="Silent Hill" placeholder="Search Silent Hill, Final Fantasy VII, Shenmue..."></label>
+        <div class="v2-searchbox-wrap">
+          <label class="v2-searchbox" aria-label="Game search"><span>⌕</span><input id="game" value="Silent Hill" autocomplete="off" aria-autocomplete="list" aria-controls="catalogueSuggestions" aria-expanded="false" placeholder="Search Silent Hill, Final Fantasy VII, Shenmue..."></label>
+          <div id="catalogueSuggestions" class="v2-suggestions" role="listbox" hidden></div>
+        </div>
         <datalist id="games"></datalist>
         <input id="platform" type="hidden" value="PS1">
         <div class="v2-platforms" aria-label="Platform filters">
@@ -201,12 +214,17 @@
 <script>
 const evidence=window.RELEASE_EVIDENCE||[];
 const baseIndex=window.BASE_CATALOGUE_INDEX||[];
-const catalog=(baseIndex.length
- ?baseIndex.map(row=>({id:row.id,game:row.title,platform:row.platform,aliases:row.aliases||[],coverage:row.coverage||"BASE_ONLY"}))
- :[...new Map(evidence.map(r=>[r[0]+"|"+r[1],{game:r[0],platform:r[1],aliases:[],coverage:"PALSCOUT_DEEP"}])).values()])
- .sort((a,b)=>a.game.localeCompare(b.game)||a.platform.localeCompare(b.platform));
-const dl=document.querySelector("#games");
-catalog.forEach(x=>{const o=document.createElement("option");o.value=x.game;o.label=x.platform;dl.appendChild(o);});
+const catalogueIndex=(baseIndex.length
+ ?baseIndex
+ :[...new Map(evidence.map(r=>[r[0]+"|"+r[1],{
+   id:(r[1]+":"+r[0]).toLowerCase().replace(/[^a-z0-9]+/g,"-"),
+   title:r[0],platform:r[1],aliases:[],releaseYear:null,coverage:"PALSCOUT_DEEP"
+ }])).values()])
+ .sort((a,b)=>a.title.localeCompare(b.title)||a.platform.localeCompare(b.platform));
+let catalogueSearchApi=null;
+const catalogueSearchReady=import("./shared/catalogue-search-core.js")
+ .then(api=>(catalogueSearchApi=api))
+ .catch(()=>null);
 
 function numberOrNull(v){const n=Number(String(v||"").replace(/[^0-9.]/g,""));return Number.isFinite(n)&&n>0?n:null;}
 function syncLegacyFields(){
@@ -219,15 +237,33 @@ function syncLegacyFields(){
   document.querySelector("#complete").value=cib&&!boxDisc&&!disc?"cib":boxDisc&&!disc?"manual-optional":disc?"loose-ok":"any";
   document.querySelector("#excludePromo").checked=!document.querySelector("#editionPromo").checked;
 }
+function fallbackCatalogueResolution(query,platform){
+ const q=String(query||"").trim().toLowerCase();
+ const rows=catalogueIndex.filter(game=>
+   (!platform||game.platform===platform)&&
+   (game.title.toLowerCase()===q||(game.aliases||[]).some(alias=>String(alias).toLowerCase()===q))
+ );
+ if(rows.length===1)return {status:"resolved",top:{game:rows[0],score:1000,reason:"fallback-exact"},ranked:[{game:rows[0],score:1000}]};
+ if(rows.length>1)return {status:"ambiguous",ranked:rows.map(game=>({game,score:1000}))};
+ return {status:"none",ranked:[]};
+}
+function resolveGameInput(){
+ const query=document.querySelector("#game").value.trim();
+ const platform=document.querySelector("#platform").value;
+ if(!query)return {status:"none",ranked:[]};
+ return catalogueSearchApi
+  ?catalogueSearchApi.resolveCatalogueQuery(catalogueIndex,query,{platform})
+  :fallbackCatalogueResolution(query,platform);
+}
 function buildTarget(){
  syncLegacyFields();
- const game=document.querySelector("#game").value.trim();
- if(!game)return null;
- const platform=document.querySelector("#platform").value;
- const query=game.toLowerCase();
- const known=catalog.filter(x=>(x.game.toLowerCase()===query||(x.aliases||[]).some(a=>String(a).toLowerCase()===query))&&(!platform||x.platform===platform));
+ const typedGame=document.querySelector("#game").value.trim();
+ if(!typedGame)return null;
+ const selectedPlatform=document.querySelector("#platform").value;
+ const resolution=resolveGameInput();
+ const canonical=(resolution.status==="resolved"||resolution.status==="corrected")?resolution.top?.game:null;
  return {
-   game:known[0]?.game||game,platform:platform||(known.length===1?known[0].platform:""),
+   game:canonical?.title||typedGame,platform:canonical?.platform||selectedPlatform,
    compatibility:"UK_EU_PAL",releasePreference:document.querySelector("#release").value,
    editionPreference:document.querySelector("#edition").value,completeness:document.querySelector("#complete").value,
    condition:document.querySelector("#condition").value,englishRequired:document.querySelector("#english").checked,
@@ -262,6 +298,13 @@ function renderLiveResults(rows){
  }
 }
 async function runSearch(){
+ await catalogueSearchReady;
+ const resolution=resolveGameInput();
+ if(resolution.status==="ambiguous"){
+   renderCatalogueSuggestions(document.querySelector("#game").value.trim(),true);
+   document.querySelector("#searchStatus").textContent="Choose the exact game from the suggestions before creating the hunt.";
+   return;
+ }
  const t=buildTarget();
  if(!t)return;
  window.currentTarget=t;
@@ -279,17 +322,99 @@ async function runSearch(){
  renderLiveResults(rows);
 }
 document.querySelector("#searchBtn").addEventListener("click",runSearch);
-document.querySelector("#game").addEventListener("input",e=>{
+
+const gameInput=document.querySelector("#game");
+const suggestionBox=document.querySelector("#catalogueSuggestions");
+let suggestionRows=[];
+let suggestionActive=-1;
+let suggestionTimer=null;
+
+function hideCatalogueSuggestions(){
+ suggestionRows=[];suggestionActive=-1;suggestionBox.hidden=true;suggestionBox.innerHTML="";
+ gameInput.setAttribute("aria-expanded","false");
+}
+function setSelectedPlatform(platform){
+ document.querySelector("#platform").value=platform||"";
+ platformButtons.forEach(button=>button.classList.toggle("active",button.dataset.platform===platform));
+}
+function selectCatalogueSuggestion(row){
+ if(!row?.game)return;
+ gameInput.value=row.game.title;
+ setSelectedPlatform(row.game.platform);
+ document.querySelector("#previewTerm").textContent=row.game.title;
+ document.querySelector("#heroArtTitle").textContent=row.game.title;
+ document.querySelector("#searchStatus").textContent=row.matchedText&&row.matchedText!==row.game.title
+  ?"Matched “"+row.matchedText+"” to "+row.game.title+" · "+row.game.platform+"."
+  :"Selected "+row.game.title+" · "+row.game.platform+".";
+ hideCatalogueSuggestions();
+}
+function paintSuggestionActive(){
+ [...suggestionBox.querySelectorAll(".v2-suggestion")].forEach((button,index)=>button.classList.toggle("active",index===suggestionActive));
+}
+async function renderCatalogueSuggestions(query,force=false){
+ const q=String(query||"").trim();
+ if(q.length<2&&!force){hideCatalogueSuggestions();return;}
+ await catalogueSearchReady;
+ if(!catalogueSearchApi){hideCatalogueSuggestions();return;}
+ const selected=document.querySelector("#platform").value;
+ const rows=catalogueSearchApi.rankCatalogueMatches(catalogueIndex,q,{limit:14});
+ rows.sort((a,b)=>(b.score+(b.game.platform===selected?15:0))-(a.score+(a.game.platform===selected?15:0)));
+ suggestionRows=rows.slice(0,6);
+ suggestionActive=-1;
+ suggestionBox.innerHTML="";
+ if(!suggestionRows.length){hideCatalogueSuggestions();return;}
+ suggestionRows.forEach((row,index)=>{
+   const button=document.createElement("button");
+   button.type="button";button.className="v2-suggestion";button.setAttribute("role","option");
+   const left=document.createElement("span");left.className="v2-suggestion-title";left.textContent=row.game.title;
+   if(row.matchedText&&row.matchedText!==row.game.title){
+     const match=document.createElement("small");match.className="v2-suggestion-match";match.textContent="matched “"+row.matchedText+"”";
+     left.appendChild(match);
+   }
+   const meta=document.createElement("span");meta.className="v2-suggestion-meta";meta.textContent=row.game.platform;
+   button.append(left,meta);
+   button.addEventListener("mousedown",event=>event.preventDefault());
+   button.addEventListener("click",()=>selectCatalogueSuggestion(suggestionRows[index]));
+   suggestionBox.appendChild(button);
+ });
+ suggestionBox.hidden=false;gameInput.setAttribute("aria-expanded","true");
+}
+function scheduleCatalogueSuggestions(value){
+ clearTimeout(suggestionTimer);
+ suggestionTimer=setTimeout(()=>renderCatalogueSuggestions(value),55);
+}
+
+gameInput.addEventListener("input",e=>{
  const value=e.target.value.trim()||"your search";
  document.querySelector("#previewTerm").textContent=value;
  document.querySelector("#heroArtTitle").textContent=value;
+ scheduleCatalogueSuggestions(e.target.value);
 });
-document.querySelector("#game").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSearch();}});
+gameInput.addEventListener("focus",()=>{if(gameInput.value.trim().length>=2)scheduleCatalogueSuggestions(gameInput.value);});
+gameInput.addEventListener("keydown",e=>{
+ if(!suggestionBox.hidden&&(e.key==="ArrowDown"||e.key==="ArrowUp")){
+   e.preventDefault();
+   const delta=e.key==="ArrowDown"?1:-1;
+   suggestionActive=(suggestionActive+delta+suggestionRows.length)%suggestionRows.length;
+   paintSuggestionActive();
+   return;
+ }
+ if(e.key==="Escape"){hideCatalogueSuggestions();return;}
+ if(e.key==="Enter"){
+   e.preventDefault();
+   if(!suggestionBox.hidden&&suggestionActive>=0){
+     selectCatalogueSuggestion(suggestionRows[suggestionActive]);
+     return;
+   }
+   hideCatalogueSuggestions();runSearch();
+ }
+});
+document.addEventListener("click",event=>{if(!event.target.closest(".v2-searchbox-wrap"))hideCatalogueSuggestions();});
 
 const platformButtons=[...document.querySelectorAll(".v2-platform")];
 platformButtons.forEach(button=>button.addEventListener("click",()=>{
- platformButtons.forEach(x=>x.classList.remove("active"));button.classList.add("active");
- document.querySelector("#platform").value=button.dataset.platform;
+ setSelectedPlatform(button.dataset.platform);
+ if(gameInput.value.trim().length>=2)scheduleCatalogueSuggestions(gameInput.value);
 }));
 
 const filterIds=["regionUk","regionUs","regionJp","regionEu","releaseOriginal","releaseBudget","releaseReissue","releaseLimited","editionStandard","editionCollector","editionPromo","completeCib","completeBoxDisc","completeDisc","condition","maxPrice"];
