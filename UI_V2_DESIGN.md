@@ -205,3 +205,23 @@ Implementation:
 - the old blue-gradient RetroNomad production shell is no longer the intended live presentation after the next Cloudflare deploy
 
 The isolated `design-preview.html` remains as a visual reference but is no longer the only place the design exists.
+
+
+## Layout authority
+
+`design-preview.html` is the authoritative production layout reference for the Collector Intelligence v2 interface, not merely a colour/style reference.
+
+For the production Search page, preserve the approved structural hierarchy:
+- GrailRaven raven/wordmark top bar
+- large `Find the exact copy.` hero
+- hero game-search field
+- PS1 / PS2 / Dreamcast platform pills
+- desktop filter rail / mobile Filters control
+- results heading + sort/source control area
+- evidence-first result cards using MATCH / REVIEW / FILTERED states
+
+On mobile, the production Search page should visually follow the approved design-preview composition represented by the 6 October 2026 mobile reference: brand header, Menu button, hero copy, search box, platform pills, results heading, Filters button, and stacked result cards.
+
+Do not implement production Search by skinning the old panel-based markup. The v2 markup itself is the layout contract; working production logic should be wired into that structure.
+
+All primary public pages should share the same v2 topbar, raven mark, typography, black surfaces and responsive mobile navigation even when their page-specific content differs.
