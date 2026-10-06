@@ -1,0 +1,43 @@
+name: Roll back active D1 catalogue dataset
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset_id:
+        description: Previously staged dataset ID to reactivate
+        required: true
+        type: string
+      confirm:
+        description: Type ROLLBACK_CATALOGUE
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  rollback:
+    if: ${{ inputs.confirm == 'ROLLBACK_CATALOGUE' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Install tooling
+        run: npm install
+      - name: Resolve D1 and render Wrangler config
+        run: npm run prepare:cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AUTH_EMAIL_FROM: ${{ vars.AUTH_EMAIL_FROM }}
+          AUTH_EMAIL_WEBHOOK_URL: ${{ secrets.AUTH_EMAIL_WEBHOOK_URL }}
+      - name: Point D1 back to selected immutable dataset
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CATALOGUE_ROLLBACK_CONFIRM: ROLLBACK_CATALOGUE
+        run: node scripts/rollback-catalogue-dataset.mjs --dataset-id="${{ inputs.dataset_id }}" --config=.wrangler.deploy.jsonc
