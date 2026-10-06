@@ -1142,3 +1142,26 @@ Fix:
 - workflow artifacts upload even when a future validation failure occurs
 
 No canonical catalogue or D1 data was modified.
+
+
+## Successful IGDB full-catalogue dry import — 6 October 2026
+
+The first valid full dry import completed:
+- 8,441 proposed catalogue games
+- 8,341 new BASE_ONLY games
+- 91/100 PALScout seeds automatically enriched
+- 9 seed mappings remaining
+- 38 provider records safely held
+- 16 same-title records suppressed
+- 33 provider title-collision review groups
+- 3 seed ambiguity review events
+- 0 ID collisions
+- catalogue validation passed
+
+Detailed result: `IGDB_DRY_IMPORT_RESULT_2026-10-06.md`.
+
+The nine remaining seed mappings have now been made explicit in `catalogue/provider-mappings/igdb.json`.
+
+The importer was also corrected to derive catalogue `releaseYear` from IGDB platform-specific `release_dates`, not global `first_release_date`.
+
+A fresh dry run is required before canonical promotion.
