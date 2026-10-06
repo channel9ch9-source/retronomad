@@ -630,3 +630,17 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [ ] verify Search against approved mobile/desktop preview
 - [ ] verify Saved Hunts / Account / Listing Checker mobile navigation
 - [ ] then resume IGDB commercial-partnership outreach
+
+
+### Screenshot-parity correction
+
+- [x] compare live Search against approved desktop/mobile screenshots
+- [x] remove production-only hero Search/Save row
+- [x] remove permanent green target card from approved result composition
+- [x] restore checkbox/toggle filter rail
+- [x] restore Sort control and example result cards
+- [x] preserve functional search, aliases, Saved Hunts and marketplace hooks behind approved UI
+- [x] strengthen Saved Hunts / Account / Listing Checker v2 page hierarchy
+- [ ] deploy screenshot-parity correction
+- [ ] compare live desktop Search against reference screenshot
+- [ ] compare live mobile Search against reference screenshot
