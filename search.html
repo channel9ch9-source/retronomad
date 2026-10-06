@@ -3,31 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Search RetroNomad for the exact physical retro-game copy you want.">
-<title>Search — RetroNomad</title>
-<style>
-:root{--bg:#090b0f;--panel:#111720;--panel2:#0c121a;--text:#f7f8fb;--muted:#96a3b5;--line:#293447;--green:#94f7b2;--amber:#ffd977;--red:#ff9da6;--max:1180px}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 480px at 50% -180px,rgba(83,127,196,.22),transparent 65%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
-a{color:inherit}.wrap{width:min(var(--max),calc(100% - 32px));margin:auto}
-nav{height:70px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:20px;font-weight:900}.mark{width:30px;height:30px;border:1px solid #39506a;border-radius:9px;display:grid;place-items:center;background:#111926;color:var(--green);font-size:12px}.navlinks{display:flex;gap:20px;color:var(--muted)}.navlinks a{text-decoration:none}
-.hero{padding:52px 0 26px}.kicker{font-size:12px;color:var(--green);font-weight:900;text-transform:uppercase;letter-spacing:.13em}h1{font-size:clamp(40px,6vw,66px);line-height:.98;letter-spacing:-.055em;margin:10px 0 13px}.lead{color:var(--muted);font-size:18px;max-width:790px;margin:0}
-.notice{margin-top:20px;border:1px solid #5d532d;background:#19170e;border-radius:12px;padding:12px 14px;color:#e8d994;font-size:13px}
-.layout{display:grid;grid-template-columns:.78fr 1.22fr;gap:18px;padding:20px 0 70px}.panel{background:linear-gradient(180deg,#121823,#0f141c);border:1px solid var(--line);border-radius:16px;padding:22px}.panel h2{margin:0 0 18px;font-size:21px}
-.field{margin-bottom:15px}.field label{display:block;font-size:12px;font-weight:800;color:#bac5d4;margin-bottom:6px}.field input,.field select{width:100%;background:#0b1017;border:1px solid var(--line);border-radius:9px;padding:11px 12px;color:var(--text);font:inherit}.field small{display:block;color:#6f7d91;margin-top:5px}.row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.check{display:flex;gap:9px;align-items:flex-start;color:#bac5d4;font-size:13px;margin:10px 0}.check input{margin-top:3px}
-.btn{width:100%;border:0;border-radius:10px;padding:13px 15px;background:var(--text);color:#0b0d12;font-weight:900;font-size:15px;cursor:pointer}.btn.secondary{margin-top:9px;background:#172131;color:var(--text);border:1px solid var(--line)}.btn:disabled{opacity:.5;cursor:not-allowed}
-.target{display:none;border:1px solid #315b43;background:#0f1914;border-radius:13px;padding:16px;margin-bottom:15px}.target h3{margin:2px 0 7px;font-size:19px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.chip{border:1px solid #315b43;border-radius:999px;padding:4px 7px;color:#b9efc9;font-size:11px}
-.empty{border:1px dashed #39475b;border-radius:13px;padding:28px;color:var(--muted);text-align:center}.empty strong{display:block;color:var(--text);font-size:18px;margin-bottom:5px}
-.resultshead{display:flex;justify-content:space-between;gap:14px;align-items:end;margin-bottom:13px}.resultshead h2{margin:0}.sourcebadge{font-size:10px;font-weight:900;color:var(--amber);border:1px solid #5d532d;border-radius:999px;padding:4px 7px}
-.cardpreview{display:none;border:1px solid var(--line);border-radius:14px;background:#0d141d;overflow:hidden}.cardtop{padding:15px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.cardtop b{font-size:16px}.cardbody{padding:15px}.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.fact{border:1px solid var(--line);border-radius:9px;background:#0a1017;padding:10px}.fact span{display:block;color:#758398;font-size:10px;text-transform:uppercase;letter-spacing:.07em}.fact b{display:block;margin-top:3px;font-size:12px}.muted{color:var(--muted)}
-.cardfoot{padding:12px 15px;border-top:1px solid var(--line);color:#7d8a9c;font-size:11px}
-.saved{display:none;margin-top:10px;color:var(--green);font-size:12px}.live-results{display:grid;gap:10px;margin-bottom:15px}.live-card{border:1px solid var(--line);border-radius:12px;background:#0d141d;padding:14px}.live-card.match{border-color:#315b43}.live-card.review{border-color:#5d532d}.live-card.filtered{border-color:#60404a;opacity:.72}.live-card h3{margin:0 0 5px;font-size:16px}.live-meta{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:11px}.live-state{font-size:10px;font-weight:900;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:3px 6px}.live-card.match .live-state{color:var(--green);border-color:#315b43}.live-card.review .live-state{color:var(--amber);border-color:#5d532d}.live-card.filtered .live-state{color:var(--red);border-color:#60404a}.live-reasons{margin-top:8px;color:var(--muted);font-size:12px}.live-links{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:9px;font-size:12px}.provider-attribution{color:#aeb9c8;font-size:11px}.provider-attribution a{color:#cbd6e5}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}}@media(max-width:560px){.row,.facts{grid-template-columns:1fr}nav{height:auto;min-height:70px;flex-wrap:wrap;padding:12px 0;gap:8px}.navlinks{display:flex;width:100%;overflow-x:auto;gap:16px;padding:2px 0 6px;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}}
-</style>
+<meta name="description" content="Search GrailRaven for the exact physical retro-game copy you want.">
+<title>Search — GrailRaven</title>
 <link rel="stylesheet" href="ui-v2.css">
 <link rel="stylesheet" href="production-v2.css">
 </head>
-<body class="production-v2 search-v2">
+<body class="search-production-v2">
 <div class="v2-topbar">
   <div class="v2-shell v2-nav">
     <a class="v2-brand" href="index.html" aria-label="GrailRaven home">
@@ -45,127 +26,113 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
     <div class="v2-meta">games · data · collectors · higher standards</div>
   </div>
 </div>
-<div class="wrap">
-<header class="hero">
-<div class="kicker">Collector intelligence · Deal Finder</div>
-<h1>Find the copy you actually want.</h1>
-<p class="lead">Search by game, then tell RetroNomad which physical release you are willing to buy. PALScout will eventually filter authorised marketplace inventory so wrong-region, wrong-edition and incomplete copies do not clutter the results.</p>
-<div class="notice"><strong>Prototype status:</strong> the search/filter experience is live, but no authorised marketplace inventory source is connected yet. RetroNomad will not invent live listings or prices.</div>
+
+<header class="v2-hero" id="search">
+  <div class="v2-hero-art" id="heroArt" aria-hidden="true"><span id="heroArtTitle">Find your game</span><small>collector intelligence</small></div>
+  <div class="v2-shell v2-hero-inner">
+    <div>
+      <div class="v2-eyebrow">Collector intelligence · Deal Finder</div>
+      <h1>Find the exact copy.</h1>
+      <p>Search by game, region, release, edition and condition. GrailRaven filters the wrong physical copies before you compare price.</p>
+      <div class="v2-searchrow">
+        <label class="v2-searchbox" aria-label="Game search"><span>⌕</span><input id="game" list="games" placeholder="Search Silent Hill, FF7, MGS3, Shenmue..."></label>
+        <datalist id="games"></datalist>
+        <input id="platform" type="hidden" value="">
+        <div class="v2-platforms" aria-label="Platform filters">
+          <button class="v2-platform" type="button" data-platform="PS1">PS1</button>
+          <button class="v2-platform" type="button" data-platform="PS2">PS2</button>
+          <button class="v2-platform" type="button" data-platform="Dreamcast">Dreamcast</button>
+        </div>
+      </div>
+      <div class="v2-search-actions">
+        <button class="v2-primary-action" id="searchBtn" type="button">Search GrailRaven</button>
+        <button class="v2-secondary-action" id="saveBtn" type="button" disabled>Save hunt</button>
+        <span id="saved" class="v2-saved-message"></span>
+      </div>
+    </div>
+  </div>
 </header>
 
-<div class="layout">
-<section class="panel">
-<h2>What are you hunting for?</h2>
+<main class="v2-shell v2-main">
+  <div class="v2-grid">
+    <aside class="v2-filterpanel" id="searchFilters" aria-label="Search filters">
+      <div class="v2-filterhead"><h2>Filters</h2><button class="v2-reset" type="button" id="resetFilters">Reset</button></div>
+      <div class="v2-filtergroup">
+        <h3>Region</h3>
+        <select id="release" class="v2-select">
+          <option value="pal-compatible">Any PAL-compatible copy</option>
+          <option value="uk-preferred">Prefer UK-market copies</option>
+          <option value="uk-only">UK exact only</option>
+          <option value="shared-pal">UK/shared PAL okay</option>
+          <option value="europe-pal">Any European PAL copy</option>
+        </select>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Edition</h3>
+        <select id="edition" class="v2-select">
+          <option value="original">Original release only</option>
+          <option value="any">Any edition</option>
+          <option value="budget-ok">Original or budget/reissue</option>
+        </select>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Completeness</h3>
+        <select id="complete" class="v2-select">
+          <option value="cib">Complete in box</option>
+          <option value="manual-optional">Case + game; manual optional</option>
+          <option value="loose-ok">Loose copy acceptable</option>
+          <option value="any">Any completeness</option>
+        </select>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Condition</h3>
+        <select id="condition" class="v2-select">
+          <option value="any">Any usable condition</option>
+          <option value="no-major">No known major damage</option>
+          <option value="collector">Collector-quality preferred</option>
+        </select>
+      </div>
+      <div class="v2-filtergroup">
+        <label class="v2-check"><input id="english" type="checkbox" checked> English-friendly packaging/materials</label>
+        <label class="v2-check"><input id="excludeBundles" type="checkbox" checked> Exclude multi-game bundles</label>
+        <label class="v2-check"><input id="excludePromo" type="checkbox" checked> Exclude demo / promo copies</label>
+      </div>
+      <div class="v2-filtergroup">
+        <h3>Max delivered price</h3>
+        <input id="maxPrice" class="v2-price-input" inputmode="decimal" placeholder="£ e.g. 80">
+      </div>
+      <div class="v2-filter-note">Search by title, partial title, abbreviation or alternate name. Exact-release PALScout coverage varies by game.</div>
+    </aside>
 
-<div class="field">
-<label for="game">Game</label>
-<input id="game" list="games" placeholder="Search by title, abbreviation or alternate name…">
-<datalist id="games"></datalist>
-<small>Search by full title, partial title, abbreviation or alternate name. Exact-release PALScout coverage may vary by title.</small>
-</div>
+    <section class="v2-results">
+      <div class="v2-resultshead">
+        <h2 id="resultsTitle">Ready to search your collection target</h2>
+        <div class="v2-results-actions">
+          <button class="v2-mobile-filter" type="button" id="mobileFilterButton" aria-expanded="false" aria-controls="searchFilters">Filters</button>
+          <span class="v2-chip review" id="sourceBadge">NO LIVE SOURCE CONNECTED</span>
+        </div>
+      </div>
 
-<div class="row">
-<div class="field">
-<label for="platform">Platform</label>
-<select id="platform">
-<option value="">Auto / any launch platform</option>
-<option>PS1</option><option>PS2</option><option>Dreamcast</option>
-</select>
-</div>
-<div class="field">
-<label for="release">Release preference</label>
-<select id="release">
-<option value="pal-compatible">Any PAL-compatible copy</option>
-<option value="uk-preferred">Prefer UK-market copies</option>
-<option value="uk-only">UK exact only</option>
-<option value="shared-pal">UK/shared PAL okay</option>
-<option value="europe-pal">Any European PAL copy</option>
-</select>
-</div>
-</div>
+      <div id="target" class="v2-target" style="display:none">
+        <div class="v2-eyebrow">Your target</div>
+        <h3 id="targetTitle"></h3>
+        <p id="targetText"></p>
+        <div id="chips" class="v2-chips chips"></div>
+      </div>
 
-<div class="row">
-<div class="field">
-<label for="edition">Edition</label>
-<select id="edition">
-<option value="original">Original release only</option>
-<option value="any">Any edition</option>
-<option value="budget-ok">Original or budget/reissue</option>
-</select>
-</div>
-<div class="field">
-<label for="complete">Completeness</label>
-<select id="complete">
-<option value="cib">Complete in box</option>
-<option value="manual-optional">Case + game; manual optional</option>
-<option value="loose-ok">Loose copy acceptable</option>
-<option value="any">Any completeness</option>
-</select>
-</div>
-</div>
+      <div id="empty" class="v2-empty">
+        <strong>Define your target and search.</strong>
+        <span>GrailRaven will turn your choices into a structured buying target. Live listings will only appear once an authorised marketplace source is connected.</span>
+      </div>
 
-<div class="row">
-<div class="field">
-<label for="condition">Condition</label>
-<select id="condition">
-<option value="any">Any usable condition</option>
-<option value="no-major">No known major damage</option>
-<option value="collector">Collector-quality preferred</option>
-</select>
-</div>
-<div class="field">
-<label for="maxPrice">Maximum delivered price</label>
-<input id="maxPrice" inputmode="decimal" placeholder="£ e.g. 80">
-<small>Item + postage. Leave blank for no ceiling.</small>
-</div>
-</div>
+      <div id="liveResults" class="v2-cards"></div>
 
-<label class="check"><input id="english" type="checkbox" checked><span>Require English-friendly packaging/materials when PAL territory varies</span></label>
-<label class="check"><input id="excludeBundles" type="checkbox" checked><span>Exclude multi-game bundles</span></label>
-<label class="check"><input id="excludePromo" type="checkbox" checked><span>Exclude demo / promo copies</span></label>
-
-<button class="btn" id="searchBtn">Search GrailRaven</button>
-<button class="btn secondary" id="saveBtn" disabled>Save to Saved Hunts</button>
-<div id="saved" class="saved"></div>
-</section>
-
-<section class="panel">
-<div class="resultshead"><div><div class="kicker">Results</div><h2>Matching copies</h2></div><span class="sourcebadge" id="sourceBadge">NO LIVE SOURCE CONNECTED</span></div>
-
-<div id="target" class="target">
-<div class="kicker">Your target</div>
-<h3 id="targetTitle"></h3>
-<div id="targetText" class="muted"></div>
-<div id="chips" class="chips"></div>
-</div>
-
-<div id="empty" class="empty">
-<strong>Define your target and search.</strong>
-RetroNomad will turn your choices into a structured buying target. Live listings will appear here only after an authorised inventory source is connected.
-</div>
-
-<div id="liveResults" class="live-results"></div>
-
-<div id="cardPreview" class="cardpreview">
-<div class="cardtop"><div><b>Future live result card</b><div class="muted">One normalised marketplace listing after PALScout classification</div></div><span class="sourcebadge">STRUCTURE PREVIEW</span></div>
-<div class="cardbody">
-<div class="facts">
-<div class="fact"><span>Marketplace</span><b>— awaiting source —</b></div>
-<div class="fact"><span>Delivered price</span><b>—</b></div>
-<div class="fact"><span>PALScout</span><b>Compatibility verdict</b></div>
-<div class="fact"><span>Exact release</span><b>UK / shared PAL / EU PAL</b></div>
-<div class="fact"><span>Edition</span><b>Original / reissue / promo</b></div>
-<div class="fact"><span>Completeness</span><b>CIB / no manual / loose</b></div>
-<div class="fact"><span>Language / package</span><b>English / territory evidence</b></div>
-<div class="fact"><span>Match confidence</span><b>High / review</b></div>
-<div class="fact"><span>Price position</span><b>Pending licensed pricing</b></div>
-</div>
-</div>
-<div class="cardfoot">The matching engine is ready to classify future candidates as Match, Review or Filtered. When a marketplace source is connected, each card will also carry the source listing ID, canonical URL, item price, postage, currency, image, timestamps, provider attribution where required and evidence used for classification.</div>
-</div>
-</section>
-</div>
-</div>
+      <div id="cardPreview" class="v2-preview-note" style="display:none">
+        Your hunt is structured and ready. Marketplace results will use the MATCH / REVIEW / FILTERED evidence-first card system once a live authorised source is connected.
+      </div>
+    </section>
+  </div>
+</main>
 
 <script src="catalogue-index.js"></script>
 <script src="release-evidence.js"></script>
@@ -220,7 +187,7 @@ function renderTarget(t){
  document.querySelector("#cardPreview").style.display="block";
  document.querySelector("#saveBtn").disabled=false;
  document.querySelector("#targetTitle").textContent=t.game+(t.platform?" · "+t.platform:"");
- document.querySelector("#targetText").textContent="RetroNomad will ask connected marketplace sources for candidate listings, then PALScout will classify them before they are eligible to appear as matches.";
+ document.querySelector("#targetText").textContent="GrailRaven will ask connected marketplace sources for candidate listings, then PALScout will classify them before they are eligible to appear as matches.";
  const chips=[
   releaseLabels[t.releasePreference],editionLabels[t.editionPreference],completeLabels[t.completeness],
   conditionLabels[t.condition],t.englishRequired&&"English-friendly",t.excludeBundles&&"No bundles",t.excludePromo&&"No demos/promos",
@@ -234,33 +201,38 @@ function renderLiveResults(rows){
  const box=document.querySelector("#liveResults");box.innerHTML="";
  const summary=window.RetroNomadSearchPipeline.summarize(rows);
  document.querySelector("#sourceBadge").textContent=summary.total+" LIVE CANDIDATE"+(summary.total===1?"":"S")+" · "+summary.MATCH+" MATCH · "+summary.REVIEW+" REVIEW";
+ document.querySelector("#resultsTitle").textContent=summary.total+" result"+(summary.total===1?"":"s")+" for “"+(window.currentTarget?.game||"your hunt")+"”";
  for(const row of rows){
-  const card=document.createElement("div");card.className="live-card "+row.match.state.toLowerCase();
-  const title=document.createElement("h3");title.textContent=row.title||"Untitled listing";
-  const meta=document.createElement("div");meta.className="live-meta";
-  const price=row.match.deliveredGbp!=null
-   ?"£"+row.match.deliveredGbp.toFixed(2)+" delivered"
-   :(row.total!=null&&row.currency
-      ?row.currency+" "+Number(row.total).toFixed(2)+" total"
-      :(row.itemPrice!=null&&row.currency?row.currency+" "+Number(row.itemPrice).toFixed(2)+" item price":"price unavailable"));
-  const bits=[row.source,price,row.classification.game,row.classification.platform,row.classification.marketBucket||"release unresolved"].filter(Boolean);
-  bits.forEach(x=>{const s=document.createElement("span");s.textContent=x;meta.appendChild(s);});
-  const state=document.createElement("span");state.className="live-state";state.textContent=row.match.state;
-  meta.appendChild(state);
-  card.appendChild(title);card.appendChild(meta);
-  const reasons=[...(row.match.reasons||[]),...(row.match.notes||[])];
-  if(reasons.length){const r=document.createElement("div");r.className="live-reasons";r.textContent=reasons.join(" · ");card.appendChild(r);}
-  const links=document.createElement("div");links.className="live-links";
-  if(row.canonicalUrl){const a=document.createElement("a");a.href=row.canonicalUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Open source listing";links.appendChild(a);}
-  const attrText=row.itemSpecifics?.priceChartingAttributionText;
-  const attrUrl=row.itemSpecifics?.priceChartingProductUrl;
-  if(attrText&&attrUrl){
-   const attr=document.createElement("span");attr.className="provider-attribution";
-   attr.append("Data/offer via ");
-   const a=document.createElement("a");a.href=attrUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="PriceCharting";
-   attr.appendChild(a);links.appendChild(attr);
+  const stateName=String(row.match?.state||"REVIEW").toLowerCase();
+  const card=document.createElement("article");card.className="v2-card";
+  const cover=document.createElement("div");cover.className="v2-cover";
+  const coverMain=document.createElement("div");coverMain.className="v2-cover-main";
+  coverMain.textContent=(row.classification?.game||row.title||"GAME").toUpperCase().slice(0,24);
+  cover.appendChild(coverMain);
+  const body=document.createElement("div");body.className="v2-cardbody";
+  const chips=document.createElement("div");chips.className="v2-chips";
+  const state=document.createElement("span");state.className="v2-chip "+stateName;state.textContent=row.match?.state||"REVIEW";chips.appendChild(state);
+  [row.classification?.marketBucket,row.classification?.edition,row.classification?.completeness].filter(Boolean).forEach(value=>{
+    const chip=document.createElement("span");chip.className="v2-chip";chip.textContent=value;chips.appendChild(chip);
+  });
+  const title=document.createElement("h3");title.className="v2-title";title.textContent=row.title||"Untitled listing";
+  const meta=document.createElement("div");meta.className="v2-meta-line";
+  meta.textContent=[row.classification?.game,row.classification?.platform,row.source].filter(Boolean).join(" · ");
+  const desc=document.createElement("p");desc.className="v2-desc";
+  desc.textContent=[...(row.match?.reasons||[]),...(row.match?.notes||[])].join(" · ")||"Candidate listing classified by PALScout.";
+  body.append(chips,title,meta,desc);
+  const priceCol=document.createElement("div");priceCol.className="v2-pricecol";
+  const priceWrap=document.createElement("div");
+  const price=document.createElement("div");price.className="v2-price";
+  price.textContent=row.match?.deliveredGbp!=null?"£"+row.match.deliveredGbp.toFixed(2)+" delivered":
+    (row.total!=null&&row.currency?row.currency+" "+Number(row.total).toFixed(2):
+    (row.itemPrice!=null&&row.currency?row.currency+" "+Number(row.itemPrice).toFixed(2):"Price unavailable"));
+  priceWrap.appendChild(price);
+  if(row.canonicalUrl){
+    const a=document.createElement("a");a.className="v2-market";a.href=row.canonicalUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Open source listing";priceWrap.appendChild(a);
   }
-  if(links.childNodes.length)card.appendChild(links);
+  priceCol.appendChild(priceWrap);
+  card.append(cover,body,priceCol);
   box.appendChild(card);
  }
 }
@@ -369,6 +341,44 @@ refreshSaveButton();
     const open=nav.classList.toggle("mobile-open");
     button.setAttribute("aria-expanded",String(open));
     button.textContent=open?"Close":"Menu";
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const platformInput=document.querySelector("#platform");
+  const platformButtons=[...document.querySelectorAll(".v2-platform")];
+  function setPlatform(value){
+    platformInput.value=value;
+    platformButtons.forEach(b=>b.classList.toggle("active",b.dataset.platform===value));
+    platformInput.dispatchEvent(new Event("change",{bubbles:true}));
+  }
+  platformButtons.forEach(button=>button.addEventListener("click",()=>{
+    setPlatform(button.classList.contains("active")?"":button.dataset.platform);
+  }));
+  const game=document.querySelector("#game");
+  game.addEventListener("input",()=>{
+    document.querySelector("#heroArtTitle").textContent=game.value.trim()||"Find your game";
+  });
+  game.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();document.querySelector("#searchBtn").click();}});
+  document.querySelector("#resetFilters").addEventListener("click",()=>{
+    document.querySelector("#release").value="pal-compatible";
+    document.querySelector("#edition").value="original";
+    document.querySelector("#complete").value="cib";
+    document.querySelector("#condition").value="any";
+    document.querySelector("#english").checked=true;
+    document.querySelector("#excludeBundles").checked=true;
+    document.querySelector("#excludePromo").checked=true;
+    document.querySelector("#maxPrice").value="";
+    setPlatform("");
+  });
+  const filterButton=document.querySelector("#mobileFilterButton");
+  const filters=document.querySelector("#searchFilters");
+  filterButton.addEventListener("click",()=>{
+    const open=filters.classList.toggle("mobile-open");
+    filterButton.setAttribute("aria-expanded",String(open));
+    filterButton.textContent=open?"Close filters":"Filters";
   });
 })();
 </script>
