@@ -181,3 +181,17 @@ Validated manifest:
 The complete candidate was staged into isolated local D1, verified, activated locally and verified again through the active-dataset pointer.
 
 This proves the pipeline mechanics before any remote production promotion. It does not grant permission to publish IGDB data and does not alter the current 100-game public catalogue.
+
+
+## Search-quality gate
+
+Structural catalogue validation is not sufficient for promotion.
+
+Before D1 staging, the approved promotion workflow runs:
+`scripts/benchmark-catalogue-search.mjs`
+
+The benchmark checks representative exact, partial, abbreviation, regional-name, duplicate-platform, ambiguity and typo searches against the full candidate, along with browser-index size and query-time regression budgets.
+
+Failure blocks the promotion workflow.
+
+Search behaviour is documented in `CATALOGUE_SEARCH_V1.md`.
