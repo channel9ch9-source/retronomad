@@ -64,6 +64,15 @@ function normalizeGameType(row){
   return normalizeCatalogueTitle(row.game_type?.type||"unknown");
 }
 
+function safeReleaseYear(timestamp){
+  if(!timestamp) return {year:null,invalid:false,raw:null};
+  const year=new Date(timestamp*1000).getUTCFullYear();
+  if(!Number.isInteger(year)||year<1980||year>2100){
+    return {year:null,invalid:true,raw:year};
+  }
+  return {year,invalid:false,raw:year};
+}
+
 function classify(row){
   const rawType=String(row.game_type?.type||"unknown");
   const type=normalizeGameType(row);
@@ -92,12 +101,15 @@ async function fetchPlatform(label,platformId){
     records.push(...page);
     if(page.length<500) break;
   }
-  return records.map(row=>({
+  return records.map(row=>{
+    const releaseYear=safeReleaseYear(row.first_release_date);
+    return {
     igdbId:String(row.id),
     name:String(row.name||"").trim(),
     slug:row.slug||null,
     firstReleaseDate:row.first_release_date||null,
-    releaseYear:row.first_release_date?new Date(row.first_release_date*1000).getUTCFullYear():null,
+    releaseYear:releaseYear.year,
+    invalidReleaseYear:releaseYear.invalid?releaseYear.raw:null,
     coverImageId:row.cover?.image_id||null,
     alternativeNames:[...new Set((row.alternative_names||[]).map(x=>String(x.name||"").trim()).filter(Boolean))],
     versionParent:row.version_parent?String(row.version_parent):null,
@@ -108,7 +120,8 @@ async function fetchPlatform(label,platformId){
     publishers:[...new Set((row.involved_companies||[]).filter(x=>x.publisher&&x.company?.name).map(x=>x.company.name))],
     genres:[...new Set((row.genres||[]).map(x=>x.name).filter(Boolean))],
     classification:classify(row)
-  }));
+  };
+  });
 }
 
 function namesForProvider(row){
@@ -179,6 +192,7 @@ const report={
     ambiguousProviderTitleGroups:[],
     seedAmbiguities:[],
     idCollisions:[],
+    invalidReleaseYears:[],
     seedGamesWithoutExactProviderMapping:[]
   }
 };
@@ -194,6 +208,17 @@ let newGames=0, enrichedSeedGames=0, heldProviderRecords=0, suppressedSameTitleR
 for(const [platformLabel,names] of Object.entries(platformNames)){
   const platform=await resolvePlatform(platformLabel,names);
   const all=await fetchPlatform(platformLabel,platform.id);
+  for(const row of all){
+    if(row.invalidReleaseYear!=null){
+      report.review.invalidReleaseYears.push({
+        platform:platformLabel,
+        igdbId:row.igdbId,
+        title:row.name,
+        invalidReleaseYear:row.invalidReleaseYear
+      });
+    }
+  }
+
   const include=all.filter(r=>r.classification.bucket==="INCLUDE_CANDIDATE");
   const reviewRows=all.filter(r=>r.classification.bucket==="REVIEW");
   const excluded=all.filter(r=>r.classification.bucket.startsWith("EXCLUDE"));
@@ -364,6 +389,7 @@ report.mergeSummary={
   providerSameTitleReviewGroups:report.review.ambiguousProviderTitleGroups.length,
   seedAmbiguities:report.review.seedAmbiguities.length,
   idCollisions:report.review.idCollisions.length,
+  invalidReleaseYears:report.review.invalidReleaseYears.length,
   proposedCatalogueValid:validation.ok,
   validationErrors:validation.errors
 };
