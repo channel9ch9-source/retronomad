@@ -182,3 +182,16 @@ Decision:
 **IGDB remains a promising base-catalogue candidate, but do not bulk-import yet.**
 
 Next benchmark/import work must build a platform-wide local alias index and conservative identity resolution. Only exact canonical/alias/provider mappings may auto-merge; fuzzy/prefix candidates must remain review items.
+
+
+## Commercial-use publication gate
+
+Current IGDB documentation contains two complementary statements:
+- getting-started guidance says the API is free for non-commercial use and directs projects with commercial needs to the commercial partnership process
+- the business FAQ says commercial integrations are allowed, the API price is free for both non-commercial and commercial projects, local caching/storage is allowed and preferred, and partnership integrations are expected to provide visible user-facing attribution to IGDB.com
+
+Therefore:
+- do not describe IGDB as requiring a paid API subscription
+- do not assume a monetized GrailRaven launch is covered merely by having Twitch API credentials
+- contact `partner@igdb.com` and complete/clarify the commercial partnership before publishing the IGDB-backed full catalogue as part of the commercial product
+- keep attribution as a product requirement
