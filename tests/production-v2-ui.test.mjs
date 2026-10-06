@@ -29,3 +29,13 @@ test("production search supports alternate-name lookup without changing the appr
   assert.ok(search.includes("(x.aliases||[]).some"));
   assert.ok(search.includes("Search Silent Hill, Final Fantasy VII, Shenmue..."));
 });
+
+
+test("production Search uses lightweight ranked autocomplete instead of thousands of datalist options",()=>{
+  assert.ok(search.includes('id="catalogueSuggestions"'));
+  assert.ok(search.includes('import("./shared/catalogue-search-core.js")'));
+  assert.ok(search.includes("rankCatalogueMatches"));
+  assert.ok(search.includes('aria-autocomplete="list"'));
+  assert.equal(search.includes('id="game" list="games"'),false);
+  assert.equal(search.includes('document.createElement("option")'),false);
+});
