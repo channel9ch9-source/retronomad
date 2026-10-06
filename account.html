@@ -33,15 +33,14 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
     </div>
     <div class="v2-meta">games · data · collectors · higher standards</div>
   </div>
-</div><div class="wrap">
-
-<header class="hero">
-<div class="kicker">Account sync</div>
+</div><main class="v2-shell v2-main app-page-main app-account-main">
+<header class="app-page-hero">
+<div class="v2-eyebrow">Collector intelligence · Account</div>
 <h1>Your hunts, beyond one browser.</h1>
 <p class="lead">RetroNomad accounts are designed to sync Saved Hunts to the backend so future scheduled monitoring can keep running when your browser is closed.</p>
 </header>
 
-<main class="card">
+<section class="card app-account-card">
 <div id="state" class="state">Checking account-service status…</div>
 
 <section id="disabled" class="hidden">
@@ -65,8 +64,8 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
 <div class="actions"><button id="syncBtn" class="btn primary">Sync Saved Hunts now</button><button id="logoutBtn" class="btn">Sign out</button></div>
 <p id="syncMessage" class="muted"></p>
 </section>
+</section>
 </main>
-</div>
 
 <script src="runtime-config.js"></script>
 <script src="saved-hunts.js"></script>
