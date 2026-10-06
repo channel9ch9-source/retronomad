@@ -12,8 +12,10 @@
   <div class="v2-shell v2-nav">
     <a class="v2-brand" href="design-preview.html" aria-label="GrailRaven design preview home">
       <span class="v2-raven" aria-hidden="true">
-        <svg viewBox="0 0 64 64" role="img">
-          <path fill="currentColor" d="M50 9c-5 1-9 3-12 7-5-3-12-3-18 1-7 5-9 14-6 22 2 7 8 11 15 12l-5 6 13-4 8 5-2-9c7-5 10-12 9-20 4-3 7-7 8-12-4 2-7 3-11 2 2-3 2-7 1-10Zm-25 15c4-3 9-3 13 0-4 1-8 3-11 6-1-2-2-4-2-6Zm8 20c-6 0-11-4-12-10 4 3 8 4 13 3 4-1 8-4 11-7 0 8-4 14-12 14Z"/>
+        <svg viewBox="0 0 96 72" role="img" aria-label="Raven emblem">
+          <path fill="currentColor" d="M75 10c-8 0-15 3-21 8-6-5-13-7-22-5-10 3-17 12-17 23 0 8 4 15 11 20-5 3-9 7-12 12 8-4 16-6 24-6 12 0 23 3 34 8-4-6-9-11-16-14 8-5 13-13 13-22 0-5-1-9-4-13 6-1 12-5 18-11-3 0-6 0-8 0Zm-39 9c7-2 14 0 18 5-7 1-13 4-18 9-2-4-2-9 0-14Zm8 35c-11 0-19-7-21-17 6 5 13 7 21 5 8-2 14-7 19-13 0 15-6 25-19 25Z"/>
+          <path fill="currentColor" d="M24 62c14-2 30-1 47 5l-3 3c-15-4-29-5-43-3l-1-5Z"/>
+          <circle cx="55" cy="24" r="1.8" fill="#050505"/>
         </svg>
       </span>
       <span><span class="v2-wordmark">GrailRaven</span><span class="v2-tagline">Collect · Verify · Own</span></span>
@@ -52,7 +54,7 @@
 
 <main class="v2-shell v2-main">
   <div class="v2-grid">
-    <aside class="v2-filterpanel" aria-label="Example search filters">
+    <aside class="v2-filterpanel" id="previewFilters" aria-label="Example search filters">
       <div class="v2-filterhead"><h2>Filters</h2><button class="v2-reset" type="button" id="resetPreview">Reset</button></div>
       <div class="v2-filtergroup">
         <h3>Region</h3>
@@ -96,7 +98,10 @@
     <section>
       <div class="v2-resultshead">
         <h2><span id="previewCount">3</span> example results for “<span id="previewTerm">Silent Hill</span>”</h2>
-        <select class="v2-sort"><option>Sort by: Best match</option><option>Price: Low to high</option><option>Newest</option></select>
+        <div class="v2-results-actions">
+          <button class="v2-mobile-filter" type="button" id="mobileFilterButton" aria-expanded="false" aria-controls="previewFilters">Filters</button>
+          <select class="v2-sort"><option>Sort by: Best match</option><option>Price: Low to high</option><option>Newest</option></select>
+        </div>
       </div>
 
       <div class="v2-cards">
@@ -165,6 +170,13 @@ platforms.forEach(button=>button.addEventListener('click',()=>{platforms.forEach
 const search=document.querySelector('#previewSearch');
 const term=document.querySelector('#previewTerm');
 search.addEventListener('input',()=>{term.textContent=search.value.trim()||'your search';});
+const mobileFilterButton=document.querySelector('#mobileFilterButton');
+const previewFilters=document.querySelector('#previewFilters');
+mobileFilterButton?.addEventListener('click',()=>{
+  const open=previewFilters.classList.toggle('mobile-open');
+  mobileFilterButton.setAttribute('aria-expanded',String(open));
+  mobileFilterButton.textContent=open?'Close filters':'Filters';
+});
 document.querySelector('#resetPreview').addEventListener('click',()=>{
   document.querySelectorAll('.v2-filterpanel input[type="checkbox"]').forEach((box,index)=>box.checked=[0,4,8,11].includes(index));
   search.value='Silent Hill';term.textContent='Silent Hill';platforms.forEach((x,i)=>x.classList.toggle('active',i===0));
