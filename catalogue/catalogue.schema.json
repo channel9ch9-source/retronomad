@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grailraven.com/schemas/catalogue-v1.json",
+  "title": "GrailRaven base catalogue v1",
+  "type": "object",
+  "required": ["schemaVersion", "catalogueVersion", "scope", "games"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "catalogueVersion": { "type": "string", "minLength": 1 },
+    "scope": {
+      "type": "object",
+      "required": ["platforms", "strategy"],
+      "properties": {
+        "platforms": {
+          "type": "array",
+          "items": { "enum": ["PS1", "PS2", "Dreamcast"] },
+          "uniqueItems": true
+        },
+        "strategy": { "const": "GLOBAL_BASE_WITH_PALSCOUT_UK_EU_RELEASE_LAYER" }
+      },
+      "additionalProperties": false
+    },
+    "games": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "platform", "aliases", "releaseYear", "developer", "publisher", "genres", "artwork", "externalRefs", "provenance", "releaseIntelligence"],
+        "properties": {
+          "id": { "type": "string", "minLength": 3 },
+          "title": { "type": "string", "minLength": 1 },
+          "platform": { "enum": ["PS1", "PS2", "Dreamcast"] },
+          "aliases": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+          "releaseYear": { "type": ["integer", "null"], "minimum": 1980, "maximum": 2100 },
+          "developer": { "type": ["string", "null"] },
+          "publisher": { "type": ["string", "null"] },
+          "genres": { "type": "array", "items": { "type": "string" } },
+          "artwork": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "required": ["source", "url", "rightsStatus"],
+                "properties": {
+                  "source": { "type": "string" },
+                  "url": { "type": "string" },
+                  "rightsStatus": { "enum": ["APPROVED", "PENDING", "DO_NOT_USE"] },
+                  "attribution": { "type": ["string", "null"] }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "externalRefs": { "type": "object", "additionalProperties": { "type": "string" } },
+          "provenance": { "type": "array", "items": { "type": "object" } },
+          "releaseIntelligence": {
+            "type": "object",
+            "required": ["coverage"],
+            "properties": {
+              "coverage": { "enum": ["BASE_ONLY", "PALSCOUT_PARTIAL", "PALSCOUT_DEEP"] }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}
