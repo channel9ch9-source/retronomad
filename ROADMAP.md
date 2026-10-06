@@ -571,3 +571,17 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [ ] inspect proposed totals, seed mapping gaps and collision groups
 - [ ] create explicit provider mapping overrides for approved regional-title cases
 - [ ] only then decide whether to promote a generated catalogue into canonical data
+
+
+### First full dry import passed; mapping/date refinement in progress
+
+- [x] first proposed full catalogue validated at 8,441 games
+- [x] zero generated ID collisions
+- [x] audit nine unmatched PALScout seed games
+- [x] add explicit IGDB mappings for all nine regional-title/provider-name cases
+- [x] add tests for explicit mapping integrity
+- [x] switch release-year derivation to platform-specific IGDB release dates
+- [ ] rerun full dry import with explicit mappings + platform-specific dates
+- [ ] confirm 100/100 seed enrichment and revised proposed total
+- [ ] review remaining provider same-title groups
+- [ ] build canonical promotion path only after the rerun passes
