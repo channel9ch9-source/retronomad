@@ -161,3 +161,23 @@ Rules:
 - an additional provider lookup index supports reverse provider-ID lookup
 
 The first safe validation found 291 legitimate cross-platform IGDB-ID reuse groups and zero same-platform collisions.
+
+
+## Validated end-to-end run — 6 October 2026
+
+Safe workflow run `37540728095` completed successfully.
+
+Validated manifest:
+- dataset ID: `cat-3faa2a84ad267ddd017c`
+- SHA-256: `3faa2a84ad267ddd017c75cdd1437af9997150a9d8b407a66fd6a56e82703816`
+- 8,433 games
+- 7,512 aliases
+- 8,433 external refs
+- 0 artwork rows
+- 291 legitimate cross-platform provider-ID reuse groups
+- 1.372 MiB compact browser search index
+- all 100 PALScout deep seed IDs preserved
+
+The complete candidate was staged into isolated local D1, verified, activated locally and verified again through the active-dataset pointer.
+
+This proves the pipeline mechanics before any remote production promotion. It does not grant permission to publish IGDB data and does not alter the current 100-game public catalogue.
