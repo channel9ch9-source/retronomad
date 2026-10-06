@@ -104,7 +104,7 @@ async function fetchPlatform(label,platformId){
   }
   return records.map(row=>{
     const platformDates=(row.release_dates||[])
-      .filter(x=>String(x.platform||"")===String(platformId)&&x.date)
+      .filter(x=>String(x.platform?.id??x.platform??"")===String(platformId)&&x.date)
       .map(x=>Number(x.date))
       .filter(Number.isFinite)
       .sort((a,b)=>a-b);
