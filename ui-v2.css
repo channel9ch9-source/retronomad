@@ -40,7 +40,7 @@ img{max-width:100%}
 .v2-links{display:flex;align-items:center;gap:4px;flex:1}
 .v2-links a{padding:11px 14px;border-radius:10px;color:#c1c9d1;font-size:14px}
 .v2-links a:hover,.v2-links a.active{box-shadow:inset 0 -2px 0 #fff}
-.v2-links a.active{box-shadow:inset 0 -2px 0 var(--green)}
+.v2-links a.active{box-shadow:inset 0 -2px 0 #fff}
 .v2-meta{margin-left:auto;color:#72808d;font-size:9px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
 .v2-demo-banner{border-bottom:1px solid #5a4c22;background:#1a160b;color:#e9dba5;text-align:center;padding:8px 16px;font-size:12px}
 .v2-demo-banner strong{color:#ffe58a}
@@ -98,7 +98,7 @@ img{max-width:100%}
 
 /* UI V2 revision: mobile-first simplification */
 .v2-results-actions{display:flex;align-items:center;gap:8px}
-.v2-mobile-filter{display:none;border:1px solid var(--green);background:rgba(0,255,65,.08);color:var(--green);border-radius:9px;padding:8px 12px;font-weight:800}
+.v2-mobile-filter{display:none;border:1px solid #fff;background:#000;color:#fff;border-radius:9px;padding:8px 12px;font-weight:800}
 @media(max-width:760px){
   .v2-shell{width:min(100% - 20px,var(--max))}
   .v2-nav{min-height:64px;gap:12px;flex-wrap:wrap;padding:8px 0}
