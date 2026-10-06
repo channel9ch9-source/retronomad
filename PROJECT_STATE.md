@@ -1256,3 +1256,22 @@ Correction:
 - `UI_V2_DESIGN.md` now explicitly declares the preview markup as the layout authority, preventing future interpretation as a mere style reference
 
 A new Cloudflare deployment is required before this corrected version is visible on grailraven.com.
+
+
+## Search screenshot-parity correction — 6 October 2026
+
+A second live comparison against the approved desktop/mobile screenshots found remaining structural drift:
+- production had added a visible Search GrailRaven / Save Hunt row
+- production replaced the approved result cards with a large green target card when no source was connected
+- filter groups used simplified selects rather than the approved checkbox/toggle UI
+
+Correction now implemented:
+- production Search uses the approved preview composition almost verbatim
+- visible Search/Save button row removed; search executes contextually (Enter/live source flow) and Save Hunt is surfaced contextually after a target is committed
+- approved filter checkbox/toggle presentation restored
+- approved result header + sort control restored
+- approved example MATCH / REVIEW / FILTERED cards restored and explicitly labelled as example data until an authorised source exists
+- demo banner is visible on desktop and hidden on mobile to match the approved references
+- Saved Hunts, Account and Listing Checker were also moved onto stronger v2 page hierarchies rather than receiving only the v2 header
+
+A new Cloudflare deployment is required.
