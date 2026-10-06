@@ -15,7 +15,20 @@ if(!input){
 const outDir=arg("out-dir","promotion-output");
 const source=arg("source","IGDB");
 const mode=arg("mode","full");
-const candidate=JSON.parse(await fs.readFile(input,"utf8"));
+const rawCandidate=JSON.parse(await fs.readFile(input,"utf8"));
+const candidate=structuredClone(rawCandidate);
+if(mode!=="baseline"){
+  const rawVersion=String(candidate.catalogueVersion||"").trim();
+  candidate.catalogueVersion=rawVersion.replace(/^dry-run-/,"")||source.toLowerCase()+"-promoted";
+  for(const game of candidate.games||[]){
+    game.provenance=(game.provenance||[]).map(entry=>{
+      const next={...entry};
+      if(next.source==="IGDB_DRY_RUN")next.source="IGDB_IMPORT";
+      if(next.source==="IGDB_EXPLICIT_MAPPING_DRY_RUN")next.source="IGDB_EXPLICIT_MAPPING";
+      return next;
+    });
+  }
+}
 const seed=JSON.parse(await fs.readFile(path.join(process.cwd(),"catalogue","base-catalogue.json"),"utf8"));
 const manifest=buildPromotionManifest(candidate,seed,{source,requireFull:mode!=="baseline"});
 
