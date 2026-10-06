@@ -514,3 +514,22 @@ Next catalogue work:
 - [ ] Build source-specific importer with collision/review reporting
 - [ ] Expand one platform at a time while keeping the 100-game benchmark pinned
 - [ ] Build public Catalogue browse/detail UI after data import is stable
+
+
+### Catalogue source selection — 6 October 2026
+
+Initial source review completed.
+
+Current direction:
+- [x] IGDB selected as first catalogue source to benchmark
+- [x] MobyGames retained as a possible later supplemental/validation source, but commercial pricing is too high for primary pre-revenue use
+- [x] RAWG retained as fallback pending clearer need/terms
+- [x] ScreenScraper excluded as primary commercial source because public community data/media uses non-commercial licensing
+- [x] Giant Bomb excluded as primary source without written commercial permission
+- [ ] Create IGDB developer credentials
+- [ ] Build read-only IGDB coverage/import benchmark
+- [ ] Compare IGDB coverage against the 100-game pinned benchmark
+- [ ] Audit covers, aliases, duplicates and platform completeness
+- [ ] Only then decide whether IGDB becomes the primary full-catalogue importer
+
+Details: `CATALOGUE_SOURCE_EVALUATION.md`.
