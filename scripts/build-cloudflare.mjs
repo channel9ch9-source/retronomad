@@ -36,9 +36,10 @@ for(const entry of await readdir(root,{withFileTypes:true})){
 await cp(join(root,"shared"),join(out,"shared"),{recursive:true});
 
 const catalogueDocument=JSON.parse(await readFile(join(root,"catalogue","base-catalogue.json"),"utf8"));
+const catalogueSearchAliases=JSON.parse(await readFile(join(root,"catalogue","search-aliases.json"),"utf8"));
 const catalogueValidation=validateCatalogue(catalogueDocument);
 if(!catalogueValidation.ok)throw new Error("Invalid base catalogue: "+catalogueValidation.errors.join("; "));
-const catalogueIndex=buildCatalogueSearchIndex(catalogueDocument);
+const catalogueIndex=buildCatalogueSearchIndex(catalogueDocument,catalogueSearchAliases.aliases||{});
 await writeFile(join(out,"catalogue-index.js"),`// Generated from catalogue/base-catalogue.json.\nwindow.BASE_CATALOGUE_INDEX=${JSON.stringify(catalogueIndex)};\n`,"utf8");
 console.log(`Built compact catalogue search index with ${catalogueIndex.length} games`);
 
