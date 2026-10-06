@@ -28,6 +28,9 @@ jobs:
           IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
         run: node scripts/igdb-dry-import.mjs
 
+      - name: Validate promotion candidate
+        run: node scripts/validate-catalogue-promotion.mjs --input=benchmarks/igdb-dry-import-proposed-$(date +%F).json
+
       - name: Upload dry-import reports
         if: always()
         uses: actions/upload-artifact@v7
