@@ -191,3 +191,17 @@ Current preferred treatment:
 - The raven asset may contain multiple cream/bronze shades and does not need to be flattened to exactly one hex value
 - Keep this subtle; do not turn the full interface into a gold-themed UI
 - Exact production logo colours can be sampled/refined when the final vector logo is created
+
+
+## Production promotion — 6 October 2026
+
+The approved v2 direction has been applied to the real production homepage and Search page.
+
+Implementation:
+- `ui-v2.css` remains the core visual system
+- `production-v2.css` adapts the existing functional production markup without replacing its working logic
+- production top navigation uses the approved raven mark, warm ivory wordmark and Collector Intelligence styling
+- status colors remain MATCH green, REVIEW orange and FILTERED red
+- the old blue-gradient RetroNomad production shell is no longer the intended live presentation after the next Cloudflare deploy
+
+The isolated `design-preview.html` remains as a visual reference but is no longer the only place the design exists.
