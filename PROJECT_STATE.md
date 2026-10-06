@@ -1052,3 +1052,17 @@ Do not commit the Client Secret or paste it into chat.
 ## IGDB catalogue benchmark result — 6 October 2026
 
 The first read-only IGDB benchmark completed successfully. Durable metrics and the decision to require a safer alias/inventory pass before bulk import are recorded in `IGDB_BENCHMARK_2026-10-06.md`.
+
+
+## IGDB platform-wide inventory benchmark ready — 6 October 2026
+
+Added a second, stricter read-only IGDB benchmark:
+- `scripts/igdb-platform-inventory.mjs`
+- `.github/workflows/igdb-platform-inventory.yml`
+- documentation: `IGDB_PLATFORM_INVENTORY.md`
+
+This benchmark downloads the full IGDB record population for PS1, PS2 and Dreamcast into a temporary report and re-resolves the pinned 100 games using exact canonical names and exact aliases only.
+
+Fuzzy/token and Roman-numeral comparisons are review hints only and can never auto-match.
+
+The canonical catalogue and D1 remain untouched.
