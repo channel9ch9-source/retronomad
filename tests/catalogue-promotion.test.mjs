@@ -28,3 +28,23 @@ test("D1 SQL quoting and alias normalization are safe",()=>{
   assert.equal(sqlString(null),"NULL");
   assert.equal(normalizeAlias("MediEvil II"),"medievil ii");
 });
+
+
+test("provider IDs may repeat across platforms but not within one platform",()=>{
+  const cross=structuredClone(seed);
+  const dreamcast=cross.games.find(g=>g.platform==="Dreamcast");
+  const ps1=cross.games.find(g=>g.platform==="PS1");
+  dreamcast.externalRefs={...(dreamcast.externalRefs||{}),igdb:"shared-test-id"};
+  ps1.externalRefs={...(ps1.externalRefs||{}),igdb:"shared-test-id"};
+  const ok=buildPromotionManifest(cross,seed,{source:"TEST",requireFull:false});
+  assert.ok(ok.counts.crossPlatformProviderRefReuseGroups>=1);
+
+  const same=structuredClone(seed);
+  const [a,b]=same.games.filter(g=>g.platform==="PS1").slice(0,2);
+  a.externalRefs={...(a.externalRefs||{}),igdb:"same-platform-test-id"};
+  b.externalRefs={...(b.externalRefs||{}),igdb:"same-platform-test-id"};
+  assert.throws(
+    ()=>buildPromotionManifest(same,seed,{source:"TEST",requireFull:false}),
+    /same platform/
+  );
+});
