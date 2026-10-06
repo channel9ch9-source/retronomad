@@ -47,7 +47,7 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
 <label for="game">Game</label>
 <input id="game" list="games" placeholder="e.g. Silent Hill">
 <datalist id="games"></datalist>
-<small>Launch catalogue currently covers PS1, PS2 and Dreamcast.</small>
+<small>Base catalogue expansion is underway for PS1, PS2 and Dreamcast; exact-release PALScout coverage may vary by title.</small>
 </div>
 
 <div class="row">
@@ -153,6 +153,7 @@ RetroNomad will turn your choices into a structured buying target. Live listings
 </div>
 </div>
 
+<script src="catalogue-index.js"></script>
 <script src="release-evidence.js"></script>
 <script src="marketplace-source.js"></script>
 <script src="palscout-classifier.js"></script>
@@ -163,7 +164,10 @@ RetroNomad will turn your choices into a structured buying target. Live listings
 <script src="account-sync.js"></script>
 <script>
 const evidence=window.RELEASE_EVIDENCE||[];
-const catalog=[...new Map(evidence.map(r=>[r[0]+"|"+r[1],{game:r[0],platform:r[1]}])).values()]
+const baseIndex=window.BASE_CATALOGUE_INDEX||[];
+const catalog=(baseIndex.length
+ ?baseIndex.map(row=>({id:row.id,game:row.title,platform:row.platform,aliases:row.aliases||[],coverage:row.coverage||"BASE_ONLY"}))
+ :[...new Map(evidence.map(r=>[r[0]+"|"+r[1],{game:r[0],platform:r[1],aliases:[],coverage:"PALSCOUT_DEEP"}])).values()])
  .sort((a,b)=>a.game.localeCompare(b.game)||a.platform.localeCompare(b.platform));
 const dl=document.querySelector("#games");
 catalog.forEach(x=>{const o=document.createElement("option");o.value=x.game;o.label=x.platform;dl.appendChild(o);});
