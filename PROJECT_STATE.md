@@ -1242,3 +1242,17 @@ Next manual verification:
 - confirm homepage shows the GrailRaven v2 shell
 - open Search and confirm the functional Deal Finder uses the v2 styling
 - verify mobile navigation and core form controls visually
+
+
+## V2 layout correction after live review — 6 October 2026
+
+The first production-v2 attempt was rejected during live review because it only skinned the old Search markup and left other app pages on their previous shells.
+
+Correction:
+- `search.html` has been rebuilt around the actual `design-preview.html` structure
+- working Search/PALScout/Saved Hunts logic is preserved inside the approved v2 layout
+- Saved Hunts, Account, Listing Checker, About, Privacy and Terms now share the GrailRaven v2 topbar and production visual system
+- `tests/site-v2-contract.test.mjs` protects both the approved Search hierarchy and the shared site shell
+- `UI_V2_DESIGN.md` now explicitly declares the preview markup as the layout authority, preventing future interpretation as a mere style reference
+
+A new Cloudflare deployment is required before this corrected version is visible on grailraven.com.
