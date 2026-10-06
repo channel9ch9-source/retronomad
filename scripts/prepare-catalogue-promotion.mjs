@@ -34,7 +34,8 @@ const searchAliases=JSON.parse(await fs.readFile(path.join(process.cwd(),"catalo
 const manifest=buildPromotionManifest(candidate,seed,{
   source,
   requireFull:mode!=="baseline",
-  supplementalAliases:searchAliases.aliases||{}
+  supplementalAliases:searchAliases.aliases||{},
+  suppressedAliases:searchAliases.suppressAliases||{}
 });
 
 await fs.mkdir(outDir,{recursive:true});
