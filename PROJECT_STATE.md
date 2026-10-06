@@ -1028,3 +1028,22 @@ Current direction:
 - GrailRaven wordmark remains warm ivory (`#F5F1E8`)
 - UI remains primarily black/white with semantic MATCH/REVIEW/FILTERED colours
 - exact production logo colour matching is deferred until final vector/logo cleanup
+
+
+## IGDB catalogue benchmark setup — 6 October 2026
+
+A Twitch Developer application named GrailRaven IGDB has been created by the user.
+
+Current IGDB documentation was rechecked. It states free non-commercial API use; commercial needs should go through IGDB's partnership process. The earlier source-evaluation wording implying automatically free commercial use was corrected.
+
+A read-only benchmark harness now exists:
+- `scripts/igdb-catalogue-benchmark.mjs`
+- `.github/workflows/igdb-catalogue-benchmark.yml`
+
+It will benchmark the pinned 100-game population and PS1/PS2/Dreamcast platform counts before any canonical catalogue import.
+
+Credentials must be stored only as GitHub secrets / future server-side secrets:
+- `IGDB_CLIENT_ID`
+- `IGDB_CLIENT_SECRET`
+
+Do not commit the Client Secret or paste it into chat.
