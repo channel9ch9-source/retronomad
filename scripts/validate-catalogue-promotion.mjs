@@ -2,9 +2,9 @@ import fs from "node:fs/promises";
 import process from "node:process";
 import {
   validateCatalogue,
-  buildCatalogueSearchIndex,
-  findCatalogueMatches
+  buildCatalogueSearchIndex
 } from "../shared/catalogue-core.js";
+import { rankCatalogueMatches } from "../shared/catalogue-search-core.js";
 
 const input=process.argv.find(x=>x.startsWith("--input="))?.slice(8);
 if(!input){
@@ -36,7 +36,7 @@ if(ids.size!==games.length) failures.push("duplicate catalogue IDs found");
 if(indexBytes>2*1024*1024) failures.push(`browser search index exceeds 2 MiB: ${indexBytes} bytes`);
 
 function assertSearch(query,predicate,description){
-  const rows=findCatalogueMatches(index,query).slice(0,10);
+  const rows=rankCatalogueMatches(index,query,{limit:10}).map(row=>row.game);
   if(!rows.some(predicate)){
     failures.push(`search smoke test failed for "${query}": ${description}; got ${rows.map(x=>x.title+" ["+x.platform+"]").join(", ")}`);
   }
