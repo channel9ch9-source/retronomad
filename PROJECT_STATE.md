@@ -965,3 +965,12 @@ Current preview decisions:
 - typography is not approved/final and is intentionally deferred
 
 Visual design is now considered good enough to park temporarily. The next major product task should be full PS1 / PS2 / Dreamcast base-catalogue architecture and population, while retaining the existing 100-game exact-release set as the deep validation benchmark.
+
+
+### Final UI highlight cleanup — 6 October 2026
+
+The remaining green UI interaction highlights were removed:
+- desktop active Search/navigation highlight -> white
+- mobile Filters button -> white
+
+Green `#00FF41` is now intended mainly as a semantic MATCH/positive-status colour, while generic interaction emphasis is neutral white for the current design pass.
