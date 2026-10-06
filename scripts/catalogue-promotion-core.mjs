@@ -54,7 +54,7 @@ export function artworkRows(game){
   }];
 }
 
-export function buildPromotionManifest(candidate,seed,{source="IGDB",requireFull=true,supplementalAliases={}}={}){
+export function buildPromotionManifest(candidate,seed,{source="IGDB",requireFull=true,supplementalAliases={},suppressedAliases={}}={}){
   const validation=validateCatalogue(candidate);
   if(!validation.ok)throw new Error("Candidate catalogue is invalid: "+validation.errors.join("; "));
 
@@ -115,7 +115,7 @@ export function buildPromotionManifest(candidate,seed,{source="IGDB",requireFull
   const artworkCount=candidate.games.reduce((n,g)=>n+artworkRows(g).length,0);
   const canonicalText=stableCatalogueJson(candidate);
   const checksum=sha256Hex(canonicalText);
-  const index=buildCatalogueSearchIndex(candidate,supplementalAliases);
+  const index=buildCatalogueSearchIndex(candidate,supplementalAliases,suppressedAliases);
   const indexBytes=Buffer.byteLength(JSON.stringify(index),"utf8");
   if(requireFull&&indexBytes>2*1024*1024)throw new Error("Compact browser index exceeds 2 MiB safety limit");
 
