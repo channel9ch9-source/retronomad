@@ -78,3 +78,23 @@ If an IGDB `first_release_date` resolves to a year outside the canonical catalog
 - the anomaly does not crash the entire dry import
 
 The workflow uploads available diagnostic artifacts even if a later validation error occurs.
+
+
+## Explicit seed mappings
+
+Known PALScout-to-IGDB regional-name differences are stored in:
+`catalogue/provider-mappings/igdb.json`
+
+The mapping file is audited and tested. It is not a general fuzzy-search dictionary.
+
+Explicit mappings are applied before automatic title/alias matching and may map a known PALScout seed to a provider record otherwise held by generic filtering (for example a known European bundle identity).
+
+Each mapped seed may still receive only one IGDB ID.
+
+## Platform-specific release year
+
+The catalogue is platform-specific, so the importer must not use IGDB's global `first_release_date` as the platform release year.
+
+The dry importer now derives `releaseYear` from the earliest IGDB `release_dates` entry whose platform matches the current PS1 / PS2 / Dreamcast inventory.
+
+If no usable platform-specific date exists, the year stays null.
