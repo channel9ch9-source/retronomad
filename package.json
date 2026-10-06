@@ -13,7 +13,8 @@
     "catalogue:promotion:prepare": "node scripts/prepare-catalogue-promotion.mjs",
     "catalogue:d1:export": "node scripts/export-catalogue-d1.mjs",
     "catalogue:d1:verify": "node scripts/verify-d1-catalogue.mjs",
-    "catalogue:d1:activate": "node scripts/activate-catalogue-dataset.mjs"
+    "catalogue:d1:activate": "node scripts/activate-catalogue-dataset.mjs",
+    "catalogue:search:benchmark": "node scripts/benchmark-catalogue-search.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
