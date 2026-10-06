@@ -1078,3 +1078,12 @@ A third read-only benchmark now measures provider filtering using IGDB's own `ve
 - `IGDB_DEDUP_FILTER_BENCHMARK.md`
 
 No canonical catalogue import occurs in this benchmark.
+
+
+### IGDB dedup first-run filter bug — 6 October 2026
+
+The first dedup/filter workflow run completed successfully but exposed a benchmark classifier bug: returned IGDB game-type display labels were not normalized before comparison, so some Mods/Bundles/etc. were incorrectly retained as include candidates.
+
+No catalogue data was modified.
+
+The benchmark classifier has been corrected. A fresh dedup/filter run is required before proceeding to a dry full-catalogue import.
