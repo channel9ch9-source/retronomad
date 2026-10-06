@@ -1,0 +1,35 @@
+name: Run IGDB catalogue benchmark
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run catalogue regression tests
+        run: npm test
+
+      - name: Run read-only IGDB benchmark
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+        run: node scripts/igdb-catalogue-benchmark.mjs
+
+      - name: Upload benchmark report
+        uses: actions/upload-artifact@v4
+        with:
+          name: igdb-catalogue-benchmark
+          path: benchmarks/igdb-catalogue-*.json
+          if-no-files-found: error
