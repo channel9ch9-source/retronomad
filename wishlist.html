@@ -37,17 +37,16 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
     </div>
     <div class="v2-meta">games · data · collectors · higher standards</div>
   </div>
-</div><div class="wrap">
-
-<header class="hero">
-<div class="kicker">Phase 1 · Wishlist</div>
+</div><main class="v2-shell v2-main app-page-main">
+<header class="app-page-hero">
+<div class="v2-eyebrow">Collector intelligence · Saved Hunts</div>
 <h1>Saved Hunts.</h1>
 <p class="lead">Keep the exact physical-game targets you care about in one place. These records are ready for future marketplace monitoring and alerts without pretending that background checks are already active.</p>
 <div class="notice"><strong>Current beta limitation:</strong> account sync is live when you are signed in, but marketplace monitoring and alerts remain unavailable until an authorised inventory source and notification provider are connected.</div>
 </header>
 
-<div class="toolbar">
-<div><div class="kicker">Your wishlist</div><h2 id="countTitle">0 saved hunts</h2></div>
+<div class="v2-resultshead app-toolbar">
+<div><div class="v2-eyebrow">Your collection targets</div><h2 id="countTitle">0 saved hunts</h2></div>
 <div class="actions"><a class="btn primary" href="search.html">New hunt</a><button class="btn" id="syncBtn" disabled>Local only</button><a class="btn" id="accountBtn" href="account.html">Account</a><button class="btn" id="exportBtn">Export JSON</button></div>
 </div>
 
@@ -56,8 +55,8 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
 Build a search target, then save it to your wishlist.
 </div>
 <div id="syncStatus" class="meta" style="margin:-4px 0 14px"></div>
-<div id="grid" class="grid"></div>
-</div>
+<div id="grid" class="grid app-hunt-grid"></div>
+</main>
 
 <script src="runtime-config.js"></script>
 <script src="saved-hunts.js"></script>
