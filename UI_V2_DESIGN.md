@@ -168,3 +168,16 @@ Still open for a later design session:
 - any further aesthetic polish not required for usability
 
 Do not allow these open visual questions to block full-catalogue architecture or core product development.
+
+
+## Interaction highlight clarification
+
+General interaction highlight colour is currently neutral white, not green.
+
+Use white/neutral styling for:
+- active top-navigation state
+- search focus/selection emphasis
+- mobile Filters button
+- checked/selected generic controls where practical
+
+Reserve green `#00FF41` primarily for positive semantic states such as MATCH, rather than generic navigation or controls.
