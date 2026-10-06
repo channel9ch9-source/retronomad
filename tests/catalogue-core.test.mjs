@@ -38,7 +38,7 @@ test("every PALSCOUT_DEEP benchmark game is backed by existing PALScout evidence
 });
 
 test("browser search index stays lightweight and searchable",()=>{
-  const index=buildCatalogueSearchIndex(document,searchAliases.aliases||{});
+  const index=buildCatalogueSearchIndex(document,searchAliases.aliases||{},searchAliases.suppressAliases||{});
   assert.equal(index.length,document.games.length);
   assert.deepEqual(Object.keys(index[0]).sort(),["aliases","coverage","id","platform","releaseYear","title"].sort());
   assert.ok(Buffer.byteLength(JSON.stringify(index),"utf8")<=2*1024*1024,"compact index must stay under 2 MiB");
@@ -54,5 +54,5 @@ test("committed browser index matches canonical catalogue",async()=>{
   assert.ok(js.startsWith(prefix));
   const payload=js.slice(prefix.length).replace(/;\s*$/,"");
   const committed=JSON.parse(payload);
-  assert.deepEqual(committed,buildCatalogueSearchIndex(document,searchAliases.aliases||{}));
+  assert.deepEqual(committed,buildCatalogueSearchIndex(document,searchAliases.aliases||{},searchAliases.suppressAliases||{}));
 });
