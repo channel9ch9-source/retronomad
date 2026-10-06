@@ -1066,3 +1066,15 @@ This benchmark downloads the full IGDB record population for PS1, PS2 and Dreamc
 Fuzzy/token and Roman-numeral comparisons are review hints only and can never auto-match.
 
 The canonical catalogue and D1 remain untouched.
+
+
+## IGDB deduplication/filter benchmark ready — 6 October 2026
+
+The full platform inventory confirmed that IGDB coverage is broad but contains editions/versions and exact-name collisions.
+
+A third read-only benchmark now measures provider filtering using IGDB's own `version_parent` and `game_type` metadata:
+- `scripts/igdb-dedup-filter-benchmark.mjs`
+- `.github/workflows/igdb-dedup-filter-benchmark.yml`
+- `IGDB_DEDUP_FILTER_BENCHMARK.md`
+
+No canonical catalogue import occurs in this benchmark.
