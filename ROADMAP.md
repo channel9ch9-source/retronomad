@@ -448,3 +448,30 @@ At every milestone:
 **Add visible PriceCharting attribution support, then build the PriceCharting pricing and Marketplace coverage harnesses. Keep the live Worker marketplace provider disabled until the real-token benchmarks have been run and audited.**
 
 Do not fabricate inventory, scrape around marketplace restrictions, weaken release-identity rules, or buy the subscription earlier than needed for real validation.
+
+
+## GrailRaven UI V2 — active design milestone (6 October 2026)
+
+A non-production design preview is being used to establish the visual system before replacing the working UI.
+
+Selected direction: Collector Intelligence.
+
+Locked feedback from the first live preview:
+- replace murky dark-blue base with near-black / charcoal
+- active/MATCH green: `#00FF41`
+- REVIEW orange: `#FF5F1F`
+- FILTERED red: `#880808`
+- replace blue checkbox/toggle/active accents with green
+- use a more characterful gothic/old-world display type treatment while keeping UI text readable
+- use the more elegant raven emblem direction from the second mockup
+- mobile must be simplified rather than merely stacking the desktop layout
+- mobile filters should collapse behind a Filters control
+- mobile cards should hide secondary evidence by default and prioritize status, release and price
+
+Authoritative design detail: `UI_V2_DESIGN.md`.
+
+Exit criteria for this milestone:
+1. revised preview works cleanly on desktop and phone
+2. user approves overall visual direction
+3. final/near-final logo direction is selected
+4. shared style/components can then be migrated to the working Search page without changing core PALScout/Saved Hunts/account logic
