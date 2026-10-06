@@ -10,6 +10,7 @@ import {
 } from "../shared/catalogue-core.js";
 
 const document=JSON.parse(await fs.readFile(new URL("../catalogue/base-catalogue.json", import.meta.url),"utf8"));
+const searchAliases=JSON.parse(await fs.readFile(new URL("../catalogue/search-aliases.json", import.meta.url),"utf8"));
 
 test("seed catalogue validates",()=>{
   const result=validateCatalogue(document);
@@ -37,7 +38,7 @@ test("every PALSCOUT_DEEP benchmark game is backed by existing PALScout evidence
 });
 
 test("browser search index stays lightweight and searchable",()=>{
-  const index=buildCatalogueSearchIndex(document);
+  const index=buildCatalogueSearchIndex(document,searchAliases.aliases||{});
   assert.equal(index.length,document.games.length);
   assert.deepEqual(Object.keys(index[0]).sort(),["aliases","coverage","id","platform","releaseYear","title"].sort());
   assert.ok(Buffer.byteLength(JSON.stringify(index),"utf8")<=2*1024*1024,"compact index must stay under 2 MiB");
@@ -53,5 +54,5 @@ test("committed browser index matches canonical catalogue",async()=>{
   assert.ok(js.startsWith(prefix));
   const payload=js.slice(prefix.length).replace(/;\s*$/,"");
   const committed=JSON.parse(payload);
-  assert.deepEqual(committed,buildCatalogueSearchIndex(document));
+  assert.deepEqual(committed,buildCatalogueSearchIndex(document,searchAliases.aliases||{}));
 });
