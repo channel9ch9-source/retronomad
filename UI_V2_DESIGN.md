@@ -181,3 +181,13 @@ Use white/neutral styling for:
 - checked/selected generic controls where practical
 
 Reserve green `#00FF41` primarily for positive semantic states such as MATCH, rather than generic navigation or controls.
+
+
+## Logo colour direction
+
+Current preferred treatment:
+- Raven mark: warm ivory / muted bronze-gold family rather than pure white
+- GrailRaven wordmark: warm ivory `#F5F1E8`
+- The raven asset may contain multiple cream/bronze shades and does not need to be flattened to exactly one hex value
+- Keep this subtle; do not turn the full interface into a gold-themed UI
+- Exact production logo colours can be sampled/refined when the final vector logo is created
