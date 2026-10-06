@@ -1165,3 +1165,40 @@ The nine remaining seed mappings have now been made explicit in `catalogue/provi
 The importer was also corrected to derive catalogue `releaseYear` from IGDB platform-specific `release_dates`, not global `first_release_date`.
 
 A fresh dry run is required before canonical promotion.
+
+
+## Final IGDB dry-import candidate passed — 6 October 2026
+
+The refined dry import completed successfully with explicit regional-title mappings and platform-specific release years.
+
+Final candidate:
+- proposed total games: 8,433
+- PS1: 3,710
+- PS2: 4,019
+- Dreamcast: 704
+- BASE_ONLY: 8,333
+- PALSCOUT_DEEP: 100
+- enriched/mapped PALScout seeds: 100/100
+- unmapped seeds: 0
+- generated ID collisions: 0
+- invalid release years: 0
+- provider records held rather than guessed: 38
+- same-title records suppressed under the conservative identity rules: 16
+- provider same-title review groups: 33
+- seed review notes: 3, all with a higher-confidence canonical selection already made
+- catalogue validation: PASS
+
+The compact browser search index generated from this candidate is approximately 1.37 MiB uncompressed and contains 7,512 aliases across 4,058 records with aliases.
+
+Smoke checks confirm common/alternate searches including FF7, FFVII, MGS3, RE2, Forbidden Siren, Lucifer's Call, Project Zero 3, MediEvil 2 and Obscure II return the intended catalogue identities.
+
+Promotion-validation logic is now codified in `scripts/validate-catalogue-promotion.mjs`.
+
+
+### IGDB commercial partnership gate
+
+Current IGDB documentation states that commercial usage is permitted through its commercial partnership process, the API price is free for both non-commercial and commercial projects, local caching/storage is allowed and preferred, and commercial integrations are expected to provide visible user-facing IGDB attribution.
+
+Before the IGDB-backed full catalogue is published as part of GrailRaven's commercial product, contact IGDB at partner@igdb.com and complete/clarify the commercial partnership.
+
+Technical catalogue work may continue behind this publication gate.
