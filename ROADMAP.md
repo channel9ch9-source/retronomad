@@ -659,7 +659,9 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] add safe local end-to-end promotion workflow
 - [x] add hard-gated remote promotion workflow
 - [ ] run safe local promotion-pipeline validation
-- [ ] fix any CI/D1 issues found by that run
+- [x] fix first provider-reference schema finding (cross-platform IGDB ID reuse)
+- [ ] rerun safe local promotion-pipeline validation
+- [ ] fix any further CI/D1 issues found by that run
 - [ ] await IGDB commercial partnership response
 - [ ] only after approval, set `IGDB_COMMERCIAL_APPROVED=true`
 - [ ] run approved remote promotion workflow
