@@ -1047,3 +1047,8 @@ Credentials must be stored only as GitHub secrets / future server-side secrets:
 - `IGDB_CLIENT_SECRET`
 
 Do not commit the Client Secret or paste it into chat.
+
+
+## IGDB catalogue benchmark result — 6 October 2026
+
+The first read-only IGDB benchmark completed successfully. Durable metrics and the decision to require a safer alias/inventory pass before bulk import are recorded in `IGDB_BENCHMARK_2026-10-06.md`.
