@@ -1118,3 +1118,27 @@ Implemented:
 The dry importer preserves the existing 100 stable IDs and PALScout coverage, imports no live artwork, writes no D1 data, and emits only proposed/review artifacts.
 
 Existing seeds can receive at most one automatically selected IGDB mapping; competing provider alias rows are held for review rather than overwritten.
+
+
+### First full-catalogue dry import failure — 6 October 2026
+
+The first dry-import workflow successfully fetched all three platform populations and constructed a proposed 8,441-game catalogue, but validation failed because one IGDB record produced a release year outside the catalogue's allowed 1980–2100 range.
+
+Observed pre-fix dry-run summary:
+- original seed games: 100
+- proposed total games: 8,441
+- new BASE_ONLY games: 8,341
+- enriched seed games: 91
+- seed games without exact provider mapping: 9
+- held provider records: 38
+- suppressed same-title records: 16
+- provider same-title review groups: 33
+- seed ambiguities: 3
+- ID collisions: 0
+
+Fix:
+- invalid provider years are now normalized to null
+- the anomalous provider record is added to the review report
+- workflow artifacts upload even when a future validation failure occurs
+
+No canonical catalogue or D1 data was modified.
