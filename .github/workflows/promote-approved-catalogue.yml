@@ -52,6 +52,9 @@ jobs:
       - name: Validate promotion candidate
         run: node scripts/validate-catalogue-promotion.mjs --input="$CANDIDATE"
 
+      - name: Benchmark full-catalogue search
+        run: node scripts/benchmark-catalogue-search.mjs --input="$CANDIDATE" --output=benchmarks/full-catalogue-search-benchmark.json --markdown=benchmarks/full-catalogue-search-benchmark.md
+
       - name: Prepare candidate + manifest
         run: node scripts/prepare-catalogue-promotion.mjs --input="$CANDIDATE" --out-dir=promotion-output
 
