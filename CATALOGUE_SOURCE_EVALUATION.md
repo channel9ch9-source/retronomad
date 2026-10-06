@@ -142,3 +142,43 @@ The workflow:
 - uploads a JSON report
 - performs no canonical catalogue import
 - never writes credentials into the report
+
+
+## First IGDB benchmark result — 6 October 2026
+
+Workflow run completed successfully against the pinned 100-game benchmark.
+
+Summary:
+- exact canonical-name or returned-alias matches: 92/100
+- candidate-review rows: 2/100
+- no-match rows: 6/100
+- rows with cover art: 94/100
+- rows with release-date data: 94/100
+- rows with company/developer/publisher data: 94/100
+
+Exact/alias match rate by platform:
+- PS1: 38/40
+- PS2: 36/40
+- Dreamcast: 18/20
+
+IGDB raw platform record counts returned by the count endpoint:
+- PlayStation: 3,941
+- PlayStation 2: 4,297
+- Dreamcast: 739
+
+These raw counts are not equivalent to retail-library counts. They may include versions/categories/region records and must be filtered/deduplicated before becoming GrailRaven catalogue totals.
+
+Examples exposing title-normalisation/alias issues:
+- `Crash Bandicoot 3: Warped` -> IGDB returned `Crash Bandicoot: Warped`
+- `MediEvil 2` -> IGDB returned `MediEvil II`
+- `Obscure II` -> IGDB returned `ObsCure: The Aftermath`
+- `Project Zero 3: The Tormented` did not resolve through the simple title search; regional naming is likely relevant
+- `Shin Megami Tensei: Lucifer's Call` did not resolve through the simple title search
+- `Project Justice: Rival Schools 2` did not resolve through the simple title search
+- `Marvel vs. Capcom 2` returned `Marvel vs. Capcom 2: New Age of Heroes` as a review candidate
+- `Forbidden Siren` incorrectly surfaced `Forbidden Siren 2` as a review candidate; this proves prefix/fuzzy matching cannot be trusted for automatic imports
+
+Decision:
+**IGDB remains a promising base-catalogue candidate, but do not bulk-import yet.**
+
+Next benchmark/import work must build a platform-wide local alias index and conservative identity resolution. Only exact canonical/alias/provider mappings may auto-merge; fuzzy/prefix candidates must remain review items.
