@@ -6,3 +6,5 @@ backend/alerts-worker.generated.js
 .dev.vars
 .env
 .env.*
+promotion-output/
+.catalogue-d1-test/
