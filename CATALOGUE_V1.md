@@ -157,3 +157,21 @@ Current source research and recommendation are recorded in `CATALOGUE_SOURCE_EVA
 Current first candidate to benchmark: **IGDB**.
 
 Do not import a full external catalogue until its coverage/duplicate behavior has been measured against the pinned 100-game set.
+
+
+## Promotion and D1 synchronization
+
+The first external full-catalogue candidate now has a controlled promotion pipeline.
+
+D1 no longer needs destructive in-place replacement for future catalogue releases. Migration `0003_catalogue_datasets.sql` introduces immutable versioned datasets and an active-dataset pointer.
+
+Benefits:
+- uploads can be staged and verified before publication
+- interrupted imports do not replace the active catalogue
+- activation is a small pointer change
+- older datasets remain available for D1 rollback
+- the repository remains the canonical/auditable source after an approved promotion
+
+See `CATALOGUE_PROMOTION_PIPELINE.md`.
+
+The IGDB-backed full catalogue remains behind the commercial-use publication gate until that relationship is clarified.
