@@ -1087,3 +1087,34 @@ The first dedup/filter workflow run completed successfully but exposed a benchma
 No catalogue data was modified.
 
 The benchmark classifier has been corrected. A fresh dedup/filter run is required before proceeding to a dry full-catalogue import.
+
+
+## Corrected IGDB dedup/filter result — 6 October 2026
+
+Corrected benchmark completed successfully.
+
+Provider populations after corrected filtering:
+- PS1: 3,737 include candidates; 121 review; 83 excluded
+- PS2: 4,040 include candidates; 145 review; 112 excluded
+- Dreamcast: 709 include candidates; 17 review; 13 excluded
+
+Pinned 100-game exact mapping after provider filtering:
+- 82 safe
+- 1 ambiguous
+- 17 unresolved by exact title/alias
+
+The unresolved set is largely regional/alternate naming and special-edition naming, not proof of missing provider coverage.
+
+The next step is a non-destructive full-catalogue dry import with explicit review outputs.
+
+
+## IGDB full catalogue dry importer ready — 6 October 2026
+
+Implemented:
+- `scripts/igdb-dry-import.mjs`
+- `.github/workflows/igdb-full-catalogue-dry-import.yml`
+- `IGDB_FULL_CATALOGUE_DRY_IMPORT.md`
+
+The dry importer preserves the existing 100 stable IDs and PALScout coverage, imports no live artwork, writes no D1 data, and emits only proposed/review artifacts.
+
+Existing seeds can receive at most one automatically selected IGDB mapping; competing provider alias rows are held for review rather than overwritten.
