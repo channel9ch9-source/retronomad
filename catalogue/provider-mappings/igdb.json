@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "provider": "IGDB",
+  "purpose": "Explicit mappings for PALScout seed identities whose UK/EU title differs from IGDB canonical naming or whose provider record is intentionally held by generic import filters.",
+  "seedMappings": [
+    {
+      "seedId": "dreamcast:marvel-vs-capcom-2",
+      "platform": "Dreamcast",
+      "igdbId": "8247",
+      "providerTitle": "Marvel vs. Capcom 2: New Age of Heroes",
+      "reason": "PALScout seed uses shortened PAL title; IGDB canonical title includes subtitle."
+    },
+    {
+      "seedId": "dreamcast:project-justice-rival-schools-2",
+      "platform": "Dreamcast",
+      "igdbId": "13096",
+      "providerTitle": "Project Justice",
+      "reason": "PALScout PAL release is Project Justice: Rival Schools 2; IGDB canonical identity is Project Justice."
+    },
+    {
+      "seedId": "ps1:crash-bandicoot-3-warped",
+      "platform": "PS1",
+      "igdbId": "1187",
+      "providerTitle": "Crash Bandicoot: Warped",
+      "reason": "PALScout PAL title includes numeral 3; IGDB canonical title omits it and exposes Crash Bandicoot 3 as an alternative name."
+    },
+    {
+      "seedId": "ps1:final-fantasy-anthology",
+      "platform": "PS1",
+      "igdbId": "146214",
+      "providerTitle": "Final Fantasy Anthology",
+      "reason": "PALScout seed is the European/UK release; IGDB 146214 is the European Edition bundle, distinct from the US anthology record."
+    },
+    {
+      "seedId": "ps1:medievil-2",
+      "platform": "PS1",
+      "igdbId": "4002",
+      "providerTitle": "MediEvil II",
+      "reason": "PALScout release uses Arabic numeral 2; IGDB canonical title uses Roman numeral II."
+    },
+    {
+      "seedId": "ps2:forbidden-siren",
+      "platform": "PS2",
+      "igdbId": "14522",
+      "providerTitle": "Siren",
+      "reason": "Forbidden Siren is the PAL title of IGDB's Siren identity."
+    },
+    {
+      "seedId": "ps2:obscure-ii",
+      "platform": "PS2",
+      "igdbId": "5080",
+      "providerTitle": "ObsCure: The Aftermath",
+      "reason": "Obscure II is the PAL/European title; IGDB canonical title is ObsCure: The Aftermath and exposes ObsCure 2 as an alternative."
+    },
+    {
+      "seedId": "ps2:project-zero-3-the-tormented",
+      "platform": "PS2",
+      "igdbId": "5107",
+      "providerTitle": "Fatal Frame III: The Tormented",
+      "reason": "Project Zero III is the PAL series title; IGDB canonical title uses Fatal Frame III and includes Project Zero III as an alternative."
+    },
+    {
+      "seedId": "ps2:shin-megami-tensei-lucifer-s-call",
+      "platform": "PS2",
+      "igdbId": "9669",
+      "providerTitle": "Shin Megami Tensei: Nocturne",
+      "reason": "Lucifer's Call is the PAL title of Shin Megami Tensei: Nocturne."
+    }
+  ]
+}
