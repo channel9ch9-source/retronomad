@@ -25,7 +25,7 @@ const deep=games.filter(g=>g.releaseIntelligence?.coverage==="PALSCOUT_DEEP");
 const baseOnly=games.filter(g=>g.releaseIntelligence?.coverage==="BASE_ONLY");
 const missingIgdbDeep=deep.filter(g=>!String(g.externalRefs?.igdb||"").trim());
 const ids=new Set(games.map(g=>g.id));
-const index=buildCatalogueSearchIndex(catalogue,searchAliases.aliases||{});
+const index=buildCatalogueSearchIndex(catalogue,searchAliases.aliases||{},searchAliases.suppressAliases||{});
 const indexBytes=Buffer.byteLength(JSON.stringify(index),"utf8");
 
 const failures=[];
