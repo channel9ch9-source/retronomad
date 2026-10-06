@@ -1,5 +1,6 @@
 import { cp, mkdir, readdir, rm, copyFile, readFile, writeFile } from "node:fs/promises";
 import { extname, join } from "node:path";
+import { buildCatalogueSearchIndex, validateCatalogue } from "../shared/catalogue-core.js";
 
 const root=process.cwd();
 const out=join(root,"dist","public");
@@ -33,6 +34,13 @@ for(const entry of await readdir(root,{withFileTypes:true})){
 }
 
 await cp(join(root,"shared"),join(out,"shared"),{recursive:true});
+
+const catalogueDocument=JSON.parse(await readFile(join(root,"catalogue","base-catalogue.json"),"utf8"));
+const catalogueValidation=validateCatalogue(catalogueDocument);
+if(!catalogueValidation.ok)throw new Error("Invalid base catalogue: "+catalogueValidation.errors.join("; "));
+const catalogueIndex=buildCatalogueSearchIndex(catalogueDocument);
+await writeFile(join(out,"catalogue-index.js"),`// Generated from catalogue/base-catalogue.json.\nwindow.BASE_CATALOGUE_INDEX=${JSON.stringify(catalogueIndex)};\n`,"utf8");
+console.log(`Built compact catalogue search index with ${catalogueIndex.length} games`);
 
 const runtime=`// Generated for the Cloudflare same-origin deployment.\nconst config=Object.freeze({\n  accountSyncEnabled: true,\n  apiBase: \"\"\n});\nwindow.APP_CONFIG=config;\n// Legacy alias retained so existing browser code/storage migrations do not break.\nwindow.RETRONOMAD_CONFIG=config;\n`;
 await writeFile(join(out,"runtime-config.js"),runtime,"utf8");
