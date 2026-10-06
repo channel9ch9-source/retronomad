@@ -1349,3 +1349,48 @@ Correction:
 - regression coverage now tests both allowed cross-platform reuse and forbidden same-platform collision
 
 The candidate itself remains valid; rerun the safe promotion-pipeline workflow.
+
+
+## Promotion pipeline validated end-to-end — 6 October 2026
+
+Safe GitHub Actions run: **37540728095**.
+
+Every pipeline stage succeeded:
+- regression tests
+- fresh IGDB dry import
+- promotion candidate validation
+- promotion manifest generation
+- immutable D1 SQL export
+- isolated local D1 initialization
+- full dataset staging
+- staged-data verification
+- local activation
+- active-pointer verification
+- audit artifact upload
+
+Validated dataset:
+- dataset ID: `cat-3faa2a84ad267ddd017c`
+- SHA-256: `3faa2a84ad267ddd017c75cdd1437af9997150a9d8b407a66fd6a56e82703816`
+- games: 8,433
+- aliases: 7,512
+- external refs: 8,433
+- artwork: 0
+- PS1: 3,710
+- PS2: 4,019
+- Dreamcast: 704
+- BASE_ONLY: 8,333
+- PALSCOUT_DEEP: 100
+- cross-platform provider-ID reuse groups: 291
+- search index: 1,438,335 bytes / 1.372 MiB
+- all 100 PALScout deep IDs preserved
+- changed seed identities: 0
+- unmapped deep seeds: 0
+
+The local D1 activation succeeded and the active pointer resolved to the validated dataset.
+
+Publication status remains unchanged:
+- `canonicalCatalogueModified=false`
+- `remoteD1Activated=false`
+- publication gate remains `IGDB_COMMERCIAL_APPROVAL_REQUIRED`
+
+The promotion/D1 pipeline is therefore technically ready pending the IGDB commercial-use response.
