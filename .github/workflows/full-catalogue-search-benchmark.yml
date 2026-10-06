@@ -24,8 +24,8 @@ jobs:
 
       - name: Build fresh IGDB dry-import candidate
         env:
-          IGDB_CLIENT_ID: \${{ secrets.IGDB_CLIENT_ID }}
-          IGDB_CLIENT_SECRET: \${{ secrets.IGDB_CLIENT_SECRET }}
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
         run: node scripts/igdb-dry-import.mjs
 
       - name: Resolve candidate path
