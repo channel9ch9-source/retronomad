@@ -1321,3 +1321,31 @@ New workflows:
 The approved remote promotion workflow remains inoperative until `IGDB_COMMERCIAL_APPROVED=true` is explicitly configured after the IGDB commercial-use question is resolved.
 
 Detailed design: `CATALOGUE_PROMOTION_PIPELINE.md`.
+
+
+## First promotion-pipeline validation finding — 6 October 2026
+
+Safe workflow run 37540213154 failed at promotion-manifest preparation, after:
+- regression tests passed
+- fresh IGDB dry import succeeded
+- promotion candidate validator passed at 8,433 games / 100 mapped PALScout deep games / 1.372 MiB search index
+
+Root cause:
+- the new promotion layer incorrectly assumed a provider game ID must be globally unique across the whole GrailRaven catalogue
+- IGDB game IDs legitimately span multiple platforms, while GrailRaven canonical IDs are platform-specific
+- example: IGDB 292078 = 240p Test Suite on both Dreamcast and PS1
+
+Full-candidate audit:
+- provider-reference rows: 8,433
+- unique aliases after per-game normalization: 7,512
+- cross-platform provider-ID reuse groups: 291
+- same-platform provider-ID collisions: 0
+
+Correction:
+- provider ID reuse is allowed across different platforms
+- the promotion safety check still rejects the same provider ID mapping to two canonical games on the same platform
+- D1 v2 external-reference primary key now includes game_id
+- migration 0004_catalogue_provider_refs.sql safely corrects the table shape if 0003 was previously applied
+- regression coverage now tests both allowed cross-platform reuse and forbidden same-platform collision
+
+The candidate itself remains valid; rerun the safe promotion-pipeline workflow.
