@@ -14,16 +14,16 @@ Official API documentation:
 https://api-docs.igdb.com/
 
 Current documented position:
-- API is free for non-commercial use.
-- Commercial usage is allowed through IGDB's partner program.
-- IGDB's FAQ says the API price is free for both non-commercial and commercial projects.
+- Current IGDB documentation says the API is free for non-commercial usage.
+- Commercial needs should go through IGDB's commercial partnership process.
+- Do not assume commercial production use is free or automatically covered.
 - User-facing IGDB attribution is expected for commercial integrations.
 - Local storage/caching is explicitly allowed and preferred.
 - API exposes games, platforms, alternative names, release dates, companies, covers, localizations and other useful metadata.
 - Cover/image endpoints are part of the API.
 
 Why it fits GrailRaven:
-- no recurring data fee appears necessary at current scale
+- development/coverage validation can proceed without another paid subscription right now
 - designed to be cached into our own database
 - broad general game catalogue
 - stable external IDs can be stored in `externalRefs`
@@ -33,7 +33,7 @@ Why it fits GrailRaven:
 Open checks before production use:
 - measure actual PS1 / PS2 / Dreamcast coverage and duplicates
 - verify how well regional/localized releases map to GrailRaven's base-game model
-- confirm commercial partner/attribution setup before monetized production launch
+- obtain/clarify IGDB commercial partnership permission before monetized production use
 - test cover coverage and image suitability
 - do not assume IGDB region/localization metadata is strong enough for PALScout exact-copy decisions
 
@@ -121,3 +121,24 @@ Do not use IGDB metadata to upgrade a game's PALScout coverage automatically.
 Because GrailRaven is pre-revenue, prefer sources that let us validate the catalogue without creating another recurring bill.
 
 This is why IGDB should be tested before commercial MobyGames or RAWG plans.
+
+
+## Read-only benchmark harness
+
+Implemented:
+- `scripts/igdb-catalogue-benchmark.mjs`
+- `.github/workflows/igdb-catalogue-benchmark.yml`
+
+Secrets:
+- `IGDB_CLIENT_ID`
+- `IGDB_CLIENT_SECRET`
+
+The workflow:
+- obtains an application access token via Twitch client credentials
+- resolves PS1, PS2 and Dreamcast platform records
+- records IGDB's raw game counts for each platform
+- searches every pinned 100-game benchmark title on the expected platform
+- records exact-name/alias coverage, covers, release dates and company metadata
+- uploads a JSON report
+- performs no canonical catalogue import
+- never writes credentials into the report
