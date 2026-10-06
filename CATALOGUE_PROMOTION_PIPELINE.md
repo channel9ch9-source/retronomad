@@ -146,3 +146,18 @@ When both gates are satisfied, it:
 Until IGDB responds, the current 100-game canonical catalogue remains the public source.
 
 The 8,433-game candidate remains development-only.
+
+
+### Provider IDs and platform identity
+
+Provider IDs are not globally unique GrailRaven game/platform identities.
+
+For IGDB specifically, one IGDB game record can span multiple platforms. Therefore the same IGDB external ID may legitimately appear on PS1, PS2 and/or Dreamcast canonical rows.
+
+Rules:
+- cross-platform reuse of the same provider ID is allowed
+- reuse of the same provider ID by two different GrailRaven games on the same platform is a promotion-blocking collision
+- D1 stores provider refs under `(dataset_id, game_id, provider, external_id)`
+- an additional provider lookup index supports reverse provider-ID lookup
+
+The first safe validation found 291 legitimate cross-platform IGDB-ID reuse groups and zero same-platform collisions.
