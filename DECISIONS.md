@@ -619,3 +619,31 @@ Decision:
 
 Reason:
 the account backend is already on Cloudflare Workers, Resend has a straightforward Worker-compatible API and a small-project free tier, and this avoids operating a separate email webhook service solely for authentication.
+
+
+## Base catalogue and PALScout are separate data layers — 6 October 2026
+
+Decision:
+Do not use the PALScout release-evidence dataset as the master list of games.
+
+GrailRaven has two intentionally separate layers:
+
+1. **Base catalogue**
+   - broad game identity for PS1, PS2 and Dreamcast
+   - supports search, browse, game pages and Saved Hunt creation
+   - may contain titles with only basic metadata
+
+2. **PALScout release intelligence**
+   - exact physical-release evidence
+   - serials, barcodes, market/territory identity, edition, language/package evidence and related collector distinctions
+   - determines whether a marketplace copy can safely become MATCH instead of REVIEW/FILTERED
+
+A base-catalogue record must never imply exact-release certainty.
+
+The original 100 game/platform pairs remain the pinned deep benchmark (40 PS1, 40 PS2, 20 Dreamcast) and are marked `PALSCOUT_DEEP`. New full-catalogue imports default conservatively and may remain `BASE_ONLY` until researched.
+
+Provider imports must preserve provenance and must not overwrite stronger PALScout evidence with weaker generic provider metadata.
+
+Artwork is rights-aware and separate from game identity. No arbitrary scraping/hotlinking of box art is permitted merely to fill visual gaps.
+
+Reference: `CATALOGUE_V1.md`.
