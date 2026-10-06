@@ -602,3 +602,15 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [ ] rebuild committed browser catalogue index
 - [ ] sync canonical catalogue to D1
 - [ ] deploy and verify public search performance
+
+
+### Production v2 UI integration
+
+- [x] apply approved GrailRaven v2 shell to production homepage
+- [x] apply approved GrailRaven v2 shell to functional Search page
+- [x] preserve Search/PALScout/Saved Hunts/account hooks
+- [x] add forgiving-search user copy
+- [x] add production UI integrity tests
+- [ ] deploy updated app to Cloudflare
+- [ ] verify grailraven.com homepage and Search on desktop/mobile
+- [ ] then continue IGDB commercial-partnership outreach and catalogue promotion
