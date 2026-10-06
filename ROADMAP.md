@@ -666,3 +666,22 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [ ] await IGDB commercial partnership response
 - [ ] only after approval, set `IGDB_COMMERCIAL_APPROVED=true`
 - [ ] run approved remote promotion workflow
+
+
+### Full-catalogue search quality
+
+- [x] separate forgiving user search from strict import identity matching
+- [x] add provider-independent curated alias layer
+- [x] add misleading-alias suppression layer
+- [x] add exact / alias / acronym / prefix / token ranking
+- [x] add Roman/Arabic numeral equivalence
+- [x] add bounded typo correction
+- [x] add ambiguity detection
+- [x] replace large native datalist strategy with top-six ranked autocomplete
+- [x] add keyboard-accessible autocomplete
+- [x] add 24-case full-catalogue search benchmark
+- [x] add search performance regression budgets
+- [x] gate future full-catalogue promotion on search benchmark
+- [ ] run full 8,433-game search benchmark
+- [ ] review any failed/ambiguous benchmark cases
+- [ ] deploy autocomplete improvement to current 100-game public Search after benchmark passes
