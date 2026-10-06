@@ -1394,3 +1394,37 @@ Publication status remains unchanged:
 - publication gate remains `IGDB_COMMERCIAL_APPROVAL_REQUIRED`
 
 The promotion/D1 pipeline is therefore technically ready pending the IGDB commercial-use response.
+
+
+## Full-catalogue search v1 ready for benchmark — 6 October 2026
+
+Implemented a provider-independent forgiving catalogue search layer while preserving strict import/PALScout identity rules.
+
+New:
+- `shared/catalogue-search-core.js`
+- `catalogue/search-aliases.json`
+- `scripts/benchmark-catalogue-search.mjs`
+- `.github/workflows/full-catalogue-search-benchmark.yml`
+- `CATALOGUE_SEARCH_V1.md`
+
+Search capabilities:
+- exact titles
+- partial/prefix search
+- curated + provider aliases
+- abbreviations/acronyms
+- Roman/Arabic numeral equivalence
+- in-order token search
+- bounded typo correction
+- explicit ambiguity handling
+- curated suppression of misleading provider aliases
+
+Production Search improvement:
+- removes the future 8,433-option native datalist approach
+- renders only the top six ranked suggestions
+- autocomplete is keyboard accessible
+- selecting a suggestion selects its platform
+- the approved v2 screenshot composition is unchanged while autocomplete is closed
+
+The full promotion workflow is now additionally gated on the search-quality/performance benchmark.
+
+Next action: run `Benchmark full catalogue search` in GitHub Actions. Full IGDB data remains development-only.
