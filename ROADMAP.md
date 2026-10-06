@@ -557,3 +557,17 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [ ] audit remaining ambiguous/unresolved benchmark titles
 - [ ] freeze v1 provider-filter rules
 - [ ] build first dry-run catalogue importer only after this gate passes
+
+
+### IGDB full catalogue dry import — ready
+
+- [x] corrected provider game-type filtering
+- [x] retain existing 100 seed IDs and PALScout coverage
+- [x] add conservative same-title provider collision handling
+- [x] ensure at most one automatic IGDB mapping per existing seed
+- [x] keep IGDB artwork out of canonical/live data pending commercial-use decision
+- [x] generate proposed catalogue + review report only
+- [ ] run dry-import workflow
+- [ ] inspect proposed totals, seed mapping gaps and collision groups
+- [ ] create explicit provider mapping overrides for approved regional-title cases
+- [ ] only then decide whether to promote a generated catalogue into canonical data
