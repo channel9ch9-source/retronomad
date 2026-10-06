@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { buildCatalogueSearchIndex, normalizeCatalogueTitle, validateCatalogue } from "../shared/catalogue-core.js";
+import { buildCatalogueSearchIndex, mergeCatalogueSearchAliases, normalizeCatalogueTitle, validateCatalogue } from "../shared/catalogue-core.js";
 
 export function stableCatalogueJson(document){
   return JSON.stringify(document,null,2)+"\n";
@@ -91,10 +91,10 @@ export function buildPromotionManifest(candidate,seed,{source="IGDB",requireFull
     }
   }
 
-  const aliasCount=candidate.games.reduce((n,g)=>{
-    const unique=new Set((g.aliases||[]).map(normalizeCatalogueTitle).filter(Boolean));
-    return n+unique.size;
-  },0);
+  const aliasCount=candidate.games.reduce(
+    (n,g)=>n+mergeCatalogueSearchAliases(g,supplementalAliases,suppressedAliases).length,
+    0
+  );
   const refKeysByPlatform=new Set();
   const refPlatforms=new Map();
   let externalRefCount=0;
