@@ -13,7 +13,7 @@ if(!validation.ok){
   console.error(validation.errors.join("\n"));
   process.exit(1);
 }
-const index=buildCatalogueSearchIndex(document,searchAliases.aliases||{});
+const index=buildCatalogueSearchIndex(document,searchAliases.aliases||{},searchAliases.suppressAliases||{});
 const counts=index.reduce((acc,row)=>{
   acc[row.platform]=(acc[row.platform]||0)+1;
   return acc;
