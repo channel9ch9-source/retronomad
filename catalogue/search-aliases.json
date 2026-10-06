@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "description": "Curated user-facing search aliases independent of catalogue metadata providers.",
+  "aliases": {
+    "dreamcast:jet-set-radio": [
+      "Jet Grind Radio",
+      "JSR"
+    ],
+    "dreamcast:resident-evil-2": [
+      "RE2",
+      "Biohazard 2"
+    ],
+    "ps1:crash-bandicoot-3-warped": [
+      "Crash 3",
+      "Crash Bandicoot 3",
+      "Crash 3 Warped"
+    ],
+    "ps1:final-fantasy-vii": [
+      "FF7",
+      "FFVII",
+      "Final Fantasy 7"
+    ],
+    "ps1:medievil-2": [
+      "MediEvil II"
+    ],
+    "ps1:resident-evil-2": [
+      "RE2",
+      "Biohazard 2"
+    ],
+    "ps2:forbidden-siren": [
+      "Siren"
+    ],
+    "ps2:marvel-vs-capcom-2-new-age-of-heroes": [
+      "MVC2",
+      "Marvel vs Capcom 2"
+    ],
+    "ps2:metal-gear-solid-3-subsistence": [
+      "MGS3",
+      "MGS3S",
+      "Metal Gear Solid 3"
+    ],
+    "ps2:obscure-ii": [
+      "ObsCure 2",
+      "ObsCure: The Aftermath"
+    ],
+    "ps2:project-zero": [
+      "Fatal Frame"
+    ],
+    "ps2:project-zero-ii-crimson-butterfly": [
+      "Fatal Frame II: Crimson Butterfly",
+      "Fatal Frame 2"
+    ],
+    "ps2:project-zero-3-the-tormented": [
+      "Fatal Frame III: The Tormented",
+      "Fatal Frame 3",
+      "Project Zero III: The Tormented"
+    ],
+    "ps2:shin-megami-tensei-lucifer-s-call": [
+      "SMT3",
+      "SMTIII",
+      "Shin Megami Tensei: Nocturne"
+    ]
+  }
+}
