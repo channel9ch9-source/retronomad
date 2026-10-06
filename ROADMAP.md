@@ -533,3 +533,15 @@ Current direction:
 - [ ] Only then decide whether IGDB becomes the primary full-catalogue importer
 
 Details: `CATALOGUE_SOURCE_EVALUATION.md`.
+
+
+### IGDB inventory benchmark — ready to run
+
+- [x] Build full-platform paginated read-only IGDB inventory harness
+- [x] Add exact canonical/alias-only safe resolver
+- [x] Add ambiguous-name/alias collision reporting
+- [x] Add non-authoritative review candidates for unresolved benchmark rows
+- [ ] Run platform-wide IGDB inventory benchmark
+- [ ] Inspect complete PS1 / PS2 / Dreamcast populations and collisions
+- [ ] Define safe filtering rules for non-retail/version/noise records
+- [ ] Decide whether IGDB is suitable for first dry-run full catalogue import
