@@ -274,3 +274,76 @@ body.production-v2.home-v2 footer{border-color:#202020}
   body.production-v2 .hero{padding-top:42px}
   body.production-v2 .facts{grid-template-columns:1fr}
 }
+
+
+/* Exact production Search layout based on the approved design-preview. */
+body.search-production-v2{background:#000;color:var(--text)}
+.v2-search-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.v2-primary-action,.v2-secondary-action{
+  border-radius:10px;padding:11px 15px;font-weight:900;cursor:pointer;
+}
+.v2-primary-action{background:#fff;color:#000;border:1px solid #fff}
+.v2-secondary-action{background:#000;color:#fff;border:1px solid #4a4a4a}
+.v2-primary-action:disabled,.v2-secondary-action:disabled{opacity:.45;cursor:not-allowed}
+.v2-saved-message{color:#9beaaa;font-size:12px}.v2-saved-message a{text-decoration:underline}
+.v2-price-input{width:100%;background:#050505;border:1px solid #3b4652;border-radius:10px;color:var(--text);padding:11px 12px}
+.v2-filter-note{color:#7f8b95;font-size:11px;line-height:1.5}
+.v2-target{border:1px solid #285f34;background:#031107;border-radius:13px;padding:16px;margin:16px 0}
+.v2-target h3{font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;margin:5px 0;font-size:23px}
+.v2-target p{margin:0;color:#aab5be}
+.v2-target .chip{border:1px solid #2d6538;border-radius:999px;padding:5px 8px;color:#a8f3b7;font-size:11px}
+.v2-empty{border:1px dashed #414141;border-radius:14px;padding:34px;text-align:center;color:#89949e;margin-top:16px;background:#020202}
+.v2-empty strong{display:block;color:var(--text);font-size:18px;margin-bottom:5px}
+.v2-empty span{display:block}
+.v2-results{min-width:0}
+.v2-results .v2-cards:empty{display:none}
+.v2-results .v2-market{display:block;margin-top:8px}
+.v2-card .v2-cover-main{white-space:normal;overflow:hidden;text-overflow:ellipsis}
+.v2-card .v2-desc{overflow-wrap:anywhere}
+.v2-chip.match{color:var(--green);border-color:var(--green);background:var(--green-bg)}
+.v2-chip.review{color:var(--amber);border-color:var(--amber);background:var(--amber-bg)}
+.v2-chip.filtered{color:var(--red);border-color:var(--red);background:var(--red-bg)}
+
+/* Shared v2 treatment for functional pages that predate the preview. */
+body.app-v2{
+  margin:0;background:#000;color:var(--text);
+  font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+body.app-v2 .wrap{width:min(1180px,calc(100% - 32px));margin:auto}
+body.app-v2 .hero{padding:60px 0 28px;border-bottom:1px solid #171717}
+body.app-v2 .hero .kicker,body.app-v2 .kicker{color:#a9b2bd;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:800}
+body.app-v2 h1,body.app-v2 h2,body.app-v2 h3{
+  font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+}
+body.app-v2 h1{font-size:clamp(44px,6vw,70px);line-height:.98;letter-spacing:-.04em;font-weight:600}
+body.app-v2 .lead{color:#b2bbc3}
+body.app-v2 .notice{background:#120f08;border-color:#4b4021;color:#d7c995}
+body.app-v2 .card,body.app-v2 .panel,body.app-v2 .hunt{
+  background:#030303;border-color:#303030;box-shadow:none;
+}
+body.app-v2 .field label{color:#d8d2c7}
+body.app-v2 input,body.app-v2 textarea,body.app-v2 select{
+  background:#050505!important;border-color:#383838!important;color:var(--text)!important;
+}
+body.app-v2 .btn{background:#000;color:#fff;border-color:#494949}
+body.app-v2 .btn.primary,body.app-v2 button.btn:not(.secondary):not(.danger){background:#fff;color:#000;border-color:#fff}
+body.app-v2 .btn.danger{color:var(--red)}
+body.app-v2 .state,body.app-v2 .box,body.app-v2 .fact,body.app-v2 .providerbox,body.app-v2 .photozone,
+body.app-v2 .gallerycheck,body.app-v2 .evidencebox,body.app-v2 .pricingbox,body.app-v2 .compatbox,body.app-v2 .verdict{
+  background:#050505;border-color:#303030;
+}
+body.app-v2 .status{color:var(--green);border-color:var(--green)}
+body.app-v2 .status.paused{color:var(--amber);border-color:var(--amber)}
+body.app-v2 .status.archived{color:var(--red);border-color:var(--red)}
+body.app-v2 .chip,body.app-v2 .badge{background:#070707;border-color:#3b4652}
+body.app-v2 .empty{background:#020202;border-color:#3a3a3a}
+body.app-v2 .hunthead,body.app-v2 .huntfoot,body.app-v2 .pricinghead,body.app-v2 .evidencehead{border-color:#282828}
+body.app-v2 .meta,body.app-v2 .muted,body.app-v2 .subnote{color:#85919c}
+body.app-v2 .evrow,body.app-v2 .pricingcell,body.app-v2 .pricingnote{border-color:#232323}
+body.app-v2 .ocrbar{background:var(--green)}
+
+@media(max-width:760px){
+  .v2-search-actions{align-items:stretch}
+  .v2-primary-action,.v2-secondary-action{flex:1 1 140px}
+  body.app-v2 .hero{padding-top:40px}
+}
