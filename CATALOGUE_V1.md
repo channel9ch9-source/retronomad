@@ -148,3 +148,12 @@ Do not commit a provider-specific dependency into the core schema. Provider adap
 6. Expand base catalogue platform by platform.
 7. Add a public Catalogue browsing page.
 8. Increment PALScout release coverage independently, prioritizing high-interest/high-value games.
+
+
+## Catalogue source evaluation
+
+Current source research and recommendation are recorded in `CATALOGUE_SOURCE_EVALUATION.md`.
+
+Current first candidate to benchmark: **IGDB**.
+
+Do not import a full external catalogue until its coverage/duplicate behavior has been measured against the pinned 100-game set.
