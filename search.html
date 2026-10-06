@@ -187,6 +187,7 @@ function renderTarget(t){
  document.querySelector("#cardPreview").style.display="block";
  document.querySelector("#saveBtn").disabled=false;
  document.querySelector("#targetTitle").textContent=t.game+(t.platform?" · "+t.platform:"");
+ document.querySelector("#resultsTitle").textContent="Results for “"+t.game+"”";
  document.querySelector("#targetText").textContent="GrailRaven will ask connected marketplace sources for candidate listings, then PALScout will classify them before they are eligible to appear as matches.";
  const chips=[
   releaseLabels[t.releasePreference],editionLabels[t.editionPreference],completeLabels[t.completeness],
