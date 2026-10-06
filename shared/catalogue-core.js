@@ -72,7 +72,19 @@ export function validateCatalogue(document) {
   return { ok: errors.length === 0, errors };
 }
 
-export function buildCatalogueSearchIndex(document) {
+export function mergeCatalogueSearchAliases(game, supplementalAliases = {}) {
+  const out = [], seen = new Set();
+  for (const value of [...(game.aliases || []), ...(supplementalAliases?.[game.id] || [])]) {
+    const display = String(value || "").trim();
+    const normalized = normalizeCatalogueTitle(display);
+    if (!display || !normalized || seen.has(normalized) || normalized === normalizeCatalogueTitle(game.title)) continue;
+    seen.add(normalized);
+    out.push(display);
+  }
+  return out;
+}
+
+export function buildCatalogueSearchIndex(document, supplementalAliases = {}) {
   const validation = validateCatalogue(document);
   if (!validation.ok) throw new Error(`Invalid catalogue: ${validation.errors.join("; ")}`);
   return document.games
@@ -80,7 +92,7 @@ export function buildCatalogueSearchIndex(document) {
       id: game.id,
       title: game.title,
       platform: game.platform,
-      aliases: [...game.aliases],
+      aliases: mergeCatalogueSearchAliases(game, supplementalAliases),
       releaseYear: game.releaseYear ?? null,
       coverage: game.releaseIntelligence?.coverage || "BASE_ONLY"
     }))
