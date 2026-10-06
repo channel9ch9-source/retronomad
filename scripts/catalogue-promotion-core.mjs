@@ -95,16 +95,23 @@ export function buildPromotionManifest(candidate,seed,{source="IGDB",requireFull
     const unique=new Set((g.aliases||[]).map(normalizeCatalogueTitle).filter(Boolean));
     return n+unique.size;
   },0);
-  const refKeys=new Set();
+  const refKeysByPlatform=new Set();
+  const refPlatforms=new Map();
   let externalRefCount=0;
   for(const game of candidate.games){
     for(const ref of externalRefRows(game)){
-      const key=ref.provider+"|"+ref.externalId;
-      if(refKeys.has(key))throw new Error("Duplicate provider external reference across games: "+key);
-      refKeys.add(key);
+      const platformKey=ref.provider+"|"+ref.externalId+"|"+game.platform;
+      if(refKeysByPlatform.has(platformKey)){
+        throw new Error("Duplicate provider external reference on the same platform: "+platformKey);
+      }
+      refKeysByPlatform.add(platformKey);
+      const providerKey=ref.provider+"|"+ref.externalId;
+      if(!refPlatforms.has(providerKey))refPlatforms.set(providerKey,new Set());
+      refPlatforms.get(providerKey).add(game.platform);
       externalRefCount++;
     }
   }
+  const crossPlatformProviderRefReuseGroups=[...refPlatforms.values()].filter(platforms=>platforms.size>1).length;
   const artworkCount=candidate.games.reduce((n,g)=>n+artworkRows(g).length,0);
   const canonicalText=stableCatalogueJson(candidate);
   const checksum=sha256Hex(canonicalText);
@@ -127,6 +134,7 @@ export function buildPromotionManifest(candidate,seed,{source="IGDB",requireFull
       aliases:aliasCount,
       externalRefs:externalRefCount,
       artwork:artworkCount,
+      crossPlatformProviderRefReuseGroups,
       baseOnly:baseOnly.length,
       palScoutPartial:partial.length,
       palScoutDeep:deep.length,
