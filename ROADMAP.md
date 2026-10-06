@@ -490,3 +490,27 @@ Final requested cleanup before pausing visual work:
 - typography remains deliberately unresolved
 
 Next priority after this preview check: resume full PS1 / PS2 / Dreamcast catalogue architecture and core app work rather than continuing aesthetic iteration.
+
+
+## Full catalogue architecture v1 — 6 October 2026
+
+Architecture foundation implemented:
+- [x] Separate base game catalogue from PALScout exact-release evidence
+- [x] Define canonical v1 game schema for PS1 / PS2 / Dreamcast
+- [x] Seed canonical catalogue with the existing 100 benchmark games
+- [x] Preserve 40 PS1 / 40 PS2 / 20 Dreamcast benchmark population
+- [x] Add release-intelligence coverage states: BASE_ONLY / PALSCOUT_PARTIAL / PALSCOUT_DEEP
+- [x] Add shared catalogue validation/search-index core
+- [x] Generate a compact browser search index instead of shipping full metadata to every page
+- [x] Decouple Search autocomplete from release-evidence rows
+- [x] Add D1 catalogue tables for games, aliases, external refs, artwork rights and import audit runs
+- [x] Add catalogue regression tests
+- [x] Document architecture in `CATALOGUE_V1.md`
+
+Next catalogue work:
+- [ ] Evaluate legitimate full-catalogue metadata sources and terms for PS1 / PS2 / Dreamcast
+- [ ] Evaluate legitimate cover-art sources/usage terms separately
+- [ ] Select primary source and optional supplemental sources
+- [ ] Build source-specific importer with collision/review reporting
+- [ ] Expand one platform at a time while keeping the 100-game benchmark pinned
+- [ ] Build public Catalogue browse/detail UI after data import is stable
