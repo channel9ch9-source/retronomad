@@ -66,3 +66,15 @@ The workflow uploads:
 - `igdb-dry-import-review-YYYY-MM-DD.json` — counts, collisions, held rows and unmapped seed games
 
 The proposed file is an artifact for review, not the canonical catalogue.
+
+
+## Invalid provider dates
+
+Provider release dates are not trusted blindly.
+
+If an IGDB `first_release_date` resolves to a year outside the canonical catalogue's allowed 1980–2100 range:
+- `releaseYear` becomes `null`
+- the raw anomalous year is recorded in `review.invalidReleaseYears`
+- the anomaly does not crash the entire dry import
+
+The workflow uploads available diagnostic artifacts even if a later validation error occurs.
