@@ -1,0 +1,276 @@
+/* Production bridge from the approved Collector Intelligence preview to the live app. */
+body.production-v2{
+  background:#000;
+  color:var(--text);
+  font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+body.production-v2 .wrap{width:min(1220px,calc(100% - 32px));margin:auto}
+body.production-v2 .v2-topbar{position:sticky;top:0;z-index:30}
+body.production-v2 .v2-brand{color:var(--text)}
+body.production-v2 .v2-meta{display:block}
+body.production-v2 .v2-links a.active{color:#fff}
+body.production-v2 .v2-links a{white-space:nowrap}
+
+body.production-v2 .hero{
+  position:relative;
+  overflow:hidden;
+  padding:64px 0 42px;
+  border-bottom:1px solid var(--line);
+}
+body.production-v2 .hero:before{
+  content:"";
+  position:absolute;
+  inset:-1px calc(50% - 50vw);
+  z-index:-1;
+  background:
+    radial-gradient(circle at 78% 32%,rgba(255,92,0,.13),transparent 24%),
+    linear-gradient(100deg,#000 0%,#000 48%,#090909 100%);
+}
+body.production-v2 .hero .kicker,
+body.production-v2 .kicker{
+  color:#a9b2bd;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+body.production-v2 .hero h1,
+body.production-v2 h1{
+  font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  color:var(--text);
+  font-weight:600;
+}
+body.production-v2 .hero h1{
+  max-width:900px;
+  font-size:clamp(46px,6vw,76px);
+  line-height:.96;
+  letter-spacing:-.045em;
+  margin:10px 0 14px;
+}
+body.production-v2 .lead{color:#b8c0c8}
+body.production-v2 .notice{
+  border:1px solid #4b4021;
+  background:#120f08;
+  color:#d7c995;
+  border-radius:12px;
+}
+body.production-v2 .notice strong{color:#f0df9b}
+
+body.production-v2 .layout{
+  display:grid;
+  grid-template-columns:330px minmax(0,1fr);
+  gap:22px;
+  padding:28px 0 72px;
+  align-items:start;
+}
+body.production-v2 .panel{
+  background:#000;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+}
+body.production-v2 .layout>.panel:first-child{
+  position:sticky;
+  top:96px;
+}
+body.production-v2 .panel h2{
+  font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  font-weight:600;
+  letter-spacing:-.02em;
+  color:var(--text);
+}
+body.production-v2 .field{margin-bottom:17px}
+body.production-v2 .field label{
+  color:#d9d4ca;
+  font-size:10px;
+  font-weight:850;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+}
+body.production-v2 .field input,
+body.production-v2 .field select{
+  width:100%;
+  background:#050505;
+  border:1px solid #3a3a3a;
+  border-radius:9px;
+  color:var(--text);
+  padding:11px 12px;
+  outline:none;
+}
+body.production-v2 .field input:focus,
+body.production-v2 .field select:focus{border-color:#878787;box-shadow:0 0 0 2px rgba(255,255,255,.06)}
+body.production-v2 .field small{color:#75808a}
+body.production-v2 .check{color:#aeb7bf}
+body.production-v2 .check input{accent-color:var(--green)}
+
+body.production-v2 .btn{
+  border:1px solid #fff;
+  background:#fff;
+  color:#000;
+  border-radius:9px;
+  font-weight:900;
+  letter-spacing:.01em;
+}
+body.production-v2 .btn.secondary{
+  background:#000;
+  color:#fff;
+  border-color:#494949;
+}
+body.production-v2 .btn:hover{transform:translateY(-1px)}
+body.production-v2 .saved{color:var(--green)}
+
+body.production-v2 .resultshead{
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+body.production-v2 .resultshead h2{font-size:24px;margin:4px 0 0}
+body.production-v2 .sourcebadge{
+  color:#c8b56c;
+  border:1px solid #51451d;
+  background:#0d0b05;
+}
+body.production-v2 .target{
+  border:1px solid #244f2c;
+  background:#031107;
+  border-radius:12px;
+  margin-top:16px;
+}
+body.production-v2 .chip{
+  background:#06170a;
+  border-color:#24542e;
+  color:#9af4ac;
+}
+body.production-v2 .empty{
+  border:1px dashed #3a3a3a;
+  background:#030303;
+  color:#8e99a3;
+  margin-top:16px;
+}
+body.production-v2 .empty strong{color:var(--text)}
+body.production-v2 .live-results{margin-top:16px}
+body.production-v2 .live-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:6px;
+  padding:18px;
+  background:#050505;
+  border:1px solid #303030;
+  border-radius:12px;
+  box-shadow:0 14px 40px rgba(0,0,0,.24);
+}
+body.production-v2 .live-card.match{border-left:4px solid var(--green)}
+body.production-v2 .live-card.review{border-left:4px solid var(--amber)}
+body.production-v2 .live-card.filtered{border-left:4px solid var(--red);opacity:.78}
+body.production-v2 .live-card h3{
+  font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  font-weight:600;
+  font-size:20px;
+}
+body.production-v2 .live-state{
+  background:#000;
+  font-weight:950;
+}
+body.production-v2 .live-card.match .live-state{color:var(--green);border-color:var(--green)}
+body.production-v2 .live-card.review .live-state{color:var(--amber);border-color:var(--amber)}
+body.production-v2 .live-card.filtered .live-state{color:var(--red);border-color:var(--red)}
+body.production-v2 .cardpreview{
+  background:#030303;
+  border-color:#303030;
+  margin-top:16px;
+}
+body.production-v2 .cardtop,
+body.production-v2 .cardfoot{border-color:#292929}
+body.production-v2 .fact{background:#050505;border-color:#303030}
+body.production-v2 .fact span{color:#737f89}
+
+body.production-v2.home-v2 .hero{
+  padding:86px 0 72px;
+}
+body.production-v2.home-v2 .hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.12fr) minmax(330px,.88fr);
+  gap:48px;
+  align-items:center;
+}
+body.production-v2.home-v2 .eyebrow{
+  display:inline-flex;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#a9b2bd;
+  font-size:10px;
+  letter-spacing:.2em;
+}
+body.production-v2.home-v2 h1 span{color:#b9b0a2}
+body.production-v2.home-v2 .actions .btn{
+  width:auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:13px 18px;
+  text-decoration:none;
+}
+body.production-v2.home-v2 .actions .btn:not(.primary){background:#000;color:#fff;border-color:#4a4a4a}
+body.production-v2.home-v2 .checkcard{
+  background:#030303;
+  border:1px solid #353535;
+  border-radius:16px;
+  box-shadow:0 32px 90px rgba(0,0,0,.5);
+}
+body.production-v2.home-v2 .checkhead{border-color:#292929}
+body.production-v2.home-v2 .live{
+  color:var(--green);
+  background:#06170a;
+  border-color:#285f34;
+}
+body.production-v2.home-v2 .inputmock,
+body.production-v2.home-v2 .fact{background:#050505;border-color:#2e2e2e}
+body.production-v2.home-v2 .resultcard{background:#031107;border-color:#285f34}
+body.production-v2.home-v2 .badge{color:var(--green);border-color:#285f34}
+body.production-v2.home-v2 section{border-top:1px solid #171717}
+body.production-v2.home-v2 h2{
+  font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  font-weight:600;
+  letter-spacing:-.035em;
+}
+body.production-v2.home-v2 .step,
+body.production-v2.home-v2 .feature,
+body.production-v2.home-v2 .region,
+body.production-v2.home-v2 .stat{
+  background:#030303;
+  border-color:#2c2c2c;
+}
+body.production-v2.home-v2 .num,
+body.production-v2.home-v2 .state{color:var(--green)}
+body.production-v2.home-v2 .state.planned,
+body.production-v2.home-v2 .futuretag{color:var(--amber)}
+body.production-v2.home-v2 .palscout{background:linear-gradient(180deg,#030a04,#000)}
+body.production-v2.home-v2 .callout{background:#050505;border-color:#343434}
+body.production-v2.home-v2 .region.active{background:#031107;border-color:#285f34}
+body.production-v2.home-v2 .cta{
+  background:#030303;
+  border-color:#363636;
+}
+body.production-v2.home-v2 footer{border-color:#202020}
+
+@media(max-width:980px){
+  body.production-v2 .v2-meta{display:none}
+  body.production-v2 .layout{grid-template-columns:1fr}
+  body.production-v2 .layout>.panel:first-child{position:static}
+  body.production-v2.home-v2 .hero-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  body.production-v2 .v2-nav{flex-wrap:wrap;gap:10px;padding:10px 0}
+  body.production-v2 .v2-menu-button{display:block;margin-left:auto}
+  body.production-v2 .v2-links{display:none;width:100%;order:3;flex-direction:column;align-items:stretch}
+  body.production-v2 .v2-links.mobile-open{display:flex}
+  body.production-v2 .v2-links a{padding:10px 4px}
+  body.production-v2 .row{grid-template-columns:1fr}
+  body.production-v2 .facts{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  body.production-v2 .v2-wordmark{font-size:23px}
+  body.production-v2 .v2-raven{width:40px;height:40px}
+  body.production-v2 .hero{padding-top:42px}
+  body.production-v2 .facts{grid-template-columns:1fr}
+}
