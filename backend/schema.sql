@@ -257,13 +257,16 @@ CREATE TABLE IF NOT EXISTS catalogue_v2_external_refs (
   external_id TEXT NOT NULL,
   canonical_url TEXT,
   metadata_json TEXT NOT NULL DEFAULT '{}',
-  PRIMARY KEY (dataset_id, provider, external_id),
+  PRIMARY KEY (dataset_id, game_id, provider, external_id),
   FOREIGN KEY (dataset_id, game_id)
     REFERENCES catalogue_v2_games(dataset_id, game_id) ON DELETE CASCADE
 );
 
 CREATE INDEX IF NOT EXISTS idx_catalogue_v2_external_refs_game
   ON catalogue_v2_external_refs(dataset_id, game_id, provider);
+
+CREATE INDEX IF NOT EXISTS idx_catalogue_v2_external_refs_provider
+  ON catalogue_v2_external_refs(dataset_id, provider, external_id);
 
 CREATE TABLE IF NOT EXISTS catalogue_v2_artwork (
   dataset_id TEXT NOT NULL,
