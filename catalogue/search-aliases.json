@@ -58,7 +58,13 @@
     "ps2:shin-megami-tensei-lucifer-s-call": [
       "SMT3",
       "SMTIII",
-      "Shin Megami Tensei: Nocturne"
+      "Shin Megami Tensei: Nocturne",
+      "Nocturne"
+    ]
+  },
+  "suppressAliases": {
+    "ps2:bloodrayne": [
+      "Nocturne"
     ]
   }
 }
