@@ -614,3 +614,19 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] deploy updated app to Cloudflare
 - [ ] verify grailraven.com homepage and Search on desktop/mobile
 - [ ] then continue IGDB commercial-partnership outreach and catalogue promotion
+
+
+### Correct v2 production migration
+
+- [x] declare design-preview markup as production layout authority
+- [x] rebuild Search using the approved v2 structure rather than old-panel skinning
+- [x] preserve functional Search/PALScout/Saved Hunts hooks
+- [x] apply v2 shell to Saved Hunts
+- [x] apply v2 shell to Account
+- [x] apply v2 shell to Listing Checker
+- [x] apply v2 shell to About / Privacy / Terms
+- [x] add site-wide v2 layout regression contract
+- [ ] deploy corrected v2 production UI to Cloudflare
+- [ ] verify Search against approved mobile/desktop preview
+- [ ] verify Saved Hunts / Account / Listing Checker mobile navigation
+- [ ] then resume IGDB commercial-partnership outreach
