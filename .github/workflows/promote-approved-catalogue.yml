@@ -1,0 +1,150 @@
+name: Promote approved IGDB catalogue
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Type PROMOTE_IGDB_CATALOGUE after IGDB commercial approval is recorded
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    if: ${{ vars.IGDB_COMMERCIAL_APPROVED == 'true' && inputs.confirm == 'PROMOTE_IGDB_CATALOGUE' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      IGDB_COMMERCIAL_APPROVED: ${{ vars.IGDB_COMMERCIAL_APPROVED }}
+      CATALOGUE_PROMOTION_CONFIRM: ${{ inputs.confirm }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install tooling
+        run: npm install
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Rebuild fresh IGDB candidate
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+        run: node scripts/igdb-dry-import.mjs
+
+      - name: Resolve candidate path
+        shell: bash
+        run: |
+          CANDIDATE="$(ls -1 benchmarks/igdb-dry-import-proposed-*.json | head -n 1)"
+          test -n "$CANDIDATE"
+          echo "CANDIDATE=$CANDIDATE" >> "$GITHUB_ENV"
+
+      - name: Validate promotion candidate
+        run: node scripts/validate-catalogue-promotion.mjs --input="$CANDIDATE"
+
+      - name: Prepare candidate + manifest
+        run: node scripts/prepare-catalogue-promotion.mjs --input="$CANDIDATE" --out-dir=promotion-output
+
+      - name: Export immutable D1 dataset
+        run: node scripts/export-catalogue-d1.mjs --input=promotion-output/canonical-candidate.json --manifest=promotion-output/manifest.json --out-dir=promotion-output/d1
+
+      - name: Resolve D1 and render Wrangler config
+        run: npm run prepare:cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AUTH_EMAIL_FROM: ${{ vars.AUTH_EMAIL_FROM }}
+          AUTH_EMAIL_WEBHOOK_URL: ${{ secrets.AUTH_EMAIL_WEBHOOK_URL }}
+
+      - name: Apply D1 migrations
+        run: npm run db:migrate
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Stage immutable dataset in remote D1
+        shell: bash
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          for f in $(find promotion-output/d1 -maxdepth 1 -type f -name '[0-8][0-9]-*.sql' | sort); do
+            echo "Loading $f"
+            npx wrangler d1 execute DB --remote --config .wrangler.deploy.jsonc --file="$f" --yes
+          done
+
+      - name: Verify staged remote dataset
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/verify-d1-catalogue.mjs --manifest=promotion-output/manifest.json --remote --config=.wrangler.deploy.jsonc
+
+      - name: Promote repository canonical catalogue
+        shell: bash
+        run: |
+          cp promotion-output/canonical-candidate.json catalogue/base-catalogue.json
+          npm run catalogue:build
+          npm test
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalogue/base-catalogue.json catalogue-index.js
+          if ! git diff --cached --quiet; then
+            DATASET_ID="$(node -e "console.log(JSON.parse(require('fs').readFileSync('promotion-output/manifest.json','utf8')).datasetId)")"
+            git commit -m "Promote canonical catalogue $DATASET_ID"
+            git push
+          fi
+
+      - name: Activate verified D1 dataset
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/activate-catalogue-dataset.mjs --manifest=promotion-output/manifest.json --config=.wrangler.deploy.jsonc
+
+      - name: Build production app from promoted catalogue
+        run: npm run build:cloudflare
+
+      - name: Configure Resend API key
+        if: env.RESEND_API_KEY != ''
+        shell: bash
+        run: printf '%s' "$RESEND_API_KEY" | npx wrangler secret put RESEND_API_KEY --config .wrangler.deploy.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+
+      - name: Configure optional email webhook secret
+        if: env.AUTH_EMAIL_WEBHOOK_SECRET != ''
+        shell: bash
+        run: printf '%s' "$AUTH_EMAIL_WEBHOOK_SECRET" | npx wrangler secret put AUTH_EMAIL_WEBHOOK_SECRET --config .wrangler.deploy.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AUTH_EMAIL_WEBHOOK_SECRET: ${{ secrets.AUTH_EMAIL_WEBHOOK_SECRET }}
+
+      - name: Deploy Worker + full static catalogue
+        run: npm run deploy:cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Upload promotion audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: approved-catalogue-promotion-audit
+          path: |
+            promotion-output/manifest.json
+            promotion-output/d1/export-summary.json
+            promotion-output/activation-result.json
+          if-no-files-found: warn
+          retention-days: 90
