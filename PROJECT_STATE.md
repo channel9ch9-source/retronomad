@@ -922,3 +922,27 @@ PriceCharting business-development update — 23/24 September 2026:
 - current PriceCharting documentation confirms public/third-party display of price data requires a commercial license and express written permission
 - PriceCharting also documents a Marketplace API with available-offer queries by product/console/condition; whether RetroNomad may surface those offers in a third-party buyer app must be explicitly confirmed with Brady
 - next PriceCharting step is to wait for Brady's response and then clarify both pricing-display rights and live Marketplace-offer usage
+
+
+## GrailRaven UI V2 design preview — 6 October 2026
+
+A separate design preview now exists:
+- `design-preview.html`
+- `ui-v2.css`
+- detailed durable specification: `UI_V2_DESIGN.md`
+
+The preview is intentionally isolated from the live Deal Finder and uses clearly labelled example UI data only.
+
+User selected the Collector Intelligence direction and requested these revisions after reviewing the first live preview:
+- near-black/charcoal base instead of murky dark blue
+- MATCH/active green `#00FF41`
+- REVIEW orange `#FF5F1F`
+- FILTERED red `#880808`
+- green active checkboxes/toggles/navigation instead of blue
+- more characterful gothic/old-world display typography, while retaining readable sans-serif UI text
+- the more elegant raven logo direction from the second visual mockup
+- a deliberately simplified phone layout with collapsible filters, shorter hero, fewer evidence thumbnails and more compact result cards
+
+These decisions are now implemented as the second preview pass and recorded in `UI_V2_DESIGN.md`.
+
+Do not migrate this visual system onto the production Search page until the preview has been reviewed again on desktop and mobile.
