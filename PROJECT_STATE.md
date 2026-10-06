@@ -1202,3 +1202,20 @@ Current IGDB documentation states that commercial usage is permitted through its
 Before the IGDB-backed full catalogue is published as part of GrailRaven's commercial product, contact IGDB at partner@igdb.com and complete/clarify the commercial partnership.
 
 Technical catalogue work may continue behind this publication gate.
+
+
+## Production UI v2 promotion — 6 October 2026
+
+The approved Collector Intelligence visual direction is no longer preview-only.
+
+Production changes:
+- `index.html` uses the GrailRaven v2 navigation/brand treatment
+- `search.html` uses the GrailRaven v2 navigation/brand treatment and production v2 skin
+- shared approved design remains in `ui-v2.css`
+- production bridge styles live in `production-v2.css`
+- the raven mark and warm ivory GrailRaven wordmark from the approved preview are used in production navigation
+- working Search/PALScout/Saved Hunts/account JavaScript hooks were preserved
+- search copy explicitly supports title, abbreviation and alternate-name lookup
+- regression tests protect the required production search IDs/scripts and v2 shell
+
+A Cloudflare deployment is required for these changes to become visible on `grailraven.com`.
