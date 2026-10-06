@@ -9,7 +9,11 @@
     "db:migrate": "wrangler d1 migrations apply DB --remote --config .wrangler.deploy.jsonc",
     "deploy:cloudflare": "wrangler deploy --config .wrangler.deploy.jsonc",
     "catalogue:build": "node scripts/build-catalogue.mjs",
-    "catalogue:validate": "node --test tests/catalogue-core.test.mjs"
+    "catalogue:validate": "node --test tests/catalogue-core.test.mjs",
+    "catalogue:promotion:prepare": "node scripts/prepare-catalogue-promotion.mjs",
+    "catalogue:d1:export": "node scripts/export-catalogue-d1.mjs",
+    "catalogue:d1:verify": "node scripts/verify-d1-catalogue.mjs",
+    "catalogue:d1:activate": "node scripts/activate-catalogue-dataset.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
