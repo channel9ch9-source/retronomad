@@ -1219,3 +1219,26 @@ Production changes:
 - regression tests protect the required production search IDs/scripts and v2 shell
 
 A Cloudflare deployment is required for these changes to become visible on `grailraven.com`.
+
+
+## Production v2 deployed successfully — 6 October 2026
+
+Cloudflare deployment completed successfully after the production v2 integration.
+
+Deployment verification:
+- all 17 regression tests passed
+- Cloudflare build completed successfully
+- production static assets uploaded:
+  - `production-v2.css`
+  - `index.html`
+  - `search.html`
+- Worker deployment succeeded
+- public brand environment remains GrailRaven
+- D1 migration step reported no pending migrations
+- build still intentionally uses the 100-game canonical catalogue; the 8,433-game IGDB candidate has not been promoted yet
+
+Next manual verification:
+- hard refresh `grailraven.com`
+- confirm homepage shows the GrailRaven v2 shell
+- open Search and confirm the functional Deal Finder uses the v2 styling
+- verify mobile navigation and core form controls visually
