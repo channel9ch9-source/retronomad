@@ -545,3 +545,15 @@ Details: `CATALOGUE_SOURCE_EVALUATION.md`.
 - [ ] Inspect complete PS1 / PS2 / Dreamcast populations and collisions
 - [ ] Define safe filtering rules for non-retail/version/noise records
 - [ ] Decide whether IGDB is suitable for first dry-run full catalogue import
+
+
+### IGDB dedup/filter benchmark — ready to run
+
+The platform inventory showed strong coverage but also duplicate/version ambiguity. Next gate:
+- [x] inspect IGDB `version_parent` and `game_type`
+- [x] create provisional include/review/exclude buckets
+- [x] re-test pinned 100 after edition/version filtering
+- [ ] run IGDB dedup/filter benchmark
+- [ ] audit remaining ambiguous/unresolved benchmark titles
+- [ ] freeze v1 provider-filter rules
+- [ ] build first dry-run catalogue importer only after this gate passes
