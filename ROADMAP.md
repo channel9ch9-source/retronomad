@@ -641,6 +641,6 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] restore Sort control and example result cards
 - [x] preserve functional search, aliases, Saved Hunts and marketplace hooks behind approved UI
 - [x] strengthen Saved Hunts / Account / Listing Checker v2 page hierarchy
-- [ ] deploy screenshot-parity correction
-- [ ] compare live desktop Search against reference screenshot
-- [ ] compare live mobile Search against reference screenshot
+- [x] deploy screenshot-parity correction
+- [x] compare live desktop Search against reference screenshot
+- [x] compare live mobile Search against reference screenshot
