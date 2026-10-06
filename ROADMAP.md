@@ -644,3 +644,22 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] deploy screenshot-parity correction
 - [x] compare live desktop Search against reference screenshot
 - [x] compare live mobile Search against reference screenshot
+
+
+### Catalogue promotion + D1 sync pipeline
+
+- [x] design immutable versioned D1 catalogue datasets
+- [x] add D1 v2 dataset migration
+- [x] add candidate checksum/manifest generation
+- [x] add idempotent D1 stage exporter
+- [x] add staged-data verification
+- [x] add gated activation command
+- [x] add D1 dataset rollback command
+- [x] make catalogue regression tests compatible with >100 canonical games
+- [x] add safe local end-to-end promotion workflow
+- [x] add hard-gated remote promotion workflow
+- [ ] run safe local promotion-pipeline validation
+- [ ] fix any CI/D1 issues found by that run
+- [ ] await IGDB commercial partnership response
+- [ ] only after approval, set `IGDB_COMMERCIAL_APPROVED=true`
+- [ ] run approved remote promotion workflow
