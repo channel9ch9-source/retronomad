@@ -75,19 +75,31 @@ function typeName(row){
   return String(row.game_type?.type||"unknown");
 }
 
+function normalizedType(row){
+  return normalizeCatalogueTitle(typeName(row));
+}
+
 function classifyRecord(row){
-  const type=typeName(row);
+  const rawType=typeName(row);
+  const type=normalizedType(row);
   const isVersion=Boolean(row.version_parent);
-  if(isVersion) return {bucket:"EXCLUDE_VERSION",reason:"version_parent"};
-  if(["dlc_addon","mod","episode","season","pack","update"].includes(type)){
-    return {bucket:"EXCLUDE_NON_BASE",reason:type};
+
+  if(isVersion) return {bucket:"EXCLUDE_VERSION",reason:"version_parent",gameType:rawType};
+
+  if(["dlc addon","mod","episode","season","pack addon","update"].includes(type)){
+    return {bucket:"EXCLUDE_NON_BASE",reason:type,gameType:rawType};
   }
-  if(["bundle","expansion"].includes(type)){
-    return {bucket:"REVIEW",reason:type};
+
+  if(["bundle","expansion","fork","unknown"].includes(type)){
+    return {bucket:"REVIEW",reason:type,gameType:rawType};
   }
-  // main games, ports, remakes, remasters, expanded games and standalone expansions
-  // remain candidates because physical console libraries can legitimately contain them.
-  return {bucket:"INCLUDE_CANDIDATE",reason:type};
+
+  if(["main game","port","remake","remaster","expanded game","standalone expansion"].includes(type)){
+    return {bucket:"INCLUDE_CANDIDATE",reason:type,gameType:rawType};
+  }
+
+  // New/unrecognised IGDB game types must never silently enter the base catalogue.
+  return {bucket:"REVIEW",reason:"unrecognised_game_type:"+type,gameType:rawType};
 }
 
 function exactMatches(game,records){
