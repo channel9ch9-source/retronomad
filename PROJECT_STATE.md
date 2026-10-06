@@ -946,3 +946,22 @@ User selected the Collector Intelligence direction and requested these revisions
 These decisions are now implemented as the second preview pass and recorded in `UI_V2_DESIGN.md`.
 
 Do not migrate this visual system onto the production Search page until the preview has been reviewed again on desktop and mobile.
+
+
+## UI V2 cleanup and pause — 6 October 2026
+
+User requested one final visual cleanup before returning to product/database development.
+
+Current preview decisions:
+- plain black page/panel base
+- MATCH green remains `#00FF41`
+- REVIEW orange is now `#FF5C00`
+- FILTERED red is now `#FF0023`
+- generic green search/check/navigation highlighting removed; neutral white/grey used for those controls for now
+- search hero is explicitly designed to use the selected game's cover/artwork once a legitimate catalogue artwork source exists
+- preview uses a non-live placeholder art layer rather than scraping/hotlinking cover art
+- raven mark now comes from the preferred second mockup; prior SVG approximation is rejected
+- mobile top navigation now uses a Menu dropdown instead of horizontal scrolling
+- typography is not approved/final and is intentionally deferred
+
+Visual design is now considered good enough to park temporarily. The next major product task should be full PS1 / PS2 / Dreamcast base-catalogue architecture and population, while retaining the existing 100-game exact-release set as the deep validation benchmark.
