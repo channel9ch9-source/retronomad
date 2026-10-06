@@ -4,6 +4,7 @@ import process from "node:process";
 import {
   artworkRows, chunkRows, externalRefRows, normalizeAlias, sha256Hex, sqlString, stableCatalogueJson
 } from "./catalogue-promotion-core.mjs";
+import { mergeCatalogueSearchAliases } from "../shared/catalogue-core.js";
 
 function arg(name,fallback=null){
   const prefix="--"+name+"=";
@@ -18,6 +19,7 @@ if(!input||!manifestPath){
 }
 const catalogue=JSON.parse(await fs.readFile(input,"utf8"));
 const manifest=JSON.parse(await fs.readFile(manifestPath,"utf8"));
+const searchConfig=JSON.parse(await fs.readFile(new URL("../catalogue/search-aliases.json",import.meta.url),"utf8"));
 const checksum=sha256Hex(stableCatalogueJson(catalogue));
 if(checksum!==manifest.checksumSha256)throw new Error("Catalogue checksum does not match promotion manifest");
 const datasetId=manifest.datasetId;
@@ -46,12 +48,20 @@ const aliasRows=[];
 const refRows=[];
 const artRows=[];
 for(const g of catalogue.games){
-  const seen=new Set();
-  for(const alias of g.aliases||[]){
+  const canonicalNorms=new Set((g.aliases||[]).map(normalizeAlias).filter(Boolean));
+  for(const alias of mergeCatalogueSearchAliases(
+    g,
+    searchConfig.aliases||{},
+    searchConfig.suppressAliases||{}
+  )){
     const norm=normalizeAlias(alias);
-    if(!norm||seen.has(norm))continue;
-    seen.add(norm);
-    aliasRows.push([datasetId,g.id,alias,norm,"CANONICAL_CATALOGUE"]);
+    aliasRows.push([
+      datasetId,
+      g.id,
+      alias,
+      norm,
+      canonicalNorms.has(norm)?"CANONICAL_CATALOGUE":"CURATED_SEARCH"
+    ]);
   }
   for(const ref of externalRefRows(g)){
     refRows.push([datasetId,g.id,ref.provider,ref.externalId,ref.canonicalUrl,JSON.stringify(ref.metadata||{})]);
