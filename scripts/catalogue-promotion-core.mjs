@@ -91,8 +91,20 @@ export function buildPromotionManifest(candidate,seed,{source="IGDB",requireFull
     }
   }
 
-  const aliasCount=candidate.games.reduce((n,g)=>n+(g.aliases||[]).length,0);
-  const externalRefCount=candidate.games.reduce((n,g)=>n+externalRefRows(g).length,0);
+  const aliasCount=candidate.games.reduce((n,g)=>{
+    const unique=new Set((g.aliases||[]).map(normalizeCatalogueTitle).filter(Boolean));
+    return n+unique.size;
+  },0);
+  const refKeys=new Set();
+  let externalRefCount=0;
+  for(const game of candidate.games){
+    for(const ref of externalRefRows(game)){
+      const key=ref.provider+"|"+ref.externalId;
+      if(refKeys.has(key))throw new Error("Duplicate provider external reference across games: "+key);
+      refKeys.add(key);
+      externalRefCount++;
+    }
+  }
   const artworkCount=candidate.games.reduce((n,g)=>n+artworkRows(g).length,0);
   const canonicalText=stableCatalogueJson(candidate);
   const checksum=sha256Hex(canonicalText);
