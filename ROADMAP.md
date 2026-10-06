@@ -475,3 +475,18 @@ Exit criteria for this milestone:
 2. user approves overall visual direction
 3. final/near-final logo direction is selected
 4. shared style/components can then be migrated to the working Search page without changing core PALScout/Saved Hunts/account logic
+
+
+### UI V2 visual work parked after cleanup — 6 October 2026
+
+Final requested cleanup before pausing visual work:
+- REVIEW orange changed to `#FF5C00`
+- FILTERED red changed to `#FF0023`
+- green removed from generic search/check/navigation highlights; neutral white/grey used for now
+- main/panel background moved to plain black
+- hero restored to a game-art-driven structure with a safe placeholder until a legitimate catalogue artwork source is chosen
+- preferred raven mark from the second mockup used in the preview instead of the rejected approximation
+- mobile primary navigation changed from horizontal scrolling to a Menu dropdown with vertically listed options
+- typography remains deliberately unresolved
+
+Next priority after this preview check: resume full PS1 / PS2 / Dreamcast catalogue architecture and core app work rather than continuing aesthetic iteration.
