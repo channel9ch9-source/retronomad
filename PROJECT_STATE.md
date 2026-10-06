@@ -1275,3 +1275,16 @@ Correction now implemented:
 - Saved Hunts, Account and Listing Checker were also moved onto stronger v2 page hierarchies rather than receiving only the v2 header
 
 A new Cloudflare deployment is required.
+
+
+## Live v2 screenshot parity verified — 6 October 2026
+
+The corrected production Search page was deployed and manually compared against the approved desktop and mobile reference screenshots.
+
+Result:
+- desktop Search visually matches the approved design-preview composition
+- mobile Search visually matches the approved reference composition
+- the user confirmed the live result looks the same / all good
+- Saved Hunts, Account and Listing Checker remain on the shared GrailRaven v2 shell
+
+The v2 Search visual migration is therefore considered complete. Future changes should preserve the screenshot-parity contract recorded in `UI_V2_DESIGN.md`.
