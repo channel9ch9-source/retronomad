@@ -45,3 +45,13 @@ test("browser search index stays lightweight and searchable",()=>{
   assert.equal(results[0].title,"Silent Hill");
   assert.equal(results[0].platform,"PS1");
 });
+
+
+test("committed browser index matches canonical catalogue",async()=>{
+  const js=await fs.readFile(new URL("../catalogue-index.js", import.meta.url),"utf8");
+  const prefix="// Generated from catalogue/base-catalogue.json. Do not edit by hand.\nwindow.BASE_CATALOGUE_INDEX=";
+  assert.ok(js.startsWith(prefix));
+  const payload=js.slice(prefix.length).replace(/;\s*$/,"");
+  const committed=JSON.parse(payload);
+  assert.deepEqual(committed,buildCatalogueSearchIndex(document));
+});
