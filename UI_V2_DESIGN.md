@@ -225,3 +225,19 @@ On mobile, the production Search page should visually follow the approved design
 Do not implement production Search by skinning the old panel-based markup. The v2 markup itself is the layout contract; working production logic should be wired into that structure.
 
 All primary public pages should share the same v2 topbar, raven mark, typography, black surfaces and responsive mobile navigation even when their page-specific content differs.
+
+
+### Screenshot parity rule — 6 October 2026
+
+The approved desktop and mobile screenshots of `design-preview.html` are the visual parity target for production Search.
+
+Production Search must not introduce permanent controls or content blocks that shift the approved composition. In particular:
+- no permanent Search / Save Hunt button row beneath the hero search box
+- no permanent large green "Your target" card replacing the result-card area
+- desktop filter rail uses the approved checkbox/toggle presentation rather than replacing groups with generic selects
+- results header retains the approved result count + Sort control composition
+- before a live marketplace source is connected, clearly labelled example cards may remain visible so the intended result UI is represented without claiming live data
+- mobile keeps the approved search → platform pills → results heading → Filters/Sort → result-card sequence
+- production functionality should be connected behind the approved controls or surfaced contextually, not by reshaping the page
+
+The 6 October reference screenshots are therefore a stronger visual contract than earlier generic production-markup compatibility decisions.
