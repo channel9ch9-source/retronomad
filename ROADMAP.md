@@ -585,3 +585,20 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [ ] confirm 100/100 seed enrichment and revised proposed total
 - [ ] review remaining provider same-title groups
 - [ ] build canonical promotion path only after the rerun passes
+
+
+### Final catalogue candidate validation
+
+- [x] refined full dry import passed
+- [x] 8,433-game proposed catalogue validates
+- [x] 100/100 PALScout seeds mapped
+- [x] platform-specific release years
+- [x] zero generated ID collisions
+- [x] compact browser index measured at ~1.37 MiB
+- [x] shorthand/alternate-name search smoke checks passed
+- [x] codify promotion candidate validator
+- [ ] contact IGDB commercial partnerships and confirm attributed GrailRaven use
+- [ ] after commercial-use gate is cleared, promote approved candidate into canonical catalogue
+- [ ] rebuild committed browser catalogue index
+- [ ] sync canonical catalogue to D1
+- [ ] deploy and verify public search performance
