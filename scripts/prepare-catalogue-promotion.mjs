@@ -30,7 +30,12 @@ if(mode!=="baseline"){
   }
 }
 const seed=JSON.parse(await fs.readFile(path.join(process.cwd(),"catalogue","base-catalogue.json"),"utf8"));
-const manifest=buildPromotionManifest(candidate,seed,{source,requireFull:mode!=="baseline"});
+const searchAliases=JSON.parse(await fs.readFile(path.join(process.cwd(),"catalogue","search-aliases.json"),"utf8"));
+const manifest=buildPromotionManifest(candidate,seed,{
+  source,
+  requireFull:mode!=="baseline",
+  supplementalAliases:searchAliases.aliases||{}
+});
 
 await fs.mkdir(outDir,{recursive:true});
 await fs.writeFile(path.join(outDir,"canonical-candidate.json"),stableCatalogueJson(candidate),"utf8");
