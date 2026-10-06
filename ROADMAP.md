@@ -611,6 +611,6 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] preserve Search/PALScout/Saved Hunts/account hooks
 - [x] add forgiving-search user copy
 - [x] add production UI integrity tests
-- [ ] deploy updated app to Cloudflare
+- [x] deploy updated app to Cloudflare
 - [ ] verify grailraven.com homepage and Search on desktop/mobile
 - [ ] then continue IGDB commercial-partnership outreach and catalogue promotion
