@@ -1017,3 +1017,14 @@ The D1 catalogue layer is a future production/query mirror; external full-catalo
 
 Next task:
 Evaluate legitimate metadata and cover-art sources for complete PS1 / PS2 / Dreamcast coverage, then select the primary source(s) before building an importer.
+
+
+### Logo colour preference confirmed — 6 October 2026
+
+User likes the subtle warm ivory / bronze-gold tint of the current raven mark.
+
+Current direction:
+- raven remains warm ivory / muted bronze-gold
+- GrailRaven wordmark remains warm ivory (`#F5F1E8`)
+- UI remains primarily black/white with semantic MATCH/REVIEW/FILTERED colours
+- exact production logo colour matching is deferred until final vector/logo cleanup
