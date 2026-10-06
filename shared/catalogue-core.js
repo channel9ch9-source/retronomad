@@ -72,19 +72,20 @@ export function validateCatalogue(document) {
   return { ok: errors.length === 0, errors };
 }
 
-export function mergeCatalogueSearchAliases(game, supplementalAliases = {}) {
+export function mergeCatalogueSearchAliases(game, supplementalAliases = {}, suppressedAliases = {}) {
   const out = [], seen = new Set();
+  const suppressed = new Set((suppressedAliases?.[game.id] || []).map(normalizeCatalogueTitle).filter(Boolean));
   for (const value of [...(game.aliases || []), ...(supplementalAliases?.[game.id] || [])]) {
     const display = String(value || "").trim();
     const normalized = normalizeCatalogueTitle(display);
-    if (!display || !normalized || seen.has(normalized) || normalized === normalizeCatalogueTitle(game.title)) continue;
+    if (!display || !normalized || suppressed.has(normalized) || seen.has(normalized) || normalized === normalizeCatalogueTitle(game.title)) continue;
     seen.add(normalized);
     out.push(display);
   }
   return out;
 }
 
-export function buildCatalogueSearchIndex(document, supplementalAliases = {}) {
+export function buildCatalogueSearchIndex(document, supplementalAliases = {}, suppressedAliases = {}) {
   const validation = validateCatalogue(document);
   if (!validation.ok) throw new Error(`Invalid catalogue: ${validation.errors.join("; ")}`);
   return document.games
@@ -92,7 +93,7 @@ export function buildCatalogueSearchIndex(document, supplementalAliases = {}) {
       id: game.id,
       title: game.title,
       platform: game.platform,
-      aliases: mergeCatalogueSearchAliases(game, supplementalAliases),
+      aliases: mergeCatalogueSearchAliases(game, supplementalAliases, suppressedAliases),
       releaseYear: game.releaseYear ?? null,
       coverage: game.releaseIntelligence?.coverage || "BASE_ONLY"
     }))
