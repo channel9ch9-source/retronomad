@@ -974,3 +974,46 @@ The remaining green UI interaction highlights were removed:
 - mobile Filters button -> white
 
 Green `#00FF41` is now intended mainly as a semantic MATCH/positive-status colour, while generic interaction emphasis is neutral white for the current design pass.
+
+
+## Full catalogue architecture foundation — 6 October 2026
+
+GrailRaven now separates broad game identity from deep physical-release intelligence.
+
+New catalogue foundation:
+- `catalogue/base-catalogue.json` — canonical base catalogue
+- `catalogue/catalogue.schema.json` — v1 schema
+- `shared/catalogue-core.js` — validation, normalization, ID and search-index helpers
+- `scripts/build-catalogue.mjs` — compact browser-index builder
+- `catalogue-index.js` — generated lightweight browser search index
+- `tests/catalogue-core.test.mjs` — catalogue regression tests
+- `CATALOGUE_V1.md` — authoritative architecture documentation
+- `backend/migrations/0002_catalogue.sql` — D1 catalogue tables
+
+Initial seed:
+- 100 games total
+- PS1: 40
+- PS2: 40
+- Dreamcast: 20
+- all current seed entries are `PALSCOUT_DEEP` because they are backed by the existing 217 release-evidence rows
+
+The 100-game set remains the permanent deep regression/benchmark population even after the base catalogue expands to thousands of titles.
+
+Search is now decoupled from the release-evidence list:
+- the Cloudflare build validates `catalogue/base-catalogue.json`
+- it emits a compact `catalogue-index.js`
+- `search.html` consumes the compact base index first
+- legacy release-evidence derivation remains only as a fallback
+
+Release-intelligence coverage states:
+- `BASE_ONLY`
+- `PALSCOUT_PARTIAL`
+- `PALSCOUT_DEEP`
+
+Critical product rule:
+A `BASE_ONLY` game is allowed to be searchable, browsable and saved as a Hunt. Its presence in the base catalogue does not prove UK/PAL territory, edition, completeness or exact release. Missing physical-release evidence must stay unknown/REVIEW rather than being guessed.
+
+The D1 catalogue layer is a future production/query mirror; external full-catalogue data should first pass through auditable provider-specific imports with provenance and collision review.
+
+Next task:
+Evaluate legitimate metadata and cover-art sources for complete PS1 / PS2 / Dreamcast coverage, then select the primary source(s) before building an importer.
