@@ -297,9 +297,13 @@ async function runOffers(target, client) {
   };
 }
 
-async function writeReport(outputPath, report) {
+async function writeReport(outputPath, report, secret = "") {
+  const serialized = JSON.stringify(report, null, 2) + "\n";
+  if (secret && serialized.includes(secret)) {
+    throw new Error("Refusing to write benchmark report because it contains the PriceCharting API token.");
+  }
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
-  await fs.writeFile(outputPath, JSON.stringify(report, null, 2) + "\n", "utf8");
+  await fs.writeFile(outputPath, serialized, "utf8");
 }
 
 const mode = arg("mode", "pricing");
@@ -357,7 +361,7 @@ for (let index = 0; index < targets.length; index++) {
     });
   }
   report.completedAt = new Date().toISOString();
-  await writeReport(outputPath, report);
+  await writeReport(outputPath, report, token);
 }
 
 if (mode === "pricing") {
@@ -388,9 +392,5 @@ if (mode === "pricing") {
 report.platforms = countBy(report.results, row => row.platform);
 report.completedAt = new Date().toISOString();
 
-const serialized = JSON.stringify(report);
-if (token && serialized.includes(token)) {
-  throw new Error("Refusing to write benchmark report because it contains the PriceCharting API token.");
-}
-await writeReport(outputPath, report);
+await writeReport(outputPath, report, token);
 process.stdout.write(`Wrote ${outputPath}${fixture ? " (offline fixture mode)" : ""}\n`);
