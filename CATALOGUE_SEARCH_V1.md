@@ -134,3 +134,19 @@ The hard-gated full-catalogue promotion workflow now runs the search benchmark b
 A dataset that validates structurally but fails search quality/performance cannot be promoted through the approved workflow.
 
 The IGDB-backed 8,433-game catalogue remains unpublished until the commercial-use gate is resolved.
+
+
+## Validated benchmark — 7 October 2026
+
+Workflow run `37634702409` passed all benchmark checks.
+
+Results:
+- 8,433 catalogue games
+- 1.372 MiB compact search index
+- 24/24 quality cases passed
+- median query: 57.58 ms
+- p95 query: 105.82 ms
+- max sampled query: 127.22 ms
+- index build: 61.72 ms
+
+All configured quality and performance gates passed on the GitHub Actions runner.
