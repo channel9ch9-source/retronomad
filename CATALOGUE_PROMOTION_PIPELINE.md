@@ -204,3 +204,6 @@ IGDB responded positively and confirmed that commercial partnership access remai
 The publication gate remains closed only because the legal partnership agreement still needs to be prepared and signed.
 
 Do not set `IGDB_COMMERCIAL_APPROVED=true` until agreement execution/confirmation is received and any additional conditions are recorded.
+
+
+Partnership details were sent to IGDB on 7 October 2026. The next external dependency is receipt of the legal agreement. The production publication gate remains closed until agreement execution/confirmation.
