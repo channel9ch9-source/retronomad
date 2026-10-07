@@ -14,7 +14,10 @@
     "catalogue:d1:export": "node scripts/export-catalogue-d1.mjs",
     "catalogue:d1:verify": "node scripts/verify-d1-catalogue.mjs",
     "catalogue:d1:activate": "node scripts/activate-catalogue-dataset.mjs",
-    "catalogue:search:benchmark": "node scripts/benchmark-catalogue-search.mjs"
+    "catalogue:search:benchmark": "node scripts/benchmark-catalogue-search.mjs",
+    "pricecharting:benchmark": "node scripts/pricecharting-benchmark.mjs",
+    "pricecharting:fixture:pricing": "node scripts/pricecharting-benchmark.mjs --mode=pricing --fixture=true --out=benchmarks/pricecharting-fixture-pricing.json",
+    "pricecharting:fixture:offers": "node scripts/pricecharting-benchmark.mjs --mode=offers --fixture=true --out=benchmarks/pricecharting-fixture-offers.json"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
