@@ -696,7 +696,7 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] confirm local storage/retention rights
 - [x] confirm future Data Dump access
 - [x] confirm user-facing IGDB.com attribution requirement
-- [ ] send requested partnership details to IGDB
+- [x] send requested partnership details to IGDB
 - [ ] receive legal agreement
 - [ ] review/sign agreement
 - [ ] record any additional conditions in repo
