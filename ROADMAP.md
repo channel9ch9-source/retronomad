@@ -663,7 +663,7 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] fix first provider-reference schema finding (cross-platform IGDB ID reuse)
 - [x] rerun safe local promotion-pipeline validation
 - [x] fix any further CI/D1 issues found by that run
-- [ ] await IGDB commercial partnership response
+- [x] receive positive IGDB commercial partnership response
 - [ ] only after approval, set `IGDB_COMMERCIAL_APPROVED=true`
 - [ ] run approved remote promotion workflow
 
@@ -686,3 +686,17 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [ ] rerun full 8,433-game search benchmark
 - [ ] review any failed/ambiguous benchmark cases
 - [ ] deploy autocomplete improvement to current 100-game public Search after benchmark passes
+
+
+### IGDB partnership agreement
+
+- [x] receive positive commercial partnership response
+- [x] confirm API remains free under partnership
+- [x] confirm local storage/retention rights
+- [x] confirm future Data Dump access
+- [x] confirm user-facing IGDB.com attribution requirement
+- [ ] send requested partnership details to IGDB
+- [ ] receive legal agreement
+- [ ] review/sign agreement
+- [ ] record any additional conditions in repo
+- [ ] only after agreement confirmation set `IGDB_COMMERCIAL_APPROVED=true`
