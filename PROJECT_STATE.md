@@ -1428,3 +1428,27 @@ Production Search improvement:
 The full promotion workflow is now additionally gated on the search-quality/performance benchmark.
 
 Next action: run `Benchmark full catalogue search` in GitHub Actions. Full IGDB data remains development-only.
+
+
+## First full-catalogue search benchmark attempt — 7 October 2026
+
+Workflow run: **37634130696**
+
+The full 8,433-game benchmark itself did not run. The workflow stopped during `npm test`.
+
+Cause:
+- one production UI regression test still asserted the literal implementation fragment `(x.aliases||[]).some`
+- that fragment belonged to the old direct alias lookup
+- the production Search page now uses `shared/catalogue-search-core.js`, `resolveCatalogueQuery` and `rankCatalogueMatches`
+
+Result:
+- 29/30 regression tests passed
+- the new lightweight ranked autocomplete regression test passed
+- benchmark candidate generation and benchmark execution were skipped
+- no benchmark artifact was produced
+
+Fix:
+- updated `tests/production-v2-ui.test.mjs` to assert the new ranked search implementation instead of the deleted code fragment
+- fix commit: `52bea199cd8f27de3f12cee4950f6c7052731d81`
+
+Next action: rerun `Benchmark full catalogue search`.
