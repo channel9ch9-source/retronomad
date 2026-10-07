@@ -1452,3 +1452,33 @@ Fix:
 - fix commit: `52bea199cd8f27de3f12cee4950f6c7052731d81`
 
 Next action: rerun `Benchmark full catalogue search`.
+
+
+## IGDB commercial partnership reply — 7 October 2026
+
+IGDB/Twitch Business Leader Christian Frithiof replied positively to GrailRaven's partnership request.
+
+Confirmed by IGDB:
+- commercial partnerships are offered
+- the IGDB API remains free of charge under the partnership
+- GrailRaven is allowed to store IGDB data on its own infrastructure, and IGDB prefers local storage
+- GrailRaven may retain all IGDB data already retrieved even if the partnership later terminates
+- once partnered, IGDB will enable Data Dumps for GrailRaven's ClientID
+- user-facing attribution to IGDB.com is required on products integrating IGDB/data
+
+IGDB stated that GrailRaven's willingness to provide attribution is sufficient to proceed directly to the agreement process.
+
+Information requested before legal prepares the agreement:
+1. product/project name
+2. intended API/data use
+3. public URL or screenshots
+4. whether partnership is as an individual or company
+5. signer name/email
+6. IGDB ClientID
+7. technical/product-updates contact email
+
+Status:
+- commercially encouraging / partnership process invited
+- not yet treated as final production authorization because the agreement has not yet been prepared/signed
+- keep `IGDB_COMMERCIAL_APPROVED` production gate false until agreement execution/confirmation
+- development, local staging, validation and benchmark work may continue
