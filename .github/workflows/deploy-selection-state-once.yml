@@ -1,0 +1,86 @@
+name: Deploy canonical Search selection state once
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: ${{ github.event.head_commit.message == 'Deploy canonical Search selection state' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install deployment tooling
+        run: npm install
+
+      - name: Assert IGDB publication gate stays closed
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          const catalogue=JSON.parse(fs.readFileSync("catalogue/base-catalogue.json","utf8"));
+          if(catalogue.games.length!==100)throw new Error("Refusing deployment: expected exactly 100 current production games");
+          if(catalogue.games.some(g=>g.releaseIntelligence?.coverage!=="PALSCOUT_DEEP")){
+            throw new Error("Refusing deployment: current production catalogue contains a non-PALSCOUT_DEEP record");
+          }
+          console.log("Publication gate verified: 100 PALScout deep games only.");
+          NODE
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Build same-origin static assets
+        run: npm run build:cloudflare
+
+      - name: Verify canonical selection bundle
+        shell: bash
+        run: |
+          grep -q 'id="catalogueSelection"' dist/public/search.html
+          grep -q 'id="selectionSave"' dist/public/search.html
+          grep -q 'No catalogue match found' dist/public/search.html
+          if grep -q 'Target ready. Live marketplace discovery is not connected yet.' dist/public/search.html; then
+            echo "Old dead-end message is still present"
+            exit 1
+          fi
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          const js=fs.readFileSync("dist/public/catalogue-index.js","utf8");
+          const count=(js.match(/"id":/g)||[]).length;
+          if(count!==100)throw new Error("Refusing deployment: built browser index has "+count+" games");
+          console.log("Canonical selection bundle verified with 100-game browser index.");
+          NODE
+
+      - name: Resolve D1 and render Wrangler config
+        run: npm run prepare:cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AUTH_EMAIL_FROM: ${{ vars.AUTH_EMAIL_FROM }}
+          AUTH_EMAIL_WEBHOOK_URL: ${{ secrets.AUTH_EMAIL_WEBHOOK_URL }}
+
+      - name: Configure Resend API key
+        if: env.RESEND_API_KEY != ''
+        shell: bash
+        run: printf '%s' "$RESEND_API_KEY" | npx wrangler secret put RESEND_API_KEY --config .wrangler.deploy.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+
+      - name: Deploy Worker + current 100-game Search
+        run: npm run deploy:cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
