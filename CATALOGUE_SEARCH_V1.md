@@ -168,3 +168,27 @@ The 8,433-game IGDB-backed candidate remains unpublished pending completion of t
 
 Cloudflare Worker version:
 `64adffea-1482-4e42-a39f-8481ee303dc3`
+
+
+## Canonical selection state — 7 October 2026
+
+The Search page now separates catalogue identification from marketplace discovery.
+
+When a query resolves to one canonical game, the UI displays:
+- Game identified
+- canonical title
+- platform
+- release year
+- PALScout coverage
+- match explanation
+- Save Hunt action
+- marketplace connection state
+
+The page no longer presents missing marketplace connectivity as if the catalogue search itself failed.
+
+No-match raw text cannot silently become a hunt target. Ambiguous searches remain unresolved until the user chooses an exact suggestion.
+
+The approved v2 demo composition remains unchanged before a search is resolved.
+
+Production deployment run: `37638721651`
+Cloudflare Worker version: `203cdb09-224c-4225-93b7-be17d549ef37`
