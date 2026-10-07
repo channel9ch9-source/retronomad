@@ -41,3 +41,16 @@ test("production Search uses lightweight ranked autocomplete instead of thousand
   assert.equal(search.includes('id="game" list="games"'),false);
   assert.equal(search.includes('document.createElement("option")'),false);
 });
+
+
+test("production Search has a canonical catalogue selection state before marketplace discovery",()=>{
+  for(const id of ["catalogueSelection","selectionTitle","selectionPlatform","selectionYear","selectionCoverage","selectionMarketplace","selectionSave"]){
+    assert.match(search,new RegExp(`id=["']${id}["']`),`missing #${id}`);
+  }
+  assert.ok(search.includes("Game identified"));
+  assert.ok(search.includes('resolution.status==="none"'));
+  assert.ok(search.includes('resolution.status==="ambiguous"'));
+  assert.ok(search.includes("No catalogue match found"));
+  assert.ok(search.includes("Live listings not connected yet"));
+  assert.equal(search.includes("Target ready. Live marketplace discovery is not connected yet."),false);
+});
