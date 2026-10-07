@@ -17,9 +17,12 @@ Completed in this continuation:
 - [x] Update `PRICING_V1.md` to reflect approval and the new scaffold
 
 Still required before real/public PriceCharting use:
-- [ ] Add visible PriceCharting attribution/linkback to pricing/result UI
-- [ ] Adapt/build the 100-title PriceCharting pricing coverage harness
-- [ ] Build a separate 100-title PriceCharting Marketplace offer-coverage harness
+- [x] Add visible PriceCharting attribution/linkback contract to PriceCharting result UI
+- [x] Adapt/build the 100-title PriceCharting pricing coverage harness
+- [x] Build a separate 100-title PriceCharting Marketplace offer-coverage harness
+- [x] Add offline 100-game fixture validation for both PriceCharting benchmark modes
+- [x] Add safe GitHub Actions harness-validation workflow
+- [x] Add hard-gated real-token PriceCharting benchmark workflow
 - [ ] Only when ready for real validation, purchase the approved Legendary subscription
 - [ ] Store `PRICECHARTING_TOKEN` only as a Cloudflare Worker secret
 - [ ] Run the 100-title UK/PAL pricing benchmark
@@ -29,7 +32,7 @@ Still required before real/public PriceCharting use:
 - [ ] Keep eBay independent; do not assume PriceCharting Marketplace replaces eBay without coverage evidence
 
 Immediate engineering action after this handoff:
-**Add the PriceCharting attribution/result presentation contract, then build the real-token benchmark harnesses while keeping the live Worker marketplace provider disabled.**
+**Verify the offline PriceCharting harness workflow. Keep the live Worker marketplace provider disabled. Purchase Legendary only when ready to run the real 100-title pricing + offer benchmarks.**
 
 ---
 
