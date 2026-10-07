@@ -1609,3 +1609,28 @@ Cloudflare Worker version:
 `203cdb09-224c-4225-93b7-be17d549ef37`
 
 The 8,433-game IGDB candidate remains unpublished.
+
+
+## PriceCharting pre-subscription benchmark readiness — 7 October 2026
+
+The PriceCharting work needed before paying for Legendary is now implemented.
+
+Confirmed/implemented:
+- server-side PriceCharting provider adapter
+- 100-title pricing benchmark mode
+- 100-title Marketplace-offer benchmark mode
+- PAL console namespaces: PS1 G72 / PS2 G63 / Dreamcast G65
+- PriceCharting remains an evidence provider; PALScout remains release authority
+- conditional visible PriceCharting attribution/linkback in future live Search result cards
+- server-side attribution metadata for reference prices and Marketplace rows
+- offline benchmark fixture mode requiring no API token and no network
+- full pinned fixture population: 40 PS1 / 40 PS2 / 20 Dreamcast
+- fixture reports preserve the real benchmark output shape
+- every benchmark report write checks that a configured real API token cannot leak into the artifact
+- normal regression tests execute both full offline benchmark modes
+- safe GitHub Actions fixture-validation workflow
+- hard-gated future real-token benchmark workflow
+
+The public marketplace provider remains disabled.
+
+No real PriceCharting coverage or inventory claim has been made. The next paid step remains purchasing Legendary only when ready to run the real 100-title pricing and Marketplace-offer benchmarks, then storing `PRICECHARTING_TOKEN` only as a server-side secret.
