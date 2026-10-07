@@ -1524,3 +1524,22 @@ Examples verified:
 - Silnt Hill -> corrected to Silent Hill
 
 The search-quality gate is now validated for the full candidate.
+
+
+## IGDB partnership details sent — 7 October 2026
+
+The requested partnership information has been sent to IGDB.
+
+Provided:
+- product/project: GrailRaven
+- intended catalogue/API use
+- public GrailRaven URL
+- partnership capacity
+- agreement signer contact
+- IGDB ClientID
+- technical/product-updates contact email
+
+Current status:
+- awaiting IGDB legal team to prepare the partnership agreement
+- `IGDB_COMMERCIAL_APPROVED` remains false
+- do not publish the 8,433-game IGDB-backed canonical catalogue until the agreement is reviewed/signed and IGDB confirms partnership activation
