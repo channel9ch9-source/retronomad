@@ -372,8 +372,7 @@ function renderLiveResults(rows){
  const box=document.querySelector("#liveResults");box.innerHTML="";
  document.querySelector("#demoResults").style.display="none";
  document.querySelector("#resultNote").textContent="Live candidates classified by PALScout.";
- document.querySelector("#previewCount").textContent=String(rows.length);
- document.querySelector("#previewTerm").textContent=window.currentTarget?.game||document.querySelector("#game").value.trim();
+ resultsHeading.textContent=rows.length+" live candidate"+(rows.length===1?"":"s")+" for “"+(window.currentTarget?.game||document.querySelector("#game").value.trim())+"”";
  for(const row of rows){
   const stateName=String(row.match?.state||"REVIEW").toLowerCase();
   const card=document.createElement("article");card.className="v2-card";
