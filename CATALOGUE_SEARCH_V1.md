@@ -150,3 +150,21 @@ Results:
 - index build: 61.72 ms
 
 All configured quality and performance gates passed on the GitHub Actions runner.
+
+
+## Production rollout — 7 October 2026
+
+The ranked autocomplete/search layer was deployed to the current public 100-game GrailRaven catalogue after the full 8,433-game benchmark passed.
+
+Deployment run: `37637618874`
+
+Pre-deploy safeguards verified:
+- exactly 100 canonical games
+- all current records PALSCOUT_DEEP
+- generated production browser index exactly 100 games
+- ranked search module included in the Cloudflare static bundle
+
+The 8,433-game IGDB-backed candidate remains unpublished pending completion of the IGDB partnership agreement.
+
+Cloudflare Worker version:
+`64adffea-1482-4e42-a39f-8481ee303dc3`
