@@ -1,6 +1,6 @@
 # PriceCharting Provider v1
 
-Last updated: 29 September 2026
+Last updated: 7 October 2026
 
 This document records the first server-side PriceCharting integration scaffold for RetroNomad.
 
@@ -126,3 +126,46 @@ These are contract/logic tests only. They are not a real PriceCharting coverage 
 7. Measure exact identifier/product-ID matching, PAL safety, completeness mapping, live offer volume and practical UK usefulness.
 8. Only then decide whether to wire PriceCharting into the public Deal Finder / scheduled Saved Hunt monitor.
 9. Do not assume PriceCharting Marketplace replaces eBay unless measured coverage supports that conclusion.
+
+
+## Offline benchmark validation — 7 October 2026
+
+The 100-title benchmark harness in `scripts/pricecharting-benchmark.mjs` now has an offline fixture mode.
+
+Commands:
+- `npm run pricecharting:fixture:pricing`
+- `npm run pricecharting:fixture:offers`
+
+Fixture mode:
+- uses the pinned 100-game launch population
+- performs no network access
+- requires no PriceCharting token
+- exercises 40 PS1 / 40 PS2 / 20 Dreamcast targets
+- exercises both pricing and Marketplace-offer report paths
+- preserves the real report schema
+- records `fixture=true` and `networkAccess=false`
+- checks every report write so a configured real API token cannot be serialized into an artifact
+
+The normal Node regression suite runs both fixture benchmark modes end-to-end.
+
+A GitHub Actions workflow named **Validate PriceCharting benchmark harness** runs the safe fixture validation and archives both synthetic reports.
+
+A separate workflow named **Run PriceCharting real benchmark** is hard-gated. Real API calls require:
+- repository variable `PRICECHARTING_REAL_BENCHMARK=true`
+- repository secret `PRICECHARTING_TOKEN`
+
+The real workflow does not enable the public marketplace provider.
+
+## Attribution contract
+
+PriceCharting-derived Search result cards have a conditional visible source/linkback contract:
+- text: `Price data / marketplace offer via PriceCharting`
+- link target comes from server-normalized PriceCharting attribution metadata
+- Marketplace rows may fall back to their returned PriceCharting offer URL
+- links open with `noopener noreferrer`
+
+The server adapter exposes deterministic attribution metadata for both reference prices and Marketplace rows without exposing the API token.
+
+For a PriceCharting product ID, the deterministic linkback uses the PriceCharting product-specific offers context (`/offers?product=<id>`) rather than inventing an undocumented slug.
+
+This attribution code remains dormant while the live PriceCharting provider is disabled.
