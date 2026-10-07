@@ -686,7 +686,7 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] fix stale pre-benchmark alias assertion
 - [x] rerun full 8,433-game search benchmark
 - [x] review benchmark ambiguity/typo cases
-- [ ] deploy autocomplete improvement to current 100-game public Search after benchmark passes
+- [x] deploy autocomplete improvement to current 100-game public Search after benchmark passes
 
 
 ### IGDB partnership agreement
