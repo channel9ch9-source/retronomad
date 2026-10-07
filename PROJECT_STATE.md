@@ -1482,3 +1482,45 @@ Status:
 - not yet treated as final production authorization because the agreement has not yet been prepared/signed
 - keep `IGDB_COMMERCIAL_APPROVED` production gate false until agreement execution/confirmation
 - development, local staging, validation and benchmark work may continue
+
+
+## Full-catalogue search benchmark passed — 7 October 2026
+
+GitHub Actions run: **37634702409**
+
+Result:
+- 24/24 search-quality cases passed
+- full 8,433-game candidate
+- compact search index: 1,438,441 bytes / 1.372 MiB
+- index build: 61.72 ms on GitHub Actions runner
+- median query: 57.58 ms
+- p95 query: 105.82 ms
+- maximum sampled query: 127.22 ms
+- all performance guardrails passed
+
+Covered:
+- exact titles
+- partial titles
+- abbreviations
+- Roman/Arabic numeral variants
+- deliberate ambiguity
+- duplicate titles across platforms
+- platform filtering
+- regional titles
+- punctuation variants
+- conservative typo correction
+- token subsequences
+- curated aliases
+
+Examples verified:
+- FF7 / FFVII -> Final Fantasy VII
+- MGS3 -> ambiguity between Snake Eater and Subsistence rather than silent selection
+- RE2 -> ambiguity across PS1/Dreamcast unless platform selected
+- Jet Grind Radio -> Jet Set Radio
+- Siren -> Forbidden Siren
+- Fatal Frame 3 -> Project Zero 3: The Tormented
+- SMT3 / Nocturne -> Shin Megami Tensei: Lucifer's Call
+- MediEvil II -> MediEvil 2
+- Silnt Hill -> corrected to Silent Hill
+
+The search-quality gate is now validated for the full candidate.
