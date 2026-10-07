@@ -1634,3 +1634,16 @@ Confirmed/implemented:
 The public marketplace provider remains disabled.
 
 No real PriceCharting coverage or inventory claim has been made. The next paid step remains purchasing Legendary only when ready to run the real 100-title pricing and Marketplace-offer benchmarks, then storing `PRICECHARTING_TOKEN` only as a server-side secret.
+
+Safe offline validation completed successfully:
+- GitHub Actions run: **37667009943**
+- regression tests: **35/35 passed**
+- offline pricing benchmark: **100/100 targets completed**
+- offline Marketplace-offer benchmark: **100/100 targets completed**
+- platform population verified: **40 PS1 / 40 PS2 / 20 Dreamcast**
+- fixture/network boundary verified: `fixture=true`, `networkAccess=false`
+- artifact: `pricecharting-offline-benchmark-validation`
+- artifact ID: `11503566995`
+- artifact digest: `sha256:6a36577ad2c2c74ed7f68748de732c1e93cbf0c116cf245d8c8313838063ca5d`
+
+This validates the harness itself only; it is not evidence of real PriceCharting catalogue or Marketplace coverage.
