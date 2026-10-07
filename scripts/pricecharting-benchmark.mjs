@@ -75,6 +75,73 @@ function bestBarcode(game, platform) {
   return rows[0] ? { value: String(rows[0][4]), market: String(rows[0][5] || "") } : null;
 }
 
+function createFixtureClient(targets) {
+  const byId = new Map();
+  const byUpc = new Map();
+  const byQuery = new Map();
+
+  targets.forEach((target, index) => {
+    const expected = PAL_CONSOLES[target.platform];
+    const id = `fixture-${String(index + 1).padStart(3, "0")}`;
+    const barcode = bestBarcode(target.game, target.platform);
+    const product = {
+      status: "success",
+      id,
+      "product-name": target.game,
+      "console-name": expected.name,
+      upc: barcode?.value || "",
+      "release-date": "2000-01-01",
+      "loose-price": 3000 + index,
+      "cib-price": 5000 + index,
+      "new-price": 9000 + index,
+      "box-only-price": 2000 + index,
+      "manual-only-price": 1000 + index
+    };
+    byId.set(id, product);
+    if (barcode?.value) byUpc.set(barcode.value, product);
+    byQuery.set(`${target.game} ${expected.name}`, [{
+      id,
+      "product-name": target.game,
+      "console-name": expected.name
+    }]);
+  });
+
+  return {
+    async searchProducts(query) {
+      return byQuery.get(String(query || "")) || [];
+    },
+    async getProductById(id) {
+      const product = byId.get(String(id));
+      if (!product) throw Object.assign(new Error("Fixture product not found"), { code: "fixture_product_missing" });
+      return product;
+    },
+    async getProductByUpc(upc) {
+      const product = byUpc.get(String(upc));
+      if (!product) throw Object.assign(new Error("Fixture UPC not found"), { code: "fixture_upc_missing" });
+      return product;
+    },
+    async getOffers({ productId, consoleId }) {
+      const product = byId.get(String(productId));
+      if (!product) return [];
+      const expectedConsole = Object.values(PAL_CONSOLES).find(row => row.id === String(consoleId));
+      if (!expectedConsole || expectedConsole.name !== product["console-name"]) return [];
+      return [{
+        "condition-string": "Normal wear",
+        "console-name": product["console-name"],
+        id: product.id,
+        "include-string": "Game, Box, and Manual",
+        "is-available": true,
+        "offer-id": "fixture-offer-" + product.id,
+        "offer-status": "available",
+        "offer-url": "/offer/fixture-offer-" + product.id,
+        price: 4200,
+        "product-name": product["product-name"],
+        "start-time": "2026-10-01"
+      }];
+    }
+  };
+}
+
 function compactProduct(product) {
   if (!product) return null;
   return {
@@ -241,9 +308,10 @@ if (!new Set(["pricing", "offers"]).has(mode)) {
   process.exit(2);
 }
 
+const fixture = ["1", "true", "yes"].includes(String(arg("fixture", "false")).toLowerCase());
 const token = String(process.env.PRICECHARTING_TOKEN || "").trim();
-if (!token) {
-  console.error("PRICECHARTING_TOKEN is required. Do not put the token in source code or command-line arguments.");
+if (!fixture && !token) {
+  console.error("PRICECHARTING_TOKEN is required for real API runs. Use --fixture=true for offline harness validation.");
   process.exit(2);
 }
 
@@ -258,12 +326,14 @@ const limit = Math.max(1, Number(arg("limit", String(allTargets.length))) || all
 const targets = allTargets.slice(start, start + limit);
 const date = new Date().toISOString().slice(0, 10);
 const outputPath = arg("out", `benchmarks/pricecharting-${mode}-${date}.json`);
-const client = createPriceChartingClient({ token });
+const client = fixture ? createFixtureClient(allTargets) : createPriceChartingClient({ token });
 
 const report = {
   schemaVersion: 1,
   provider: "PriceCharting",
   mode,
+  fixture,
+  networkAccess: !fixture,
   generatedAt: new Date().toISOString(),
   launchPopulation: allTargets.length,
   start,
@@ -315,6 +385,12 @@ if (mode === "pricing") {
   };
 }
 
+report.platforms = countBy(report.results, row => row.platform);
 report.completedAt = new Date().toISOString();
+
+const serialized = JSON.stringify(report);
+if (token && serialized.includes(token)) {
+  throw new Error("Refusing to write benchmark report because it contains the PriceCharting API token.");
+}
 await writeReport(outputPath, report);
-process.stdout.write(`Wrote ${outputPath}\n`);
+process.stdout.write(`Wrote ${outputPath}${fixture ? " (offline fixture mode)" : ""}\n`);
