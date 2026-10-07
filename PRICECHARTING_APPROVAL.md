@@ -113,3 +113,17 @@ Still required:
 ## Accuracy rule
 
 PriceCharting approval solves the permission/licensing blocker for the described launch use under the recorded arrangement. It does **not** prove coverage quality, inventory depth, exact-release matching accuracy or eBay-equivalent marketplace supply. Those must be measured before making product claims.
+
+
+### Readiness update — 7 October 2026
+
+The pre-subscription engineering work is now concretely implemented and regression-protected:
+- visible conditional PriceCharting attribution/linkback exists in Search live-result rendering
+- reference-price and Marketplace normalization expose attribution metadata server-side
+- the 100-title pricing benchmark harness exists
+- the 100-title Marketplace-offer benchmark harness exists
+- both harness modes can run offline against deterministic fixtures with no token/network access
+- a safe fixture-validation GitHub Actions workflow is available
+- the future real-token benchmark workflow is hard-gated and does not enable the public marketplace provider
+
+No real coverage or inventory claim is made from fixture mode. Only a future paid-token run may establish real PriceCharting coverage.
