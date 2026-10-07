@@ -1,5 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+
+const execFileAsync=promisify(execFile);
+const benchmarkScript=new URL("../scripts/pricecharting-benchmark.mjs",import.meta.url);
 import {
   PAL_CONSOLES,
   createPriceChartingClient,
@@ -158,4 +166,51 @@ test("PriceCharting attribution linkback is deterministic and never contains an 
   assert.equal(priceChartingAttributionUrl("6910"), "https://www.pricecharting.com/offers?product=6910");
   assert.equal(priceChartingAttributionUrl(""), "https://www.pricecharting.com");
   assert.doesNotMatch(priceChartingAttributionUrl("6910"), /[?&]t=/);
+});
+
+
+async function runBenchmarkFixture(mode){
+  const dir=await fs.mkdtemp(path.join(os.tmpdir(),"grailraven-pricecharting-"));
+  const out=path.join(dir,mode+".json");
+  await execFileAsync(process.execPath,[
+    benchmarkScript.pathname,
+    "--mode="+mode,
+    "--fixture=true",
+    "--out="+out
+  ],{
+    cwd:new URL("..",import.meta.url).pathname,
+    env:{...process.env,PRICECHARTING_TOKEN:""}
+  });
+  const raw=await fs.readFile(out,"utf8");
+  const report=JSON.parse(raw);
+  await fs.rm(dir,{recursive:true,force:true});
+  return {report,raw};
+}
+
+test("offline PriceCharting pricing benchmark covers the pinned 100-game launch population",async()=>{
+  const {report,raw}=await runBenchmarkFixture("pricing");
+  assert.equal(report.fixture,true);
+  assert.equal(report.networkAccess,false);
+  assert.equal(report.launchPopulation,100);
+  assert.equal(report.results.length,100);
+  assert.deepEqual(report.platforms,{PS1:40,PS2:40,Dreamcast:20});
+  assert.equal(report.summary.rowsWithAnyPalCandidate,100);
+  assert.equal(report.summary.rowsWithCibPrice,100);
+  assert.equal(report.summary.rowsWithLoosePrice,100);
+  assert.equal(report.summary.rowsWithNewPrice,100);
+  assert.equal(report.apiTokenIncluded,false);
+  assert.doesNotMatch(raw,/PRICECHARTING_TOKEN/i);
+});
+
+test("offline PriceCharting offers benchmark covers 100 provider rows without network access",async()=>{
+  const {report,raw}=await runBenchmarkFixture("offers");
+  assert.equal(report.fixture,true);
+  assert.equal(report.networkAccess,false);
+  assert.equal(report.launchPopulation,100);
+  assert.equal(report.results.length,100);
+  assert.deepEqual(report.platforms,{PS1:40,PS2:40,Dreamcast:20});
+  assert.equal(report.summary.titlesWithOffers,100);
+  assert.equal(report.summary.totalOffers,100);
+  assert.equal(report.apiTokenIncluded,false);
+  assert.doesNotMatch(raw,/PRICECHARTING_TOKEN/i);
 });
