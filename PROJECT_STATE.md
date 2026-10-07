@@ -1571,3 +1571,41 @@ Production D1 migrations `0003_catalogue_datasets.sql` and `0004_catalogue_provi
 The public site therefore has the forgiving ranked autocomplete/search behaviour against the existing 100-game canonical catalogue only.
 
 The one-time deployment workflow was removed immediately after successful deployment.
+
+
+## Canonical game selection state deployed — 7 October 2026
+
+Production deployment run: **37638721651**
+
+Search no longer ends with the ambiguous message:
+`Target ready. Live marketplace discovery is not connected yet.`
+
+After a real catalogue match, Search now shows a contextual canonical-game confirmation panel with:
+- Game identified status
+- canonical title
+- platform
+- release year when available
+- PALScout coverage level
+- how the query matched (canonical title / alias / abbreviation / partial / correction)
+- clear explanation that live marketplace discovery is a separate layer
+- visible Save this hunt action
+
+Behaviour changes:
+- demo listing cards remain visible in the approved idle Search state
+- once a real canonical game is resolved, demo cards are hidden and the identified-game panel becomes the result state
+- no-match searches no longer create a raw-text hunt
+- ambiguous searches require the user to choose the exact game/platform
+- selecting an autocomplete suggestion immediately resolves the canonical game
+- if a live marketplace provider is added later, the same canonical selection state remains compatible with live PALScout-classified results
+
+Deployment safeguards passed:
+- exact 100-game canonical production catalogue
+- all 100 current games PALSCOUT_DEEP
+- regression tests
+- production bundle assertions
+- browser index exactly 100 games
+
+Cloudflare Worker version:
+`203cdb09-224c-4225-93b7-be17d549ef37`
+
+The 8,433-game IGDB candidate remains unpublished.
