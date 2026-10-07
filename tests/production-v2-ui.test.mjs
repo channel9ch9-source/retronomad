@@ -26,7 +26,9 @@ test("production homepage and search use GrailRaven v2 shell",()=>{
 });
 
 test("production search supports alternate-name lookup without changing the approved preview copy",()=>{
-  assert.ok(search.includes("(x.aliases||[]).some"));
+  assert.ok(search.includes('import("./shared/catalogue-search-core.js")'));
+  assert.ok(search.includes("resolveCatalogueQuery"));
+  assert.ok(search.includes("rankCatalogueMatches"));
   assert.ok(search.includes("Search Silent Hill, Final Fantasy VII, Shenmue..."));
 });
 
