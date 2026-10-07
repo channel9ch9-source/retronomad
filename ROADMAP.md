@@ -701,3 +701,16 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [ ] review/sign agreement
 - [ ] record any additional conditions in repo
 - [ ] only after agreement confirmation set `IGDB_COMMERCIAL_APPROVED=true`
+
+
+### Canonical Search selection state
+
+- [x] replace marketplace dead-end status with canonical game confirmation
+- [x] show title / platform / year / PALScout coverage
+- [x] show how the query matched
+- [x] keep Save Hunt available before marketplace integration
+- [x] reject no-match raw-text hunt creation
+- [x] require explicit choice for ambiguous catalogue searches
+- [x] hide demo listing cards only after a real game is identified
+- [x] preserve approved idle Search composition
+- [x] deploy to current 100-game production catalogue
