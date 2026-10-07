@@ -36,6 +36,8 @@
 .v2-selection-source strong{display:block;color:#e7edf2;font-size:13px;margin-bottom:3px}
 .v2-selection-save{border:1px solid #66737d;background:#11161a;color:#fff;border-radius:9px;padding:10px 12px;font-weight:750;cursor:pointer;width:100%}
 .v2-selection-save:hover{border-color:#fff}
+.v2-provider-attribution{margin-top:10px;font-size:10px;color:#7f8a93;line-height:1.35}
+.v2-provider-attribution a{color:#c8d0d6;text-decoration:underline;text-underline-offset:2px}
 @media(max-width:760px){.v2-demo-banner{display:none}.v2-suggestions{top:calc(100% + 6px)}.v2-selection-panel{grid-template-columns:1fr}.v2-selection-side{border-left:0;border-top:1px solid #242d35;padding-left:0;padding-top:14px}}
 </style>
 </head>
@@ -387,6 +389,15 @@ function renderLiveResults(rows){
   const meta=document.createElement("div");meta.className="v2-meta-line";meta.textContent=[row.classification?.game,row.classification?.platform,row.source].filter(Boolean).join(" · ");
   const desc=document.createElement("p");desc.className="v2-desc";desc.textContent=[...(row.match?.reasons||[]),...(row.match?.notes||[])].join(" · ")||"Candidate listing classified by PALScout.";
   body.append(chips,title,meta,desc);
+  if(String(row.source||"").toLowerCase()==="pricecharting"){
+    const attribution=document.createElement("div");attribution.className="v2-provider-attribution";
+    const link=document.createElement("a");
+    link.href=row.itemSpecifics?.priceChartingAttributionUrl||row.canonicalUrl||"https://www.pricecharting.com";
+    link.target="_blank";link.rel="noopener noreferrer";
+    link.textContent="Price data / marketplace offer via PriceCharting";
+    attribution.append("Source: ",link);
+    body.appendChild(attribution);
+  }
   const priceCol=document.createElement("div");priceCol.className="v2-pricecol";
   const price=document.createElement("div");price.className="v2-price";price.textContent=row.match?.deliveredGbp!=null?"£"+row.match.deliveredGbp.toFixed(2)+" delivered":(row.itemPrice!=null&&row.currency?row.currency+" "+Number(row.itemPrice).toFixed(2):"Price unavailable");
   priceCol.appendChild(price);
