@@ -682,6 +682,7 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] add 24-case full-catalogue search benchmark
 - [x] add search performance regression budgets
 - [x] gate future full-catalogue promotion on search benchmark
-- [ ] run full 8,433-game search benchmark
+- [x] fix stale pre-benchmark alias assertion
+- [ ] rerun full 8,433-game search benchmark
 - [ ] review any failed/ambiguous benchmark cases
 - [ ] deploy autocomplete improvement to current 100-game public Search after benchmark passes
