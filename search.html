@@ -22,7 +22,21 @@
 .v2-suggestion-title{min-width:0;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .v2-suggestion-meta{flex:0 0 auto;color:#8f9ba5;font-size:11px}
 .v2-suggestion-match{display:block;color:#77838d;font-size:10px;font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:760px){.v2-demo-banner{display:none}.v2-suggestions{top:calc(100% + 6px)}}
+.v2-selection-panel{display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:18px;align-items:stretch;background:#000;border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:12px}
+.v2-selection-panel[hidden]{display:none}
+.v2-selection-kicker{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.v2-selection-ok{display:inline-flex;align-items:center;gap:6px;border:1px solid #415347;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:800;letter-spacing:.08em;color:#dbe8dd;text-transform:uppercase;background:#0b100c}
+.v2-selection-match{font-size:11px;color:#8f9ba5}
+.v2-selection-title{font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:24px;line-height:1.05;margin:0 0 7px;color:#fff}
+.v2-selection-meta{display:flex;gap:8px;flex-wrap:wrap;color:#c3ccd3;font-size:12px}
+.v2-selection-meta span{border:1px solid #303b45;border-radius:999px;padding:5px 8px;background:#080a0c}
+.v2-selection-copy{margin:11px 0 0;color:#9da8b0;font-size:12px;max-width:720px}
+.v2-selection-side{border-left:1px solid #242d35;padding-left:18px;display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.v2-selection-source{font-size:12px;color:#8f9ba5;line-height:1.45}
+.v2-selection-source strong{display:block;color:#e7edf2;font-size:13px;margin-bottom:3px}
+.v2-selection-save{border:1px solid #66737d;background:#11161a;color:#fff;border-radius:9px;padding:10px 12px;font-weight:750;cursor:pointer;width:100%}
+.v2-selection-save:hover{border-color:#fff}
+@media(max-width:760px){.v2-demo-banner{display:none}.v2-suggestions{top:calc(100% + 6px)}.v2-selection-panel{grid-template-columns:1fr}.v2-selection-side{border-left:0;border-top:1px solid #242d35;padding-left:0;padding-top:14px}}
 </style>
 </head>
 <body>
@@ -116,12 +130,35 @@
 
     <section>
       <div class="v2-resultshead">
-        <h2><span id="previewCount">3</span> example results for “<span id="previewTerm">Silent Hill</span>”</h2>
+        <h2 id="resultsHeading"><span id="previewCount">3</span> example results for “<span id="previewTerm">Silent Hill</span>”</h2>
         <div class="v2-results-actions">
           <button class="v2-mobile-filter" type="button" id="mobileFilterButton" aria-expanded="false" aria-controls="searchFilters">Filters</button>
           <select class="v2-sort" id="sortResults"><option>Sort by: Best match</option><option>Price: Low to high</option><option>Newest</option></select>
         </div>
       </div>
+
+      <section id="catalogueSelection" class="v2-selection-panel" aria-live="polite" hidden>
+        <div>
+          <div class="v2-selection-kicker">
+            <span class="v2-selection-ok">✓ Game identified</span>
+            <span id="selectionMatch" class="v2-selection-match"></span>
+          </div>
+          <h3 id="selectionTitle" class="v2-selection-title"></h3>
+          <div class="v2-selection-meta">
+            <span id="selectionPlatform"></span>
+            <span id="selectionYear"></span>
+            <span id="selectionCoverage"></span>
+          </div>
+          <p id="selectionCopy" class="v2-selection-copy"></p>
+        </div>
+        <div class="v2-selection-side">
+          <div id="selectionMarketplace" class="v2-selection-source">
+            <strong>Live listings not connected yet</strong>
+            GrailRaven has identified the game. Authorised marketplace listings will appear here once a source is enabled.
+          </div>
+          <button id="selectionSave" class="v2-selection-save" type="button">Save this hunt</button>
+        </div>
+      </section>
 
       <div id="demoResults">
 <div class="v2-cards">
@@ -226,6 +263,66 @@ const catalogueSearchReady=import("./shared/catalogue-search-core.js")
  .then(api=>(catalogueSearchApi=api))
  .catch(()=>null);
 
+const resultsHeading=document.querySelector("#resultsHeading");
+const previewHeadingHtml=resultsHeading.innerHTML;
+const previewResultNote=document.querySelector("#resultNote").textContent;
+let selectedSuggestionMatch=null;
+
+function coverageLabel(value){
+ if(value==="PALSCOUT_DEEP")return "PALScout evidence ready";
+ if(value==="PALSCOUT_PARTIAL")return "PALScout partial evidence";
+ return "Catalogue metadata";
+}
+function matchLabel(row,resolution){
+ const reason=row?.reason||resolution?.top?.reason||"";
+ if(resolution?.status==="corrected")return "Corrected from your search";
+ if(reason.includes("alias")&&row?.matchedText)return "Matched alias: “"+row.matchedText+"”";
+ if(reason.includes("acronym")&&row?.matchedText)return "Matched abbreviation: “"+row.matchedText+"”";
+ if(reason.includes("prefix")||reason.includes("contains")||reason.includes("subsequence"))return "Matched your partial title";
+ return "Canonical catalogue match";
+}
+function hideCatalogueSelection({restorePreview=false}={}){
+ const panel=document.querySelector("#catalogueSelection");
+ panel.hidden=true;
+ if(restorePreview){
+   document.querySelector("#demoResults").style.display="";
+   document.querySelector("#liveResults").innerHTML="";
+   resultsHeading.innerHTML=previewHeadingHtml;
+   const term=document.querySelector("#previewTerm");
+   if(term)term.textContent=document.querySelector("#game").value.trim()||"Silent Hill";
+   document.querySelector("#resultNote").textContent=previewResultNote;
+ }
+}
+function renderCatalogueSelection(game,resolution,row,providers=[]){
+ const panel=document.querySelector("#catalogueSelection");
+ document.querySelector("#selectionTitle").textContent=game.title;
+ document.querySelector("#selectionPlatform").textContent=game.platform;
+ document.querySelector("#selectionYear").textContent=game.releaseYear||"Release year unavailable";
+ document.querySelector("#selectionCoverage").textContent=coverageLabel(game.coverage);
+ document.querySelector("#selectionMatch").textContent=matchLabel(row,resolution);
+ document.querySelector("#selectionCopy").textContent=
+   game.coverage==="PALSCOUT_DEEP"
+   ?"This canonical game is linked to GrailRaven’s deeper physical-release evidence. Your region, edition, completeness and condition filters are ready to be applied when live listings are available."
+   :"This canonical game has been identified in the catalogue. Exact physical-release evidence will be applied where PALScout coverage is available.";
+ const market=document.querySelector("#selectionMarketplace");
+ market.innerHTML="";
+ const strong=document.createElement("strong");
+ if(providers.length){
+   strong.textContent="Live marketplace connected";
+   market.append(strong,document.createTextNode(" GrailRaven is checking authorised listings for this target."));
+ }else{
+   strong.textContent="Live listings not connected yet";
+   market.append(strong,document.createTextNode(" GrailRaven has identified the game. Authorised marketplace listings will appear here once a source is enabled."));
+ }
+ panel.hidden=false;
+ document.querySelector("#demoResults").style.display="none";
+ resultsHeading.textContent="Game identified";
+ document.querySelector("#resultNote").textContent=providers.length
+   ?"The selected canonical game is confirmed. Live candidates will be classified by PALScout below."
+   :"Catalogue identification is working. Marketplace discovery is the next layer and is not connected yet.";
+ document.querySelector("#saveBtn").disabled=false;
+}
+
 function numberOrNull(v){const n=Number(String(v||"").replace(/[^0-9.]/g,""));return Number.isFinite(n)&&n>0?n:null;}
 function syncLegacyFields(){
   const uk=document.querySelector("#regionUk").checked,eu=document.querySelector("#regionEu").checked;
@@ -297,27 +394,39 @@ function renderLiveResults(rows){
   card.append(cover,body,priceCol);box.appendChild(card);
  }
 }
-async function runSearch(){
+async function runSearch(options={}){
  await catalogueSearchReady;
  const resolution=resolveGameInput();
- if(resolution.status==="ambiguous"){
-   renderCatalogueSuggestions(document.querySelector("#game").value.trim(),true);
-   document.querySelector("#searchStatus").textContent="Choose the exact game from the suggestions before creating the hunt.";
+ const status=document.querySelector("#searchStatus");
+ if(resolution.status==="none"){
+   window.currentTarget=null;
+   hideCatalogueSelection({restorePreview:true});
+   status.textContent="No catalogue match found. Try another title or choose one of the suggested games.";
+   document.querySelector("#saveBtn").disabled=true;
+   if(document.querySelector("#game").value.trim().length>=2)renderCatalogueSuggestions(document.querySelector("#game").value.trim(),true);
    return;
  }
+ if(resolution.status==="ambiguous"){
+   window.currentTarget=null;
+   hideCatalogueSelection({restorePreview:true});
+   renderCatalogueSuggestions(document.querySelector("#game").value.trim(),true);
+   status.textContent="More than one catalogue game could match. Choose the exact title and platform from the suggestions.";
+   document.querySelector("#saveBtn").disabled=true;
+   return;
+ }
+ const canonical=resolution.top?.game;
+ if(!canonical)return;
  const t=buildTarget();
  if(!t)return;
  window.currentTarget=t;
- document.querySelector("#previewTerm").textContent=t.game;
+ document.querySelector("#previewTerm")?.replaceChildren(document.createTextNode(t.game));
  document.querySelector("#heroArtTitle").textContent=t.game;
  const providers=window.RetroNomadMarketplace?.providerNames?.()||[];
- if(!providers.length){
-   const status=document.querySelector("#searchStatus");
-   status.innerHTML='Target ready. Live marketplace discovery is not connected yet. <button type="button" id="inlineSave">Save this hunt</button>';
-   document.querySelector("#saveBtn").disabled=false;
-   document.querySelector("#inlineSave")?.addEventListener("click",()=>document.querySelector("#saveBtn").click());
-   return;
- }
+ const selectionRow=options.selectionRow||selectedSuggestionMatch||resolution.top;
+ selectedSuggestionMatch=null;
+ renderCatalogueSelection(canonical,resolution,selectionRow,providers);
+ status.textContent="";
+ if(!providers.length)return;
  const rows=await window.RetroNomadSearchPipeline.run(t);
  renderLiveResults(rows);
 }
@@ -339,14 +448,13 @@ function setSelectedPlatform(platform){
 }
 function selectCatalogueSuggestion(row){
  if(!row?.game)return;
+ selectedSuggestionMatch=row;
  gameInput.value=row.game.title;
  setSelectedPlatform(row.game.platform);
  document.querySelector("#previewTerm").textContent=row.game.title;
  document.querySelector("#heroArtTitle").textContent=row.game.title;
- document.querySelector("#searchStatus").textContent=row.matchedText&&row.matchedText!==row.game.title
-  ?"Matched “"+row.matchedText+"” to "+row.game.title+" · "+row.game.platform+"."
-  :"Selected "+row.game.title+" · "+row.game.platform+".";
  hideCatalogueSuggestions();
+ runSearch({selectionRow:row});
 }
 function paintSuggestionActive(){
  [...suggestionBox.querySelectorAll(".v2-suggestion")].forEach((button,index)=>button.classList.toggle("active",index===suggestionActive));
@@ -386,8 +494,13 @@ function scheduleCatalogueSuggestions(value){
 
 gameInput.addEventListener("input",e=>{
  const value=e.target.value.trim()||"your search";
+ selectedSuggestionMatch=null;
+ hideCatalogueSelection({restorePreview:true});
  document.querySelector("#previewTerm").textContent=value;
  document.querySelector("#heroArtTitle").textContent=value;
+ document.querySelector("#searchStatus").textContent="";
+ document.querySelector("#saveBtn").disabled=true;
+ window.currentTarget=null;
  scheduleCatalogueSuggestions(e.target.value);
 });
 gameInput.addEventListener("focus",()=>{if(gameInput.value.trim().length>=2)scheduleCatalogueSuggestions(gameInput.value);});
@@ -438,6 +551,8 @@ document.querySelector("#mobileNavButton").addEventListener("click",()=>{
  const nav=document.querySelector("#primaryNav"),button=document.querySelector("#mobileNavButton"),open=nav.classList.toggle("mobile-open");
  button.setAttribute("aria-expanded",String(open));button.textContent=open?"Close":"Menu";
 });
+
+document.querySelector("#selectionSave").addEventListener("click",()=>document.querySelector("#saveBtn").click());
 
 document.querySelector("#saveBtn").addEventListener("click",async()=>{
  const target=window.currentTarget||buildTarget();if(!target)return;
