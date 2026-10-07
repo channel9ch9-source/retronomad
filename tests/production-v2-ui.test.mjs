@@ -54,3 +54,11 @@ test("production Search has a canonical catalogue selection state before marketp
   assert.ok(search.includes("Live listings not connected yet"));
   assert.equal(search.includes("Target ready. Live marketplace discovery is not connected yet."),false);
 });
+
+
+test("production Search contains the conditional PriceCharting attribution contract",()=>{
+  assert.ok(search.includes("Price data / marketplace offer via PriceCharting"));
+  assert.ok(search.includes('String(row.source||"").toLowerCase()==="pricecharting"'));
+  assert.ok(search.includes("priceChartingAttributionUrl"));
+  assert.ok(search.includes('link.rel="noopener noreferrer"'));
+});
