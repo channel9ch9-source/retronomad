@@ -23,6 +23,7 @@ Still required before real/public PriceCharting use:
 - [x] Add offline 100-game fixture validation for both PriceCharting benchmark modes
 - [x] Add safe GitHub Actions harness-validation workflow
 - [x] Add hard-gated real-token PriceCharting benchmark workflow
+- [x] Pass safe offline PriceCharting harness validation (run 37667009943; 35/35 tests; 100 pricing + 100 offers)
 - [ ] Only when ready for real validation, purchase the approved Legendary subscription
 - [ ] Store `PRICECHARTING_TOKEN` only as a Cloudflare Worker secret
 - [ ] Run the 100-title UK/PAL pricing benchmark
