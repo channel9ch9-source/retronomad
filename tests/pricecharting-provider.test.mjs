@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   PAL_CONSOLES,
   createPriceChartingClient,
+  priceChartingAttributionUrl,
   findPriceChartingProductsForTarget,
   normalizePriceChartingOffer,
   referencePriceFromProduct,
@@ -115,6 +116,7 @@ test("marketplace search preserves evidence without inventing postage or deliver
   assert.deepEqual(row.identifiers, ["4012927021234"]);
   assert.equal(row.itemSpecifics.priceChartingProductId, "pal-1");
   assert.equal(row.itemSpecifics.priceChartingAttributionText, "Price data and marketplace offer via PriceCharting");
+  assert.equal(row.itemSpecifics.priceChartingAttributionUrl, "https://www.pricecharting.com/offers?product=pal-1");
 
   const offerCall = fetchFn.calls.find(u => u.pathname === "/api/offers");
   assert.equal(offerCall.searchParams.get("condition-id"), "3");
@@ -126,6 +128,8 @@ test("reference price uses the correct completeness bucket and cents conversion"
   assert.equal(ref.amount, 123.45);
   assert.equal(ref.currency, "USD");
   assert.equal(ref.field, "cib-price");
+  assert.equal(ref.attributionText, "Price data via PriceCharting");
+  assert.equal(ref.attributionUrl, "https://www.pricecharting.com/offers?product=pal-1");
   assert.equal(referencePriceFromProduct({ id: "pal-1", "cib-price": 12345 }, "incomplete"), null);
 });
 
@@ -147,4 +151,11 @@ test("missing token fails safely without exposing secrets", () => {
     assert.doesNotMatch(error.message, /token=.*[a-z0-9]{20}/i);
     return true;
   });
+});
+
+
+test("PriceCharting attribution linkback is deterministic and never contains an API token", () => {
+  assert.equal(priceChartingAttributionUrl("6910"), "https://www.pricecharting.com/offers?product=6910");
+  assert.equal(priceChartingAttributionUrl(""), "https://www.pricecharting.com");
+  assert.doesNotMatch(priceChartingAttributionUrl("6910"), /[?&]t=/);
 });
