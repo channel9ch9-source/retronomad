@@ -195,3 +195,12 @@ The benchmark checks representative exact, partial, abbreviation, regional-name,
 Failure blocks the promotion workflow.
 
 Search behaviour is documented in `CATALOGUE_SEARCH_V1.md`.
+
+
+## IGDB partnership status — 7 October 2026
+
+IGDB responded positively and confirmed that commercial partnership access remains free, local storage is allowed/preferred, retrieved data may be retained after termination, Data Dumps will be enabled for the partnered ClientID, and user-facing attribution to IGDB.com is required.
+
+The publication gate remains closed only because the legal partnership agreement still needs to be prepared and signed.
+
+Do not set `IGDB_COMMERCIAL_APPROVED=true` until agreement execution/confirmation is received and any additional conditions are recorded.
