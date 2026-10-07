@@ -1,0 +1,64 @@
+name: Validate PriceCharting benchmark harness
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "backend/pricecharting-provider.js"
+      - "scripts/pricecharting-benchmark.mjs"
+      - "tests/pricecharting-provider.test.mjs"
+      - "tests/production-v2-ui.test.mjs"
+      - "search.html"
+      - "package.json"
+      - ".github/workflows/pricecharting-harness-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Generate offline pricing benchmark
+        run: npm run pricecharting:fixture:pricing
+
+      - name: Generate offline offers benchmark
+        run: npm run pricecharting:fixture:offers
+
+      - name: Verify fixture reports
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          for (const file of [
+            "benchmarks/pricecharting-fixture-pricing.json",
+            "benchmarks/pricecharting-fixture-offers.json"
+          ]) {
+            const report=JSON.parse(fs.readFileSync(file,"utf8"));
+            if(report.fixture!==true || report.networkAccess!==false) throw new Error(file+" is not an offline fixture report");
+            if(report.launchPopulation!==100 || report.results.length!==100) throw new Error(file+" does not cover 100 targets");
+            if(report.platforms?.PS1!==40 || report.platforms?.PS2!==40 || report.platforms?.Dreamcast!==20) throw new Error(file+" platform split changed");
+          }
+          console.log("PriceCharting offline benchmark harness verified.");
+          NODE
+
+      - name: Upload fixture benchmark reports
+        uses: actions/upload-artifact@v7
+        with:
+          name: pricecharting-offline-benchmark-validation
+          path: |
+            benchmarks/pricecharting-fixture-pricing.json
+            benchmarks/pricecharting-fixture-offers.json
+          retention-days: 30
