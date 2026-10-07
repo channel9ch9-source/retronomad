@@ -1543,3 +1543,31 @@ Current status:
 - awaiting IGDB legal team to prepare the partnership agreement
 - `IGDB_COMMERCIAL_APPROVED` remains false
 - do not publish the 8,433-game IGDB-backed canonical catalogue until the agreement is reviewed/signed and IGDB confirms partnership activation
+
+
+## Ranked search deployed to current public catalogue — 7 October 2026
+
+Production deployment run: **37637618874**
+
+Safety checks passed before deployment:
+- canonical catalogue exactly 100 games
+- all 100 current canonical games remain `PALSCOUT_DEEP`
+- regression tests passed
+- Cloudflare build succeeded
+- ranked Search bundle present
+- generated browser index exactly 100 games
+
+Cloudflare uploaded the four expected changed static assets:
+- `/search.html`
+- `/catalogue-index.js`
+- `/shared/catalogue-core.js`
+- `/shared/catalogue-search-core.js`
+
+Cloudflare Worker version:
+- `64adffea-1482-4e42-a39f-8481ee303dc3`
+
+Production D1 migrations `0003_catalogue_datasets.sql` and `0004_catalogue_provider_refs.sql` were applied successfully. No full IGDB catalogue dataset was staged or activated by this deployment.
+
+The public site therefore has the forgiving ranked autocomplete/search behaviour against the existing 100-game canonical catalogue only.
+
+The one-time deployment workflow was removed immediately after successful deployment.
