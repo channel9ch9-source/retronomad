@@ -195,3 +195,23 @@ Therefore:
 - do not assume a monetized GrailRaven launch is covered merely by having Twitch API credentials
 - contact `partner@igdb.com` and complete/clarify the commercial partnership before publishing the IGDB-backed full catalogue as part of the commercial product
 - keep attribution as a product requirement
+
+
+### Direct IGDB commercial reply — 7 October 2026
+
+IGDB confirmed directly to GrailRaven that:
+- commercial partnerships are available
+- API access remains free of charge as part of the partnership
+- storing/caching the data locally is allowed and preferred
+- already retrieved IGDB data may be retained after partnership termination
+- Data Dumps are enabled for the partnered ClientID
+- user-facing attribution to IGDB.com is required
+
+This materially improves IGDB's suitability as GrailRaven's primary broad catalogue source.
+
+Remaining gate:
+- complete/sign the partnership agreement
+- record any additional agreement conditions
+- only then mark the production publication gate as cleared
+
+Until then, continue treating the 8,433-game IGDB candidate as development/staging data rather than public production catalogue data.
