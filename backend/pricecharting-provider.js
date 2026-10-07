@@ -69,6 +69,14 @@ function absolutePriceChartingUrl(value) {
   }
 }
 
+export function priceChartingAttributionUrl(productId) {
+  const id = String(productId || "").trim();
+  if (!id) return BASE_URL;
+  const url = new URL("/offers", BASE_URL);
+  url.searchParams.set("product", id);
+  return url.toString();
+}
+
 function safeDate(value) {
   const raw = String(value || "").trim();
   if (!raw || raw === "0001-01-01") return null;
@@ -228,7 +236,9 @@ export function referencePriceFromProduct(product = {}, completeness) {
     field,
     currency: "USD",
     amount: usd,
-    productUrl: product.id ? `${BASE_URL}/game/${encodeURIComponent(String(product.id))}` : ""
+    attributionText: "Price data via PriceCharting",
+    attributionUrl: priceChartingAttributionUrl(product.id),
+    productUrl: priceChartingAttributionUrl(product.id)
   };
 }
 
@@ -272,7 +282,8 @@ export function normalizePriceChartingOffer(offer = {}, product = {}, expectedCo
       includeString: include,
       conditionString: condition,
       priceChartingAttributionText: "Price data and marketplace offer via PriceCharting",
-      priceChartingProductUrl: productId ? `${BASE_URL}/game/${encodeURIComponent(productId)}` : ""
+      priceChartingAttributionUrl: priceChartingAttributionUrl(productId),
+      priceChartingProductUrl: priceChartingAttributionUrl(productId)
     },
     identifiers,
     englishFriendly: null,
