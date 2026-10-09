@@ -143,3 +143,16 @@ test("account client exposes the deletion API and Privacy documents it",async()=
   assert.ok(privacy.includes("permanently delete their account from the Account page"));
   assert.ok(privacy.includes("server sessions and cloud Saved Hunts"));
 });
+
+
+test("account deletion endpoint is authenticated and confirmation-gated",async()=>{
+  const worker=await read("backend/alerts-worker.js");
+  assert.ok(worker.includes('u.pathname === "/api/account/delete"'));
+  assert.ok(worker.includes("const s = await requireSession(request, env)"));
+  assert.ok(worker.includes('String(body.confirmation || "") !== "DELETE"'));
+  assert.ok(worker.includes("confirmation_required"));
+  assert.ok(worker.includes("DELETE FROM saved_hunts WHERE owner_id = ?"));
+  assert.ok(worker.includes("DELETE FROM sessions WHERE user_id = ?"));
+  assert.ok(worker.includes("DELETE FROM users WHERE id = ?"));
+  assert.ok(worker.includes('response.headers.append("set-cookie", clearSessionCookie())'));
+});
