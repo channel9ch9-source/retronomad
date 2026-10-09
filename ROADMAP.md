@@ -718,3 +718,30 @@ The platform inventory showed strong coverage but also duplicate/version ambigui
 - [x] hide demo listing cards only after a real game is identified
 - [x] preserve approved idle Search composition
 - [x] deploy to current 100-game production catalogue
+
+
+### Public Catalogue v1
+
+- [x] create dedicated `catalogue.html` public browse page
+- [x] use current compact canonical catalogue index rather than full metadata documents
+- [x] add PS1 / PS2 / Dreamcast filtering
+- [x] add title / alias / abbreviation search
+- [x] add title and release-year sorting
+- [x] render a bounded 36 records per page
+- [x] add canonical-ID game detail routes
+- [x] show title / platform / release year when source-backed / aliases / PALScout coverage
+- [x] keep artwork intentionally unavailable pending provider-rights clarity
+- [x] wire Find this game to exact canonical Search target
+- [x] wire Save Hunt to exact canonical Search target
+- [x] preserve canonical catalogue ID in browser and cloud Saved Hunts
+- [x] update public navigation to dedicated Catalogue page
+- [x] add Catalogue regression contract
+- [x] deploy behind 100-game PALScout publication guard
+- [x] pass 40/40 regression tests in production deployment
+- [x] remove one-time deployment workflow
+
+Future after IGDB agreement:
+- [ ] feed the approved 8,433-game canonical index into the same Catalogue UI
+- [ ] re-run full-catalogue UI/search performance checks
+- [ ] add provider-backed metadata fields only where agreement/rights permit
+- [ ] add artwork only after artwork rights are explicitly acceptable
