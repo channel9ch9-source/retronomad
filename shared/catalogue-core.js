@@ -12,6 +12,12 @@ export const RELEASE_INTELLIGENCE_COVERAGE = Object.freeze([
   "PALSCOUT_DEEP"
 ]);
 
+export const ARTWORK_RIGHTS_STATUS = Object.freeze([
+  "APPROVED",
+  "PENDING",
+  "DO_NOT_USE"
+]);
+
 export function normalizeCatalogueTitle(value) {
   return String(value || "")
     .normalize("NFKD")
@@ -47,7 +53,14 @@ export function validateCatalogueGame(game) {
   }
   const coverage = game.releaseIntelligence?.coverage || "BASE_ONLY";
   if (!RELEASE_INTELLIGENCE_COVERAGE.includes(coverage)) errors.push(`invalid release intelligence coverage: ${coverage}`);
-  if (game.artwork != null && typeof game.artwork !== "object") errors.push("artwork must be null or an object");
+  if (game.artwork != null && typeof game.artwork !== "object") {
+    errors.push("artwork must be null or an object");
+  } else if (game.artwork) {
+    const rightsStatus = String(game.artwork.rightsStatus || "");
+    if (!ARTWORK_RIGHTS_STATUS.includes(rightsStatus)) errors.push(`invalid artwork rights status: ${rightsStatus || "(missing)"}`);
+    if (!String(game.artwork.source || "").trim()) errors.push("artwork source is required");
+    if (!String(game.artwork.assetUrl || "").trim()) errors.push("artwork assetUrl is required");
+  }
   if (game.externalRefs != null && typeof game.externalRefs !== "object") errors.push("externalRefs must be an object");
   if (!Array.isArray(game.provenance)) errors.push("provenance must be an array");
   return errors;
@@ -85,18 +98,40 @@ export function mergeCatalogueSearchAliases(game, supplementalAliases = {}, supp
   return out;
 }
 
-export function buildCatalogueSearchIndex(document, supplementalAliases = {}, suppressedAliases = {}) {
+export function publicCatalogueArtwork(game, { includeArtwork = false } = {}) {
+  if (!includeArtwork) return null;
+  const artwork = game?.artwork;
+  if (!artwork || artwork.rightsStatus !== "APPROVED") return null;
+  const assetUrl = String(artwork.assetUrl || "").trim();
+  const source = String(artwork.source || "").trim();
+  if (!assetUrl || !source) return null;
+  return {
+    kind: String(artwork.kind || "COVER"),
+    source,
+    sourceRef: artwork.sourceRef == null ? null : String(artwork.sourceRef),
+    assetUrl,
+    rightsStatus: "APPROVED",
+    attribution: artwork.attribution == null ? null : String(artwork.attribution)
+  };
+}
+
+export function buildCatalogueSearchIndex(document, supplementalAliases = {}, suppressedAliases = {}, options = {}) {
   const validation = validateCatalogue(document);
   if (!validation.ok) throw new Error(`Invalid catalogue: ${validation.errors.join("; ")}`);
   return document.games
-    .map(game => ({
-      id: game.id,
-      title: game.title,
-      platform: game.platform,
-      aliases: mergeCatalogueSearchAliases(game, supplementalAliases, suppressedAliases),
-      releaseYear: game.releaseYear ?? null,
-      coverage: game.releaseIntelligence?.coverage || "BASE_ONLY"
-    }))
+    .map(game => {
+      const row = {
+        id: game.id,
+        title: game.title,
+        platform: game.platform,
+        aliases: mergeCatalogueSearchAliases(game, supplementalAliases, suppressedAliases),
+        releaseYear: game.releaseYear ?? null,
+        coverage: game.releaseIntelligence?.coverage || "BASE_ONLY"
+      };
+      const artwork = publicCatalogueArtwork(game, options);
+      if (artwork) row.artwork = artwork;
+      return row;
+    })
     .sort((a,b) => a.title.localeCompare(b.title) || a.platform.localeCompare(b.platform));
 }
 
