@@ -4,7 +4,23 @@ Last updated: 2 October 2026
 
 This file is the durable product anchor for the current public brand, **GrailRaven**. Technical implementation should be checked against this purpose before major changes.
 
+The business objective, monetisation direction, validation plan and financial-success decision rules are defined in `BUSINESS_DIRECTION.md`. Product work should satisfy both documents.
+
 The previous working/public name was **RetroNomad**. Historical internal identifiers may retain that name for compatibility; branding should not be coupled to core architecture. See `BRAND_NAMING.md` and `brand.json`.
+
+## Business objective
+
+GrailRaven is being built as a serious attempt to create a **financially meaningful, sustainable software business**.
+
+The project must not drift into feature-building for its own sake. Major work should materially support at least one of:
+- customer acquisition
+- retention
+- willingness to pay
+- defensibility
+
+The intended commercial wedge is exact-copy acquisition intelligence, not generic collection tracking.
+
+See `BUSINESS_DIRECTION.md` for the durable business strategy, monetisation direction, validation criteria, eBay reapplication plan and mobile-app decision rules.
 
 ## Core proposition
 
