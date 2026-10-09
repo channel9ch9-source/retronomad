@@ -75,6 +75,7 @@ function boolInt(v) { return v === true ? 1 : 0; }
 function normaliseTarget(t = {}) {
   const n = Number(t.maxDeliveredGbp);
   return {
+    catalogueId: String(t.catalogueId || "").trim().slice(0, 220),
     game: String(t.game || "").trim().slice(0, 200),
     platform: String(t.platform || "").trim().slice(0, 40),
     compatibility: String(t.compatibility || "UK_EU_PAL").slice(0, 80),
