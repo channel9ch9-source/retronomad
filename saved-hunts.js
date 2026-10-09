@@ -14,6 +14,7 @@
  function numberOrNull(v){const n=Number(v);return Number.isFinite(n)&&n>=0?n:null;}
  function normaliseTarget(t={}){
   return{
+   catalogueId:String(t.catalogueId||"").trim(),
    game:String(t.game||"").trim(),
    platform:String(t.platform||"").trim(),
    compatibility:String(t.compatibility||"UK_EU_PAL"),
