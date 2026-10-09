@@ -49,7 +49,7 @@ const catalogueIndex=buildCatalogueSearchIndex(
 await writeFile(join(out,"catalogue-index.js"),`// Generated from catalogue/base-catalogue.json.\nwindow.BASE_CATALOGUE_INDEX=${JSON.stringify(catalogueIndex)};\n`,"utf8");
 console.log(`Built compact catalogue search index with ${catalogueIndex.length} games`);
 
-const runtime=`// Generated for the Cloudflare same-origin deployment.\nconst config=Object.freeze({\n  accountSyncEnabled: true,\n  apiBase: \"\"\n});\nwindow.APP_CONFIG=config;\n// Legacy alias retained so existing browser code/storage migrations do not break.\nwindow.RETRONOMAD_CONFIG=config;\n`;
+const runtime=`// Generated for the Cloudflare same-origin deployment.\nconst config=Object.freeze({\n  accountSyncEnabled: true,\n  catalogueArtworkEnabled: ${catalogueArtworkEnabled},\n  apiBase: \"\"\n});\nwindow.APP_CONFIG=config;\n// Legacy alias retained so existing browser code/storage migrations do not break.\nwindow.RETRONOMAD_CONFIG=config;\n`;
 await writeFile(join(out,"runtime-config.js"),runtime,"utf8");
 
 console.log(`Built Cloudflare static assets for ${brand.name} in dist/public`);
