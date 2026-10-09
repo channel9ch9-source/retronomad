@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   deploy:
-    if: ${{ github.event.head_commit.message == 'Deploy dormant artwork slots' }}
+    if: ${{ startsWith(github.event.head_commit.message, 'Deploy dormant artwork slots') }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
