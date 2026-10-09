@@ -858,3 +858,16 @@ Monetisation direction:
 Mobile direction:
 - mobile app is a future opportunity for push alerts, barcode/photo scanning and marketplace-share workflows
 - do not divert into separate native iOS/Android development before web product-market fit
+
+
+### Immediate infrastructure issue — www hostname
+
+Observed 9 October 2026:
+- [x] apex `grailraven.com` confirmed working by user
+- [ ] diagnose why `www.grailraven.com` does not load
+- [ ] make `www.grailraven.com` resolve
+- [ ] redirect `www` → `https://grailraven.com`
+- [ ] verify HTTPS/certificate coverage and Worker/custom-domain routing
+- [ ] preserve existing production Worker, D1 and catalogue/provider gates
+
+This is the immediate next task before returning to the waiting-on-IGDB sequence.
