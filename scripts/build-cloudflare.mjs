@@ -8,6 +8,7 @@ await rm(join(root,"dist"),{recursive:true,force:true});
 await mkdir(out,{recursive:true});
 
 const brand=JSON.parse(await readFile(join(root,"brand.json"),"utf8"));
+const catalogueArtworkEnabled=["1","true","yes"].includes(String(process.env.CATALOGUE_ARTWORK_ENABLED||"false").toLowerCase());
 for(const key of ["name","mark","domain","contactEmail","legacyPublicName"]){
   if(!String(brand[key]||"").trim())throw new Error(`brand.json is missing ${key}`);
 }
@@ -39,7 +40,12 @@ const catalogueDocument=JSON.parse(await readFile(join(root,"catalogue","base-ca
 const catalogueSearchAliases=JSON.parse(await readFile(join(root,"catalogue","search-aliases.json"),"utf8"));
 const catalogueValidation=validateCatalogue(catalogueDocument);
 if(!catalogueValidation.ok)throw new Error("Invalid base catalogue: "+catalogueValidation.errors.join("; "));
-const catalogueIndex=buildCatalogueSearchIndex(catalogueDocument,catalogueSearchAliases.aliases||{},catalogueSearchAliases.suppressAliases||{});
+const catalogueIndex=buildCatalogueSearchIndex(
+  catalogueDocument,
+  catalogueSearchAliases.aliases||{},
+  catalogueSearchAliases.suppressAliases||{},
+  {includeArtwork:catalogueArtworkEnabled}
+);
 await writeFile(join(out,"catalogue-index.js"),`// Generated from catalogue/base-catalogue.json.\nwindow.BASE_CATALOGUE_INDEX=${JSON.stringify(catalogueIndex)};\n`,"utf8");
 console.log(`Built compact catalogue search index with ${catalogueIndex.length} games`);
 
