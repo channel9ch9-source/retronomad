@@ -376,6 +376,48 @@ async function verifyMagicLink(request, env) {
   });
 }
 
+export async function deleteAccountData(env, session) {
+  const ownerId = String(session?.userId || "");
+  const emailNorm = String(session?.emailNorm || "");
+  if (!ownerId || !emailNorm) {
+    const e = new Error("A valid authenticated account is required.");
+    e.code = "not_authenticated";
+    e.status = 401;
+    throw e;
+  }
+
+  const statements = [
+    env.DB.prepare(
+      "DELETE FROM notification_queue WHERE hunt_id IN (SELECT id FROM saved_hunts WHERE owner_id = ?)"
+    ).bind(ownerId),
+    env.DB.prepare(
+      "DELETE FROM hunt_matches WHERE hunt_id IN (SELECT id FROM saved_hunts WHERE owner_id = ?)"
+    ).bind(ownerId),
+    env.DB.prepare(
+      "DELETE FROM monitor_runs WHERE hunt_id IN (SELECT id FROM saved_hunts WHERE owner_id = ?)"
+    ).bind(ownerId),
+    env.DB.prepare("DELETE FROM saved_hunts WHERE owner_id = ?").bind(ownerId),
+    env.DB.prepare("DELETE FROM auth_tokens WHERE email_norm = ?").bind(emailNorm),
+    env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(ownerId),
+    env.DB.prepare("DELETE FROM users WHERE id = ?").bind(ownerId)
+  ];
+
+  await env.DB.batch(statements);
+  return { ok: true, deleted: true };
+}
+
+async function deleteAccount(request, env, session) {
+  const body = await request.json().catch(() => ({}));
+  if (String(body.confirmation || "") !== "DELETE") {
+    return json({ error: "confirmation_required", message: 'Type DELETE to confirm account deletion.' }, 400, env, request);
+  }
+
+  await deleteAccountData(env, session);
+  const response = json({ ok: true, deleted: true }, 200, env, request);
+  response.headers.append("set-cookie", clearSessionCookie());
+  return response;
+}
+
 async function listServerHunts(env, ownerId) {
   const q = await env.DB.prepare(
     `SELECT * FROM saved_hunts
@@ -690,6 +732,16 @@ export default {
       const response = json({ ok: true }, 200, env, request);
       response.headers.append("set-cookie", clearSessionCookie());
       return response;
+    }
+
+    if (request.method === "POST" && u.pathname === "/api/account/delete") {
+      if (!originAllowed(request, env)) return json({ error: "origin_not_allowed" }, 403, env, request);
+      try {
+        const s = await requireSession(request, env);
+        return await deleteAccount(request, env, s);
+      } catch (e) {
+        return json({ error: e.code || "account_delete_failed", message: String(e.message || e) }, e.status || 500, env, request);
+      }
     }
 
     if (request.method === "POST" && u.pathname === "/api/hunts/sync") {
