@@ -860,14 +860,16 @@ Mobile direction:
 - do not divert into separate native iOS/Android development before web product-market fit
 
 
-### Immediate infrastructure issue — www hostname
+### www hostname — completed 9 October 2026
 
-Observed 9 October 2026:
 - [x] apex `grailraven.com` confirmed working by user
-- [ ] diagnose why `www.grailraven.com` does not load
-- [ ] make `www.grailraven.com` resolve
-- [ ] redirect `www` → `https://grailraven.com`
-- [ ] verify HTTPS/certificate coverage and Worker/custom-domain routing
-- [ ] preserve existing production Worker, D1 and catalogue/provider gates
+- [x] diagnose why `www.grailraven.com` did not load
+- [x] add proxied `www` DNS record
+- [x] make `www.grailraven.com` resolve
+- [x] redirect `www` → `https://grailraven.com` with HTTP 301
+- [x] preserve request path and query string
+- [x] verify Universal SSL active
+- [x] preserve existing production Worker, D1 and catalogue/provider gates
+- [x] user confirmed the fixed hostname works after DNS cache refresh
 
-This is the immediate next task before returning to the waiting-on-IGDB sequence.
+Next: return to the waiting-on-IGDB sequence and review the legal partnership agreement when received.
