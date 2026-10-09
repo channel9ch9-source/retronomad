@@ -1752,3 +1752,40 @@ Privacy/account launch corrections:
 The deployment build still rewrites legacy source branding from `RetroNomad` to the public `GrailRaven` brand from `brand.json`, so production transactional email branding remains GrailRaven.
 
 The one-time deployment workflow was removed after success.
+
+
+## Self-service account deletion deployed — 9 October 2026
+
+Production deployment:
+- GitHub Actions run: **37939371609**
+- regression tests: **56/56 passed**
+- D1 migrations: **none pending**
+- Cloudflare Worker version: `2b05a097-2561-4ceb-905a-61fbf8c70b25`
+- public catalogue remained exactly 100 PALScout-deep games
+- catalogue artwork flag remained false
+
+Account deletion flow:
+- requires an authenticated session
+- requires exact typed confirmation `DELETE`
+- is exposed at `POST /api/account/delete`
+- deletes the authenticated user's notification-queue rows, hunt matches and monitor runs through owned Saved Hunt IDs
+- deletes all Saved Hunts owned by that account
+- deletes outstanding passwordless auth tokens for that email
+- deletes all sessions for that user
+- deletes the user account row
+- runs the server-side deletion statements together through a single D1 batch
+- clears the session cookie after success
+- cannot select another user's account because every account/hunt deletion is scoped to the authenticated user ID or authenticated email identity
+
+Browser behavior after successful deletion:
+- clears local Saved Hunts
+- clears Saved Hunt tombstones / legacy local target storage via the Saved Hunts module
+- clears the random account-sync device ID
+- returns the Account page to signed-out state
+- tells the user that account and Saved Hunt data were removed
+
+Privacy wording now documents the self-service deletion path.
+
+The short-lived pseudonymous auth-rate rows are intentionally not account-linked and therefore are not part of account deletion; they rotate daily and are designed to be pruned after about 24 hours.
+
+The one-time production deployment workflow was removed after successful rollout.
