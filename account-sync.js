@@ -22,6 +22,9 @@
   return request("/api/auth/request-link",{method:"POST",body:JSON.stringify({email,returnTo:returnTo||location.href})});
  }
  async function logout(){return request("/api/auth/logout",{method:"POST",body:"{}"});}
+ async function deleteAccount(confirmation){
+  return request("/api/account/delete",{method:"POST",body:JSON.stringify({confirmation:String(confirmation||"")})});
+ }
 
  async function syncSavedHunts(){
   if(!window.RetroNomadSavedHunts)throw new Error("Saved Hunts module is unavailable.");
@@ -49,5 +52,5 @@
   return id;
  }
 
- window.RetroNomadAccount={state,me,requestSignIn,logout,syncSavedHunts,deviceId};
+ window.RetroNomadAccount={state,me,requestSignIn,logout,deleteAccount,syncSavedHunts,deviceId};
 })();
