@@ -26,6 +26,8 @@ jobs:
 
       - name: Build same-origin static assets
         run: npm run build:cloudflare
+        env:
+          CATALOGUE_ARTWORK_ENABLED: ${{ vars.CATALOGUE_ARTWORK_ENABLED }}
 
       - name: Resolve/create D1 and render Wrangler config
         run: npm run prepare:cloudflare
