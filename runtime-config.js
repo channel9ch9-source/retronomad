@@ -5,6 +5,7 @@
 // same-site/custom-domain setup.
 const config=Object.freeze({
   accountSyncEnabled:false,
+  catalogueArtworkEnabled:false,
   apiBase:""
 });
 window.APP_CONFIG=config;
