@@ -203,11 +203,51 @@ async function sendMagicLink(env, to, magicLink) {
   throw e;
 }
 
-async function enforceLoginRequestRate(env, email) {
+export async function authClientRateKey(request, now = new Date()) {
+  const address = String(request?.headers?.get?.("cf-connecting-ip") || "").trim();
+  if (!address) return "";
+  const day = now.toISOString().slice(0, 10);
+  return sha256Hex("login-request|" + day + "|" + address);
+}
+
+export async function enforceLoginRequestRate(env, email, request = null) {
   const emailNorm = normalizeEmail(email);
-  const now = Date.now();
-  const oneMinuteAgo = new Date(now - 60 * 1000).toISOString();
-  const fifteenMinutesAgo = new Date(now - 15 * 60 * 1000).toISOString();
+  const nowMs = Date.now();
+  const now = new Date(nowMs).toISOString();
+  const oneMinuteAgo = new Date(nowMs - 60 * 1000).toISOString();
+  const fifteenMinutesAgo = new Date(nowMs - 15 * 60 * 1000).toISOString();
+
+  const clientKey = request ? await authClientRateKey(request, new Date(nowMs)) : "";
+  if (clientKey) {
+    const oneDayAgo = new Date(nowMs - 24 * 60 * 60 * 1000).toISOString();
+    await env.DB.prepare(
+      "DELETE FROM auth_rate_events WHERE created_at < ?"
+    ).bind(oneDayAgo).run();
+
+    await env.DB.prepare(
+      "INSERT INTO auth_rate_events (id, scope, client_key, created_at) VALUES (?, 'LOGIN_REQUEST', ?, ?)"
+    ).bind(opaqueId("rate"), clientKey, now).run();
+
+    const clientRecent = await env.DB.prepare(
+      "SELECT COUNT(*) AS n FROM auth_rate_events WHERE scope = 'LOGIN_REQUEST' AND client_key = ? AND created_at >= ?"
+    ).bind(clientKey, oneMinuteAgo).first();
+    if (Number(clientRecent?.n || 0) > 6) {
+      const e = new Error("Too many sign-in requests. Please try again shortly.");
+      e.code = "rate_limited";
+      e.status = 429;
+      throw e;
+    }
+
+    const clientWindowed = await env.DB.prepare(
+      "SELECT COUNT(*) AS n FROM auth_rate_events WHERE scope = 'LOGIN_REQUEST' AND client_key = ? AND created_at >= ?"
+    ).bind(clientKey, fifteenMinutesAgo).first();
+    if (Number(clientWindowed?.n || 0) > 20) {
+      const e = new Error("Too many sign-in requests. Please try again later.");
+      e.code = "rate_limited";
+      e.status = 429;
+      throw e;
+    }
+  }
 
   const recent = await env.DB.prepare(
     "SELECT COUNT(*) AS n FROM auth_tokens WHERE email_norm = ? AND created_at >= ?"
@@ -620,7 +660,7 @@ export default {
       const returnTo = safeReturnUrl(body.returnTo, effectiveAppOrigin(request, env));
       let created;
       try {
-        await enforceLoginRequestRate(env, email);
+        await enforceLoginRequestRate(env, email, request);
         created = await createLoginToken(env, email, returnTo, request);
         await sendMagicLink(env, email, created.magicLink);
       } catch (e) {
