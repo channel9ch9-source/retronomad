@@ -24,7 +24,48 @@ footer{border-top:1px solid var(--line);padding:34px 0 48px;color:var(--muted);f
     </div>
     <div class="v2-meta">games · data · collectors · higher standards</div>
   </div>
-</div><div class="wrap"><section><div class="kicker">Privacy</div><h2>Privacy notice</h2><p class="section-lead">This development site does not currently provide user accounts, analytics, advertising, payment processing or an email signup form.</p><div class="card" style="margin-top:28px"><h3>Future features</h3><p>If analytics, alerts, marketplace integrations, accounts or email signup are added, this notice will be updated before those features are publicly enabled.</p></div><p class="note">Last updated: 22 September 2026.</p></section></div><footer><div class="wrap foot"><div>© 2026 RetroNomad</div><div class="footlinks"><a href="index.html">Home</a><a href="about.html">About</a><a href="terms.html">Terms</a></div></div></footer><script>
+</div><div class="wrap"><section>
+  <div class="kicker">Privacy</div>
+  <h2>Privacy notice</h2>
+  <p class="section-lead">GrailRaven uses a small amount of account and security data to provide passwordless sign-in, cloud Saved Hunt sync and account protection. We do not currently run advertising or behavioural analytics.</p>
+
+  <div class="grid3" style="margin-top:28px">
+    <div class="card">
+      <h3>Account data</h3>
+      <p>If you sign in, we process your email address, an internal account identifier, session records and the Saved Hunts you choose to sync. Saved Hunts can include game/platform targets, release preferences, condition/completeness choices and target price.</p>
+    </div>
+    <div class="card">
+      <h3>Passwordless sign-in</h3>
+      <p>Sign-in links are single-use and valid for 15 minutes. GrailRaven stores hashes of authentication/session tokens rather than the raw secret tokens used in the links or session cookie.</p>
+    </div>
+    <div class="card">
+      <h3>Abuse prevention</h3>
+      <p>To limit sign-in-email abuse, GrailRaven applies per-email throttling and a short-lived pseudonymous client bucket derived from the Cloudflare connection address. The raw address is not stored in the GrailRaven abuse-limit table; the derived bucket rotates daily and old rate-event rows are pruned after about 24 hours.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Why we use this data</h3>
+    <p>We use account data to authenticate you, synchronize Saved Hunts across devices, preserve deletion/tombstone state, protect the sign-in service from abuse and operate the account backend. We do not sell account data to advertisers.</p>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Service providers</h3>
+    <p>Cloudflare provides hosting, request handling and D1 database infrastructure. Resend is used for transactional passwordless sign-in email where configured. Those services process the data needed to deliver their infrastructure or email functions.</p>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Retention and control</h3>
+    <p>Saved Hunts remain associated with your account until you delete or archive them or request account-data deletion. Sessions expire after their configured lifetime and can be revoked by signing out. Security rate-event rows are designed to be short-lived. To ask about, correct or request deletion of account data, contact <a href="mailto:contact@grailraven.com">contact@grailraven.com</a>.</p>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Marketplace and catalogue data</h3>
+    <p>Public catalogue browsing does not require an account. Live marketplace discovery, autonomous alerts and advertising are not currently enabled. If GrailRaven adds new account-data uses, analytics, advertising, payment processing or additional providers, this notice will be updated before those uses are enabled.</p>
+  </div>
+
+  <p class="note">Last updated: 9 October 2026.</p>
+</section></div><footer><div class="wrap foot"><div>© 2026 RetroNomad</div><div class="footlinks"><a href="index.html">Home</a><a href="about.html">About</a><a href="terms.html">Terms</a></div></div></footer><script>
 (function(){
  const button=document.querySelector("#mobileNavButton"),nav=document.querySelector("#primaryNav");
  if(!button||!nav)return;
