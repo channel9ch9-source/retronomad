@@ -13,6 +13,16 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
 .hero{padding:55px 0 24px}.kicker{font-size:12px;color:var(--green);font-weight:900;text-transform:uppercase;letter-spacing:.12em}h1{font-size:clamp(42px,7vw,64px);line-height:.98;letter-spacing:-.055em;margin:10px 0 12px}.lead{color:var(--muted);font-size:18px}
 .card{margin:18px 0 70px;border:1px solid var(--line);background:linear-gradient(180deg,#121823,#0f141c);border-radius:16px;padding:22px}.state{border:1px solid #5d532d;background:#19170e;color:#e8d994;border-radius:11px;padding:12px 13px;margin-bottom:18px}.state.good{border-color:#315b43;background:#0f1914;color:#b9efc9}.state.bad{border-color:#60404a;background:#1a1115;color:#ffc0c6}
 .field{margin:14px 0}.field label{display:block;font-size:12px;font-weight:800;color:#bac5d4;margin-bottom:6px}.field input{width:100%;background:#0b1017;border:1px solid var(--line);border-radius:9px;padding:12px;color:var(--text);font:inherit}.btn{border:1px solid var(--line);background:#172131;color:var(--text);border-radius:9px;padding:10px 13px;font:inherit;font-weight:850;cursor:pointer}.btn.primary{background:var(--text);color:#0b0d12}.btn:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:8px;flex-wrap:wrap}.muted{color:var(--muted);font-size:13px}.hidden{display:none}.user{font-size:18px;font-weight:850;margin:0 0 5px}
+.danger-zone{margin-top:26px;padding-top:22px;border-top:1px solid #493038}
+.danger-zone h3{margin:0 0 8px;color:#ffd9dd}
+.danger-zone .danger-copy{color:#c5a4aa;font-size:13px;max-width:620px}
+.btn.danger{background:#1b0c0f;border-color:#7d2633;color:#ffd7dc}
+.btn.danger:hover{border-color:#ff5d73}
+.delete-panel{margin-top:13px;border:1px solid #5a2730;background:#12090b;border-radius:11px;padding:14px}
+.delete-panel label{display:block;font-size:12px;font-weight:850;color:#ffd1d7;margin:0 0 7px}
+.delete-panel input{width:100%;max-width:260px;background:#080506;border:1px solid #69313a;border-radius:9px;padding:11px;color:#fff;font:inherit}
+.delete-panel .actions{margin-top:11px}
+.delete-warning{color:#d9a8af;font-size:12px;margin:8px 0 0}
 @media(max-width:600px){nav{height:auto;min-height:70px;flex-wrap:wrap;padding:12px 0;gap:8px}.navlinks{display:flex;width:100%;overflow-x:auto;gap:16px;padding:2px 0 6px;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}}
 </style>
 <link rel="stylesheet" href="ui-v2.css"><link rel="stylesheet" href="production-v2.css"></head>
@@ -63,6 +73,22 @@ nav{height:70px;display:flex;align-items:center;justify-content:space-between}.b
 <p class="muted">You can sync the Saved Hunts stored in this browser with your RetroNomad account.</p>
 <div class="actions"><button id="syncBtn" class="btn primary">Sync Saved Hunts now</button><button id="logoutBtn" class="btn">Sign out</button></div>
 <p id="syncMessage" class="muted"></p>
+
+<div class="danger-zone">
+  <h3>Delete account</h3>
+  <p class="danger-copy">Permanently delete your GrailRaven account, all cloud-synced Saved Hunts and the Saved Hunts stored in this browser. This cannot be undone.</p>
+  <button id="openDeleteAccount" class="btn danger" type="button">Delete account</button>
+  <div id="deleteAccountPanel" class="delete-panel hidden">
+    <label for="deleteConfirmation">Type DELETE to confirm</label>
+    <input id="deleteConfirmation" type="text" autocomplete="off" spellcheck="false" aria-describedby="deleteAccountWarning">
+    <p id="deleteAccountWarning" class="delete-warning">This permanently removes the account and Saved Hunt data described above.</p>
+    <div class="actions">
+      <button id="confirmDeleteAccount" class="btn danger" type="button" disabled>Permanently delete account</button>
+      <button id="cancelDeleteAccount" class="btn" type="button">Cancel</button>
+    </div>
+    <p id="deleteAccountMessage" class="muted"></p>
+  </div>
+</div>
 </section>
 </section>
 </main>
@@ -107,6 +133,44 @@ q("#syncBtn").addEventListener("click",async()=>{
   q("#syncMessage").textContent="Synced "+(r.hunts?.length||0)+" Saved Hunt"+((r.hunts?.length||0)===1?"":"s")+".";
  }catch(e){q("#syncMessage").textContent=e.message;}
  finally{btn.disabled=false;}
+});
+q("#openDeleteAccount").addEventListener("click",()=>{
+ q("#deleteAccountPanel").classList.remove("hidden");
+ q("#deleteConfirmation").value="";
+ q("#confirmDeleteAccount").disabled=true;
+ q("#deleteAccountMessage").textContent="";
+ q("#deleteConfirmation").focus();
+});
+q("#cancelDeleteAccount").addEventListener("click",()=>{
+ q("#deleteAccountPanel").classList.add("hidden");
+ q("#deleteConfirmation").value="";
+ q("#confirmDeleteAccount").disabled=true;
+ q("#deleteAccountMessage").textContent="";
+});
+q("#deleteConfirmation").addEventListener("input",e=>{
+ q("#confirmDeleteAccount").disabled=e.target.value!=="DELETE";
+});
+q("#confirmDeleteAccount").addEventListener("click",async()=>{
+ const btn=q("#confirmDeleteAccount");
+ const confirmation=q("#deleteConfirmation").value;
+ if(confirmation!=="DELETE")return;
+ btn.disabled=true;
+ q("#deleteAccountMessage").textContent="Deleting account…";
+ try{
+  await RetroNomadAccount.deleteAccount(confirmation);
+  RetroNomadSavedHunts?.clearAll?.();
+  localStorage.removeItem("retronomad_device_id_v1");
+  q("#deleteAccountPanel").classList.add("hidden");
+  q("#deleteConfirmation").value="";
+  q("#email").value="";
+  show("#signin");
+  q("#state").className="state good";
+  q("#state").textContent="ACCOUNT DELETED · account and Saved Hunt data removed";
+  q("#signinMessage").textContent="Your account was deleted. You can create a new account later by requesting a new sign-in link.";
+ }catch(e){
+  q("#deleteAccountMessage").textContent=e.message;
+  btn.disabled=confirmation!=="DELETE";
+ }
 });
 q("#logoutBtn").addEventListener("click",async()=>{
  try{await RetroNomadAccount.logout();}catch(e){}
