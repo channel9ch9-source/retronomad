@@ -354,14 +354,15 @@ function resolveGameInput(){
   ?catalogueSearchApi.resolveCatalogueQuery(catalogueIndex,query,{platform})
   :fallbackCatalogueResolution(query,platform);
 }
-function buildTarget(){
+function buildTarget(canonicalOverride=null){
  syncLegacyFields();
  const typedGame=document.querySelector("#game").value.trim();
  if(!typedGame)return null;
  const selectedPlatform=document.querySelector("#platform").value;
- const resolution=resolveGameInput();
- const canonical=(resolution.status==="resolved"||resolution.status==="corrected")?resolution.top?.game:null;
+ const resolution=canonicalOverride?null:resolveGameInput();
+ const canonical=canonicalOverride||((resolution?.status==="resolved"||resolution?.status==="corrected")?resolution.top?.game:null);
  return {
+   catalogueId:canonical?.id||null,
    game:canonical?.title||typedGame,platform:canonical?.platform||selectedPlatform,
    compatibility:"UK_EU_PAL",releasePreference:document.querySelector("#release").value,
    editionPreference:document.querySelector("#edition").value,completeness:document.querySelector("#complete").value,
@@ -406,7 +407,9 @@ function renderLiveResults(rows){
 }
 async function runSearch(options={}){
  await catalogueSearchReady;
- const resolution=resolveGameInput();
+ const resolution=options.canonicalGame
+   ?{status:"resolved",top:{game:options.canonicalGame,reason:"canonical-id",matchedText:options.canonicalGame.title}}
+   :resolveGameInput();
  const status=document.querySelector("#searchStatus");
  if(resolution.status==="none"){
    window.currentTarget=null;
@@ -426,7 +429,7 @@ async function runSearch(options={}){
  }
  const canonical=resolution.top?.game;
  if(!canonical)return;
- const t=buildTarget();
+ const t=buildTarget(canonical);
  if(!t)return;
  window.currentTarget=t;
  document.querySelector("#previewTerm")?.replaceChildren(document.createTextNode(t.game));
@@ -464,7 +467,7 @@ function selectCatalogueSuggestion(row){
  document.querySelector("#previewTerm").textContent=row.game.title;
  document.querySelector("#heroArtTitle").textContent=row.game.title;
  hideCatalogueSuggestions();
- runSearch({selectionRow:row});
+ runSearch({selectionRow:row,canonicalGame:row.game});
 }
 function paintSuggestionActive(){
  [...suggestionBox.querySelectorAll(".v2-suggestion")].forEach((button,index)=>button.classList.toggle("active",index===suggestionActive));
@@ -588,7 +591,7 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
  setSelectedPlatform(canonical.platform);
  document.querySelector("#previewTerm").textContent=canonical.title;
  document.querySelector("#heroArtTitle").textContent=canonical.title;
- await runSearch({selectionRow:{game:canonical,reason:"canonical-id",matchedText:canonical.title}});
+ await runSearch({selectionRow:{game:canonical,reason:"canonical-id",matchedText:canonical.title},canonicalGame:canonical});
  if(params.get("save")==="1"&&window.currentTarget){
    document.querySelector("#saveBtn").click();
  }
