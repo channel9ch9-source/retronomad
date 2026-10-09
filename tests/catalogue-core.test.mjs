@@ -56,3 +56,62 @@ test("committed browser index matches canonical catalogue",async()=>{
   const committed=JSON.parse(payload);
   assert.deepEqual(committed,buildCatalogueSearchIndex(document,searchAliases.aliases||{},searchAliases.suppressAliases||{}));
 });
+
+
+test("rights-gated artwork is emitted only for approved records when explicitly enabled",()=>{
+  const base=document.games[0];
+  const approved={
+    ...base,
+    artwork:{
+      kind:"COVER",
+      source:"TEST_PROVIDER",
+      sourceRef:"cover-123",
+      assetUrl:"https://example.invalid/cover.jpg",
+      rightsStatus:"APPROVED",
+      attribution:"Artwork via test provider"
+    }
+  };
+  const enabled=buildCatalogueSearchIndex(
+    {...document,games:[approved]},
+    {},
+    {},
+    {includeArtwork:true}
+  );
+  assert.deepEqual(enabled[0].artwork,{
+    kind:"COVER",
+    source:"TEST_PROVIDER",
+    sourceRef:"cover-123",
+    assetUrl:"https://example.invalid/cover.jpg",
+    rightsStatus:"APPROVED",
+    attribution:"Artwork via test provider"
+  });
+
+  const disabled=buildCatalogueSearchIndex(
+    {...document,games:[approved]},
+    {},
+    {},
+    {includeArtwork:false}
+  );
+  assert.equal("artwork" in disabled[0],false);
+
+  for(const rightsStatus of ["PENDING","DO_NOT_USE"]){
+    const gated=buildCatalogueSearchIndex(
+      {...document,games:[{...approved,artwork:{...approved.artwork,rightsStatus}}]},
+      {},
+      {},
+      {includeArtwork:true}
+    );
+    assert.equal("artwork" in gated[0],false,rightsStatus+" artwork must not be public");
+  }
+});
+
+test("canonical artwork records require rights, source and asset URL",()=>{
+  for(const artwork of [
+    {source:"TEST",assetUrl:"https://example.invalid/a.jpg"},
+    {rightsStatus:"APPROVED",assetUrl:"https://example.invalid/a.jpg"},
+    {rightsStatus:"APPROVED",source:"TEST"}
+  ]){
+    const result=validateCatalogue({...document,games:[{...document.games[0],artwork}]});
+    assert.equal(result.ok,false);
+  }
+});
