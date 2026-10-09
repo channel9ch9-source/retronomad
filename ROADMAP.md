@@ -745,3 +745,25 @@ Future after IGDB agreement:
 - [ ] re-run full-catalogue UI/search performance checks
 - [ ] add provider-backed metadata fields only where agreement/rights permit
 - [ ] add artwork only after artwork rights are explicitly acceptable
+
+
+### Artwork feature-flag architecture
+
+- [x] define rights-aware public artwork payload
+- [x] align artwork fields with existing D1 artwork model
+- [x] require APPROVED rights status for public eligibility
+- [x] add independent build/runtime artwork feature flag
+- [x] default artwork flag to false
+- [x] omit artwork URLs entirely from public compact index when flag is false
+- [x] add dormant cover slots to Catalogue cards
+- [x] add dormant artwork slot to Catalogue detail view
+- [x] add dormant game-specific artwork slot to Search hero
+- [x] add attribution display hooks
+- [x] add broken-image fallbacks
+- [x] add artwork-gate regression tests
+- [x] deploy dormant architecture with artwork explicitly disabled
+- [x] pass 44/44 regression tests
+- [ ] confirm provider/artwork rights in IGDB agreement
+- [ ] populate approved artwork records
+- [ ] audit representative covers/attribution
+- [ ] enable `CATALOGUE_ARTWORK_ENABLED=true` only after rights review
