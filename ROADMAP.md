@@ -789,5 +789,23 @@ Future after IGDB agreement:
 
 Remaining before broader public launch:
 - [ ] verify/confirm production sending-domain status in the email provider
-- [ ] consider self-service account deletion UI/API rather than contact-only deletion requests
+- [x] add self-service account deletion UI/API
 - [ ] re-review Terms/Privacy before any analytics, advertising, payments or autonomous notifications are enabled
+
+
+### Self-service account deletion
+
+- [x] add authenticated account-deletion endpoint
+- [x] require exact typed `DELETE` confirmation
+- [x] scope all deletion to authenticated user identity
+- [x] delete cloud Saved Hunts and owned monitor/match/notification data
+- [x] delete outstanding auth tokens
+- [x] delete all account sessions
+- [x] delete user account row
+- [x] clear session cookie after deletion
+- [x] clear current browser Saved Hunts/tombstones/device ID after success
+- [x] update Privacy notice
+- [x] add database-scope and UI/API regression tests
+- [x] pass 56/56 production regression tests
+- [x] deploy behind existing 100-game / artwork-off safety gates
+- [x] remove one-time deployment workflow
