@@ -1719,3 +1719,36 @@ Activation rule:
 A first guarded deployment attempt correctly stopped before Cloudflare deploy when the generated runtime flag was missing. The generator was fixed, the same guard was rerun, and only the successful guarded build was deployed.
 
 The 8,433-game IGDB candidate and all IGDB artwork remain unpublished.
+
+
+## Account/public-launch hardening v1 deployed — 9 October 2026
+
+Production deployment:
+- GitHub Actions run: **37936419838**
+- regression tests: **51/51 passed**
+- D1 migration applied: `0005_auth_rate_events.sql`
+- Cloudflare Worker version: `339f0a31-bb36-4123-bda1-1c2b6f04c67a`
+- catalogue publication gate remained at 100 PALScout-deep games
+- catalogue artwork flag remained false
+
+Passwordless abuse protection now has two layers:
+- existing per-email throttling: 1 request/minute and 5 requests/15 minutes
+- new client-level spray throttling across different email addresses
+
+Client-level rate protection:
+- uses Cloudflare's connection address only to derive a SHA-256 bucket
+- raw connection addresses are not stored in the GrailRaven auth-rate table
+- bucket input includes the UTC date so identifiers rotate daily
+- rate-event rows are opportunistically pruned after about 24 hours
+- current thresholds: more than 6 requests/minute or more than 20 requests/15 minutes from the same derived client bucket returns HTTP 429
+- when Cloudflare client-address metadata is unavailable, the client bucket is skipped and the existing per-email limiter still applies
+
+Privacy/account launch corrections:
+- public Privacy page now accurately describes passwordless accounts, cloud Saved Hunt sync, security-rate data and current infrastructure/email providers
+- stale copy claiming that accounts do not exist was removed
+- account-data enquiries/deletion requests point to `contact@grailraven.com`
+- Worker health state now reports `ok` rather than stale `scaffold_only`
+
+The deployment build still rewrites legacy source branding from `RetroNomad` to the public `GrailRaven` brand from `brand.json`, so production transactional email branding remains GrailRaven.
+
+The one-time deployment workflow was removed after success.
