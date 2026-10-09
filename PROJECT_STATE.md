@@ -1647,3 +1647,36 @@ Safe offline validation completed successfully:
 - artifact digest: `sha256:6a36577ad2c2c74ed7f68748de732c1e93cbf0c116cf245d8c8313838063ca5d`
 
 This validates the harness itself only; it is not evidence of real PriceCharting catalogue or Marketplace coverage.
+
+
+## Public Catalogue v1 deployed — 9 October 2026
+
+GrailRaven now has a dedicated public `catalogue.html` experience.
+
+Production deployment:
+- GitHub Actions run: **37931462039**
+- regression tests: **40/40 passed**
+- publication guard: **100 PALScout-deep games only**
+- generated browser catalogue index: **100 games**
+- Cloudflare Worker version: `fcb48b67-9d57-4e64-9678-3099d3e3cef5`
+
+Catalogue v1 features:
+- PS1 / PS2 / Dreamcast platform filters
+- title / alias search using the shared forgiving catalogue-search core
+- title and release-year sorting
+- bounded rendering at 36 games per page
+- canonical game detail route via `catalogue.html?game=<canonical-id>`
+- title, platform, source-backed release year when available, aliases and PALScout coverage state
+- deliberate no-artwork placeholder while artwork/provider rights remain gated
+- Find this game action into Search
+- Save Hunt action into Search
+- canonical catalogue IDs carried into Search targets and preserved through local/cloud Saved Hunt normalization
+- all public navigation now points to the dedicated Catalogue page rather than the old homepage anchor
+
+Safety boundaries:
+- no 8,433-game IGDB candidate was published
+- no IGDB artwork or gated metadata was exposed
+- public catalogue remains the validated 100-game launch set
+- IGDB commercial gate remains closed
+
+The one-time deployment workflow was removed after successful production deployment.
