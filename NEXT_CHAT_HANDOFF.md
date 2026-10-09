@@ -20,8 +20,8 @@ The GitHub repository is the authoritative durable record.
 Public brand: **GrailRaven**
 
 Primary domain:
-- `https://grailraven.com` — user confirmed working on 9 October 2026
-- `https://www.grailraven.com` — user reported NOT loading on 9 October 2026; this is the immediate infrastructure issue to diagnose next
+- `https://grailraven.com` — canonical; user confirmed working on 9 October 2026
+- `https://www.grailraven.com` — fixed on 9 October 2026; now resolves and permanently redirects to the apex domain
 
 Current public catalogue:
 - 100 launch games
@@ -41,27 +41,26 @@ Artwork:
 - current public artwork count: 0
 - artwork URLs are omitted from the public compact index while the flag is off
 
+## www hostname fix completed
+
+Resolved on 9 October 2026.
+
+Cloudflare configuration:
+- added proxied A record: `www` → `192.0.2.1`
+- added Single Redirect matching hostname `www.grailraven.com`
+- dynamic target preserves path: `concat("https://grailraven.com", http.request.uri.path)`
+- status: 301 Permanent Redirect
+- preserve query string: enabled
+- apex `grailraven.com` remains canonical
+- existing Worker custom domain, D1 and catalogue/provider gates were not changed
+
+The hostname initially still appeared unavailable because of cached DNS resolution. After waiting for propagation, flushing Windows DNS and clearing Firefox DNS cache, the user confirmed `www.grailraven.com` worked.
+
 ## Immediate next task
 
-Diagnose and fix the **www subdomain**:
-
-Observed by user:
-- `grailraven.com` works
-- `www.grailraven.com` does not
-
-Likely areas to inspect:
-- Cloudflare DNS record for `www`
-- Worker/custom-domain routing
-- certificate / hostname coverage
-- whether `www` should redirect permanently to the apex domain
-
-Preferred outcome:
-- keep `grailraven.com` as canonical
-- make `www.grailraven.com` resolve reliably and redirect to `https://grailraven.com`
-- avoid creating a second Cloudflare account
-- preserve existing Worker/D1 configuration
-
-Do not alter catalogue/provider gates while fixing this.
+Return to the waiting-on-IGDB sequence:
+- await the IGDB legal partnership agreement
+- review it before enabling any IGDB commercial/public gates
 
 ## IGDB status
 
