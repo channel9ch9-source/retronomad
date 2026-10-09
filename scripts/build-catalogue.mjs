@@ -6,6 +6,7 @@ const root=process.cwd();
 const sourcePath=path.join(root,"catalogue","base-catalogue.json");
 const outputPath=path.join(root,"catalogue-index.js");
 
+const artworkEnabled=["1","true","yes"].includes(String(process.env.CATALOGUE_ARTWORK_ENABLED||"false").toLowerCase());
 const document=JSON.parse(await fs.readFile(sourcePath,"utf8"));
 const searchAliases=JSON.parse(await fs.readFile(path.join(root,"catalogue","search-aliases.json"),"utf8"));
 const validation=validateCatalogue(document);
@@ -13,7 +14,12 @@ if(!validation.ok){
   console.error(validation.errors.join("\n"));
   process.exit(1);
 }
-const index=buildCatalogueSearchIndex(document,searchAliases.aliases||{},searchAliases.suppressAliases||{});
+const index=buildCatalogueSearchIndex(
+  document,
+  searchAliases.aliases||{},
+  searchAliases.suppressAliases||{},
+  {includeArtwork:artworkEnabled}
+);
 const counts=index.reduce((acc,row)=>{
   acc[row.platform]=(acc[row.platform]||0)+1;
   return acc;
