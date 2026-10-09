@@ -84,3 +84,22 @@ test("Saved Hunts preserve canonical catalogue identity locally and in cloud nor
   assert.ok(saved.includes('catalogueId:String(t.catalogueId||"").trim()'));
   assert.ok(worker.includes('catalogueId: String(t.catalogueId || "").trim().slice(0, 220)'));
 });
+
+
+test("Catalogue and Search artwork slots stay behind the deployment flag",async()=>{
+  const catalogue=await read("catalogue.html");
+  const search=await read("search.html");
+  const runtime=await read("runtime-config.js");
+  for(const token of ["catalogueArtworkEnabled","detailArtwork","approvedArtwork","rightsStatus===\"APPROVED\""]){
+    assert.ok(catalogue.includes(token),`Catalogue missing artwork gate token: ${token}`);
+  }
+  for(const token of ["catalogueArtworkEnabled","heroArtImage","approvedCatalogueArtwork","rightsStatus===\"APPROVED\""]){
+    assert.ok(search.includes(token),`Search missing artwork gate token: ${token}`);
+  }
+  assert.ok(runtime.includes("catalogueArtworkEnabled:false"));
+});
+
+test("committed public catalogue index contains no artwork payload while the flag is off",async()=>{
+  const index=await read("catalogue-index.js");
+  assert.equal(index.includes('"artwork":'),false);
+});
