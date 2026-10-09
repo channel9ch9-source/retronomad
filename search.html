@@ -38,6 +38,10 @@
 .v2-selection-save:hover{border-color:#fff}
 .v2-provider-attribution{margin-top:10px;font-size:10px;color:#7f8a93;line-height:1.35}
 .v2-provider-attribution a{color:#c8d0d6;text-decoration:underline;text-underline-offset:2px}
+.v2-hero-art-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%;opacity:.56}
+.v2-hero-art-image[hidden]{display:none}
+.v2-hero-art-credit{position:absolute;right:26px;bottom:20px;z-index:1;color:rgba(255,255,255,.52);font-size:9px;letter-spacing:.08em;text-transform:none;max-width:320px;text-align:right}
+.v2-hero-art-credit[hidden]{display:none}
 @media(max-width:760px){.v2-demo-banner{display:none}.v2-suggestions{top:calc(100% + 6px)}.v2-selection-panel{grid-template-columns:1fr}.v2-selection-side{border-left:0;border-top:1px solid #242d35;padding-left:0;padding-top:14px}}
 </style>
 </head>
@@ -63,7 +67,12 @@
 <div class="v2-demo-banner"><strong>DESIGN PREVIEW:</strong> listings, prices, artwork blocks and result counts below are example UI data while live marketplace discovery is not connected.</div>
 
 <header class="v2-hero" id="search">
-  <div class="v2-hero-art" id="heroArt" aria-hidden="true"><span id="heroArtTitle">Silent Hill</span><small>game cover art area</small></div>
+  <div class="v2-hero-art" id="heroArt" aria-hidden="true">
+    <img id="heroArtImage" class="v2-hero-art-image" alt="" decoding="async" hidden>
+    <span id="heroArtTitle">Silent Hill</span>
+    <small id="heroArtFallbackNote">game cover art area</small>
+    <div id="heroArtworkCredit" class="v2-hero-art-credit" hidden></div>
+  </div>
   <div class="v2-shell v2-hero-inner">
     <div>
       <div class="v2-eyebrow">Collector intelligence · UI v2 preview</div>
@@ -253,6 +262,7 @@
 <script>
 const evidence=window.RELEASE_EVIDENCE||[];
 const baseIndex=window.BASE_CATALOGUE_INDEX||[];
+const catalogueArtworkEnabled=window.APP_CONFIG?.catalogueArtworkEnabled===true;
 const catalogueIndex=(baseIndex.length
  ?baseIndex
  :[...new Map(evidence.map(r=>[r[0]+"|"+r[1],{
@@ -274,6 +284,33 @@ function coverageLabel(value){
  if(value==="PALSCOUT_DEEP")return "PALScout evidence ready";
  if(value==="PALSCOUT_PARTIAL")return "PALScout partial evidence";
  return "Catalogue metadata";
+}
+function approvedCatalogueArtwork(game){
+ const art=game?.artwork;
+ return catalogueArtworkEnabled&&art?.rightsStatus==="APPROVED"&&String(art.assetUrl||"").trim()?art:null;
+}
+function setHeroArtwork(game,fallbackTitle=""){
+ const frame=document.querySelector("#heroArt");
+ const image=document.querySelector("#heroArtImage");
+ const title=document.querySelector("#heroArtTitle");
+ const note=document.querySelector("#heroArtFallbackNote");
+ const credit=document.querySelector("#heroArtworkCredit");
+ const art=approvedCatalogueArtwork(game);
+ const fallback=String(fallbackTitle||game?.title||document.querySelector("#game")?.value||"Silent Hill").trim()||"Silent Hill";
+ const restoreFallback=()=>{
+   image.hidden=true;image.removeAttribute("src");image.alt="";
+   title.hidden=false;title.textContent=fallback;
+   note.hidden=false;credit.hidden=true;credit.textContent="";
+   frame.setAttribute("aria-hidden","true");
+ };
+ if(!art){restoreFallback();return;}
+ image.src=art.assetUrl;
+ image.alt=game.title+" cover artwork";
+ image.hidden=false;title.hidden=true;note.hidden=true;
+ credit.textContent=art.attribution?String(art.attribution):"";
+ credit.hidden=!art.attribution;
+ frame.removeAttribute("aria-hidden");
+ image.addEventListener("error",restoreFallback,{once:true});
 }
 function matchLabel(row,resolution){
  const reason=row?.reason||resolution?.top?.reason||"";
@@ -297,6 +334,7 @@ function hideCatalogueSelection({restorePreview=false}={}){
 }
 function renderCatalogueSelection(game,resolution,row,providers=[]){
  const panel=document.querySelector("#catalogueSelection");
+ setHeroArtwork(game,game.title);
  document.querySelector("#selectionTitle").textContent=game.title;
  document.querySelector("#selectionPlatform").textContent=game.platform;
  document.querySelector("#selectionYear").textContent=game.releaseYear||"Release year unavailable";
@@ -465,7 +503,7 @@ function selectCatalogueSuggestion(row){
  gameInput.value=row.game.title;
  setSelectedPlatform(row.game.platform);
  document.querySelector("#previewTerm").textContent=row.game.title;
- document.querySelector("#heroArtTitle").textContent=row.game.title;
+ setHeroArtwork(row.game,row.game.title);
  hideCatalogueSuggestions();
  runSearch({selectionRow:row,canonicalGame:row.game});
 }
@@ -510,7 +548,7 @@ gameInput.addEventListener("input",e=>{
  selectedSuggestionMatch=null;
  hideCatalogueSelection({restorePreview:true});
  document.querySelector("#previewTerm").textContent=value;
- document.querySelector("#heroArtTitle").textContent=value;
+ setHeroArtwork(null,value);
  document.querySelector("#searchStatus").textContent="";
  document.querySelector("#saveBtn").disabled=true;
  window.currentTarget=null;
@@ -608,11 +646,17 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
  document.querySelector("#condition").value=t.condition||"any";
  document.querySelector("#maxPrice").value=t.maxDeliveredGbp!=null?"£"+t.maxDeliveredGbp:"£100";
  document.querySelector("#english").checked=t.englishRequired===true;document.querySelector("#englishSwitch").classList.toggle("on",document.querySelector("#english").checked);
- document.querySelector("#previewTerm").textContent=t.game;document.querySelector("#heroArtTitle").textContent=t.game;
+ document.querySelector("#previewTerm").textContent=t.game;
+ const restoredCanonical=(t.catalogueId&&catalogueIndex.find(g=>g.id===t.catalogueId))||catalogueIndex.find(g=>g.title===t.game&&g.platform===t.platform)||null;
+ setHeroArtwork(restoredCanonical,t.game);
  document.querySelector("#searchStatus").innerHTML='Loaded from Saved Hunts. <button type="button" id="inlineSave">Save/update hunt</button>';
  document.querySelector("#saveBtn").disabled=false;document.querySelector("#inlineSave")?.addEventListener("click",()=>document.querySelector("#saveBtn").click());
 })();
 syncLegacyFields();
+if(catalogueArtworkEnabled&&!new URLSearchParams(location.search).get("hunt")&&!new URLSearchParams(location.search).get("game")){
+ const initial=catalogueIndex.find(g=>g.title==="Silent Hill"&&g.platform==="PS1")||null;
+ setHeroArtwork(initial,"Silent Hill");
+}
 </script>
 </body>
 </html>
