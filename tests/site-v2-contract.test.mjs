@@ -103,3 +103,21 @@ test("committed public catalogue index contains no artwork payload while the fla
   const index=await read("catalogue-index.js");
   assert.equal(index.includes('"artwork":'),false);
 });
+
+
+test("Privacy reflects live account processing and short-lived abuse buckets",async()=>{
+  const privacy=await read("privacy.html");
+  assert.ok(privacy.includes("passwordless sign-in"));
+  assert.ok(privacy.includes("cloud Saved Hunt sync"));
+  assert.ok(privacy.includes("pseudonymous client bucket"));
+  assert.ok(privacy.includes("raw address is not stored"));
+  assert.ok(privacy.includes("contact@grailraven.com"));
+  assert.equal(privacy.includes("does not currently provide user accounts"),false);
+});
+
+test("account backend includes additive sign-in abuse-rate migration",async()=>{
+  const migration=await read("backend/migrations/0005_auth_rate_events.sql");
+  assert.ok(migration.includes("CREATE TABLE IF NOT EXISTS auth_rate_events"));
+  assert.ok(migration.includes("client_key TEXT NOT NULL"));
+  assert.ok(migration.includes("idx_auth_rate_events_client_created"));
+});
