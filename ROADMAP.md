@@ -428,8 +428,8 @@ Current state:
 
 Before broader public launch:
 - [ ] verify a RetroNomad-owned sending domain
-- [ ] add stronger abuse protection
-- [ ] update privacy/account-data policy
+- [x] add stronger passwordless sign-in abuse protection
+- [x] update privacy/account-data policy
 - [ ] later move to a production/custom domain when appropriate
 
 ---
@@ -767,3 +767,27 @@ Future after IGDB agreement:
 - [ ] populate approved artwork records
 - [ ] audit representative covers/attribution
 - [ ] enable `CATALOGUE_ARTWORK_ENABLED=true` only after rights review
+
+
+### Account/public-launch hardening v1
+
+- [x] audit live passwordless sign-in security
+- [x] retain per-email sign-in throttling
+- [x] add cross-address/client spray throttling
+- [x] avoid storing raw client addresses in auth-rate table
+- [x] rotate derived client buckets daily
+- [x] prune short-lived rate events after about 24 hours
+- [x] add additive D1 auth-rate migration
+- [x] update Privacy for live accounts/Saved Hunt sync
+- [x] document Cloudflare + Resend processing roles
+- [x] remove stale no-accounts privacy wording
+- [x] correct deployed Worker health state
+- [x] add auth-hardening regression tests
+- [x] pass 51/51 production regression tests
+- [x] deploy hardened Worker and migration
+- [x] remove one-time deployment workflow
+
+Remaining before broader public launch:
+- [ ] verify/confirm production sending-domain status in the email provider
+- [ ] consider self-service account deletion UI/API rather than contact-only deletion requests
+- [ ] re-review Terms/Privacy before any analytics, advertising, payments or autonomous notifications are enabled
