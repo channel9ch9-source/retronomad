@@ -1680,3 +1680,42 @@ Safety boundaries:
 - IGDB commercial gate remains closed
 
 The one-time deployment workflow was removed after successful production deployment.
+
+
+## Dormant artwork architecture deployed — 9 October 2026
+
+GrailRaven now has production-ready artwork slots behind a double publication gate.
+
+Production rollout:
+- successful GitHub Actions run: **37933535039**
+- regression tests: **44/44 passed**
+- Cloudflare Worker version: `83e320e4-c37a-4c60-969b-c6e6f8b82b61`
+- public catalogue: **100 PALScout-deep games**
+- current public artwork records: **0**
+- runtime/build artwork flag: **false**
+- public `catalogue-index.js` contains **no artwork payload**
+
+Artwork contract:
+- canonical artwork fields align with D1: kind, source, sourceRef, assetUrl, rightsStatus, attribution
+- allowed rights states: APPROVED / PENDING / DO_NOT_USE
+- only APPROVED artwork is eligible for a public index
+- even APPROVED artwork is omitted unless the explicit build flag is enabled
+- Catalogue cards have dormant cover-image slots
+- Catalogue detail pages have a dormant full artwork slot + attribution line
+- Search hero has a dormant game-specific artwork slot + attribution line
+- image failures fall back to the existing neutral/platform presentation
+
+Deployment flag:
+- `CATALOGUE_ARTWORK_ENABLED`
+- persistent Cloudflare deployment workflow reads it from the GitHub repository variable of the same name
+- current default/production state is false
+
+Activation rule:
+1. provider agreement / artwork rights must be confirmed
+2. canonical artwork records must carry `rightsStatus: APPROVED`
+3. review a gated build and regression output
+4. only then set `CATALOGUE_ARTWORK_ENABLED=true` and deploy
+
+A first guarded deployment attempt correctly stopped before Cloudflare deploy when the generated runtime flag was missing. The generator was fixed, the same guard was rerun, and only the successful guarded build was deployed.
+
+The 8,433-game IGDB candidate and all IGDB artwork remain unpublished.
