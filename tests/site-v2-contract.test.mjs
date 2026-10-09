@@ -76,3 +76,11 @@ test("Search accepts exact canonical Catalogue IDs and preserves them in hunt ta
   assert.ok(html.includes("catalogueId:canonical?.id||null"));
   assert.ok(html.includes('params.get("save")==="1"'));
 });
+
+
+test("Saved Hunts preserve canonical catalogue identity locally and in cloud normalization",async()=>{
+  const saved=await read("saved-hunts.js");
+  const worker=await read("backend/alerts-worker.js");
+  assert.ok(saved.includes('catalogueId:String(t.catalogueId||"").trim()'));
+  assert.ok(worker.includes('catalogueId: String(t.catalogueId || "").trim().slice(0, 220)'));
+});
