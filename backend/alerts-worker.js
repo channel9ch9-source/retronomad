@@ -1,8 +1,9 @@
 // RetroNomad account + Saved Hunts monitor Worker (Cloudflare Worker / D1 style).
 //
-// Infrastructure scaffold only; not deployed by this repository.
+// Deployed through the repository's Cloudflare build; public branding is
+// generated from brand.json during deployment.
 //
-// Required future bindings / secrets:
+// Required bindings / secrets:
 // DB                         - D1 database created from backend/schema.sql
 // APP_ORIGIN                 - public app origin, e.g. https://www.retronomad.example
 // ADMIN_TOKEN                - internal scheduler test secret
@@ -636,7 +637,7 @@ export default {
     if (request.method === "GET" && u.pathname === "/health") {
       return json({
         service: "retronomad-account-monitor",
-        status: "scaffold_only",
+        status: "ok",
         databaseConfigured: Boolean(env.DB),
         appOriginMode: String(env.APP_ORIGIN || "self"),
         authEmailConfigured: authEmailProvider(env) !== "none",
