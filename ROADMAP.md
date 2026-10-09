@@ -809,3 +809,52 @@ Remaining before broader public launch:
 - [x] pass 56/56 production regression tests
 - [x] deploy behind existing 100-game / artwork-off safety gates
 - [x] remove one-time deployment workflow
+
+
+### Business direction and validation discipline — 9 October 2026
+
+Durable strategy: `BUSINESS_DIRECTION.md`.
+
+Primary objective:
+- build GrailRaven into a financially meaningful, sustainable software business
+- do not optimise for feature count or treat the project primarily as a hobby/portfolio exercise
+
+Decision filter for major work:
+- [ ] does it improve acquisition?
+- [ ] does it improve retention?
+- [ ] does it improve willingness to pay?
+- [ ] does it improve defensibility?
+
+Standing product wedge:
+- exact-copy acquisition intelligence
+- Search → Filter → Compare → Alert
+- PALScout precision / evidence / MATCH-REVIEW-FILTERED trust model
+- do not compete by indiscriminately cloning general collection-tracker features
+
+Near-term business sequence:
+1. [ ] receive/review IGDB partnership agreement
+2. [ ] if acceptable, promote approved 8,433-game catalogue and permitted artwork
+3. [ ] run real PriceCharting pricing + Marketplace benchmark when ready to pay
+4. [ ] connect marketplace inventory only if benchmark quality is adequate
+5. [ ] complete useful Search → Filter → Compare → Alert loop
+6. [ ] begin active collector acquisition / behavioural validation
+7. [ ] reapply for eBay developer access from a materially stronger public-product position
+8. [ ] test freemium / Collector subscription willingness to pay
+9. [ ] consider mobile/PWA/native app only after usage evidence supports it
+
+Validation principle:
+- after the useful marketplace product exists, prefer a 3–6 month measured acquisition/retention/payment validation period over indefinite private feature development
+- if real retention and willingness to pay are strong, accelerate
+- if serious distribution produces weak retention/payment intent, reassess positioning/model rather than endlessly adding features
+
+Monetisation direction:
+- Free acquisition tier
+- paid Collector tier, provisional target approximately £3.99/month or £35–£40/year subject to validation
+- later Trader/Professional tier only after consumer fit
+- possible affiliate/referral/API/dealer revenue where permitted and trust-compatible
+- advertising is not the primary model
+- do not build a full GrailRaven marketplace without strong evidence
+
+Mobile direction:
+- mobile app is a future opportunity for push alerts, barcode/photo scanning and marketplace-share workflows
+- do not divert into separate native iOS/Android development before web product-market fit
