@@ -1836,3 +1836,22 @@ Validation discipline:
 - use real search, Saved Hunt, return, alert/click, conversion and acquisition metrics to decide whether to accelerate, refine or pivot
 
 Illustrative subscription revenue examples in `BUSINESS_DIRECTION.md` are business targets/scenarios, not forecasts.
+
+
+## Current domain issue — www hostname — 9 October 2026
+
+User-confirmed live behavior:
+- `https://grailraven.com` loads
+- `https://www.grailraven.com` does not load
+
+This is the immediate next infrastructure issue.
+
+Preferred resolution:
+- keep `grailraven.com` as canonical
+- make `www.grailraven.com` resolve reliably
+- redirect `www` permanently to the apex domain
+- inspect Cloudflare DNS/custom-domain/Worker routing and certificate coverage
+- do not create another Cloudflare account
+- preserve current Worker/D1/catalogue/provider gates while fixing it
+
+See `NEXT_CHAT_HANDOFF.md` for the complete next-thread handoff.
