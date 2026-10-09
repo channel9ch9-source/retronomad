@@ -1838,20 +1838,19 @@ Validation discipline:
 Illustrative subscription revenue examples in `BUSINESS_DIRECTION.md` are business targets/scenarios, not forecasts.
 
 
-## Current domain issue — www hostname — 9 October 2026
+## www hostname resolution — completed 9 October 2026
 
-User-confirmed live behavior:
-- `https://grailraven.com` loads
-- `https://www.grailraven.com` does not load
+User-confirmed live behavior after fix:
+- `https://grailraven.com` loads and remains canonical
+- `https://www.grailraven.com` resolves and redirects permanently to the apex domain
 
-This is the immediate next infrastructure issue.
+Cloudflare configuration used:
+- proxied A record `www` → `192.0.2.1`
+- Single Redirect for hostname `www.grailraven.com`
+- dynamic destination `concat("https://grailraven.com", http.request.uri.path)`
+- HTTP 301
+- query-string preservation enabled
 
-Preferred resolution:
-- keep `grailraven.com` as canonical
-- make `www.grailraven.com` resolve reliably
-- redirect `www` permanently to the apex domain
-- inspect Cloudflare DNS/custom-domain/Worker routing and certificate coverage
-- do not create another Cloudflare account
-- preserve current Worker/D1/catalogue/provider gates while fixing it
+No Worker, D1, catalogue or provider-gate changes were required. Initial post-change failure was local DNS caching; after propagation plus Windows/Firefox DNS cache flushes, the user confirmed the hostname worked.
 
 See `NEXT_CHAT_HANDOFF.md` for the complete next-thread handoff.
