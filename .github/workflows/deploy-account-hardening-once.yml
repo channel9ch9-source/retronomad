@@ -1,0 +1,94 @@
+name: Deploy account hardening once
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: ${{ github.event.head_commit.message == 'Deploy account hardening' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CATALOGUE_ARTWORK_ENABLED: "false"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install deployment tooling
+        run: npm install
+
+      - name: Assert catalogue and artwork gates stay closed
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          const catalogue=JSON.parse(fs.readFileSync("catalogue/base-catalogue.json","utf8"));
+          if(catalogue.games.length!==100) throw new Error("Expected exactly 100 public games");
+          if(catalogue.games.some(g=>g.releaseIntelligence?.coverage!=="PALSCOUT_DEEP")) throw new Error("Public catalogue contains non-deep records");
+          if(catalogue.games.some(g=>g.artwork!=null)) throw new Error("Current public seed unexpectedly contains artwork");
+          if(String(process.env.CATALOGUE_ARTWORK_ENABLED).toLowerCase()!=="false") throw new Error("Artwork flag must remain false");
+          console.log("Publication gates verified.");
+          NODE
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Build Cloudflare static assets
+        run: npm run build:cloudflare
+
+      - name: Verify public-launch hardening bundle
+        shell: bash
+        run: |
+          grep -q 'passwordless sign-in' dist/public/privacy.html
+          grep -q 'pseudonymous client bucket' dist/public/privacy.html
+          grep -q 'catalogueArtworkEnabled: false' dist/public/runtime-config.js
+          if grep -q '"artwork":' dist/public/catalogue-index.js; then
+            echo "Artwork payload leaked into public catalogue index"
+            exit 1
+          fi
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          const worker=fs.readFileSync("backend/alerts-worker.js","utf8");
+          if(!worker.includes("auth_rate_events")) throw new Error("auth abuse limiter missing");
+          if(!fs.existsSync("backend/migrations/0005_auth_rate_events.sql")) throw new Error("auth rate migration missing");
+          console.log("Account hardening bundle verified.");
+          NODE
+
+      - name: Resolve D1 and render Wrangler config
+        run: npm run prepare:cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AUTH_EMAIL_FROM: ${{ vars.AUTH_EMAIL_FROM }}
+          AUTH_EMAIL_WEBHOOK_URL: ${{ secrets.AUTH_EMAIL_WEBHOOK_URL }}
+
+      - name: Apply D1 migrations
+        run: npm run db:migrate
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Configure Resend API key
+        if: env.RESEND_API_KEY != ''
+        shell: bash
+        run: printf '%s' "$RESEND_API_KEY" | npx wrangler secret put RESEND_API_KEY --config .wrangler.deploy.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+
+      - name: Deploy Worker + hardened account app
+        run: npm run deploy:cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
