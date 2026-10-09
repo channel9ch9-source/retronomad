@@ -64,15 +64,30 @@ Coverage is not a quality score for the game itself. It only describes GrailRave
 
 The full canonical record should not be shipped wholesale to every browser page.
 
-`scripts/build-catalogue.mjs` and the Cloudflare build produce a compact `catalogue-index.js` containing only:
+`scripts/build-catalogue.mjs` and the Cloudflare build produce a compact `catalogue-index.js` containing:
 - id
 - title
 - platform
 - aliases
 - release year
 - release-intelligence coverage
+- optional public artwork payload, only when explicitly enabled and rights-approved
 
-The Search page consumes this compact index.
+The optional artwork payload is limited to:
+- kind
+- source
+- sourceRef
+- assetUrl
+- rightsStatus
+- attribution
+
+The Search and Catalogue pages consume this compact index.
+
+Artwork is subject to a double gate:
+1. canonical artwork must have `rightsStatus: APPROVED`
+2. `CATALOGUE_ARTWORK_ENABLED` must be true at build/runtime
+
+If either condition is false, artwork is omitted from the compact public index rather than merely hidden with CSS.
 
 This means catalogue metadata can grow without forcing artwork/provenance/provider payloads into every page load.
 
@@ -207,3 +222,28 @@ Production deployment run: `37931462039`
 Cloudflare Worker version: `fcb48b67-9d57-4e64-9678-3099d3e3cef5`
 
 The production publication gate verified exactly 100 PALScout-deep records. The 8,433-game IGDB-backed candidate remains unpublished.
+
+
+### Dormant artwork UI slots — 9 October 2026
+
+Artwork-capable UI is now deployed but disabled.
+
+Prepared surfaces:
+- Catalogue browse-card cover image
+- Catalogue detail artwork
+- Search hero game artwork
+- attribution text hooks
+- graceful fallback to existing neutral/platform treatment
+
+Current production flag:
+`CATALOGUE_ARTWORK_ENABLED=false`
+
+Current public artwork count:
+`0`
+
+Successful guarded deployment:
+- run: `37933535039`
+- tests: `44/44`
+- Worker version: `83e320e4-c37a-4c60-969b-c6e6f8b82b61`
+
+The live UI therefore remains visually unchanged until artwork rights are confirmed and the flag is deliberately enabled.
