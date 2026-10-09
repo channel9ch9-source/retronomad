@@ -175,3 +175,35 @@ Benefits:
 See `CATALOGUE_PROMOTION_PIPELINE.md`.
 
 The IGDB-backed full catalogue remains behind the commercial-use publication gate until that relationship is clarified.
+
+
+## Public Catalogue UI v1 — 9 October 2026
+
+The public catalogue browser is now deployed at `catalogue.html`.
+
+The UI consumes the compact generated `catalogue-index.js`, not full provider records.
+
+Browse behaviour:
+- filters by PS1 / PS2 / Dreamcast
+- searches title and aliases through the shared catalogue-search core
+- supports alphabetical and release-year sorting
+- renders at most 36 game cards per page
+- uses canonical game IDs for detail/deep-link identity
+
+Detail route:
+`catalogue.html?game=<canonical-id>`
+
+Search route:
+`search.html?game=<canonical-id>`
+
+Save route:
+`search.html?game=<canonical-id>&save=1`
+
+Search targets now carry `catalogueId`, and Saved Hunts preserve it locally and through server normalization. This protects identity when future provider datasets contain same-title records that cannot safely be represented by title/platform alone.
+
+Artwork remains intentionally absent. The public detail view uses a neutral platform placeholder until artwork rights are explicitly resolved.
+
+Production deployment run: `37931462039`
+Cloudflare Worker version: `fcb48b67-9d57-4e64-9678-3099d3e3cef5`
+
+The production publication gate verified exactly 100 PALScout-deep records. The 8,433-game IGDB-backed candidate remains unpublished.
