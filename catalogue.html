@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Browse the GrailRaven physical retro-game catalogue by platform, title and PALScout coverage.">
+<title>Catalogue — GrailRaven</title>
+<link rel="stylesheet" href="ui-v2.css">
+<link rel="stylesheet" href="production-v2.css">
+<style>
+.catalogue-hero{padding:44px 0 24px;border-bottom:1px solid var(--line)}
+.catalogue-hero h1{margin:8px 0 10px;font-size:clamp(34px,6vw,68px);line-height:.98}
+.catalogue-hero p{max-width:760px;color:#98a3ab;font-size:15px;line-height:1.6}
+.catalogue-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.catalogue-stat{border:1px solid #26313a;border-radius:999px;padding:7px 10px;font-size:11px;color:#c8d0d6;background:#07090b}
+.catalogue-toolbar{display:grid;grid-template-columns:minmax(240px,1fr) auto auto;gap:10px;align-items:center;margin:24px 0 18px}
+.catalogue-search{min-width:0}
+.catalogue-search input,.catalogue-toolbar select{width:100%;height:44px;border:1px solid #34404a;border-radius:10px;background:#050607;color:#f5f1e8;padding:0 12px;font:inherit}
+.catalogue-platforms{display:flex;gap:7px;flex-wrap:wrap}
+.catalogue-platform{height:44px;border:1px solid #34404a;border-radius:10px;background:#07090b;color:#bcc6cd;padding:0 13px;cursor:pointer;font-weight:750}
+.catalogue-platform.active{border-color:#e9edf0;color:#fff;background:#15191d}
+.catalogue-summary{display:flex;justify-content:space-between;gap:16px;align-items:center;margin:0 0 12px;color:#89959e;font-size:12px}
+.catalogue-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.catalogue-card{display:flex;min-height:148px;border:1px solid #242d35;border-radius:14px;background:#050607;text-decoration:none;color:inherit;overflow:hidden;transition:border-color .15s ease,transform .15s ease}
+.catalogue-card:hover{border-color:#66737d;transform:translateY(-1px)}
+.catalogue-card-mark{width:76px;flex:0 0 76px;display:flex;align-items:center;justify-content:center;border-right:1px solid #202830;background:#0a0c0e;color:#69757e;font-family:"Cinzel","Palatino Linotype",Georgia,serif;font-weight:800;font-size:18px;letter-spacing:.06em}
+.catalogue-card-body{padding:15px;min-width:0}
+.catalogue-card-platform{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8b97a0;font-weight:800}
+.catalogue-card h2{margin:5px 0 8px;font-size:17px;line-height:1.2;color:#f5f1e8}
+.catalogue-card-meta{display:flex;gap:6px;flex-wrap:wrap}
+.catalogue-chip{border:1px solid #303a43;border-radius:999px;padding:4px 7px;font-size:10px;color:#aeb8bf}
+.catalogue-chip.deep{border-color:#415347;color:#d9e5dc;background:#0a0f0c}
+.catalogue-alias{margin-top:9px;color:#77838c;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.catalogue-empty{border:1px dashed #35404a;border-radius:14px;padding:28px;text-align:center;color:#8e9aa3}
+.catalogue-pager{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 8px}
+.catalogue-pager button{border:1px solid #35404a;background:#080a0c;color:#fff;border-radius:9px;padding:9px 13px;cursor:pointer}
+.catalogue-pager button:disabled{opacity:.35;cursor:default}
+.catalogue-pager span{font-size:12px;color:#8f9ba5;min-width:100px;text-align:center}
+.catalogue-detail{margin:28px 0 10px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;border:1px solid #27313a;border-radius:16px;background:#050607;padding:22px}
+.catalogue-detail-art{min-height:280px;border:1px solid #252e35;border-radius:12px;background:linear-gradient(145deg,#0c0f12,#030404);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#6f7a82;text-align:center;padding:20px}
+.catalogue-detail-art strong{font-family:"Cinzel","Palatino Linotype",Georgia,serif;font-size:36px;color:#a5afb5}
+.catalogue-detail-art small{margin-top:10px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.catalogue-detail h1{font-size:clamp(30px,5vw,54px);line-height:1.02;margin:7px 0 12px}
+.catalogue-detail-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.catalogue-detail-copy{color:#9ba6ae;line-height:1.6;max-width:760px}
+.catalogue-detail-section{margin-top:20px;padding-top:18px;border-top:1px solid #232b32}
+.catalogue-detail-section h3{font-size:13px;margin:0 0 9px;color:#e4e9ec}
+.catalogue-aliases{display:flex;gap:7px;flex-wrap:wrap}
+.catalogue-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.catalogue-action{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 14px;border-radius:9px;border:1px solid #65717a;background:#12171b;color:#fff;text-decoration:none;font-weight:800;font-size:12px}
+.catalogue-action.secondary{background:#07090b;border-color:#35404a;color:#c8d0d6}
+.catalogue-back{display:inline-block;margin-top:22px;color:#aeb8bf;text-decoration:underline;text-underline-offset:3px;font-size:12px}
+.catalogue-note{margin:20px 0 0;border-top:1px solid #202830;padding-top:14px;color:#72808a;font-size:11px;line-height:1.5}
+@media(max-width:980px){.catalogue-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.catalogue-toolbar{grid-template-columns:1fr}.catalogue-platforms{order:2}.catalogue-sort{order:3}.catalogue-detail{grid-template-columns:170px minmax(0,1fr)}.catalogue-detail-art{min-height:220px}}
+@media(max-width:640px){.catalogue-hero{padding-top:28px}.catalogue-grid{grid-template-columns:1fr}.catalogue-card{min-height:128px}.catalogue-detail{grid-template-columns:1fr;padding:16px}.catalogue-detail-art{min-height:150px}.catalogue-summary{align-items:flex-start;flex-direction:column}.catalogue-toolbar{margin-top:18px}}
+</style>
+</head>
+<body>
+<div class="v2-topbar">
+  <div class="v2-shell v2-nav">
+    <a class="v2-brand" href="index.html" aria-label="GrailRaven home">
+      <span class="v2-raven" aria-hidden="true">GR</span>
+      <span><span class="v2-wordmark">GrailRaven</span><span class="v2-tagline">Collect · Verify · Own</span></span>
+    </a>
+    <button class="v2-menu-button" type="button" id="mobileNavButton" aria-expanded="false" aria-controls="primaryNav">Menu</button>
+    <div class="v2-links" id="primaryNav">
+      <a href="search.html">Search</a>
+      <a href="wishlist.html">Saved Hunts</a>
+      <a class="active" href="catalogue.html">Catalogue</a>
+      <a href="account.html">Account</a>
+      <a href="analyze.html">Listing checker</a>
+    </div>
+    <div class="v2-meta">games · data · collectors · higher standards</div>
+  </div>
+</div>
+
+<main class="v2-shell v2-main">
+  <section id="browseView">
+    <header class="catalogue-hero">
+      <div class="v2-eyebrow">Collector intelligence · Catalogue</div>
+      <h1>Browse the collection universe.</h1>
+      <p>Explore GrailRaven’s current physical-game catalogue. General catalogue identity stays separate from PALScout’s exact release evidence, so broader discovery never weakens release-level verification.</p>
+      <div class="catalogue-stats">
+        <span class="catalogue-stat"><strong id="statTotal">0</strong> games</span>
+        <span class="catalogue-stat"><strong id="statPs1">0</strong> PS1</span>
+        <span class="catalogue-stat"><strong id="statPs2">0</strong> PS2</span>
+        <span class="catalogue-stat"><strong id="statDc">0</strong> Dreamcast</span>
+        <span class="catalogue-stat"><strong id="statDeep">0</strong> PALScout deep</span>
+      </div>
+    </header>
+
+    <div class="catalogue-toolbar" aria-label="Catalogue filters">
+      <div class="catalogue-search"><input id="catalogueQuery" type="search" autocomplete="off" placeholder="Search title, alias or abbreviation…" aria-label="Search catalogue"></div>
+      <div class="catalogue-platforms" id="platformFilters">
+        <button class="catalogue-platform active" type="button" data-platform="">All</button>
+        <button class="catalogue-platform" type="button" data-platform="PS1">PS1</button>
+        <button class="catalogue-platform" type="button" data-platform="PS2">PS2</button>
+        <button class="catalogue-platform" type="button" data-platform="Dreamcast">Dreamcast</button>
+      </div>
+      <div class="catalogue-sort">
+        <select id="catalogueSort" aria-label="Sort catalogue">
+          <option value="az">Title A–Z</option>
+          <option value="za">Title Z–A</option>
+          <option value="year-new">Newest year</option>
+          <option value="year-old">Oldest year</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="catalogue-summary">
+      <span id="catalogueSummary">Loading catalogue…</span>
+      <span>36 games per page · bounded rendering</span>
+    </div>
+    <div id="catalogueGrid" class="catalogue-grid" aria-live="polite"></div>
+    <div id="catalogueEmpty" class="catalogue-empty" hidden>No games match those filters.</div>
+    <nav class="catalogue-pager" aria-label="Catalogue pages">
+      <button id="prevPage" type="button">Previous</button>
+      <span id="pageLabel">Page 1 of 1</span>
+      <button id="nextPage" type="button">Next</button>
+    </nav>
+    <p class="catalogue-note">This public catalogue currently contains GrailRaven’s validated launch set. Broader catalogue data remains behind its provider/licensing publication gate until approved.</p>
+  </section>
+
+  <section id="detailView" hidden>
+    <a class="catalogue-back" href="catalogue.html">← Browse all games</a>
+    <article class="catalogue-detail">
+      <div class="catalogue-detail-art" aria-label="Artwork placeholder">
+        <strong id="detailMark">GR</strong>
+        <small>Artwork intentionally unavailable</small>
+      </div>
+      <div>
+        <div class="v2-eyebrow" id="detailPlatformEyebrow">Catalogue record</div>
+        <h1 id="detailTitle">Game</h1>
+        <div class="catalogue-detail-meta">
+          <span class="catalogue-chip" id="detailPlatform"></span>
+          <span class="catalogue-chip" id="detailYear"></span>
+          <span class="catalogue-chip deep" id="detailCoverage"></span>
+        </div>
+        <p class="catalogue-detail-copy" id="detailCopy"></p>
+
+        <div class="catalogue-detail-section" id="aliasesSection">
+          <h3>Known search names</h3>
+          <div class="catalogue-aliases" id="detailAliases"></div>
+        </div>
+
+        <div class="catalogue-detail-section">
+          <h3>Release intelligence</h3>
+          <p class="catalogue-detail-copy" id="coverageCopy"></p>
+        </div>
+
+        <div class="catalogue-actions">
+          <a id="findGame" class="catalogue-action" href="search.html">Find this game</a>
+          <a id="saveGame" class="catalogue-action secondary" href="search.html">Save Hunt</a>
+        </div>
+      </div>
+    </article>
+  </section>
+</main>
+
+<script src="catalogue-index.js"></script>
+<script>
+const catalogue=Array.isArray(window.BASE_CATALOGUE_INDEX)?window.BASE_CATALOGUE_INDEX:[];
+const PAGE_SIZE=36;
+let rankedSearch=null;
+let state={query:"",platform:"",sort:"az",page:1};
+
+const $=s=>document.querySelector(s);
+const byPlatform=p=>catalogue.filter(g=>g.platform===p).length;
+const coverageLabel=value=>value==="PALSCOUT_DEEP"?"PALScout deep":value==="PALSCOUT_PARTIAL"?"PALScout partial":"Base catalogue";
+const platformMark=p=>p==="Dreamcast"?"DC":p;
+const normalYear=g=>Number(g.releaseYear)||null;
+
+function applyStats(){
+ $("#statTotal").textContent=catalogue.length;
+ $("#statPs1").textContent=byPlatform("PS1");
+ $("#statPs2").textContent=byPlatform("PS2");
+ $("#statDc").textContent=byPlatform("Dreamcast");
+ $("#statDeep").textContent=catalogue.filter(g=>g.coverage==="PALSCOUT_DEEP").length;
+}
+
+function sortedRows(rows){
+ const copy=[...rows];
+ if(state.sort==="za") return copy.sort((a,b)=>b.title.localeCompare(a.title)||a.platform.localeCompare(b.platform));
+ if(state.sort==="year-new") return copy.sort((a,b)=>(normalYear(b)||-Infinity)-(normalYear(a)||-Infinity)||a.title.localeCompare(b.title));
+ if(state.sort==="year-old") return copy.sort((a,b)=>(normalYear(a)||Infinity)-(normalYear(b)||Infinity)||a.title.localeCompare(b.title));
+ return copy.sort((a,b)=>a.title.localeCompare(b.title)||a.platform.localeCompare(b.platform));
+}
+
+function filteredRows(){
+ let rows=catalogue;
+ if(state.platform) rows=rows.filter(g=>g.platform===state.platform);
+ if(state.query){
+   if(rankedSearch){
+     const allowed=new Set(rows.map(g=>g.id));
+     return rankedSearch(rows,state.query,{limit:rows.length}).filter(r=>allowed.has(r.game.id)).map(r=>r.game);
+   }
+   const q=state.query.toLowerCase();
+   rows=rows.filter(g=>g.title.toLowerCase().includes(q)||(g.aliases||[]).some(a=>String(a).toLowerCase().includes(q)));
+ }
+ return sortedRows(rows);
+}
+
+function gameCard(game){
+ const a=document.createElement("a");
+ a.className="catalogue-card";
+ a.href="catalogue.html?game="+encodeURIComponent(game.id);
+ const mark=document.createElement("div");mark.className="catalogue-card-mark";mark.textContent=platformMark(game.platform);
+ const body=document.createElement("div");body.className="catalogue-card-body";
+ const platform=document.createElement("div");platform.className="catalogue-card-platform";platform.textContent=game.platform;
+ const title=document.createElement("h2");title.textContent=game.title;
+ const meta=document.createElement("div");meta.className="catalogue-card-meta";
+ const year=document.createElement("span");year.className="catalogue-chip";year.textContent=game.releaseYear||"Year unavailable";
+ const coverage=document.createElement("span");coverage.className="catalogue-chip"+(game.coverage==="PALSCOUT_DEEP"?" deep":"");coverage.textContent=coverageLabel(game.coverage);
+ meta.append(year,coverage);
+ body.append(platform,title,meta);
+ if((game.aliases||[]).length){
+   const aliases=document.createElement("div");aliases.className="catalogue-alias";aliases.textContent="Also: "+game.aliases.slice(0,3).join(" · ");
+   body.appendChild(aliases);
+ }
+ a.append(mark,body);
+ return a;
+}
+
+function render(){
+ const rows=filteredRows();
+ const pages=Math.max(1,Math.ceil(rows.length/PAGE_SIZE));
+ if(state.page>pages)state.page=pages;
+ const start=(state.page-1)*PAGE_SIZE;
+ const shown=rows.slice(start,start+PAGE_SIZE);
+ const grid=$("#catalogueGrid");grid.innerHTML="";
+ shown.forEach(g=>grid.appendChild(gameCard(g)));
+ $("#catalogueEmpty").hidden=rows.length!==0;
+ $("#catalogueSummary").textContent=rows.length===catalogue.length
+   ?catalogue.length+" games in the current public catalogue"
+   :rows.length+" matching game"+(rows.length===1?"":"s");
+ $("#pageLabel").textContent="Page "+state.page+" of "+pages;
+ $("#prevPage").disabled=state.page<=1;
+ $("#nextPage").disabled=state.page>=pages;
+}
+
+function showDetail(id){
+ const game=catalogue.find(g=>g.id===id);
+ if(!game)return false;
+ $("#browseView").hidden=true;$("#detailView").hidden=false;
+ document.title=game.title+" — GrailRaven Catalogue";
+ $("#detailMark").textContent=platformMark(game.platform);
+ $("#detailPlatformEyebrow").textContent=game.platform+" · Catalogue record";
+ $("#detailTitle").textContent=game.title;
+ $("#detailPlatform").textContent=game.platform;
+ $("#detailYear").textContent=game.releaseYear||"Year unavailable";
+ $("#detailCoverage").textContent=coverageLabel(game.coverage);
+ $("#detailCopy").textContent="Canonical GrailRaven game identity for "+game.title+" on "+game.platform+". Catalogue identity is kept separate from exact physical-release classification.";
+ const aliases=game.aliases||[];
+ $("#aliasesSection").hidden=aliases.length===0;
+ const aliasBox=$("#detailAliases");aliasBox.innerHTML="";
+ aliases.forEach(alias=>{const chip=document.createElement("span");chip.className="catalogue-chip";chip.textContent=alias;aliasBox.appendChild(chip);});
+ $("#coverageCopy").textContent=game.coverage==="PALSCOUT_DEEP"
+  ?"PALScout has deeper physical-release evidence for this launch record. Exact region, edition, completeness and other listing evidence are still evaluated at search/listing time."
+  :game.coverage==="PALSCOUT_PARTIAL"
+   ?"PALScout has partial release evidence for this game. Ambiguous physical copies remain review cases until stronger evidence is available."
+   :"This record currently provides catalogue identity only. It must not be treated as exact physical-release proof.";
+ const target="search.html?game="+encodeURIComponent(game.id);
+ $("#findGame").href=target;
+ $("#saveGame").href=target+"&save=1";
+ return true;
+}
+
+$("#catalogueQuery").addEventListener("input",e=>{state.query=e.target.value.trim();state.page=1;render();});
+$("#catalogueSort").addEventListener("change",e=>{state.sort=e.target.value;state.page=1;render();});
+$("#platformFilters").addEventListener("click",e=>{
+ const button=e.target.closest("[data-platform]");if(!button)return;
+ state.platform=button.dataset.platform||"";state.page=1;
+ document.querySelectorAll(".catalogue-platform").forEach(b=>b.classList.toggle("active",b===button));
+ render();
+});
+$("#prevPage").addEventListener("click",()=>{if(state.page>1){state.page--;render();scrollTo({top:0,behavior:"smooth"});}});
+$("#nextPage").addEventListener("click",()=>{state.page++;render();scrollTo({top:0,behavior:"smooth"});});
+$("#mobileNavButton").addEventListener("click",()=>{
+ const nav=$("#primaryNav"),button=$("#mobileNavButton"),open=nav.classList.toggle("mobile-open");
+ button.setAttribute("aria-expanded",String(open));button.textContent=open?"Close":"Menu";
+});
+
+applyStats();
+const detailId=new URLSearchParams(location.search).get("game");
+if(!detailId||!showDetail(detailId)){
+ render();
+ import("./shared/catalogue-search-core.js").then(api=>{rankedSearch=api.rankCatalogueMatches;render();}).catch(()=>{});
+}
+</script>
+</body>
+</html>
