@@ -1789,3 +1789,50 @@ Privacy wording now documents the self-service deletion path.
 The short-lived pseudonymous auth-rate rows are intentionally not account-linked and therefore are not part of account deletion; they rotate daily and are designed to be pruned after about 24 hours.
 
 The one-time production deployment workflow was removed after successful rollout.
+
+
+## Business purpose reaffirmed — 9 October 2026
+
+The project's primary purpose has been explicitly restated and recorded in `BUSINESS_DIRECTION.md`.
+
+GrailRaven is being built as a serious attempt to create a **financially meaningful, sustainable software business**. Future work should be judged primarily by whether it improves:
+- acquisition
+- retention
+- willingness to pay
+- defensibility
+
+The project should not drift into feature-building for its own sake.
+
+Current strategic positioning:
+- do not compete as a generic collection tracker
+- focus on exact-copy acquisition intelligence
+- preserve Search → Filter → Compare → Alert as the commercial core
+- PALScout precision and visible uncertainty are core trust/differentiation features
+
+Current monetisation direction:
+- freemium
+- provisional Collector subscription around £3.99/month or £35–£40/year, subject to real validation
+- later professional/trader tools only if justified by demand
+- secondary referral/API/dealer opportunities may be explored where permitted
+- no full in-house marketplace without strong evidence
+
+Current external sequence:
+1. await/review IGDB agreement
+2. promote approved catalogue/artwork if rights allow
+3. run the real PriceCharting benchmark
+4. validate an authorised live marketplace source
+5. complete the useful exact-copy hunt/alert loop
+6. shift focus toward real user acquisition, retention and payment validation
+7. reapply for eBay developer access once the public product is materially stronger
+
+eBay remains an important future objective, but reapplication must be transparent and legitimate; do not evade the previous rejection or substitute scraping.
+
+Mobile:
+- an Android/iOS app is considered strategically useful later for push alerts, scanning and in-store workflows
+- native app work should wait until the web product demonstrates product-market fit and user behaviour supports the investment
+
+Validation discipline:
+- once the useful product is live, run an active 3–6 month market-validation phase
+- use real search, Saved Hunt, return, alert/click, conversion and acquisition metrics to decide whether to accelerate, refine or pivot
+
+Illustrative subscription revenue examples in `BUSINESS_DIRECTION.md` are business targets/scenarios, not forecasts.
