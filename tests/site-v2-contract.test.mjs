@@ -121,3 +121,25 @@ test("account backend includes additive sign-in abuse-rate migration",async()=>{
   assert.ok(migration.includes("client_key TEXT NOT NULL"));
   assert.ok(migration.includes("idx_auth_rate_events_client_created"));
 });
+
+
+test("Account page requires explicit DELETE confirmation for self-service deletion",async()=>{
+  const account=await read("account.html");
+  for(const id of ["openDeleteAccount","deleteAccountPanel","deleteConfirmation","confirmDeleteAccount","cancelDeleteAccount","deleteAccountMessage"]){
+    assert.ok(account.includes(`id="${id}"`),`Account missing #${id}`);
+  }
+  assert.ok(account.includes('e.target.value!=="DELETE"'));
+  assert.ok(account.includes('confirmation!=="DELETE"'));
+  assert.ok(account.includes("RetroNomadAccount.deleteAccount"));
+  assert.ok(account.includes("RetroNomadSavedHunts?.clearAll?.()"));
+  assert.ok(account.includes('localStorage.removeItem("retronomad_device_id_v1")'));
+});
+
+test("account client exposes the deletion API and Privacy documents it",async()=>{
+  const client=await read("account-sync.js");
+  const privacy=await read("privacy.html");
+  assert.ok(client.includes('request("/api/account/delete"'));
+  assert.ok(client.includes("deleteAccount"));
+  assert.ok(privacy.includes("permanently delete their account from the Account page"));
+  assert.ok(privacy.includes("server sessions and cloud Saved Hunts"));
+});
