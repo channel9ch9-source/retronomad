@@ -573,6 +573,27 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
  }
 });
 
+(async function restoreCatalogueTarget(){
+ const params=new URLSearchParams(location.search);
+ if(params.get("hunt"))return;
+ const canonicalId=params.get("game");
+ if(!canonicalId)return;
+ const canonical=catalogueIndex.find(game=>game.id===canonicalId);
+ const status=document.querySelector("#searchStatus");
+ if(!canonical){
+   status.textContent="That catalogue game is not available in the current public catalogue.";
+   return;
+ }
+ gameInput.value=canonical.title;
+ setSelectedPlatform(canonical.platform);
+ document.querySelector("#previewTerm").textContent=canonical.title;
+ document.querySelector("#heroArtTitle").textContent=canonical.title;
+ await runSearch({selectionRow:{game:canonical,reason:"canonical-id",matchedText:canonical.title}});
+ if(params.get("save")==="1"&&window.currentTarget){
+   document.querySelector("#saveBtn").click();
+ }
+})();
+
 (function restoreHunt(){
  RetroNomadSavedHunts.migrateLegacy();
  const id=new URLSearchParams(location.search).get("hunt");if(!id)return;
