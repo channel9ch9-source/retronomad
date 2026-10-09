@@ -191,8 +191,7 @@ function filteredRows(){
  if(state.platform) rows=rows.filter(g=>g.platform===state.platform);
  if(state.query){
    if(rankedSearch){
-     const allowed=new Set(rows.map(g=>g.id));
-     return rankedSearch(rows,state.query,{limit:rows.length}).filter(r=>allowed.has(r.game.id)).map(r=>r.game);
+     rows=rankedSearch(rows,state.query,{limit:rows.length}).map(r=>r.game);
    }
    const q=state.query.toLowerCase();
    rows=rows.filter(g=>g.title.toLowerCase().includes(q)||(g.aliases||[]).some(a=>String(a).toLowerCase().includes(q)));
