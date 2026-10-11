@@ -1053,3 +1053,29 @@ Audit findings and fixes:
 - [x] deploy retention-journey audit patch — run `38166781719`
 - [x] verify production smoke — passed attempt 1 in run `38166781719`
 - [ ] manually exercise Search -> Save -> Saved Hunts -> Account
+
+
+### Manual retention-path verification — reopen state finding 11 October 2026
+
+User manually created a Silent Hill PS1 hunt with:
+- UK PAL
+- Original release
+- Box + disc
+- No major damage
+- English packaging only
+- £73 maximum delivered
+
+Verified on live Saved Hunts:
+- [x] all selected criteria were preserved in stored hunt state
+- [x] reopened Search restored all visible criteria correctly
+- [x] unsupported planned filters remained disabled
+- [x] stale-filter save bug is fixed in live production
+
+Additional UX findings fixed in source:
+- [x] Saved Hunts display labels now match Search wording (`UK PAL`, `Box + disc`)
+- [x] reopening a canonical Saved Hunt now renders the canonical "Game identified" edit state rather than leaving example result cards visible
+- [x] reopened canonical hunt presents a clear `Update Saved Hunt` action
+- [x] regression test added
+- [x] validation run `38168093423` passed 66/66 tests
+- [ ] deploy reopen-state/label cleanup
+- [ ] manually verify update-in-place behavior after deploy
