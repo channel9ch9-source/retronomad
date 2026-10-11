@@ -89,10 +89,10 @@ function render(){
    '<div class="hunthead"><div><h3>'+esc(h.label)+'</h3><div class="meta">Saved '+esc(fmtDate(h.createdAt))+' · Updated '+esc(fmtDate(h.updatedAt))+'</div></div><span class="status '+statusClass+'">'+esc(h.status)+'</span></div>'+
    '<div class="huntbody"><div class="chips">'+chips.map(x=>'<span class="chip">'+esc(x)+'</span>').join("")+'</div>'+
    '<div class="split"><div class="box"><span>Monitoring</span><b>'+esc(h.monitoring.state==="NOT_RUNNING"?"Not running":h.monitoring.state)+'</b><div class="meta">Last checked: '+esc(fmtDate(h.monitoring.lastCheckedAt))+'</div></div>'+
-   '<div class="box"><span>Alerts</span><b class="warn">'+(h.alerts.requested?"Wanted — not active":"Not requested")+'</b><div class="meta">Marketplace alert delivery is not configured yet</div></div></div>'+
+   '<div class="box"><span>Alerts</span><b class="warn">'+(h.alerts.requested?"Preference saved — not active":"Not requested")+'</b><div class="meta">Preference only — automatic marketplace alerts are not active yet</div></div></div>'+
    (history.length?'<details class="history"><summary>Match history ('+history.length+')</summary><ul>'+history.map(x=>'<li>'+esc(x.title||x.externalId)+' · '+(x.deliveredGbp!=null?'£'+Number(x.deliveredGbp).toFixed(2):'price unknown')+(x.canonicalUrl?' · <a target="_blank" rel="noopener noreferrer" href="'+esc(x.canonicalUrl)+'">open</a>':'')+'</li>').join("")+'</ul></details>':'')+
    '</div>'+
-   '<div class="huntfoot"><label class="alertline"><input type="checkbox" data-action="alert" data-id="'+esc(h.id)+'" '+(h.alerts.requested?"checked":"")+'> I want an alert when this becomes available</label>'+
+   '<div class="huntfoot"><label class="alertline"><input type="checkbox" data-action="alert" data-id="'+esc(h.id)+'" '+(h.alerts.requested?"checked":"")+'> Remember that I want an alert when alerts launch</label>'+
    '<div class="huntbuttons"><a class="btn small" href="search.html?hunt='+encodeURIComponent(h.id)+'">Open in Search</a>'+
    (h.status==="ACTIVE"?'<button class="btn small" data-action="pause" data-id="'+esc(h.id)+'">Pause</button>':'')+
    (h.status==="PAUSED"?'<button class="btn small" data-action="resume" data-id="'+esc(h.id)+'">Resume</button>':'')+
@@ -102,22 +102,40 @@ function render(){
  }
 }
 
-document.addEventListener("change",e=>{
+async function syncLocalChanges(label){
+ const status=document.querySelector("#syncStatus");
+ if(!RetroNomadAccount.state().enabled)return;
+ try{
+  const me=await RetroNomadAccount.me();
+  if(!me.authenticated)return;
+  status.textContent=(label||"Saved Hunt changes")+" Syncing…";
+  const result=await RetroNomadAccount.syncSavedHunts();
+  status.textContent=(label||"Saved Hunt changes")+" synced across devices ("+(result.hunts?.length||0)+" total).";
+ }catch(e){
+  status.textContent=(label||"Saved Hunt changes")+" saved locally; cloud sync failed: "+e.message;
+ }
+}
+
+document.addEventListener("change",async e=>{
  const a=e.target?.dataset?.action,id=e.target?.dataset?.id;if(a!=="alert"||!id)return;
  RetroNomadSavedHunts.setAlertRequested(id,e.target.checked);render();
+ await syncLocalChanges("Alert preference");
 });
-document.addEventListener("click",e=>{
+document.addEventListener("click",async e=>{
  const btn=e.target.closest("[data-action]");if(!btn)return;
  const a=btn.dataset.action,id=btn.dataset.id;
- if(a==="pause")RetroNomadSavedHunts.setStatus(id,"PAUSED");
- if(a==="resume")RetroNomadSavedHunts.setStatus(id,"ACTIVE");
- if(a==="archive")RetroNomadSavedHunts.setStatus(id,"ARCHIVED");
- if(a==="delete"&&confirm("Delete this saved hunt from this browser?"))RetroNomadSavedHunts.remove(id);
+ let changed=false;
+ if(a==="pause"){RetroNomadSavedHunts.setStatus(id,"PAUSED");changed=true;}
+ if(a==="resume"){RetroNomadSavedHunts.setStatus(id,"ACTIVE");changed=true;}
+ if(a==="archive"){RetroNomadSavedHunts.setStatus(id,"ARCHIVED");changed=true;}
+ if(a==="delete"&&confirm("Delete this saved hunt? This also removes it from your synced account after the next successful sync.")){RetroNomadSavedHunts.remove(id);changed=true;}
+ if(!changed)return;
  render();
+ await syncLocalChanges("Saved Hunt changes");
 });
 document.querySelector("#exportBtn").addEventListener("click",()=>{
  const blob=new Blob([JSON.stringify(RetroNomadSavedHunts.exportData(),null,2)],{type:"application/json"});
- const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="retronomad-saved-hunts.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="grailraven-saved-hunts.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 });
 async function initAccountSync(){
  const btn=document.querySelector("#syncBtn"),status=document.querySelector("#syncStatus");
