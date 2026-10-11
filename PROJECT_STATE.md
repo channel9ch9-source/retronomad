@@ -1950,3 +1950,20 @@ Verified:
 - live production smoke passed on attempt 1
 
 Current Worker version: `790860c0-5b5b-4a20-a584-182700e76617`.
+
+
+## Google Search Console — configured 11 October 2026
+
+GrailRaven now has a verified Google Search Console Domain property for `grailraven.com`.
+
+Completed:
+- Domain ownership verified by DNS
+- production sitemap submitted successfully at `https://grailraven.com/sitemap.xml`
+- homepage is already indexed
+- `/analyze` is indexed
+- `/about` is indexed
+- `/search` and `/catalogue` both passed Google's live URL test as available to Google
+- indexing requests were submitted for `/search` and `/catalogue`
+- Google confirmed both were added to the priority crawl queue
+
+Do not repeatedly resubmit the same URLs; wait for normal crawling/indexing and later use Search Console for impressions, queries, clicks and indexing diagnostics.
