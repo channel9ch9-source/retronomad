@@ -1158,7 +1158,7 @@ Implemented:
 - [x] regression tests verify privacy-safe field selection and production-build inclusion
 - [x] validation run `38179493562` passed 71/71 tests
 - [x] deploy sharing experiment — run `38180110251`
-- [ ] manually verify copied summary on a live result
+- [x] manually verify copied summary on a live FFVII result — privacy-safe output passed
 
 
 ### Listing Checker share-control visibility fix — validated
@@ -1172,4 +1172,13 @@ Fix:
 - [x] retain dynamic creation as a fallback
 - [x] add regression coverage for visible markup + event binding
 - [x] validation run `38180622109` passed 72/72 tests
-- [ ] deploy visibility fix and retry live copy action
+- [x] deploy visibility fix — run `38180715495`; live button and clipboard output verified
+
+
+### Share-summary wording polish — validated
+
+Live clipboard output was useful and privacy-safe. Minor collector-facing cleanup:
+- [x] change identifier suffix from `· serial` to `(serial)`
+- [x] remove internal `· text` suffix from completeness
+- [x] validation run `38180874849` passed 73/73 tests
+- [ ] deploy wording polish
