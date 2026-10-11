@@ -2272,3 +2272,23 @@ Regression protection added:
 Validation run `38173148176`: 69/69 tests passed; public catalogue remains 100 games.
 
 Next: deploy current main and manually verify the main Analyse listing button plus all three examples.
+
+
+## Listing Checker runtime restoration — deployed and FFVII verified live
+
+Production deployment run `38177384405` succeeded:
+- 69/69 tests passed
+- public catalogue remained 100 games
+- no D1 migrations pending
+- production smoke passed on attempt 1
+- Worker version: `3dfbbb9a-9cb2-4ad9-b6a0-2c6b133a12d7`
+
+Manual production verification confirmed:
+- primary Analyse listing button now responds
+- Final Fantasy VII example data with SCES-00867 resolves correctly
+- result: Final Fantasy VII / PS1 / UK exact identifier
+- evidence strength: STRONG
+- classification: COMPARISON-READY
+- price comparison remains ungraded without a supplied reference
+
+Remaining manual checks: Silent Hill PAL and final Rule of Rose edge-case confirmation.
