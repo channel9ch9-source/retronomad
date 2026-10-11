@@ -2252,3 +2252,23 @@ The handlers now:
 Validation run `38169769133`: 68/68 tests passed. Public catalogue remains 100 games.
 
 Next: deploy and retry the three built-in examples.
+
+
+## Listing Checker runtime failure — fixed, pending deployment
+
+A live browser test on 11 October 2026 showed that both the primary Analyse listing action and all three built-in examples did nothing.
+
+Root cause was not the example handler itself. The page had dangling references to photo/OCR state and helpers that had been removed previously. In particular:
+- `photoOcrText` and related state were undefined when `analyse()` ran
+- `scanListingPhotos` was undefined during startup listener binding
+- therefore the analyser threw before rendering and later example handlers were never attached
+
+The missing photo/OCR runtime block was restored from the last known-good implementation at commit `959d37def83029ceeaddb3ccc923dcce9e9150af`, while retaining all newer GrailRaven classification/pricing fixes.
+
+Regression protection added:
+- Node VM runtime-initialization test for Listing Checker inline JS
+- production smoke assertions for critical Listing Checker runtime dependencies
+
+Validation run `38173148176`: 69/69 tests passed; public catalogue remains 100 games.
+
+Next: deploy current main and manually verify the main Analyse listing button plus all three examples.
