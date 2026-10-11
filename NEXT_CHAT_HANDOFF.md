@@ -563,3 +563,17 @@ User visually confirmed:
 - Update Saved Hunt is the primary action
 
 Remaining manual check: change one criterion, click Update Saved Hunt, and confirm the existing hunt changes in place while Saved Hunts count remains 1.
+
+
+## Saved Hunt update-in-place — verified live
+
+User changed the live Silent Hill PS1 hunt from £73 to £68 and clicked Update Saved Hunt.
+
+Result:
+- Saved Hunts count stayed at 1
+- original hunt updated correctly
+- no duplicate was created
+
+Search -> Save -> reopen -> edit -> Saved Hunts is now manually verified.
+
+Remaining audit step: test Account passwordless sign-in and automatic Saved Hunt sync with the existing hunt.
