@@ -1029,3 +1029,26 @@ Fix:
 - [x] validation run `38163755549` passed 62/62 tests
 - [x] redeploy fixed build — run `38163942682`
 - [x] visually confirm stray top-left text is gone — user confirmed 11 Oct 2026
+
+
+### Search -> Saved Hunts -> Account journey audit — validated 11 October 2026
+
+Audit findings and fixes:
+- [x] Saved Hunt now rebuilds from the user's current visible Search filters at save time instead of potentially using a stale in-memory target
+- [x] an existing Saved Hunt opened from Saved Hunts now updates in place instead of creating a duplicate when criteria change
+- [x] restoring an existing Saved Hunt now restores visible region/release/completeness/condition/price/English controls before editing
+- [x] new hunts remain new-hunt saves; edit mode is tied to an existing hunt opened for editing
+- [x] Save button gives direct Saved/Updated confirmation
+- [x] Search reports when local save succeeds but account sync does not
+- [x] unsupported NTSC-U / NTSC-J filters are visibly disabled and marked Planned
+- [x] unsupported Limited edition / Collector's edition exact filters are visibly disabled and marked Planned
+- [x] alert checkbox now records a future alert preference without implying alerts are live
+- [x] signed-in Saved Hunt mutations attempt immediate cloud sync
+- [x] Saved Hunts rerenders after cloud merge
+- [x] Saved Hunts export filename uses GrailRaven public branding
+- [x] Account automatically syncs Saved Hunts after authenticated sign-in
+- [x] Account copy explains automatic sync and keeps manual Sync as retry/control
+- [x] regression coverage added for the full retention journey
+- [x] validation run `38166618478` passed 65/65 tests
+- [ ] deploy retention-journey audit patch
+- [ ] verify production smoke and manually exercise Search -> Save -> Saved Hunts -> Account
