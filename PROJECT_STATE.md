@@ -2292,3 +2292,16 @@ Manual production verification confirmed:
 - price comparison remains ungraded without a supplied reference
 
 Remaining manual checks: Silent Hill PAL and final Rule of Rose edge-case confirmation.
+
+
+## Listing Checker classifier triad — live verification complete
+
+On 11 October 2026 the three intended production outcomes were manually verified:
+
+- Final Fantasy VII / SCES-00867 -> UK exact identifier -> COMPARISON-READY
+- Silent Hill / SLES-01514 -> shared PAL identifier -> COMPARISON-READY in the shared-PAL bucket, without claiming an exact UK package
+- Rule of Rose / SLES-54218 -> no normal UK retail bucket / separate market -> pricing classification blocked
+
+The primary Analyse listing button also works independently of the built-in examples.
+
+Pricing remains descriptive and ungraded until the user supplies a manual reference. This closes the current Listing Checker input -> evidence/classification -> pricing-gate audit.
