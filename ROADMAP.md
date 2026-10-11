@@ -1140,5 +1140,5 @@ Fix:
 - [x] add runtime initialization regression test using Node `vm` so missing top-level helper references fail CI
 - [x] add production smoke assertions that the deployed Listing Checker contains critical runtime helpers
 - [x] validation run `38173148176` passed 69/69 tests
-- [ ] deploy runtime restoration
-- [ ] re-test main Analyse listing button and FFVII / Silent Hill / Rule of Rose examples
+- [x] deploy runtime restoration — run `38177384405`
+- [ ] re-test main Analyse listing button and FFVII / Silent Hill / Rule of Rose examples — Analyse button + FFVII live pass; Silent Hill and final Rule of Rose verification remain
