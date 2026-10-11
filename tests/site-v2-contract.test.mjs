@@ -21,7 +21,7 @@ test("production Search preserves the approved design-preview structure",async()
 });
 
 test("all primary public app pages use the GrailRaven v2 shell",async()=>{
-  for(const page of ["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","privacy.html","terms.html"]){
+  for(const page of ["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","uk-pal-game-guide.html","privacy.html","terms.html"]){
     const html=await read(page);
     assert.ok(html.includes('href="ui-v2.css"'),`${page} missing ui-v2.css`);
     assert.ok(html.includes("v2-topbar"),`${page} missing v2 topbar`);
@@ -43,7 +43,7 @@ test("functional pages retain their critical hooks after v2 migration",async()=>
 
 
 test("public navigation points to the dedicated Catalogue page",async()=>{
-  for(const page of ["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","privacy.html","terms.html"]){
+  for(const page of ["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","uk-pal-game-guide.html","privacy.html","terms.html"]){
     const html=await read(page);
     assert.ok(html.includes('href="catalogue.html"'),`${page} does not link to Catalogue`);
   }
@@ -170,7 +170,7 @@ test("public Listing Checker keeps manual pricing but no longer exposes the reti
 });
 
 test("public source copy uses GrailRaven and avoids stale prototype labels",async()=>{
-  const publicPages=["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","privacy.html","terms.html"];
+  const publicPages=["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","uk-pal-game-guide.html","privacy.html","terms.html"];
   for(const page of publicPages){
     const html=await read(page);
     const visible=html
@@ -181,5 +181,29 @@ test("public source copy uses GrailRaven and avoids stale prototype labels",asyn
     for(const stale of ["DESIGN PREVIEW","early-stage prototype","Development-site terms","future backend","Backend required","Phase 1 search beta"]){
       assert.equal(visible.includes(stale),false,`${page} still exposes stale public copy: ${stale}`);
     }
+  }
+});
+
+
+test("first collector acquisition guide is evidence-led and internally linked",async()=>{
+  const guide=await read("uk-pal-game-guide.html");
+  const home=await read("index.html");
+  for(const token of [
+    "How to identify a UK/PAL retro game copy.",
+    "SCES-00867",
+    "SLES-01514",
+    "SCES-02147",
+    "SLES-50382",
+    "SLES-51156",
+    "SLES-54218",
+    "MK-51184-50",
+    "UK/PAL identification FAQ",
+    'href="analyze.html"',
+    'href="search.html"',
+    'href="catalogue.html"'
+  ]) assert.ok(guide.includes(token),`guide missing acquisition/evidence token: ${token}`);
+  assert.ok(home.includes('href="uk-pal-game-guide.html"'));
+  for(const retired of ["RetroTechCollector","rtc_live_"]){
+    assert.equal(guide.includes(retired),false,`guide should not expose retired provider: ${retired}`);
   }
 });
