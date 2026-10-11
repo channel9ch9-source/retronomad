@@ -49,6 +49,13 @@ const publicPages=new Map([
     index:true,
     sitemap:true
   }],
+  ["uk-pal-game-guide.html",{
+    path:"/uk-pal-game-guide",
+    title:`How to identify a UK/PAL retro game copy — ${brand.name}`,
+    description:`Learn how to identify UK and European PAL PS1, PS2 and Dreamcast copies using serials, barcodes, packaging, language, edition and completeness evidence.`,
+    index:true,
+    sitemap:true
+  }],
   ["wishlist.html",{
     path:"/wishlist",
     title:`Saved Hunts — ${brand.name}`,
