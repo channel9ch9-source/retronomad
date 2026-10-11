@@ -110,6 +110,7 @@ async function syncLocalChanges(label){
   if(!me.authenticated)return;
   status.textContent=(label||"Saved Hunt changes")+" Syncing…";
   const result=await RetroNomadAccount.syncSavedHunts();
+  render();
   status.textContent=(label||"Saved Hunt changes")+" synced across devices ("+(result.hunts?.length||0)+" total).";
  }catch(e){
   status.textContent=(label||"Saved Hunt changes")+" saved locally; cloud sync failed: "+e.message;
