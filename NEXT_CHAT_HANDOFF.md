@@ -354,3 +354,16 @@ Validated in run `38158956959`:
 
 The bundle has not yet been deployed at this point.
 Use the normal manual Cloudflare deploy workflow; the deploy now includes a live-production smoke test.
+
+
+## Waiting-period bundle deployed — 11 October 2026
+
+Deployment run `38159086437` passed:
+- 60/60 tests
+- no pending D1 migrations
+- 100-game publication guard intact
+- live production smoke passed on attempt 1
+
+Current Worker version: `790860c0-5b5b-4a20-a584-182700e76617`.
+
+The public RTC connector is now retired; manual Pricing v1 and OCR remain. Security headers and refreshed GrailRaven copy are live.
