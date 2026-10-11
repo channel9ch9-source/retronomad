@@ -391,3 +391,24 @@ Google confirmed `/search` and `/catalogue` were added to the priority crawl que
 User confirmed in the Resend dashboard that `grailraven.com` is **Verified**.
 
 The production passwordless-account sender remains `GrailRaven <accounts@grailraven.com>`. Treat the production sending-domain verification task as complete.
+
+
+## First acquisition content page — ready to deploy
+
+Built and validated 11 October 2026:
+- source: `uk-pal-game-guide.html`
+- canonical production route: `https://grailraven.com/uk-pal-game-guide`
+- topic: how to identify a UK/PAL retro game copy
+- evidence-led examples come from the existing PALScout launch dataset
+- linked from public navigation/homepage
+- included in sitemap
+- Article + FAQ JSON-LD included
+- production smoke now checks the guide
+
+Validation run `38161759309` passed 61/61 tests.
+
+After deployment:
+1. require normal production smoke to pass
+2. use Search Console URL Inspection for `https://grailraven.com/uk-pal-game-guide`
+3. if live test is available to Google, request indexing once
+4. do not repeatedly resubmit
