@@ -1142,3 +1142,19 @@ Fix:
 - [x] validation run `38173148176` passed 69/69 tests
 - [x] deploy runtime restoration — run `38177384405`
 - [x] re-test main Analyse listing button and FFVII / Silent Hill / Rule of Rose examples — all live paths passed
+
+
+### Organic-sharing acquisition experiment — ready to deploy
+
+Business goal: make useful Listing Checker results easier to share in collector communities without exposing raw seller/listing text.
+
+Implemented:
+- [x] add a production Listing Checker `Copy result summary` action
+- [x] summary includes only rendered verdict fields: game, platform, classification, release signal, matched identifier, completeness, PALScout compatibility and evidence strength
+- [x] summary links back to `https://grailraven.com/analyze`
+- [x] deliberately exclude seller URL, marketplace item ID, pasted title/description, listing price and postage
+- [x] clipboard API + fallback copy path
+- [x] build-time injection keeps the main analyser source untouched
+- [x] regression tests verify privacy-safe field selection and production-build inclusion
+- [x] validation run `38179493562` passed 71/71 tests
+- [ ] deploy and manually verify copied summary on a live result
