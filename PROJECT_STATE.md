@@ -2124,3 +2124,15 @@ Current behavior after the patch:
 Validation run `38166618478`: 65/65 tests passed. Public catalogue remains 100 games.
 
 Next: normal Cloudflare deploy, production smoke, then manually exercise the full live path.
+
+
+## Retention journey audit deployed — 11 October 2026
+
+Production deployment run `38166781719` succeeded:
+- 65/65 tests passed
+- 100-game public catalogue guard intact
+- no D1 migrations pending
+- live production smoke passed on attempt 1
+- Worker version: `73fc344a-a4e6-42bd-b0cb-5d334159470e`
+
+Next: manually exercise the live Search -> Save -> Saved Hunts -> edit -> Account/sync journey.
