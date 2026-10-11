@@ -2097,3 +2097,30 @@ Verified:
 The user visually confirmed the stray top-left literal `\n\n...` text is gone on the live site.
 
 This deployment also includes the Catalogue heading typography alignment and the public copy/fallback cleanup from the new-visitor journey audit.
+
+
+## Search -> Saved Hunts -> Account audit — validated, pending deployment
+
+On 11 October 2026 the main retention path was audited as a first-time collector.
+
+Important functional issues found and fixed:
+- Search could save a stale target if filters changed after the game was identified.
+- Editing an existing Saved Hunt could create a new hunt rather than updating the original.
+- Reopening a Saved Hunt did not restore all visible filter controls, risking accidental preference drift on update.
+- Several future/unsupported filters (NTSC-U, NTSC-J, Limited edition, Collector's edition) looked active even though the current Saved Hunt model cannot faithfully represent them.
+- Signed-in changes made directly on Saved Hunts did not immediately cloud-sync.
+- Account sign-in required an unnecessary second manual sync step.
+
+Current behavior after the patch:
+- save uses the current visible supported filter state
+- existing-hunt edits update in place
+- supported filters round-trip visibly
+- unsupported filters are disabled and labelled Planned
+- Search distinguishes local save from successful cloud sync
+- alert checkbox is explicitly a future-alert preference, not a live alert
+- signed-in Saved Hunt mutations sync automatically
+- Account automatically syncs after sign-in and retains manual Sync as a retry/control
+
+Validation run `38166618478`: 65/65 tests passed. Public catalogue remains 100 games.
+
+Next: normal Cloudflare deploy, production smoke, then manually exercise the full live path.
