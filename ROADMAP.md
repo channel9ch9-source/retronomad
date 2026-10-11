@@ -376,7 +376,7 @@ Next:
 
 ## eBay
 Current state:
-**No authorised eBay developer access. Earlier developer application was rejected after appeal.**
+**No authorised eBay developer access yet. Earlier developer application was rejected after appeal; a legitimate reconsideration request was submitted through eBay's rejected-registration support path on 11 October 2026.**
 
 Do not:
 - evade the rejection
@@ -384,13 +384,17 @@ Do not:
 - create misleading accounts
 - spam applications
 
-Future:
-- [ ] maintain a functioning public RetroNomad prototype
-- [ ] prepare a concise authorised Browse API use case
-- [ ] reapply only when there is a materially stronger legitimate application
-- [ ] use accurate identity/business/project information
-- [ ] disclose prior rejection where appropriate
-- [ ] if approved, integrate active listing discovery behind an authorised connector/backend
+Progress:
+- [x] maintain a functioning public GrailRaven product
+- [x] prepare a concise authorised Buy Browse API use case
+- [x] reapply from a materially stronger legitimate position
+- [x] use accurate identity/business/project information
+- [x] reference business-domain contact email and live grailraven.com product
+- [x] state that GrailRaven will not scrape or bypass eBay controls
+- [ ] wait for eBay's reconsideration response
+- [ ] if approved, build/test the eBay adapter in Sandbox
+- [ ] pursue the appropriate production-access review
+- [ ] if rejected again, strengthen product/traffic evidence before another attempt
 
 The classifier must remain marketplace-independent so users can paste listing data manually even without eBay API access.
 
