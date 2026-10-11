@@ -50,10 +50,10 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
   const sitemap=await readBuilt("sitemap.xml");
   for(const url of [
     "https://grailraven.com/",
-    "https://grailraven.com/search.html",
-    "https://grailraven.com/catalogue.html",
-    "https://grailraven.com/analyze.html",
-    "https://grailraven.com/about.html"
+    "https://grailraven.com/search",
+    "https://grailraven.com/catalogue",
+    "https://grailraven.com/analyze",
+    "https://grailraven.com/about"
   ]) assert.ok(sitemap.includes(`<loc>${url}</loc>`),`sitemap missing ${url}`);
   for(const excluded of ["account.html","wishlist.html","privacy.html","terms.html","design-preview.html","pricing-coverage.html"]){
     assert.equal(sitemap.includes(excluded),false,`sitemap should not include ${excluded}`);
