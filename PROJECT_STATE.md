@@ -2044,3 +2044,24 @@ Decision: do not contact PriceCharting now simply because RetroNomad was renamed
 The existing approval is recorded under the historical RetroNomad name and covers the described product/use case. The repo's previous "confirm the rename" step was intentionally conservative; it was not documented as an immediate PriceCharting requirement.
 
 PriceCharting remains inactive. Revisit the rename question only when GrailRaven is actually ready to buy Legendary and begin real API/production use.
+
+
+## New-visitor journey audit — validated, pending deployment
+
+On 11 October 2026 the public path from acquisition to retention was audited:
+Homepage/Guide -> Search or Listing Checker -> exact game selection -> Saved Hunt -> Account.
+
+The functional wiring was sound. The main findings were credibility/presentation issues rather than broken product flow.
+
+Fixed:
+- Catalogue hero now uses the same Cinzel/serif display family as the other major page headers
+- Catalogue heading is now "Browse the GrailRaven catalogue."
+- Search internal "UI v2 preview" label removed
+- Search prototype-style "being designed" wording replaced with truthful current-capability copy
+- Account and Saved Hunts local-only fallbacks no longer mention stale GitHub Pages/undeployed-backend state
+
+A new regression contract protects the audited journey.
+
+Validation run `38163291294`: 62/62 tests passed. Public catalogue remains 100 games.
+
+Next: deploy and visually verify the Catalogue heading on production.
