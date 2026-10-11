@@ -42,8 +42,15 @@ async function verify(){
     "https://grailraven.com/search",
     "https://grailraven.com/catalogue",
     "https://grailraven.com/analyze",
-    "https://grailraven.com/about"
+    "https://grailraven.com/about",
+    "https://grailraven.com/uk-pal-game-guide"
   ]) assert(sitemap.body.includes(`<loc>${url}</loc>`),`sitemap missing ${url}`);
+
+  const guide=await fetchText("/uk-pal-game-guide");
+  assert(guide.response.status===200,`Guide page returned ${guide.response.status}`);
+  assert(guide.body.includes("<title>How to identify a UK/PAL retro game copy — GrailRaven</title>"),"Guide title metadata missing");
+  assert(guide.body.includes('<link rel="canonical" href="https://grailraven.com/uk-pal-game-guide">'),"Guide canonical URL missing");
+  assert(guide.body.includes("How to identify a UK/PAL retro game copy."),"Guide primary heading missing");
 
   const account=await fetchText("/account");
   assert(account.response.status===200,`Account page returned ${account.response.status}`);
