@@ -174,7 +174,7 @@ test("public source copy uses GrailRaven and avoids stale prototype labels",asyn
   for(const page of publicPages){
     const html=await read(page);
     const visible=html
-      .split(/(<script\\b[\\s\\S]*?<\\/script>|<style\\b[\\s\\S]*?<\\/style>)/gi)
+      .split(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>)/gi)
       .filter((_,index)=>index%2===0)
       .join("\n");
     assert.equal(visible.includes("RetroNomad"),false,`${page} still exposes legacy public branding`);
