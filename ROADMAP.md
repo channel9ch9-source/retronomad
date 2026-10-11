@@ -1077,5 +1077,5 @@ Additional UX findings fixed in source:
 - [x] reopened canonical hunt presents a clear `Update Saved Hunt` action
 - [x] regression test added
 - [x] validation run `38168093423` passed 66/66 tests
-- [ ] deploy reopen-state/label cleanup
+- [x] deploy reopen-state/label cleanup — run `38168228445`
 - [ ] manually verify update-in-place behavior after deploy
