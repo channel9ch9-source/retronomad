@@ -27,6 +27,12 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
     await assert.rejects(fs.access(join(out,internal)),{code:"ENOENT"});
   }
 
+  for(const page of ["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","uk-pal-game-guide.html","privacy.html","terms.html"]){
+    const built=await readBuilt(page);
+    const head=built.split("</head>")[0];
+    assert.equal(head.includes("\\n"),false,`${page} contains literal \\n escape text in <head>`);
+  }
+
   const home=await readBuilt("index.html");
   assert.ok(home.includes("<title>GrailRaven — Find the right copy at the right price</title>"));
   assert.ok(home.includes('<link rel="canonical" href="https://grailraven.com/">'));
