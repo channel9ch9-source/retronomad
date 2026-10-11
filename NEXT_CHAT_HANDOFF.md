@@ -384,3 +384,10 @@ Indexing state at setup:
 - `/catalogue`: live test available to Google; indexing requested
 
 Google confirmed `/search` and `/catalogue` were added to the priority crawl queue. Do not repeatedly resubmit.
+
+
+## Resend domain status — confirmed 11 October 2026
+
+User confirmed in the Resend dashboard that `grailraven.com` is **Verified**.
+
+The production passwordless-account sender remains `GrailRaven <accounts@grailraven.com>`. Treat the production sending-domain verification task as complete.
