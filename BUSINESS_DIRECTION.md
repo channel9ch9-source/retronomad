@@ -325,3 +325,16 @@ This experiment supports:
 - trust by not embedding raw marketplace/user-entered listing content in the share payload
 
 Do not add broad social-network integrations or tracking solely for this experiment. First verify that the basic share artifact is useful and understandable.
+
+
+## Organic-sharing experiment — completed 11 October 2026
+
+The Listing Checker sharing experiment is now live and manually verified.
+
+Result:
+- users can copy a concise derived GrailRaven verdict
+- the payload excludes raw seller/listing URL, marketplace item ID, pasted listing title/description, item price and postage
+- copied output includes a canonical link back to the Listing Checker
+- final collector-facing wording passed live verification
+
+This experiment is complete. The next growth priority should be external distribution/feedback rather than additional internal sharing polish.
