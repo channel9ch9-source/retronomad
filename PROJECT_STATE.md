@@ -2136,3 +2136,22 @@ Production deployment run `38166781719` succeeded:
 - Worker version: `73fc344a-a4e6-42bd-b0cb-5d334159470e`
 
 Next: manually exercise the live Search -> Save -> Saved Hunts -> edit -> Account/sync journey.
+
+
+## Manual retention-path verification — 11 October 2026
+
+A live Silent Hill PS1 Saved Hunt was manually tested with UK PAL, Original release, Box + disc, No major damage, English packaging required and a £73 delivered ceiling.
+
+The Saved Hunts card and reopened Search controls confirmed that the selected criteria now round-trip correctly.
+
+The test also revealed a presentation problem: reopening a Saved Hunt restored filters but left the example result cards visible and exposed only a small inline "Save/update hunt" control.
+
+Fixed in source:
+- Saved Hunts labels now mirror public Search language (for example UK PAL and Box + disc)
+- reopened canonical hunts now run through canonical game selection state
+- demo cards are replaced by the proper Game identified panel
+- the primary action is Update Saved Hunt
+
+Validation run `38168093423`: 66/66 tests passed; public catalogue remains 100 games.
+
+Next: deploy and manually verify update-in-place on the same test hunt.
