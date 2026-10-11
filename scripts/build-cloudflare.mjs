@@ -174,7 +174,6 @@ const securityHeaders=[
   "  Referrer-Policy: strict-origin-when-cross-origin",
   "  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()",
   "  Strict-Transport-Security: max-age=31536000; includeSubDomains",
-  "  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
   "",
   "https://:worker.:subdomain.workers.dev/*",
   "  X-Robots-Tag: noindex, nofollow",
