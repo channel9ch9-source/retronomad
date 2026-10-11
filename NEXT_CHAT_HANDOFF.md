@@ -525,3 +525,26 @@ Deployment run `38166781719` passed with 65/65 tests and production smoke on att
 Current Worker version: `73fc344a-a4e6-42bd-b0cb-5d334159470e`.
 
 Remaining verification: manually test the live Search -> Save -> Saved Hunts -> reopen/edit -> Account/sync path.
+
+
+## Manual Saved Hunt round-trip — passed; reopen UX patch ready
+
+Live manual test confirmed a Silent Hill PS1 Saved Hunt correctly preserved/restored:
+- UK PAL
+- Original release
+- Box + disc
+- No major damage
+- English packaging
+- £73 delivered ceiling
+
+Screenshot exposed one remaining UX issue: reopened hunts showed restored filters but still displayed demo result cards and only a small inline save/update link.
+
+Source patch now:
+- aligns Saved Hunts labels with Search wording
+- renders canonical Game identified state on reopen
+- exposes clear Update Saved Hunt action
+- hides demo results for reopened canonical hunts
+
+Validation run `38168093423` passed 66/66 tests.
+
+Next: deploy current main, then manually change one criterion and confirm the original hunt updates in place rather than duplicating.
