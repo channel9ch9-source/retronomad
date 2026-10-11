@@ -347,7 +347,7 @@ test("Listing Checker inline runtime initializes without missing helper referenc
     "async function scanListingPhotos"
   ]) assert.ok(html.includes(token),`Listing Checker missing runtime dependency: ${token}`);
 
-  const inlineScripts=[...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/gi)]
+  const inlineScripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
     .map(m=>m[1])
     .filter(Boolean);
   assert.ok(inlineScripts.length>=1,"Listing Checker main inline script missing");
