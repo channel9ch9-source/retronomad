@@ -1122,3 +1122,23 @@ Fix:
 - [x] validation run `38169769133` passed 68/68 tests
 - [ ] deploy example-button fix
 - [ ] retry FFVII / Silent Hill / Rule of Rose live examples
+
+
+### Listing Checker runtime failure — root cause fixed 11 October 2026
+
+Live production testing showed both the built-in examples and the main Analyse listing button were inert.
+
+Root cause:
+- the Listing Checker still referenced photo/OCR state and helpers (`photoOcrText`, `aggregateGalleryEvidence`, `scanListingPhotos`, etc.)
+- that block had been accidentally removed during earlier September work
+- missing state caused `analyse()` to throw before rendering
+- missing `scanListingPhotos` also aborted later startup listener registration, leaving example buttons unbound
+
+Fix:
+- [x] restore the last known-good photo/OCR runtime block from commit `959d37def83029ceeaddb3ccc923dcce9e9150af`
+- [x] preserve current GrailRaven trust/pricing changes
+- [x] add runtime initialization regression test using Node `vm` so missing top-level helper references fail CI
+- [x] add production smoke assertions that the deployed Listing Checker contains critical runtime helpers
+- [x] validation run `38173148176` passed 69/69 tests
+- [ ] deploy runtime restoration
+- [ ] re-test main Analyse listing button and FFVII / Silent Hill / Rule of Rose examples
