@@ -2235,3 +2235,20 @@ Production deployment run `38169240742` succeeded:
 - Worker version: `59ee7b37-353a-408f-a683-e10d62606ad2`
 
 Remaining verification: manually exercise the FFVII UK, Silent Hill PAL and Rule of Rose examples plus the price-comparison gate.
+
+
+## Listing Checker built-in examples — bug fixed, pending deployment
+
+During live verification on 11 October 2026, the user reported that clicking FFVII UK, Silent Hill PAL or Rule of Rose under "Try an example" produced no action.
+
+Cause: the handler used implicit browser globals created from element IDs (`title.value`, `platform.value`, etc.). This behaviour is not dependable.
+
+The handlers now:
+- query each input explicitly
+- populate the selected example
+- refresh automatic hints
+- run the analyser
+
+Validation run `38169769133`: 68/68 tests passed. Public catalogue remains 100 games.
+
+Next: deploy and retry the three built-in examples.
