@@ -1892,3 +1892,16 @@ Verified by the deployment workflow itself:
 - www redirect behavior remains part of the production smoke contract
 
 Current Worker version: `52c90563-d3bd-415a-ad2c-5d0dba23a7c7`.
+
+
+## Security-header bundle — validated, not yet deployed
+
+On 11 October 2026 a browser/security-header hardening bundle was prepared and validated.
+
+Static assets will gain nosniff, frame denial, conservative referrer policy, permissions restrictions and HSTS. The workers.dev asset hostname is marked noindex/nofollow. Worker JSON/API responses gain the same baseline protections plus a restrictive CSP.
+
+A site-wide static CSP was deliberately omitted after audit showed that Listing Checker photo OCR loads Tesseract.js from jsDelivr; the stricter draft would have broken that feature.
+
+Validation run: `38156899006` — passed.
+
+Audit also surfaced an older intentional RetroTechCollector automatic-pricing connector in `analyze.html` (added 23 September 2026). It is not represented in the current PriceCharting-led business/provider roadmap. Decide whether to retain, hide or retire it rather than deleting it implicitly.
