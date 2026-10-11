@@ -990,3 +990,25 @@ Public-product audit finding:
 - [x] treat prior rename-confirmation note as a conservative internal safeguard, not a documented immediate provider requirement
 - [x] keep PriceCharting inactive while IGDB agreement and eBay manual-review/forum route are still pending
 - [ ] revisit whether a brief rename confirmation is prudent only immediately before Legendary subscription / real production API use
+
+
+### New-visitor journey audit — validated 11 October 2026
+
+Audit path:
+Homepage / Guide -> Search or Listing Checker -> exact game selection -> Saved Hunt -> Account.
+
+Findings fixed:
+- [x] Catalogue hero heading used the body sans-serif instead of the shared Cinzel/serif display family
+- [x] Catalogue hero copy tightened from broad "collection universe" wording to "Browse the GrailRaven catalogue."
+- [x] Search no longer exposes internal "UI v2 preview" wording
+- [x] Search hero copy now describes the current exact-target capability without prototype wording
+- [x] Account fallback no longer claims production is on static GitHub Pages or that the backend is undeployed
+- [x] Saved Hunts fallback no longer claims the account backend is undeployed
+- [x] preserve Homepage -> Search / Listing Checker entry points
+- [x] preserve Catalogue -> exact Search / Save Hunt handoff
+- [x] preserve Search -> visible Save Hunt action after canonical game identification
+- [x] preserve Saved Hunts -> Account path
+- [x] add regression coverage for the audited journey and stale-copy regressions
+- [x] validation run `38163291294` passed 62/62 tests
+- [ ] deploy user-journey audit patch
+- [ ] visually confirm Catalogue heading typography on production
