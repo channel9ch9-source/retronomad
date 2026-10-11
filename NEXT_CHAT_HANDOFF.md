@@ -157,9 +157,9 @@ Do not buy Legendary until ready to run the real benchmark.
 
 Previous developer application was rejected after appeal.
 
-A new legitimate reconsideration request was submitted through eBay's official **"My account registration was rejected"** support path on 11 October 2026.
+A new legitimate reconsideration request was submitted through eBay's official **"My account registration was rejected"** support path on 11 October 2026 and was rejected almost immediately.
 
-Current reapplication positioning:
+Reconsideration positioning used:
 - live public product at grailraven.com
 - business-domain contact email: contact@grailraven.com
 - intended use: eBay Buy Browse API, initially eBay UK
@@ -170,16 +170,19 @@ Current reapplication positioning:
 - no automated buying, selling, bidding or messaging
 - willingness to complete required Sandbox and production-access review
 
+eBay's response said the account did not meet internal eligibility/risk-control criteria, gave no specific reason, and said reapplication may be considered later.
+
 Do not:
 - evade the rejection
 - scrape around access restrictions
 - create misleading accounts
+- immediately create/reapply through another account merely to bypass the decision
 - spam applications
 
 Next eBay action:
-- wait for eBay's response to the reconsideration request
-- if approved, proceed transparently with Sandbox integration and the appropriate production-access process
-- if rejected again, do not immediately resubmit; strengthen product/traffic evidence before another attempt
+- leave eBay parked for now
+- strengthen the public product, catalogue, authorised provider integrations and real-user evidence
+- reconsider a transparent reapplication later from a materially stronger position
 
 eBay remains a strategically valuable future integration.
 
