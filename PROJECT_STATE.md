@@ -2028,3 +2028,10 @@ Verified:
 Current Worker version: `27af9073-ea88-4eeb-950f-78c0fa1d133b`.
 
 Next acquisition step: inspect `https://grailraven.com/uk-pal-game-guide` in Google Search Console and request indexing once if the live URL is available to Google.
+
+
+## First acquisition guide — Google indexing requested
+
+On 11 October 2026, Google Search Console live URL inspection confirmed `https://grailraven.com/uk-pal-game-guide` is available to Google and the user submitted a single indexing request successfully.
+
+Do not repeatedly resubmit. Let Search Console collect crawl/index/impression/query data before deciding whether to expand this SEO content cluster.
