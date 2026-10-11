@@ -339,3 +339,18 @@ Public audit finding:
 - `analyze.html` still contains the intentional September RetroTechCollector automatic-pricing connector
 - current provider strategy is PriceCharting-led
 - decide whether RTC should be retained, hidden or retired before further Listing Checker cleanup
+
+
+## Ready-to-deploy waiting-period bundle — 11 October 2026
+
+Validated in run `38158956959`:
+- security header hardening
+- public RTC connector retirement
+- manual Pricing v1 preserved
+- Listing Checker OCR preserved
+- public GrailRaven branding/copy cleanup
+- stale prototype/design-preview wording removed without pretending unavailable marketplace/pricing/notification features are live
+- new regression guards for retired RTC connector and public-copy state
+
+The bundle has not yet been deployed at this point.
+Use the normal manual Cloudflare deploy workflow; the deploy now includes a live-production smoke test.
