@@ -2035,3 +2035,12 @@ Next acquisition step: inspect `https://grailraven.com/uk-pal-game-guide` in Goo
 On 11 October 2026, Google Search Console live URL inspection confirmed `https://grailraven.com/uk-pal-game-guide` is available to Google and the user submitted a single indexing request successfully.
 
 Do not repeatedly resubmit. Let Search Console collect crawl/index/impression/query data before deciding whether to expand this SEO content cluster.
+
+
+## PriceCharting rename-contact timing — 11 October 2026
+
+Decision: do not contact PriceCharting now simply because RetroNomad was renamed GrailRaven.
+
+The existing approval is recorded under the historical RetroNomad name and covers the described product/use case. The repo's previous "confirm the rename" step was intentionally conservative; it was not documented as an immediate PriceCharting requirement.
+
+PriceCharting remains inactive. Revisit the rename question only when GrailRaven is actually ready to buy Legendary and begin real API/production use.
