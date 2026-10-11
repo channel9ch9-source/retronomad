@@ -680,3 +680,14 @@ Live verification:
 - no price grading without a reference
 
 Remaining: verify Silent Hill PAL review behavior and Rule of Rose separate-market behavior.
+
+
+## Listing Checker live audit complete
+
+Manual production verification now covers:
+- FFVII / SCES-00867: UK exact, STRONG evidence, COMPARISON-READY
+- Silent Hill / SLES-01514: shared PAL, STRONG evidence, COMPARISON-READY only in shared-PAL bucket (no exact-UK claim)
+- Rule of Rose / SLES-54218: separate market / no normal UK retail bucket, price comparison blocked
+- primary Analyse listing action works independently of example shortcuts
+
+Treat the Listing Checker journey audit as complete unless later changes touch this path.
