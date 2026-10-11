@@ -254,6 +254,7 @@ test("Search Saved Hunt workflow preserves current filters and edits in place",a
     'id="releaseLimited" type="checkbox" disabled',
     'id="editionCollector" type="checkbox" disabled'
   ]) assert.ok(search.includes(token),`unsupported Search filter must be visibly disabled: ${token}`);
+  assert.ok(search.includes("Saved locally; account sync did not complete."));
 });
 
 test("Saved Hunts clearly separate alert preference from live alerts and sync mutations",async()=>{
