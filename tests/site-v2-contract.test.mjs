@@ -156,3 +156,30 @@ test("account deletion endpoint is authenticated and confirmation-gated",async()
   assert.ok(worker.includes("DELETE FROM users WHERE id = ?"));
   assert.ok(worker.includes('response.headers.append("set-cookie", clearSessionCookie())'));
 });
+
+
+test("public Listing Checker keeps manual pricing but no longer exposes the retired RTC connector",async()=>{
+  const analyze=await read("analyze.html");
+  for(const id of ["refType","refDate","refSource","refLow","refTypical","refHigh","refCondition","refUrl","refBasis","savePricingRef","clearPricingRef","exportPricingRefs"]){
+    assert.ok(analyze.includes(`id="${id}"`),`analyze missing manual pricing hook #${id}`);
+  }
+  assert.ok(analyze.includes("tesseract.min.js"),"Listing Checker photo OCR dependency missing");
+  for(const retired of ["RetroTechCollector","rtcApiKey","RTC_KEY_SESSION","fetchRtcPricingReference","maybeAutoFetchRtc","pricingProviderMatch"]){
+    assert.equal(analyze.includes(retired),false,`retired RTC connector token still public: ${retired}`);
+  }
+});
+
+test("public source copy uses GrailRaven and avoids stale prototype labels",async()=>{
+  const publicPages=["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","privacy.html","terms.html"];
+  for(const page of publicPages){
+    const html=await read(page);
+    const visible=html
+      .split(/(<script\\b[\\s\\S]*?<\\/script>|<style\\b[\\s\\S]*?<\\/style>)/gi)
+      .filter((_,index)=>index%2===0)
+      .join("\n");
+    assert.equal(visible.includes("RetroNomad"),false,`${page} still exposes legacy public branding`);
+    for(const stale of ["DESIGN PREVIEW","early-stage prototype","Development-site terms","future backend","Backend required","Phase 1 search beta"]){
+      assert.equal(visible.includes(stale),false,`${page} still exposes stale public copy: ${stale}`);
+    }
+  }
+});
