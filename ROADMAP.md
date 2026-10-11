@@ -87,7 +87,7 @@ Immediate engineering action after this handoff:
 - [x] Deploy cross-device auto-sync and email-threading fixes
 - [x] Re-test cloud Saved Hunt appearing on phone and repeated sign-in email rendering
 - [x] Verify Saved Hunt deletion/tombstone propagation across devices
-- [ ] Before public account launch, verify a RetroNomad-owned sending domain and add stronger abuse protection
+- [x] Before public account launch, verify a GrailRaven-owned sending domain and add stronger abuse protection
 - [ ] Later move from workers.dev to a production/custom domain when appropriate
 - [ ] Configure transactional sign-in email delivery + abuse/rate controls
 - [ ] Update privacy/account-data policy before enabling public accounts
@@ -433,7 +433,7 @@ Current state:
 - [x] deletion/tombstone propagation verified
 
 Before broader public launch:
-- [ ] verify a RetroNomad-owned sending domain
+- [x] verify a GrailRaven-owned sending domain — `grailraven.com` Verified in Resend
 - [x] add stronger passwordless sign-in abuse protection
 - [x] update privacy/account-data policy
 - [ ] later move to a production/custom domain when appropriate
@@ -794,7 +794,7 @@ Future after IGDB agreement:
 - [x] remove one-time deployment workflow
 
 Remaining before broader public launch:
-- [ ] verify/confirm production sending-domain status in the email provider
+- [x] verify/confirm production sending-domain status in the email provider — `grailraven.com` Verified in Resend on 11 Oct 2026
 - [x] add self-service account deletion UI/API
 - [ ] re-review Terms/Privacy before any analytics, advertising, payments or autonomous notifications are enabled
 
