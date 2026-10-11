@@ -236,3 +236,39 @@ test("new-visitor journey stays clear and production-facing",async()=>{
   assert.equal(account.includes("GitHub Pages"),false,"Account exposes stale hosting copy");
   assert.equal(account.includes("Account backend not deployed yet"),false,"Account exposes stale backend copy");
 });
+
+
+test("Search Saved Hunt workflow preserves current filters and edits in place",async()=>{
+  const search=await read("search.html");
+  for(const token of [
+    "function applyTargetToVisibleFilters",
+    "const target=buildTarget(canonical)||prior",
+    "RetroNomadSavedHunts.update(window.currentHuntId,{target})",
+    'document.querySelector("#selectionSave").textContent=result.updated?"Updated ✓":"Saved ✓"',
+    'document.querySelector("#selectionSave").textContent=window.currentHuntId?"Update Saved Hunt":"Save this hunt"'
+  ]) assert.ok(search.includes(token),`Search missing Saved Hunt round-trip protection: ${token}`);
+
+  for(const token of [
+    'id="regionUs" type="checkbox" disabled',
+    'id="regionJp" type="checkbox" disabled',
+    'id="releaseLimited" type="checkbox" disabled',
+    'id="editionCollector" type="checkbox" disabled'
+  ]) assert.ok(search.includes(token),`unsupported Search filter must be visibly disabled: ${token}`);
+});
+
+test("Saved Hunts clearly separate alert preference from live alerts and sync mutations",async()=>{
+  const wishlist=await read("wishlist.html");
+  assert.ok(wishlist.includes("Remember that I want an alert when alerts launch"));
+  assert.ok(wishlist.includes("Preference only — automatic marketplace alerts are not active yet"));
+  assert.ok(wishlist.includes("async function syncLocalChanges"));
+  assert.ok(wishlist.includes('await syncLocalChanges("Alert preference")'));
+  assert.ok(wishlist.includes('await syncLocalChanges("Saved Hunt changes")'));
+  assert.ok(wishlist.includes('a.download="grailraven-saved-hunts.json"'));
+});
+
+test("Account automatically syncs Saved Hunts after authenticated sign-in",async()=>{
+  const account=await read("account.html");
+  assert.ok(account.includes('q("#syncMessage").textContent="Syncing Saved Hunts…"'));
+  assert.ok(account.includes("const r=await RetroNomadAccount.syncSavedHunts()"));
+  assert.ok(account.includes('q("#syncMessage").textContent="Saved Hunts synced across devices ("'));
+});
