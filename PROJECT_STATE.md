@@ -2199,3 +2199,27 @@ Verified:
 - the existing Silent Hill test hunt remained present after sync with the updated £68 delivered ceiling
 
 This closes the current Search/Saved Hunts/Account journey audit.
+
+
+## Listing Checker trust/usability audit — validated, pending deployment
+
+On 11 October 2026 the public Listing Checker flow was audited from input through PALScout evidence/classification and manual price comparison.
+
+Important trust issue fixed:
+The legacy analyser could reach Comparison-ready from a recognised game title plus completeness/package signals even without a matched release identifier. A final safety gate now prevents title recognition from becoming release-level comparison proof: if no recognised release evidence record matched, the listing remains REVIEW.
+
+Other fixes:
+- photo OCR can be used as an input path without a separately typed title/identifier
+- manual English/UK confirmation is explicitly visual-photo evidence
+- explicit entered identifiers appear in the evidence panel
+- manual pricing values no longer carry silently between different exact comparison buckets
+- future-dated pricing references cannot be saved
+- public "Pricing v1" jargon removed
+- runtime RetroNomad wording and legacy pricing-export filename removed
+- eBay URL import limitations are stated accurately
+- optional manual pricing inputs are collapsed by default
+- document title now says Listing Checker
+
+Validation run `38169089612`: 67/67 tests passed. Public catalogue remains 100 games.
+
+Next: normal Cloudflare deploy, then manually test the three built-in examples and one gated manual price comparison.
