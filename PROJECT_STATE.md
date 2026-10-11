@@ -1854,3 +1854,20 @@ Cloudflare configuration used:
 No Worker, D1, catalogue or provider-gate changes were required. Initial post-change failure was local DNS caching; after propagation plus Windows/Firefox DNS cache flushes, the user confirmed the hostname worked.
 
 See `NEXT_CHAT_HANDOFF.md` for the complete next-thread handoff.
+
+
+## Public acquisition / build hardening — validated 11 October 2026
+
+A production-build hardening change is validated but not yet manually deployed.
+
+It:
+- excludes internal design/pricing lab HTML from the Cloudflare public build
+- generates canonical/page-specific SEO metadata, social summary metadata, robots.txt and sitemap.xml
+- marks non-acquisition account/legal utility pages noindex
+- statically emits GrailRaven public branding while preserving legacy internal compatibility identifiers inside scripts
+- adds a non-deploying CI workflow on pushes/PRs
+- adds a public-build regression test
+
+Validation workflow run: `38155580640` — passed.
+
+Next action for this change: run the existing manual Cloudflare deployment workflow, then verify live metadata, robots and sitemap.
