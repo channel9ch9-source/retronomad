@@ -231,7 +231,9 @@ On 11 October 2026, a legitimate reconsideration request was submitted through e
 - explanation that GrailRaven helps collectors identify relevant listings and sends users back to eBay
 - explicit commitment not to scrape or bypass access controls
 
-Current action: wait for eBay's response. If approved, proceed with Sandbox integration and the appropriate production-access review. If rejected again, do not immediately resubmit; strengthen product and usage evidence first.
+The reconsideration was rejected almost immediately. eBay stated that the account did not meet internal eligibility/risk-control criteria, provided no specific reason, and said the user may consider reapplying later.
+
+Current action: park eBay rather than repeatedly reapplying. Strengthen the public product, authorised provider integrations and real-user evidence first, then reconsider a transparent reapplication later.
 
 eBay access could materially strengthen inventory coverage, exact-copy hunting and alert usefulness, but the business architecture must remain marketplace-independent.
 
