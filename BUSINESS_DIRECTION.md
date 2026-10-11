@@ -311,3 +311,17 @@ This deliberately follows the business filter:
 - product bridge: links directly into Search, Catalogue and Listing Checker
 
 Do not create a large volume of generic SEO articles by default. Let Search Console query/impression data and real product engagement inform the next content cluster.
+
+
+## First organic-sharing product experiment — 11 October 2026
+
+After the Search/Saved Hunts and Listing Checker journeys passed live verification, the next no-cost acquisition step is to make useful classification results easier to share organically.
+
+The Listing Checker now has a privacy-conscious "Copy result summary" path for collector communities. It copies only the derived GrailRaven verdict fields and a link back to the checker; raw seller URL, marketplace item ID, pasted listing title/description and listing prices are intentionally excluded.
+
+This experiment supports:
+- acquisition through useful community sharing rather than promotional spam
+- defensibility by surfacing PALScout exact-release reasoning
+- trust by not embedding raw marketplace/user-entered listing content in the share payload
+
+Do not add broad social-network integrations or tracking solely for this experiment. First verify that the basic share artifact is useful and understandable.
