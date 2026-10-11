@@ -460,3 +460,18 @@ Audit findings fixed:
 - added regression coverage for Homepage -> Search/Catalogue/Listing Checker -> Saved Hunt -> Account path
 
 Next: deploy normal Cloudflare workflow and visually confirm Catalogue header typography.
+
+
+## Immediate deployment required — literal newline bug fixed
+
+User screenshot after deploy run `38163408484` showed visible `\n\n...` text in the top-left of all public pages.
+
+Cause: `scripts/build-cloudflare.mjs` emitted literal `\\n` text while injecting SEO tags into `<head>`.
+
+Fixed and regression-protected. Validation run `38163755549` passed 62/62 tests.
+
+Next:
+1. run normal Cloudflare deploy from current `main`
+2. require live production smoke to pass
+3. visually confirm the top-left `\n` text is gone
+4. then verify Catalogue hero font fix live
