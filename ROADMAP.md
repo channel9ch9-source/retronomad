@@ -947,3 +947,19 @@ Public-product audit finding:
 - [x] full validation run `38158956959` passed
 - [x] deploy bundled credibility/provider cleanup + security headers — run `38159086437`
 - [x] verify live smoke check passes after deployment — attempt 1
+
+
+### Google Search Console setup — completed 11 October 2026
+
+- [x] verify Domain property for `grailraven.com`
+- [x] keep DNS verification record in Cloudflare
+- [x] submit `https://grailraven.com/sitemap.xml`
+- [x] sitemap accepted successfully
+- [x] homepage indexed
+- [x] `/analyze` indexed
+- [x] `/about` indexed
+- [x] live URL test confirms `/search` is available to Google
+- [x] live URL test confirms `/catalogue` is available to Google
+- [x] request indexing for `/search`
+- [x] request indexing for `/catalogue`
+- [ ] revisit Search Console after Google has had time to crawl/index and collect query data
