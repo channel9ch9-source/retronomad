@@ -475,3 +475,22 @@ Next:
 2. require live production smoke to pass
 3. visually confirm the top-left `\n` text is gone
 4. then verify Catalogue hero font fix live
+
+
+## User-journey audit + newline rendering fix — deployed
+
+Deployment run `38163942682` passed:
+- 62/62 tests
+- 100-game guard intact
+- no D1 migrations
+- live smoke passed on attempt 2
+- Worker version `fcec6c95-2fea-45e9-8903-5d91ab3f087f`
+
+User confirmed the visible top-left literal `\n` text is gone.
+
+The deployment also contains:
+- Catalogue hero font alignment
+- clearer Catalogue hero copy
+- Search production-facing copy cleanup
+- current Account/Saved Hunts fallback wording
+- regression coverage for the new-visitor journey
