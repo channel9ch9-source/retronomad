@@ -640,3 +640,28 @@ Next:
 1. deploy current main
 2. retry FFVII UK first
 3. then Silent Hill PAL and Rule of Rose
+
+
+## Listing Checker inert-page root cause fixed
+
+Live symptom:
+- main Analyse listing button did nothing
+- FFVII / Silent Hill / Rule of Rose example buttons did nothing
+
+Actual cause:
+- photo/OCR runtime helpers and state had been removed earlier while references remained
+- `analyse()` failed on undefined photo state
+- startup binding failed at undefined `scanListingPhotos`, so later example handlers were never registered
+
+Fix:
+- restored historical photo/OCR runtime block from `959d37def83029ceeaddb3ccc923dcce9e9150af`
+- added VM-based runtime initialization test
+- added production smoke checks for Listing Checker runtime helpers
+
+Validation run `38173148176`: 69/69 tests passed.
+
+Next:
+1. deploy current main
+2. verify production smoke
+3. manually type Final Fantasy VII and click Analyse listing
+4. if that works, retry FFVII UK example, then Silent Hill PAL and Rule of Rose
