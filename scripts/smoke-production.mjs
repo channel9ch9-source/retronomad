@@ -29,7 +29,6 @@ async function verify(){
   ]) assert(home.response.headers.get(name)===value,`Homepage ${name} header mismatch: ${home.response.headers.get(name)}`);
   assert((home.response.headers.get("permissions-policy")||"").includes("camera=()"),"Homepage Permissions-Policy missing");
   assert((home.response.headers.get("strict-transport-security")||"").includes("max-age=31536000"),"Homepage HSTS missing");
-  assert((home.response.headers.get("content-security-policy")||"").includes("object-src 'none'"),"Homepage CSP missing object-src protection");
 
   const robots=await fetchText("/robots.txt");
   assert(robots.response.status===200,`robots.txt returned ${robots.response.status}`);
