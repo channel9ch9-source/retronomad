@@ -1933,3 +1933,20 @@ This is bundled with the previously validated security-header work.
 Validation run: `38158956959` — passed regression tests, smoke-script syntax and Cloudflare build.
 
 Next action: run the normal manual Cloudflare production deployment and require the post-deploy live smoke step to pass.
+
+
+## Public credibility + security bundle — deployed 11 October 2026
+
+Production deployment run `38159086437` succeeded.
+
+Verified:
+- 60/60 regression tests passed
+- compact public catalogue remained 100 games
+- no D1 migrations were pending
+- security-header bundle deployed
+- public RTC connector retirement deployed
+- manual Pricing v1 and Listing Checker OCR preserved
+- refreshed GrailRaven public copy deployed
+- live production smoke passed on attempt 1
+
+Current Worker version: `790860c0-5b5b-4a20-a584-182700e76617`.
