@@ -59,12 +59,18 @@
 
   function init(){
     const result=document.getElementById(RESULT_ID);
-    if(!result||document.getElementById(BUTTON_ID))return;
+    if(!result)return;
+
+    let button=document.getElementById(BUTTON_ID);
+    if(button){
+      button.addEventListener("click",onCopy);
+      return;
+    }
 
     const row=document.createElement("div");
     row.className="listing-share-row";
 
-    const button=document.createElement("button");
+    button=document.createElement("button");
     button.id=BUTTON_ID;
     button.type="button";
     button.className="btn secondary";
