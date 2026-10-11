@@ -367,3 +367,20 @@ Deployment run `38159086437` passed:
 Current Worker version: `790860c0-5b5b-4a20-a584-182700e76617`.
 
 The public RTC connector is now retired; manual Pricing v1 and OCR remain. Security headers and refreshed GrailRaven copy are live.
+
+
+## Search Console milestone — 11 October 2026
+
+Google Search Console Domain property for `grailraven.com` is verified.
+
+Sitemap:
+- `https://grailraven.com/sitemap.xml` submitted successfully
+
+Indexing state at setup:
+- homepage: indexed
+- `/analyze`: indexed
+- `/about`: indexed
+- `/search`: live test available to Google; indexing requested
+- `/catalogue`: live test available to Google; indexing requested
+
+Google confirmed `/search` and `/catalogue` were added to the priority crawl queue. Do not repeatedly resubmit.
