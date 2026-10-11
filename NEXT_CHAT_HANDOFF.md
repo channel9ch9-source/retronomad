@@ -324,3 +324,18 @@ Cloudflare's canonical static-asset routes are extensionless (for example `/sear
 Current Worker version: `52c90563-d3bd-415a-ad2c-5d0dba23a7c7`.
 
 This milestone is closed. Future deploys now verify the live custom domain automatically after deployment.
+
+
+## Waiting-period hardening in progress — 11 October 2026
+
+A security-header bundle is validated but not yet deployed. CI run `38156899006` passed.
+
+Important compatibility note:
+- Listing Checker photo OCR loads Tesseract.js from jsDelivr
+- therefore do not add a restrictive site-wide static CSP without explicitly allowing/reworking that dependency
+- API/JSON responses can use a restrictive CSP safely
+
+Public audit finding:
+- `analyze.html` still contains the intentional September RetroTechCollector automatic-pricing connector
+- current provider strategy is PriceCharting-led
+- decide whether RTC should be retained, hidden or retired before further Listing Checker cleanup
