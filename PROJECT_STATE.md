@@ -2081,3 +2081,19 @@ Fixed in source:
 Validation run `38163755549`: 62/62 tests passed; 100-game public catalogue guard unchanged.
 
 A fresh Cloudflare deployment is required to remove the already-live bad build output.
+
+
+## User-journey + newline fix deployed — 11 October 2026
+
+Production deployment run `38163942682` succeeded.
+
+Verified:
+- 62/62 tests passed
+- public catalogue remained 100 games
+- no D1 migrations pending
+- production smoke passed on attempt 2
+- current Worker version: `fcec6c95-2fea-45e9-8903-5d91ab3f087f`
+
+The user visually confirmed the stray top-left literal `\n\n...` text is gone on the live site.
+
+This deployment also includes the Catalogue heading typography alignment and the public copy/fallback cleanup from the new-visitor journey audit.
