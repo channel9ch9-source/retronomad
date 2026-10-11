@@ -2155,3 +2155,15 @@ Fixed in source:
 Validation run `38168093423`: 66/66 tests passed; public catalogue remains 100 games.
 
 Next: deploy and manually verify update-in-place on the same test hunt.
+
+
+## Reopened Saved Hunt UX patch deployed — 11 October 2026
+
+Production deployment run `38168228445` succeeded:
+- 66/66 tests passed
+- public catalogue remained 100 games
+- no D1 migrations pending
+- production smoke passed on attempt 1
+- Worker version: `902cfe88-b3e4-4ad4-9eb7-73124460ad54`
+
+User screenshot confirmed the reopened Silent Hill hunt now renders the canonical Game identified panel, preserves the saved filters and shows a clear Update Saved Hunt action instead of demo result cards.
