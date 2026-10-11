@@ -42,6 +42,17 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
   assert.ok(account.includes('<meta name="robots" content="noindex,follow">'));
   assert.ok(wishlist.includes('<meta name="robots" content="noindex,follow">'));
 
+  const headers=await readBuilt("_headers");
+  for(const required of [
+    "X-Content-Type-Options: nosniff",
+    "X-Frame-Options: DENY",
+    "Referrer-Policy: strict-origin-when-cross-origin",
+    "Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    "Strict-Transport-Security: max-age=31536000; includeSubDomains",
+    "Content-Security-Policy:",
+    "X-Robots-Tag: noindex, nofollow"
+  ]) assert.ok(headers.includes(required),`_headers missing ${required}`);
+
   const robots=await readBuilt("robots.txt");
   assert.ok(robots.includes("User-agent: *"));
   assert.ok(robots.includes("Allow: /"));
