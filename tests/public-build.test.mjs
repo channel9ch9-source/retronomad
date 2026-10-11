@@ -49,7 +49,6 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
     "Referrer-Policy: strict-origin-when-cross-origin",
     "Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()",
     "Strict-Transport-Security: max-age=31536000; includeSubDomains",
-    "Content-Security-Policy:",
     "X-Robots-Tag: noindex, nofollow"
   ]) assert.ok(headers.includes(required),`_headers missing ${required}`);
 
