@@ -2344,3 +2344,21 @@ The control is now rendered directly in `analyze.html`, with `listing-share.js` 
 Validation run `38180622109`: 72/72 tests passed; public catalogue remains 100 games.
 
 Next: deploy and manually verify the visible button and clipboard output.
+
+
+## Listing Checker sharing — live verification passed
+
+Visibility-fix deployment run `38180715495` succeeded:
+- 72/72 tests
+- 100-game catalogue intact
+- no D1 migrations
+- production smoke passed attempt 1
+- Worker version `291bde21-8215-4af2-9178-0ff529bb22b7`
+
+Live FFVII clipboard output was verified and included only derived GrailRaven result data plus the canonical checker URL. It excluded seller/listing URL, marketplace item ID, raw title/description, price and postage.
+
+Minor wording polish is validated but not yet deployed:
+- `SCES-00867 · serial` -> `SCES-00867 (serial)`
+- `Complete · text` -> `Complete`
+
+Validation run `38180874849`: 73/73 tests.
