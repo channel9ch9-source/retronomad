@@ -691,3 +691,24 @@ Manual production verification now covers:
 - primary Analyse listing action works independently of example shortcuts
 
 Treat the Listing Checker journey audit as complete unless later changes touch this path.
+
+
+## Organic-sharing experiment ready to deploy
+
+Added `listing-share.js` plus Cloudflare build injection for a privacy-safe `Copy result summary` action on Listing Checker results.
+
+The share text includes only:
+- game/platform
+- classification + verdict title
+- release signal
+- matched identifier
+- completeness
+- PALScout compatibility
+- evidence strength
+- `https://grailraven.com/analyze`
+
+It intentionally excludes seller URL/item ID, raw listing title/description and prices.
+
+Validation run `38179493562`: 71/71 tests passed.
+
+Next: deploy current main and manually verify the copied summary.
