@@ -22,56 +22,56 @@ const publicPages=new Map([
     sitemap:true
   }],
   ["search.html",{
-    path:"/search.html",
+    path:"/search",
     title:`Search physical games — ${brand.name}`,
     description:`Search ${brand.name} for the exact physical retro-game copy you want by platform, region, edition, completeness and price.`,
     index:true,
     sitemap:true
   }],
   ["catalogue.html",{
-    path:"/catalogue.html",
+    path:"/catalogue",
     title:`Retro game catalogue — ${brand.name}`,
     description:`Browse ${brand.name}'s physical game catalogue for PlayStation, PlayStation 2 and Dreamcast, with PALScout release-intelligence coverage.`,
     index:true,
     sitemap:true
   }],
   ["analyze.html",{
-    path:"/analyze.html",
+    path:"/analyze",
     title:`Listing checker — ${brand.name}`,
     description:`Check a physical game listing with PALScout release, region, edition and completeness evidence before you buy.`,
     index:true,
     sitemap:true
   }],
   ["about.html",{
-    path:"/about.html",
+    path:"/about",
     title:`About — ${brand.name}`,
     description:`Learn how ${brand.name} helps physical game collectors identify and hunt for the exact copy they want.`,
     index:true,
     sitemap:true
   }],
   ["wishlist.html",{
-    path:"/wishlist.html",
+    path:"/wishlist",
     title:`Saved Hunts — ${brand.name}`,
     description:`Manage your saved exact-copy game hunts in ${brand.name}.`,
     index:false,
     sitemap:false
   }],
   ["account.html",{
-    path:"/account.html",
+    path:"/account",
     title:`Account — ${brand.name}`,
     description:`Sign in to manage your ${brand.name} account and cloud-synced Saved Hunts.`,
     index:false,
     sitemap:false
   }],
   ["privacy.html",{
-    path:"/privacy.html",
+    path:"/privacy",
     title:`Privacy — ${brand.name}`,
     description:`Privacy information for ${brand.name} accounts, Saved Hunts and service providers.`,
     index:false,
     sitemap:false
   }],
   ["terms.html",{
-    path:"/terms.html",
+    path:"/terms",
     title:`Terms — ${brand.name}`,
     description:`Terms for using the ${brand.name} physical-game collector service.`,
     index:false,
