@@ -1181,4 +1181,17 @@ Live clipboard output was useful and privacy-safe. Minor collector-facing cleanu
 - [x] change identifier suffix from `· serial` to `(serial)`
 - [x] remove internal `· text` suffix from completeness
 - [x] validation run `38180874849` passed 73/73 tests
-- [ ] deploy wording polish
+- [x] deploy wording polish — run `38180978208`
+
+
+### Organic-sharing experiment — complete
+
+Final production state:
+- live Copy result summary control verified
+- privacy-safe copied payload verified
+- collector-facing wording polished
+- deployment run `38180978208` passed 73/73 tests
+- production smoke passed on attempt 1
+- Worker version `1a8b6135-86ed-4e37-ace2-a2c5ccd6747e`
+
+Next business step: move from product-internal work to a measured external distribution test.
