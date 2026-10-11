@@ -273,3 +273,15 @@ test("Account automatically syncs Saved Hunts after authenticated sign-in",async
   assert.ok(account.includes("const r=await RetroNomadAccount.syncSavedHunts()"));
   assert.ok(account.includes('q("#syncMessage").textContent="Saved Hunts synced across devices ("'));
 });
+
+
+test("reopened Saved Hunts render canonical edit state instead of demo results",async()=>{
+  const search=await read("search.html");
+  for(const token of [
+    "(async function restoreHunt()",
+    'reason:"saved-hunt"',
+    'await runSearch({',
+    'document.querySelector("#selectionSave").textContent="Update Saved Hunt"',
+    'Loaded from Saved Hunts. Adjust the filters, then update this hunt when ready.'
+  ]) assert.ok(search.includes(token),`reopened Saved Hunt flow missing: ${token}`);
+});
