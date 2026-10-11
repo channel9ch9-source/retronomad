@@ -980,5 +980,5 @@ Public-product audit finding:
 - [x] validation run `38161759309` passed 61/61 tests
 - [x] deploy first acquisition guide — run `38162267076`
 - [x] confirm live production smoke passes — attempt 1
-- [ ] request indexing for `https://grailraven.com/uk-pal-game-guide` in Search Console after deployment
+- [x] request indexing for `https://grailraven.com/uk-pal-game-guide` in Search Console after deployment
 - [ ] later measure impressions/clicks/query terms before deciding the next guide cluster
