@@ -90,7 +90,7 @@ function escapeHtml(value){
 }
 
 function applyStaticBrand(html){
-  const protectedBlock=/(<script\\b[\\s\\S]*?<\\/script>|<style\\b[\\s\\S]*?<\\/style>)/gi;
+  const protectedBlock=/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>)/gi;
   return html.split(protectedBlock).map((part,index)=>{
     if(index%2===1)return part;
     return part
@@ -102,8 +102,8 @@ function applyStaticBrand(html){
 function setMeta(html,selector,name,value){
   const escaped=escapeHtml(value);
   const patterns={
-    description:/<meta\\s+name=["']description["'][^>]*>/i,
-    robots:/<meta\\s+name=["']robots["'][^>]*>/i
+    description:/<meta\s+name=["']description["'][^>]*>/i,
+    robots:/<meta\s+name=["']robots["'][^>]*>/i
   };
   const tag=`<meta name="${name}" content="${escaped}">`;
   return patterns[selector]?.test(html)?html.replace(patterns[selector],tag):html.replace("</head>",tag+"\\n</head>");
@@ -114,8 +114,8 @@ function addSeo(html,page){
   const url=base+page.path;
   const title=escapeHtml(page.title);
   const description=escapeHtml(page.description);
-  html=/<title>[\\s\\S]*?<\\/title>/i.test(html)
-    ?html.replace(/<title>[\\s\\S]*?<\\/title>/i,`<title>${title}</title>`)
+  html=/<title>[\s\S]*?<\/title>/i.test(html)
+    ?html.replace(/<title>[\s\S]*?<\/title>/i,`<title>${title}</title>`)
     :html.replace("</head>",`<title>${title}</title>\\n</head>`);
   html=setMeta(html,"description","description",page.description);
   html=setMeta(html,"robots","robots",page.index?"index,follow":"noindex,follow");
