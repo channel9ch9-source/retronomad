@@ -290,3 +290,24 @@ Do not divert into separate native app development before web product-market fit
 8. Reapply for eBay developer access from a materially stronger position.
 9. Test paid subscription willingness to pay.
 10. Consider PWA/native mobile only when usage evidence supports it.
+
+
+## Parallel work while external approvals are pending — 11 October 2026
+
+While awaiting IGDB agreement and possible eBay manual-review movement, public acquisition/build hardening was completed and validated.
+
+Ready to deploy:
+- automatic non-deploying CI on push/PR
+- production exclusion of internal `design-preview.html` and `pricing-coverage.html`
+- canonical URLs
+- page-specific GrailRaven SEO descriptions/titles
+- Open Graph/Twitter summary metadata
+- homepage WebSite structured data
+- robots.txt
+- sitemap.xml
+- noindex handling for account/Saved Hunts/legal utility pages
+- static public-brand replacement at build time without changing legacy internal identifiers
+- regression test for public build contract
+
+Validation run `38155580640` passed.
+The production Cloudflare deployment has not yet been run for this change.
