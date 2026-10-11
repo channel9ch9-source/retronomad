@@ -310,3 +310,20 @@ test("Listing Checker keeps release-level pricing evidence-gated",async()=>{
   assert.equal(analyze.includes('copy="RetroNomad cannot safely place this listing into a comparison bucket yet."'),false);
   assert.equal(analyze.includes('Analyse a listing first so RetroNomad can build the exact pricing bucket.'),false);
 });
+
+
+test("Listing Checker example buttons use explicit DOM lookups and run analysis",async()=>{
+  const analyze=await read("analyze.html");
+  for(const token of [
+    'document.querySelectorAll("[data-ex]").forEach(button=>button.addEventListener("click"',
+    'const titleEl=document.querySelector("#title")',
+    'const platformEl=document.querySelector("#platform")',
+    'const completeEl=document.querySelector("#complete")',
+    'const descEl=document.querySelector("#desc")',
+    'const identifierEl=document.querySelector("#identifier")',
+    'const englishEl=document.querySelector("#english")',
+    'updateAutoHints();',
+    'analyse();'
+  ]) assert.ok(analyze.includes(token),`Listing Checker example flow missing: ${token}`);
+  assert.equal(analyze.includes('title.value="Final Fantasy 7 PS1 PAL UK complete black label"'),false);
+});
