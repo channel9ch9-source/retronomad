@@ -982,3 +982,11 @@ Public-product audit finding:
 - [x] confirm live production smoke passes — attempt 1
 - [x] request indexing for `https://grailraven.com/uk-pal-game-guide` in Search Console after deployment
 - [ ] later measure impressions/clicks/query terms before deciding the next guide cluster
+
+
+### PriceCharting contact timing — decision 11 October 2026
+
+- [x] do not contact PriceCharting now solely because RetroNomad was renamed GrailRaven
+- [x] treat prior rename-confirmation note as a conservative internal safeguard, not a documented immediate provider requirement
+- [x] keep PriceCharting inactive while IGDB agreement and eBay manual-review/forum route are still pending
+- [ ] revisit whether a brief rename confirmation is prudent only immediately before Legendary subscription / real production API use
