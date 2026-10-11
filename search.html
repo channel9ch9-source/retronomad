@@ -684,12 +684,11 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
  }
 })();
 
-(function restoreHunt(){
+(async function restoreHunt(){
  RetroNomadSavedHunts.migrateLegacy();
  const id=new URLSearchParams(location.search).get("hunt");if(!id)return;
  const hunt=RetroNomadSavedHunts.get(id);if(!hunt)return;
  const t=hunt.target;window.currentHuntId=hunt.id;window.currentTarget=t;
- document.querySelector("#selectionSave").textContent="Update Saved Hunt";
  document.querySelector("#game").value=t.game||"Silent Hill";
  document.querySelector("#platform").value=t.platform||"PS1";
  platformButtons.forEach(b=>b.classList.toggle("active",b.dataset.platform===document.querySelector("#platform").value));
@@ -697,8 +696,19 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
  document.querySelector("#previewTerm").textContent=t.game;
  const restoredCanonical=(t.catalogueId&&catalogueIndex.find(g=>g.id===t.catalogueId))||catalogueIndex.find(g=>g.title===t.game&&g.platform===t.platform)||null;
  setHeroArtwork(restoredCanonical,t.game);
- document.querySelector("#searchStatus").innerHTML='Loaded from Saved Hunts. <button type="button" id="inlineSave">Save/update hunt</button>';
- document.querySelector("#saveBtn").disabled=false;document.querySelector("#inlineSave")?.addEventListener("click",()=>document.querySelector("#saveBtn").click());
+ if(restoredCanonical){
+   await runSearch({
+     selectionRow:{game:restoredCanonical,reason:"saved-hunt",matchedText:restoredCanonical.title},
+     canonicalGame:restoredCanonical
+   });
+   window.currentHuntId=hunt.id;
+   document.querySelector("#selectionSave").textContent="Update Saved Hunt";
+   document.querySelector("#searchStatus").textContent="Loaded from Saved Hunts. Adjust the filters, then update this hunt when ready.";
+ }else{
+   document.querySelector("#searchStatus").innerHTML='Loaded from Saved Hunts. <button type="button" id="inlineSave">Update Saved Hunt</button>';
+   document.querySelector("#saveBtn").disabled=false;
+   document.querySelector("#inlineSave")?.addEventListener("click",()=>document.querySelector("#saveBtn").click());
+ }
 })();
 syncLegacyFields();
 if(catalogueArtworkEnabled&&!new URLSearchParams(location.search).get("hunt")&&!new URLSearchParams(location.search).get("game")){
