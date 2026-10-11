@@ -908,3 +908,25 @@ Purpose:
 - present a cleaner public surface to users and potential partners
 - keep internal labs out of the Cloudflare production site
 - add automatic regression/build validation without auto-deploying changes
+
+
+### Browser/security header hardening — 11 October 2026
+
+- [x] audit current Cloudflare static/Worker response headers
+- [x] add native Workers Static Assets `_headers` generation
+- [x] add `X-Content-Type-Options: nosniff`
+- [x] add `X-Frame-Options: DENY`
+- [x] add conservative Referrer-Policy
+- [x] disable unused browser capabilities with Permissions-Policy
+- [x] add HSTS without preload
+- [x] add restrictive CSP to JSON/API responses
+- [x] add `X-Robots-Tag: noindex, nofollow` for workers.dev asset host
+- [x] preserve Listing Checker photo OCR by deliberately not applying a site-wide static CSP while Tesseract loads from jsDelivr
+- [x] extend regression and production smoke contracts
+- [x] validation run `38156899006` passed
+- [ ] deploy security-header bundle and verify live headers
+
+Public-product audit finding:
+- the Listing Checker still exposes the intentional September 2026 RetroTechCollector automatic-pricing connector
+- this predates the current PriceCharting-led provider strategy
+- do not remove silently; decide whether to retain, hide, or retire it before the next public-product cleanup
