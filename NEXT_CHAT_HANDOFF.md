@@ -494,3 +494,25 @@ The deployment also contains:
 - Search production-facing copy cleanup
 - current Account/Saved Hunts fallback wording
 - regression coverage for the new-visitor journey
+
+
+## Retention journey audit patch — ready to deploy
+
+Validated run `38166618478`: 65/65 tests; 100-game guard intact.
+
+Key fixes:
+- Search saves current filter state, not stale selection-time state
+- existing Saved Hunts update in place
+- Saved Hunt filters round-trip visibly on reopen
+- unsupported US/Japan and limited/collector exact filters are disabled + marked Planned
+- save confirmation distinguishes local save and account-sync failure
+- alert checkbox is clearly a future preference only
+- signed-in Saved Hunt mutations auto-sync
+- Saved Hunts rerenders after cloud merge
+- export filename uses GrailRaven branding
+- Account auto-syncs Saved Hunts immediately after authenticated sign-in
+
+Next:
+1. deploy current main through normal Cloudflare workflow
+2. require production smoke to pass
+3. manually test Search -> Save this hunt -> Saved Hunts -> Open in Search/edit -> Account sign-in/sync
