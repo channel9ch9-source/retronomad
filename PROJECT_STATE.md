@@ -2321,3 +2321,15 @@ Production build behavior:
 Validation run `38179493562`: 71/71 tests passed; public catalogue remains 100 games.
 
 Next: deploy and manually verify the copied output from a live FFVII/Silent Hill result.
+
+
+## Organic-sharing experiment — deployed
+
+Production deployment run `38180110251` succeeded:
+- 71/71 tests passed
+- public catalogue remained 100 games
+- no D1 migrations pending
+- production smoke passed on attempt 1
+- Worker version: `3ecfd380-a5d4-45b0-b2b8-fdb83d59799c`
+
+Remaining check: manually verify the Copy result summary control and copied text on a live Listing Checker result.
