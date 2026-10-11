@@ -1,0 +1,33 @@
+name: Validate GrailRaven app
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Build Cloudflare public assets
+        run: npm run build:cloudflare
+        env:
+          CATALOGUE_ARTWORK_ENABLED: "false"
