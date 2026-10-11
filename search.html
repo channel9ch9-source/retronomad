@@ -654,7 +654,12 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
  status.innerHTML=(result.updated?"Saved Hunt updated. ":result.created?"Saved to your hunts. ":"This target was already saved. ")+'<a href="wishlist.html">Open Saved Hunts</a>.';
  document.querySelector("#selectionSave").textContent=result.updated?"Updated ✓":"Saved ✓";
  if(RetroNomadAccount?.state?.().enabled){
-  try{const me=await RetroNomadAccount.me();if(me.authenticated){await RetroNomadAccount.syncSavedHunts();status.innerHTML+=" Synced to your account.";}}catch(e){}
+  try{
+   const me=await RetroNomadAccount.me();
+   if(me.authenticated){await RetroNomadAccount.syncSavedHunts();status.innerHTML+=" Synced to your account.";}
+  }catch(e){
+   status.innerHTML+=" Saved locally; account sync did not complete.";
+  }
  }
 });
 
