@@ -1104,3 +1104,21 @@ Findings fixed:
 - [x] validation run `38169089612` passed 67/67 tests
 - [x] deploy Listing Checker audit patch — run `38169240742`
 - [ ] manually verify FFVII / Silent Hill / Rule of Rose example outcomes and manual pricing gate
+
+
+### Listing Checker example-button bug — fixed 11 October 2026
+
+Manual production verification found that the built-in FFVII / Silent Hill / Rule of Rose example buttons did nothing.
+
+Root cause:
+- the old handlers relied on legacy browser ID-to-global-variable behaviour such as `title.value`, `platform.value`, etc.
+- this is not reliable across modern browsers/page contexts
+
+Fix:
+- [x] use explicit `document.querySelector(...)` lookups for all example fields
+- [x] refresh auto-detection hints before analysis
+- [x] run analysis after populating the example
+- [x] regression test added
+- [x] validation run `38169769133` passed 68/68 tests
+- [ ] deploy example-button fix
+- [ ] retry FFVII / Silent Hill / Rule of Rose live examples
