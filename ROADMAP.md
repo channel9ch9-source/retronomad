@@ -1052,7 +1052,7 @@ Audit findings and fixes:
 - [x] validation run `38166618478` passed 65/65 tests
 - [x] deploy retention-journey audit patch — run `38166781719`
 - [x] verify production smoke — passed attempt 1 in run `38166781719`
-- [ ] manually verify Account sign-in -> automatic Saved Hunt sync
+- [x] manually verify Account sign-in -> automatic Saved Hunt sync — live end-to-end pass 11 Oct 2026
 
 
 ### Manual retention-path verification — reopen state finding 11 October 2026
