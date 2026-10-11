@@ -444,3 +444,19 @@ Decision on 11 October 2026:
 - PriceCharting remains inactive
 - revisit whether a brief rename confirmation is prudent only immediately before purchasing Legendary / starting real API production use
 - do not represent the old approval as if it originally named GrailRaven
+
+
+## User-journey audit patch — ready to deploy
+
+Validated 11 October 2026 in run `38163291294`:
+- 62/62 tests passed
+- 100-game public catalogue guard intact
+
+Audit findings fixed:
+- Catalogue header font mismatch (now shared Cinzel/serif display typography)
+- clearer Catalogue hero title
+- removed Search "UI v2 preview" / prototype-style wording
+- removed stale account/Saved Hunts "backend not deployed" / GitHub Pages fallback wording
+- added regression coverage for Homepage -> Search/Catalogue/Listing Checker -> Saved Hunt -> Account path
+
+Next: deploy normal Cloudflare workflow and visually confirm Catalogue header typography.
