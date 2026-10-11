@@ -32,13 +32,13 @@ async function verify(){
   assert(sitemap.response.status===200,`sitemap.xml returned ${sitemap.response.status}`);
   for(const url of [
     "https://grailraven.com/",
-    "https://grailraven.com/search.html",
-    "https://grailraven.com/catalogue.html",
-    "https://grailraven.com/analyze.html",
-    "https://grailraven.com/about.html"
+    "https://grailraven.com/search",
+    "https://grailraven.com/catalogue",
+    "https://grailraven.com/analyze",
+    "https://grailraven.com/about"
   ]) assert(sitemap.body.includes(`<loc>${url}</loc>`),`sitemap missing ${url}`);
 
-  const account=await fetchText("/account.html");
+  const account=await fetchText("/account");
   assert(account.response.status===200,`Account page returned ${account.response.status}`);
   assert(account.body.includes('<meta name="robots" content="noindex,follow">'),"Account page missing noindex");
 
@@ -50,12 +50,12 @@ async function verify(){
   const health=await fetchText("/health");
   assert(health.response.status===200,`/health returned ${health.response.status}`);
   const healthJson=JSON.parse(health.body);
-  assert(healthJson.marketplaceProvider==="disabled"||healthJson.marketplaceProviderConfigured===false,"Marketplace provider unexpectedly enabled");
-  assert(healthJson.notificationProvider==="disabled"||healthJson.notificationProviderConfigured===false,"Notification provider unexpectedly enabled");
+  assert(healthJson.marketplaceConfigured===false,"Marketplace provider unexpectedly enabled");
+  assert(healthJson.notificationsConfigured===false,"Notification provider unexpectedly enabled");
 
-  const www=await fetch(wwwOrigin+"/search.html?smoke=1",{redirect:"manual"});
+  const www=await fetch(wwwOrigin+"/search?smoke=1",{redirect:"manual"});
   assert(www.status===301,`www redirect returned ${www.status}, expected 301`);
-  assert(www.headers.get("location")==="https://grailraven.com/search.html?smoke=1",`Unexpected www redirect target: ${www.headers.get("location")}`);
+  assert(www.headers.get("location")==="https://grailraven.com/search?smoke=1",`Unexpected www redirect target: ${www.headers.get("location")}`);
 
   console.log("Production smoke check passed for "+origin);
 }
