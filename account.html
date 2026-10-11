@@ -103,7 +103,7 @@ function show(id){for(const x of ["#disabled","#signin","#signedin"])q(x).classL
 async function refresh(){
  const cfg=RetroNomadAccount.state();
  if(!cfg.enabled){
-  q("#state").className="state";q("#state").textContent="LOCAL-ONLY BETA · account backend is not deployed";
+  q("#state").className="state";q("#state").textContent="ACCOUNT SYNC UNAVAILABLE · local Saved Hunts still work";
   show("#disabled");return;
  }
  try{
