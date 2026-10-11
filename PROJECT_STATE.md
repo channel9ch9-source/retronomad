@@ -2012,3 +2012,19 @@ It has its own canonical route, sitemap inclusion, Article/FAQ structured data, 
 Validation run `38161759309`: 61/61 tests passed; 100-game publication guard unchanged.
 
 Next: deploy, verify live smoke, then request Google indexing for the guide.
+
+
+## First SEO/acquisition guide — deployed 11 October 2026
+
+Production deployment run `38162267076` succeeded.
+
+Verified:
+- 61/61 tests passed
+- 100-game publication guard remained intact
+- no D1 migrations pending
+- `uk-pal-game-guide.html` uploaded
+- live production smoke passed on attempt 1
+
+Current Worker version: `27af9073-ea88-4eeb-950f-78c0fa1d133b`.
+
+Next acquisition step: inspect `https://grailraven.com/uk-pal-game-guide` in Google Search Console and request indexing once if the live URL is available to Google.
