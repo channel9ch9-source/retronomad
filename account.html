@@ -111,6 +111,13 @@ async function refresh(){
   if(me.authenticated){
    q("#state").className="state good";q("#state").textContent="ACCOUNT CONNECTED";
    q("#userEmail").textContent=me.user.email;show("#signedin");
+   q("#syncMessage").textContent="Syncing Saved Hunts…";
+   try{
+    const r=await RetroNomadAccount.syncSavedHunts();
+    q("#syncMessage").textContent="Saved Hunts synced across devices ("+(r.hunts?.length||0)+" total).";
+   }catch(syncError){
+    q("#syncMessage").textContent="Signed in, but Saved Hunt sync failed: "+syncError.message;
+   }
   }else{
    q("#state").className="state";q("#state").textContent="ACCOUNT SERVICE READY · not signed in";show("#signin");
   }
