@@ -10,6 +10,7 @@
 <style>
 .gr-hidden{display:none!important}
 .v2-inline-status{margin-top:10px;color:#94a0aa;font-size:12px}
+.v2-check:has(input:disabled){opacity:.55;cursor:not-allowed}.v2-planned{margin-left:auto;color:#a9945f;font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
 .v2-inline-status a,.v2-inline-status button{color:#fff;text-decoration:underline;background:none;border:0;padding:0;cursor:pointer;font:inherit}
 .v2-toggle-button{border:0;background:transparent;padding:0;width:100%;text-align:left;cursor:pointer}
 .v2-searchbox-wrap{position:relative;min-width:0}
@@ -104,8 +105,8 @@
       <div class="v2-filtergroup">
         <h3>Region</h3>
         <label class="v2-check"><input id="regionUk" type="checkbox" checked> UK PAL</label>
-        <label class="v2-check"><input id="regionUs" type="checkbox"> NTSC-U (US)</label>
-        <label class="v2-check"><input id="regionJp" type="checkbox"> NTSC-J (Japan)</label>
+        <label class="v2-check"><input id="regionUs" type="checkbox" disabled> NTSC-U (US) <span class="v2-planned">Planned</span></label>
+        <label class="v2-check"><input id="regionJp" type="checkbox" disabled> NTSC-J (Japan) <span class="v2-planned">Planned</span></label>
         <label class="v2-check"><input id="regionEu" type="checkbox"> Other Europe</label>
       </div>
       <div class="v2-filtergroup">
@@ -113,12 +114,12 @@
         <label class="v2-check"><input id="releaseOriginal" type="checkbox" checked> Original release</label>
         <label class="v2-check"><input id="releaseBudget" type="checkbox"> Platinum / budget</label>
         <label class="v2-check"><input id="releaseReissue" type="checkbox"> Re-release</label>
-        <label class="v2-check"><input id="releaseLimited" type="checkbox"> Limited edition</label>
+        <label class="v2-check"><input id="releaseLimited" type="checkbox" disabled> Limited edition <span class="v2-planned">Planned</span></label>
       </div>
       <div class="v2-filtergroup">
         <h3>Edition</h3>
         <label class="v2-check"><input id="editionStandard" type="checkbox" checked> Standard</label>
-        <label class="v2-check"><input id="editionCollector" type="checkbox"> Collector's edition</label>
+        <label class="v2-check"><input id="editionCollector" type="checkbox" disabled> Collector's edition <span class="v2-planned">Planned</span></label>
         <label class="v2-check"><input id="editionPromo" type="checkbox"> Demo / promo</label>
       </div>
       <div class="v2-filtergroup">
@@ -362,6 +363,7 @@ function renderCatalogueSelection(game,resolution,row,providers=[]){
    ?"The selected canonical game is confirmed. Live candidates will be classified by PALScout below."
    :"Catalogue identification is working. Marketplace discovery is the next layer and is not connected yet.";
  document.querySelector("#saveBtn").disabled=false;
+ document.querySelector("#selectionSave").textContent=window.currentHuntId?"Update Saved Hunt":"Save this hunt";
 }
 
 function numberOrNull(v){const n=Number(String(v||"").replace(/[^0-9.]/g,""));return Number.isFinite(n)&&n>0?n:null;}
@@ -607,9 +609,22 @@ document.querySelector("#mobileNavButton").addEventListener("click",()=>{
 document.querySelector("#selectionSave").addEventListener("click",()=>document.querySelector("#saveBtn").click());
 
 document.querySelector("#saveBtn").addEventListener("click",async()=>{
- const target=window.currentTarget||buildTarget();if(!target)return;
- const result=RetroNomadSavedHunts.create(target),status=document.querySelector("#searchStatus");
- status.innerHTML=(result.created?"Saved to your hunts. ":"This target was already saved. ")+'<a href="wishlist.html">Open Saved Hunts</a>.';
+ const prior=window.currentTarget;
+ const canonical=(prior?.catalogueId&&catalogueIndex.find(game=>game.id===prior.catalogueId))||null;
+ const target=buildTarget(canonical)||prior;
+ if(!target)return;
+ window.currentTarget=target;
+ const status=document.querySelector("#searchStatus");
+ let result;
+ if(window.currentHuntId&&RetroNomadSavedHunts.get(window.currentHuntId)){
+  const hunt=RetroNomadSavedHunts.update(window.currentHuntId,{target});
+  result={hunt,created:false,updated:true};
+ }else{
+  result=RetroNomadSavedHunts.create(target);
+  if(result.hunt?.id)window.currentHuntId=result.hunt.id;
+ }
+ status.innerHTML=(result.updated?"Saved Hunt updated. ":result.created?"Saved to your hunts. ":"This target was already saved. ")+'<a href="wishlist.html">Open Saved Hunts</a>.';
+ document.querySelector("#selectionSave").textContent=result.updated?"Updated ✓":"Saved ✓";
  if(RetroNomadAccount?.state?.().enabled){
   try{const me=await RetroNomadAccount.me();if(me.authenticated){await RetroNomadAccount.syncSavedHunts();status.innerHTML+=" Synced to your account.";}}catch(e){}
  }
@@ -641,6 +656,7 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
  const id=new URLSearchParams(location.search).get("hunt");if(!id)return;
  const hunt=RetroNomadSavedHunts.get(id);if(!hunt)return;
  const t=hunt.target;window.currentHuntId=hunt.id;window.currentTarget=t;
+ document.querySelector("#selectionSave").textContent="Update Saved Hunt";
  document.querySelector("#game").value=t.game||"Silent Hill";
  document.querySelector("#platform").value=t.platform||"PS1";
  platformButtons.forEach(b=>b.classList.toggle("active",b.dataset.platform===document.querySelector("#platform").value));
