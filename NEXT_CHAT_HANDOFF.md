@@ -721,3 +721,18 @@ Deployment run `38180110251` passed with 71/71 tests and production smoke on att
 Worker version: `3ecfd380-a5d4-45b0-b2b8-fdb83d59799c`.
 
 Next: manually verify the live Copy result summary control and inspect its clipboard output for correct fields and privacy-safe exclusions.
+
+
+## Share-control visibility fix ready to deploy
+
+The first sharing deploy passed CI but the live screenshot did not show the button.
+
+Fix:
+- source-rendered Copy result summary button/status
+- direct `listing-share.js` include
+- helper binds existing button, dynamic insertion retained only as fallback
+- regression test added
+
+Validation run `38180622109`: 72/72 tests passed.
+
+Next: deploy and retry on a live Listing Checker result.
