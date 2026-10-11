@@ -167,6 +167,12 @@ for(const entry of await readdir(root,{withFileTypes:true})){
     html=addSeo(html,publicPages.get(entry.name));
     const tag='<script src="brand-runtime.js" defer></script>';
     if(!html.includes(tag))html=html.includes("</head>")?html.replace("</head>",tag+"\n</head>"):tag+"\n"+html;
+    if(entry.name==="analyze.html"){
+      const shareTag='<script src="listing-share.js" defer></script>';
+      if(!html.includes(shareTag))html=html.replace("</body>",shareTag+"\n</body>");
+      const shareCss='<style>.listing-share-row{display:flex;align-items:center;gap:10px;margin:0 0 14px}.listing-share-row .btn{width:auto;padding:9px 12px;font-size:12px}.listing-share-status{color:#8290a3;font-size:11px}</style>';
+      if(!html.includes(".listing-share-row{"))html=html.replace("</head>",shareCss+"\n</head>");
+    }
     await writeFile(dest,html,"utf8");
   }else{
     await copyFile(source,dest);
