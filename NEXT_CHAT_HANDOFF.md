@@ -712,3 +712,12 @@ It intentionally excludes seller URL/item ID, raw listing title/description and 
 Validation run `38179493562`: 71/71 tests passed.
 
 Next: deploy current main and manually verify the copied summary.
+
+
+## Listing Checker sharing deployed
+
+Deployment run `38180110251` passed with 71/71 tests and production smoke on attempt 1.
+
+Worker version: `3ecfd380-a5d4-45b0-b2b8-fdb83d59799c`.
+
+Next: manually verify the live Copy result summary control and inspect its clipboard output for correct fields and privacy-safe exclusions.
