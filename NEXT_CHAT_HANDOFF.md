@@ -548,3 +548,18 @@ Source patch now:
 Validation run `38168093423` passed 66/66 tests.
 
 Next: deploy current main, then manually change one criterion and confirm the original hunt updates in place rather than duplicating.
+
+
+## Reopened Saved Hunt UX patch deployed
+
+Deployment run `38168228445` passed with 66/66 tests and production smoke on attempt 1.
+
+Worker version: `902cfe88-b3e4-4ad4-9eb7-73124460ad54`.
+
+User visually confirmed:
+- canonical Game identified state appears on reopen
+- saved filters remain restored
+- demo cards are hidden
+- Update Saved Hunt is the primary action
+
+Remaining manual check: change one criterion, click Update Saved Hunt, and confirm the existing hunt changes in place while Saved Hunts count remains 1.
