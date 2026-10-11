@@ -33,13 +33,25 @@ function effectiveAppOrigin(request, env) {
   return new URL(request.url).origin;
 }
 
+function browserSecurityHeaders() {
+  return {
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "content-security-policy": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+  };
+}
+
 function corsHeaders(env, request) {
   const allowed = effectiveAppOrigin(request, env);
   const origin = request.headers.get("origin") || "";
   const h = {
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-store",
-    "vary": "Origin"
+    "vary": "Origin",
+    ...browserSecurityHeaders()
   };
   if (allowed && origin === allowed) {
     h["access-control-allow-origin"] = allowed;
@@ -671,7 +683,8 @@ export default {
           "access-control-allow-methods": "GET,POST,OPTIONS",
           "access-control-allow-headers": "content-type",
           "access-control-max-age": "86400",
-          "vary": "Origin"
+          "vary": "Origin",
+          ...browserSecurityHeaders()
         }
       });
     }
