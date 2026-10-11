@@ -412,3 +412,17 @@ After deployment:
 2. use Search Console URL Inspection for `https://grailraven.com/uk-pal-game-guide`
 3. if live test is available to Google, request indexing once
 4. do not repeatedly resubmit
+
+
+## First acquisition guide deployed — 11 October 2026
+
+Deployment run `38162267076` passed:
+- 61/61 tests
+- 100-game guard intact
+- no D1 migrations
+- guide asset uploaded
+- live production smoke passed on attempt 1
+
+Current Worker version: `27af9073-ea88-4eeb-950f-78c0fa1d133b`.
+
+Next: Search Console URL Inspection for `https://grailraven.com/uk-pal-game-guide`; if Google's live test says it is available, request indexing once.
