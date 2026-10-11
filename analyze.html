@@ -585,7 +585,42 @@ function analyse(){
  document.querySelector("#empty").style.display="none";const r=document.querySelector("#result");r.style.display="block";const v=document.querySelector("#verdict");v.className="verdict "+cls;document.querySelector("#badge").textContent=badge;document.querySelector("#verdictTitle").textContent=head;document.querySelector("#verdictText").textContent=copy;document.querySelector("#game").textContent=itemType==="MAGAZINE_DEMO"?"Magazine / demo":(bundleSignal.isBundle?("Bundle: "+bundleSignal.games.join(" + ")):(game?game.t:(unsupportedTitle||"Not matched")));document.querySelector("#plat").textContent=game?game.p:(platform||"Unknown");document.querySelector("#market").textContent=ev?evidenceMarketLabel(ev[5]):(game?marketLabel(game.s):"—");document.querySelector("#edition").textContent=bundleSignal.isBundle&&edition==="Original / not flagged"?"Bundle":edition;document.querySelector("#comp").textContent=complete==="not_applicable"?"Not applicable":(compLabel(complete)+(selectedComplete==="unknown"&&complete!=="unknown"?" · "+completeSource:""));document.querySelector("#galleryComp").textContent=galleryComplete.value==="complete"?"Complete · gallery confirmed":galleryComplete.reason;document.querySelector("#conditionResult").textContent=condition.label;document.querySelector("#confidence").textContent=confidence;document.querySelector("#matchedId").textContent=ev?(ev[4]+" · "+ev[3]):"None";document.querySelector("#listingSource").textContent=listingSource;document.querySelector("#listingItemId").textContent=ebayMeta.id||"—";renderPalScoutCompatibility(palScoutCompatibility(game?game.p:platform,regionSignal,ev,itemType,bundleSignal));document.querySelector("#regionSignal").textContent=regionSignal.label+" · "+regionSignal.confidence;document.querySelector("#platformSignal").textContent=platformSignal.value?(platformSignal.value+" · "+platformSignal.confidence):platformSignal.reason;document.querySelector("#completeSignal").textContent=completeSignal.value!=="unknown"?(compLabel(completeSignal.value)+" · "+completeSignal.confidence):completeSignal.reason;document.querySelector("#editionSignal").textContent=bundleSignal.isBundle&&edition==="Original / not flagged"?"Bundle":edition;document.querySelector("#photoSignal").textContent=photoEvidenceSummary();document.querySelector("#galleryComponents").textContent=[gallery.case&&"case/cover",gallery.manual&&"manual",(gallery.disc||gallery.allDiscs)&&"disc(s)",gallery.allDiscs&&"all discs",gallery.barcode&&"barcode/spine",gallery.english&&"English/UK packaging"].filter(Boolean).join(", ")||"None confirmed";document.querySelector("#conditionSignal").textContent=condition.label;renderEvidencePanel(ev,candidates,complete,effectiveEnglish,identifier);const ul=document.querySelector("#reasons");ul.innerHTML="";reasons.forEach(x=>{const li=document.createElement("li");li.textContent=x;ul.appendChild(li);});const price=parseFloat(document.querySelector("#price").value||0),post=parseFloat(document.querySelector("#postage").value||0);document.querySelector("#pricebox").textContent=(price||post)?("Entered total: £"+(price+post).toFixed(2)+" (price + postage)."):"";renderPricingV1({price,postage:post,status:cls==="ready"?"READY":(cls==="separate"?"SEPARATE":"REVIEW"),text:listingText,complete,condition,game:game?game.t:(unsupportedTitle||""),platform:game?game.p:platform,release:ev?evidenceMarketLabel(ev[5]):(game?marketLabel(game.s):"Unresolved release"),edition,identifier:ev?ev[4]:(identifier||candidates[0]||"")});
 }
 document.querySelector("#analyse").addEventListener("click",analyse);document.querySelector("#savePricingRef").addEventListener("click",saveCurrentPricingReference);document.querySelector("#clearPricingRef").addEventListener("click",clearCurrentPricingReference);document.querySelector("#exportPricingRefs").addEventListener("click",exportPricingReferences);document.querySelector("#importListing").addEventListener("click",importListingUrl);document.querySelector("#scanPhotos").addEventListener("click",scanListingPhotos);document.querySelector("#photoInput").addEventListener("change",e=>{photoFiles=[...e.target.files].filter(f=>f.type.startsWith("image/")).slice(0,6);photoOcrText="";photoOcrCandidates=[];photoSignals=[];galleryPhotoEvidence=photoFiles.map(()=>({disc:false,manual:false,case:false,barcode:false,condition:false}));["allDiscsShown","galleryEnglish","issueCase","issueDisc","issuePaper","issueWriting"].forEach(id=>{const el=document.querySelector("#"+id);if(el)el.checked=false;});renderPhotoPreviews();renderPhotoSignals();updateAutoHints();});document.querySelector("#listingUrl").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();importListingUrl();}});function updateAutoHints(){const text=document.querySelector("#title").value+" "+document.querySelector("#desc").value+" "+photoOcrText;const explicit=document.querySelector("#identifier").value.trim();const cands=extractIdentifierCandidates(text);const idHint=document.querySelector("#autoIdHint");if(explicit)idHint.textContent="Using the identifier you entered.";else if(cands.length)idHint.textContent="Auto-detected from listing text: "+cands.join(", ");else idHint.textContent="";const ps=detectPlatformSignal(text),cs=detectCompletenessSignal(text);document.querySelector("#platformHint").textContent=document.querySelector("#platform").value?"Manual selection in use.":(ps.value?"Auto-detected: "+ps.value+" · "+ps.confidence:ps.confidence==="Conflict"?ps.reason:"");document.querySelector("#completeHint").textContent=document.querySelector("#complete").value!=="unknown"?"Manual selection in use.":(cs.value!=="unknown"?"Auto-detected: "+compLabel(cs.value)+" · "+cs.confidence:"");}["title","desc","identifier"].forEach(id=>document.querySelector("#"+id).addEventListener("input",updateAutoHints));["platform","complete"].forEach(id=>document.querySelector("#"+id).addEventListener("change",updateAutoHints));["price","postage","refType","refSource","refDate","refLow","refTypical","refHigh","refCondition","refUrl","refBasis"].forEach(id=>document.querySelector("#"+id).addEventListener("change",()=>{if(document.querySelector("#result").style.display==="block")analyse();}));["allDiscsShown","galleryEnglish","issueCase","issueDisc","issuePaper","issueWriting"].forEach(id=>document.querySelector("#"+id).addEventListener("change",()=>{updateGallerySummary();updateAutoHints();}));
-document.querySelectorAll("[data-ex]").forEach(b=>b.onclick=()=>{const e=b.dataset.ex;if(e==="ff7"){title.value="Final Fantasy 7 PS1 PAL UK complete black label";platform.value="";complete.value="unknown";desc.value="PS1 original PAL copy, complete with case and manual. SCES-00867";identifier.value="";english.checked=true;}if(e==="sh"){title.value="Silent Hill PS1 PAL complete";platform.value="";complete.value="unknown";desc.value="PlayStation 1 PAL version, complete with manual. SLES-01514";identifier.value="";english.checked=false;}if(e==="ror"){title.value="Rule of Rose PS2 PAL English";platform.value="";complete.value="unknown";desc.value="PS2 European PAL copy, complete with manual. SLES-54218";identifier.value="";english.checked=true;}analyse();});
+document.querySelectorAll("[data-ex]").forEach(button=>button.addEventListener("click",()=>{
+ const e=button.dataset.ex;
+ const titleEl=document.querySelector("#title");
+ const platformEl=document.querySelector("#platform");
+ const completeEl=document.querySelector("#complete");
+ const descEl=document.querySelector("#desc");
+ const identifierEl=document.querySelector("#identifier");
+ const englishEl=document.querySelector("#english");
+
+ if(e==="ff7"){
+  titleEl.value="Final Fantasy 7 PS1 PAL UK complete black label";
+  platformEl.value="";
+  completeEl.value="unknown";
+  descEl.value="PS1 original PAL copy, complete with case and manual. SCES-00867";
+  identifierEl.value="";
+  englishEl.checked=true;
+ }
+ if(e==="sh"){
+  titleEl.value="Silent Hill PS1 PAL complete";
+  platformEl.value="";
+  completeEl.value="unknown";
+  descEl.value="PlayStation 1 PAL version, complete with manual. SLES-01514";
+  identifierEl.value="";
+  englishEl.checked=false;
+ }
+ if(e==="ror"){
+  titleEl.value="Rule of Rose PS2 PAL English";
+  platformEl.value="";
+  completeEl.value="unknown";
+  descEl.value="PS2 European PAL copy, complete with manual. SLES-54218";
+  identifierEl.value="";
+  englishEl.checked=true;
+ }
+ updateAutoHints();
+ analyse();
+}));
 </script><script>
 (function(){
  const button=document.querySelector("#mobileNavButton"),nav=document.querySelector("#primaryNav");
