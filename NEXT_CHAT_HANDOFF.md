@@ -750,3 +750,11 @@ A final wording cleanup is ready but not deployed:
 - completeness no longer exposes `· text`
 
 Validation run `38180874849`: 73/73 tests.
+
+
+## Sharing experiment closed
+
+Final wording deployment run `38180978208` passed with 73/73 tests and production smoke on attempt 1.
+Worker version: `1a8b6135-86ed-4e37-ace2-a2c5ccd6747e`.
+
+Treat Listing Checker sharing as complete. Next priority should be a measured external distribution/feedback experiment, not more internal polish.
