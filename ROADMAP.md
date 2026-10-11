@@ -1012,3 +1012,20 @@ Findings fixed:
 - [x] validation run `38163291294` passed 62/62 tests
 - [ ] deploy user-journey audit patch
 - [ ] visually confirm Catalogue heading typography on production
+
+
+### Visible literal-newline rendering bug — fixed in source 11 October 2026
+
+After deployment run `38163408484`, the user spotted visible `\n\n...` text at the top-left of every public page.
+
+Root cause:
+- the Cloudflare build's SEO metadata injection used the JavaScript string `"\\n"`, which writes the two visible characters backslash+n into the generated HTML
+- non-whitespace text inside `<head>` caused the browser parser to surface those characters visually before the site shell
+
+Fix:
+- [x] replace literal `\\n` output with real newline characters in all three SEO/head insertion paths
+- [x] add public-build regression asserting no production page head contains literal `\\n`
+- [x] add live production-smoke assertion for the same regression
+- [x] validation run `38163755549` passed 62/62 tests
+- [ ] redeploy fixed build
+- [ ] visually confirm stray top-left text is gone
