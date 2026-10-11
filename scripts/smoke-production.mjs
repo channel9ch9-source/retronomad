@@ -22,6 +22,14 @@ async function verify(){
   assert(home.body.includes('<link rel="canonical" href="https://grailraven.com/">'),"Homepage canonical URL missing");
   assert(home.body.includes('<meta property="og:site_name" content="GrailRaven">'),"Homepage Open Graph site name missing");
   assert(home.body.includes('type="application/ld+json"'),"Homepage structured data missing");
+  for(const [name,value] of [
+    ["x-content-type-options","nosniff"],
+    ["x-frame-options","DENY"],
+    ["referrer-policy","strict-origin-when-cross-origin"]
+  ]) assert(home.response.headers.get(name)===value,`Homepage ${name} header mismatch: ${home.response.headers.get(name)}`);
+  assert((home.response.headers.get("permissions-policy")||"").includes("camera=()"),"Homepage Permissions-Policy missing");
+  assert((home.response.headers.get("strict-transport-security")||"").includes("max-age=31536000"),"Homepage HSTS missing");
+  assert((home.response.headers.get("content-security-policy")||"").includes("object-src 'none'"),"Homepage CSP missing object-src protection");
 
   const robots=await fetchText("/robots.txt");
   assert(robots.response.status===200,`robots.txt returned ${robots.response.status}`);
@@ -50,6 +58,9 @@ async function verify(){
   const health=await fetchText("/health");
   assert(health.response.status===200,`/health returned ${health.response.status}`);
   const healthJson=JSON.parse(health.body);
+  assert(health.response.headers.get("x-content-type-options")==="nosniff","Health API missing nosniff");
+  assert(health.response.headers.get("x-frame-options")==="DENY","Health API missing frame protection");
+  assert((health.response.headers.get("content-security-policy")||"").includes("default-src 'none'"),"Health API missing restrictive CSP");
   assert(healthJson.marketplaceConfigured===false,"Marketplace provider unexpectedly enabled");
   assert(healthJson.notificationsConfigured===false,"Notification provider unexpectedly enabled");
 
