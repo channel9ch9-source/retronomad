@@ -222,15 +222,16 @@ eBay access remains a high-value future objective.
 
 Previous developer access was rejected after appeal. Do not evade that decision or scrape around it.
 
-Reapply later from a materially stronger position, ideally with:
-- a functioning public product
-- a broader legitimate catalogue
+On 11 October 2026, a legitimate reconsideration request was submitted through eBay's official rejected-registration support route from a materially stronger position, including:
+- functioning public product at grailraven.com
+- business-domain contact email at contact@grailraven.com
 - clear privacy/account controls
 - demonstrated exact-copy classification
-- real user activity/traffic where available
-- a concise legitimate Browse/API use case
-- an explanation that GrailRaven helps collectors identify relevant listings and sends users back to the marketplace
-- accurate identity/business/project information
+- a concise legitimate Buy Browse API use case
+- explanation that GrailRaven helps collectors identify relevant listings and sends users back to eBay
+- explicit commitment not to scrape or bypass access controls
+
+Current action: wait for eBay's response. If approved, proceed with Sandbox integration and the appropriate production-access review. If rejected again, do not immediately resubmit; strengthen product and usage evidence first.
 
 eBay access could materially strengthen inventory coverage, exact-copy hunting and alert usefulness, but the business architecture must remain marketplace-independent.
 
