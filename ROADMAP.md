@@ -879,3 +879,29 @@ Mobile direction:
 - [x] user confirmed the fixed hostname works after DNS cache refresh
 
 Next: return to the waiting-on-IGDB sequence and review the legal partnership agreement when received.
+
+
+### Public acquisition / launch hardening — 11 October 2026
+
+Validated and ready for production deployment:
+- [x] add non-deploying CI workflow for normal pushes / pull requests
+- [x] make Cloudflare public build exclude internal-only `design-preview.html`
+- [x] make Cloudflare public build exclude internal-only `pricing-coverage.html`
+- [x] add canonical URLs for public pages
+- [x] add page-specific GrailRaven titles and meta descriptions at build time
+- [x] add Open Graph and Twitter summary metadata
+- [x] add homepage WebSite structured data
+- [x] add `robots.txt` with canonical sitemap location
+- [x] add production `sitemap.xml` for indexable acquisition pages
+- [x] mark Account / Saved Hunts / Privacy / Terms as `noindex,follow`
+- [x] statically replace legacy public-brand text outside scripts/styles in the Cloudflare build while preserving internal compatibility identifiers
+- [x] add public-build regression coverage
+- [x] validation workflow passed: run `38155580640`
+- [ ] run the normal manual Cloudflare production deployment
+- [ ] verify live canonical/meta/robots/sitemap behavior after deployment
+
+Purpose:
+- improve organic acquisition/readiness
+- present a cleaner public surface to users and potential partners
+- keep internal labs out of the Cloudflare production site
+- add automatic regression/build validation without auto-deploying changes
