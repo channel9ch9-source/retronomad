@@ -10,7 +10,11 @@ The written approval described below was obtained while the project was publicly
 
 The current public brand is now **GrailRaven** (`grailraven.com`). The underlying product, use case and intended PriceCharting integration have not changed.
 
-Do **not** rewrite the historical approval as though PriceCharting originally approved the GrailRaven name. Before production PriceCharting data/Marketplace use under the new public brand, notify the PriceCharting business-development contact of the rename and confirm that the existing approved arrangement continues under GrailRaven. Do not invent or assume any new commercial terms.
+Do **not** rewrite the historical approval as though PriceCharting originally approved the GrailRaven name.
+
+Current decision (11 October 2026): do **not** contact PriceCharting merely because of the rename while the integration is still inactive. The recorded rename-confirmation step is a conservative internal safeguard, not a documented immediate requirement from PriceCharting.
+
+Revisit this only when GrailRaven is actually ready to subscribe to Legendary and begin real production/API use. At that point, decide whether a brief confirmation of the RetroNomad -> GrailRaven rename is prudent before public use. Do not invent or assume any new commercial terms.
 
 ## Approved launch arrangement
 
@@ -100,11 +104,10 @@ Completed before paying for real access:
 5. separate Marketplace-offer benchmark mode added
 
 Still required:
-1. notify PriceCharting of the RetroNomad -> GrailRaven rename and confirm the existing arrangement carries over
-2. finish public-domain/Resend deployment setup
-3. subscribe to Legendary only when ready for real API calls
-4. store the API token only as a Cloudflare Worker secret
-5. run the 100-title UK/PAL pricing benchmark
+1. defer any rename-confirmation contact until immediately before real paid/API production use, and only if still prudent
+2. subscribe to Legendary only when ready for real API calls
+3. store the API token only as a Cloudflare Worker secret
+4. run the 100-title UK/PAL pricing benchmark
 6. run the separate 100-title Marketplace offer-coverage benchmark
 7. measure exact identifier/product-ID matching, PAL/region safety, completeness mapping, available-offer volume and UK usefulness
 8. do not assume PriceCharting Marketplace replaces eBay unless the coverage benchmark supports that conclusion
