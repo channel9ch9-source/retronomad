@@ -123,7 +123,7 @@ async function initAccountSync(){
  const btn=document.querySelector("#syncBtn"),status=document.querySelector("#syncStatus");
  if(!RetroNomadAccount.state().enabled){
   btn.disabled=true;btn.textContent="Local only";
-  status.textContent="Account sync backend is not deployed; these hunts are stored only in this browser.";
+  status.textContent="Account sync is unavailable right now; these hunts remain stored in this browser.";
   return;
  }
  try{
