@@ -1873,3 +1873,22 @@ Production deployment run: `38156024681` — passed 57/57 tests and deployed suc
 Worker version: `4771a6fb-676f-427b-8c2f-bc8a22f158cb`.
 
 Cloudflare deployment logs confirm the new robots/sitemap and production HTML assets were uploaded. Live custom-domain behavior still needs an external smoke check; add that to the deployment workflow so future deploys verify production automatically.
+
+
+## Public acquisition / production smoke milestone — completed 11 October 2026
+
+Corrected production deployment run `38156550993` passed.
+
+Verified by the deployment workflow itself:
+- regression/build stages passed
+- 100-game guarded catalogue remained active
+- no D1 migrations pending
+- Worker deployed successfully
+- live production smoke passed on attempt 1
+- canonical GrailRaven domain responded with expected SEO/discovery metadata
+- extensionless Cloudflare canonical routes are now used in sitemap/canonical metadata
+- internal design/pricing lab pages are not part of the public build
+- marketplace and notification providers remain disabled
+- www redirect behavior remains part of the production smoke contract
+
+Current Worker version: `52c90563-d3bd-415a-ad2c-5d0dba23a7c7`.
