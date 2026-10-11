@@ -9,14 +9,21 @@
     return value||fallback;
   }
 
+  function cleanDisplay(value){
+    return String(value||"")
+      .replace(/\s*·\s*text\s*$/i,"")
+      .replace(/\s*·\s*serial\s*$/i," (serial)")
+      .trim();
+  }
+
   function buildSummary(){
     return [
       "GrailRaven listing check",
       read("game")+" · "+read("plat"),
       read("badge")+" — "+read("verdictTitle"),
       "Release: "+read("market"),
-      "Identifier: "+read("matchedId","None"),
-      "Completeness: "+read("comp"),
+      "Identifier: "+cleanDisplay(read("matchedId","None")),
+      "Completeness: "+cleanDisplay(read("comp")),
       "PALScout: "+read("compatBadge")+" — "+read("compatTitle"),
       "Evidence: "+read("evidenceStrength"),
       "Check a listing: https://grailraven.com/analyze"
