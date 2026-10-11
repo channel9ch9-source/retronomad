@@ -20,7 +20,7 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
     stdio:"pipe"
   });
 
-  for(const page of ["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","privacy.html","terms.html"]){
+  for(const page of ["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","uk-pal-game-guide.html","privacy.html","terms.html"]){
     await fs.access(join(out,page));
   }
   for(const internal of ["design-preview.html","pricing-coverage.html"]){
@@ -36,6 +36,13 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
   assert.ok(home.includes('type="application/ld+json"'));
   const staticHome=home.replace(/<script\b[\s\S]*?<\/script>/gi,"").replace(/<style\b[\s\S]*?<\/style>/gi,"");
   assert.equal(staticHome.includes("RetroNomad"),false);
+
+  const guide=await readBuilt("uk-pal-game-guide.html");
+  assert.ok(guide.includes("<title>How to identify a UK/PAL retro game copy — GrailRaven</title>"));
+  assert.ok(guide.includes('<link rel="canonical" href="https://grailraven.com/uk-pal-game-guide">'));
+  assert.ok(guide.includes('<meta name="robots" content="index,follow">'));
+  assert.ok(guide.includes("How to identify a UK/PAL retro game copy."));
+  assert.ok(guide.includes('type="application/ld+json"'));
 
   const account=await readBuilt("account.html");
   const wishlist=await readBuilt("wishlist.html");
@@ -63,7 +70,8 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
     "https://grailraven.com/search",
     "https://grailraven.com/catalogue",
     "https://grailraven.com/analyze",
-    "https://grailraven.com/about"
+    "https://grailraven.com/about",
+    "https://grailraven.com/uk-pal-game-guide"
   ]) assert.ok(sitemap.includes(`<loc>${url}</loc>`),`sitemap missing ${url}`);
   for(const excluded of ["account.html","wishlist.html","privacy.html","terms.html","design-preview.html","pricing-coverage.html"]){
     assert.equal(sitemap.includes(excluded),false,`sitemap should not include ${excluded}`);
