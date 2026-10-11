@@ -63,9 +63,9 @@ Build a search target, then save it to your wishlist.
 <script src="saved-hunts.js"></script>
 <script src="account-sync.js"></script>
 <script>
-const releaseLabels={"pal-compatible":"Any PAL-compatible","uk-preferred":"UK-market preferred","uk-only":"UK exact only","shared-pal":"UK/shared PAL","europe-pal":"Any European PAL"};
+const releaseLabels={"pal-compatible":"UK / European PAL","uk-preferred":"UK PAL","uk-only":"UK exact only","shared-pal":"UK/shared PAL","europe-pal":"Other European PAL"};
 const editionLabels={"original":"Original only","any":"Any edition","budget-ok":"Original or budget/reissue"};
-const completenessLabels={"cib":"CIB","manual-optional":"Manual optional","loose-ok":"Loose acceptable","any":"Any completeness"};
+const completenessLabels={"cib":"CIB (complete in box)","manual-optional":"Box + disc","loose-ok":"Disc only","any":"Any completeness"};
 const conditionLabels={"any":"Any usable condition","no-major":"No major damage","collector":"Collector-quality preferred"};
 
 function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
