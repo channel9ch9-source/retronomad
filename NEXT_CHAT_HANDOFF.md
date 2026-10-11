@@ -310,4 +310,6 @@ Ready to deploy:
 - regression test for public build contract
 
 Validation run `38155580640` passed.
-The production Cloudflare deployment has not yet been run for this change.
+Production deployment run `38156024681` also passed with 57/57 tests.
+Worker version: `4771a6fb-676f-427b-8c2f-bc8a22f158cb`.
+Cloudflare logs confirm the new production assets were uploaded. Add automated live-domain smoke verification to future deployments.
