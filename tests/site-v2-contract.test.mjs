@@ -300,8 +300,11 @@ test("Listing Checker keeps release-level pricing evidence-gated",async()=>{
   assert.ok(analyze.includes("if(previousKey&&previousKey!==key)clearPricingValueFields()"));
   assert.ok(analyze.includes("Reference date cannot be in the future."));
 
+  assert.ok(analyze.includes('<details class="pricing-input">'));
   assert.ok(analyze.includes("Optional price comparison"));
   assert.ok(analyze.includes("<h4>Price comparison</h4>"));
+  assert.ok(analyze.includes("<title>Listing Checker — GrailRaven</title>"));
+  assert.ok(analyze.includes("eBay links recognised · other public pages may import"));
   assert.ok(analyze.includes('a.download="grailraven-pricing-references.json"'));
   assert.equal(analyze.includes('a.download="retronomad-pricing-v1.json"'),false);
   assert.equal(analyze.includes('copy="RetroNomad cannot safely place this listing into a comparison bucket yet."'),false);
