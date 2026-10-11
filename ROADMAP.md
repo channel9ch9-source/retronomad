@@ -1079,3 +1079,28 @@ Additional UX findings fixed in source:
 - [x] validation run `38168093423` passed 66/66 tests
 - [x] deploy reopen-state/label cleanup — run `38168228445`
 - [x] manually verify update-in-place behavior after deploy — Silent Hill hunt updated £73 -> £68 with Saved Hunts count remaining 1
+
+
+### Listing Checker trust/usability audit — validated 11 October 2026
+
+Audit path:
+Listing details / URL / gallery -> PALScout classification -> evidence panel -> optional price comparison.
+
+Findings fixed:
+- [x] title recognition alone can no longer become release-level Comparison-ready
+- [x] final safety gate forces REVIEW when no recognised release identifier/evidence record matched
+- [x] scanned photo OCR can now serve as the starting evidence path without also requiring a typed title/identifier
+- [x] English/UK checkbox now explicitly means visual confirmation from listing photos, not seller-description wording
+- [x] explicit manually entered identifiers now appear in the Evidence used panel
+- [x] bucket-specific manual pricing values are cleared when the exact comparison key changes, preventing reference bleed between games/releases
+- [x] saved reference for the new exact bucket is loaded after a key change when available
+- [x] future-dated manual pricing references are rejected at save time
+- [x] remove public/internal "Pricing v1" wording in favour of "Optional price comparison" / "Price comparison"
+- [x] remove remaining runtime RetroNomad copy and legacy pricing export filename
+- [x] clarify eBay URL handling: link recognised, direct automatic page import requires authorised API access
+- [x] collapse optional manual pricing-reference inputs by default so identification remains the primary first-use task
+- [x] Listing Checker browser title aligned with public navigation naming
+- [x] regression coverage added for the trust gates
+- [x] validation run `38169089612` passed 67/67 tests
+- [ ] deploy Listing Checker audit patch
+- [ ] manually verify FFVII / Silent Hill / Rule of Rose example outcomes and manual pricing gate
