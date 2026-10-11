@@ -736,3 +736,17 @@ Fix:
 Validation run `38180622109`: 72/72 tests passed.
 
 Next: deploy and retry on a live Listing Checker result.
+
+
+## Listing Checker share experiment — live pass
+
+Deployment run `38180715495` passed with 72/72 tests and production smoke attempt 1.
+Worker version: `291bde21-8215-4af2-9178-0ff529bb22b7`.
+
+User confirmed the Copy result summary button is visible and copied a correct FFVII result. Privacy exclusions passed: no raw listing URL/item ID/title/description/price/postage.
+
+A final wording cleanup is ready but not deployed:
+- identifier source shown as `(serial)`
+- completeness no longer exposes `· text`
+
+Validation run `38180874849`: 73/73 tests.
