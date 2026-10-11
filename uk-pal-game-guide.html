@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Learn how to identify a UK or European PAL physical game copy using serials, barcodes, packaging, language, edition and completeness evidence.">
+<title>How to identify a UK/PAL retro game copy — GrailRaven</title>
+<link rel="stylesheet" href="ui-v2.css">
+<link rel="stylesheet" href="production-v2.css">
+<style>
+.guide{padding-bottom:84px}
+.guide-hero{padding:64px 0 34px;border-bottom:1px solid #1c1c1c;background:radial-gradient(circle at 82% 20%,rgba(255,92,0,.09),transparent 25%),linear-gradient(135deg,#000,#060606 60%,#000)}
+.guide-hero .eyebrow{color:#abb4bd;font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}
+.guide-hero h1{font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:clamp(44px,7vw,76px);line-height:.98;letter-spacing:-.045em;font-weight:600;max-width:980px;margin:12px 0 16px}
+.guide-hero .lead{font-size:18px;line-height:1.7;color:#b2bbc3;max-width:820px;margin:0}
+.guide-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.guide-btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 15px;border:1px solid #494949;border-radius:9px;text-decoration:none;font-weight:850;background:#050505;color:#fff}
+.guide-btn.primary{background:#fff;color:#000;border-color:#fff}
+.guide-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:42px;align-items:start;padding-top:38px}
+.guide article{min-width:0}
+.guide article h2{font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:clamp(28px,4vw,39px);font-weight:600;line-height:1.12;margin:48px 0 14px;letter-spacing:-.025em}
+.guide article h2:first-child{margin-top:0}
+.guide article h3{font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:22px;font-weight:600;margin:30px 0 10px}
+.guide article p,.guide article li{color:#b2bbc3;font-size:16px;line-height:1.75}
+.guide article strong{color:#f5f5f5}
+.guide article a{color:#fff;text-decoration-thickness:1px;text-underline-offset:3px}
+.quick{border:1px solid #3b4652;background:#050505;border-radius:14px;padding:20px 22px;margin:0 0 34px}
+.quick strong{display:block;color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.quick p{margin:0!important}
+.evidence-table{width:100%;border-collapse:collapse;margin:18px 0 26px;font-size:14px}
+.evidence-table th,.evidence-table td{border-bottom:1px solid #292929;text-align:left;vertical-align:top;padding:13px 12px}
+.evidence-table th{color:#fff;background:#050505}
+.evidence-table td{color:#adb6bf}
+.state{display:inline-block;border:1px solid #3b4652;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#dbe2e8}
+.state.exact{border-color:#315b43;color:#94f7b2}
+.state.review{border-color:#5d532d;color:#ffd977}
+.example{border:1px solid #303030;background:#030303;border-radius:14px;padding:19px;margin:14px 0}
+.example h3{margin:0 0 8px!important;font-size:19px!important}
+.example p{margin:5px 0!important;font-size:14px!important}
+.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#fff;background:#0a0a0a;border:1px solid #303030;border-radius:5px;padding:1px 5px}
+.checklist{border:1px solid #315b43;background:#07100b;border-radius:14px;padding:20px 22px;margin:28px 0}
+.checklist h3{margin:0 0 10px!important}
+.checklist ol{margin-bottom:0;padding-left:22px}
+.guide-side{position:sticky;top:94px;border:1px solid #303030;background:#030303;border-radius:14px;padding:18px}
+.guide-side b{display:block;margin-bottom:9px;font-family:"Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;font-size:18px;font-weight:600}
+.guide-side a{display:block;padding:8px 0;border-bottom:1px solid #222;color:#aeb7c0;text-decoration:none;font-size:13px}
+.guide-side a:last-child{border-bottom:0}
+.guide-side a:hover{color:#fff}
+.guide-cta{margin-top:50px;border:1px solid #404b59;border-radius:16px;background:linear-gradient(135deg,#050505,#0b0f13);padding:25px}
+.guide-cta h2{margin:0 0 10px!important}
+.guide-cta p{margin:0 0 17px}
+.faq-guide details{border-bottom:1px solid #292929;padding:15px 0}
+.faq-guide summary{cursor:pointer;color:#f1f1f1;font-weight:800}
+.faq-guide details p{margin-bottom:0}
+.updated{margin-top:40px;color:#6f7984!important;font-size:12px!important}
+@media(max-width:850px){.guide-grid{grid-template-columns:1fr}.guide-side{position:static;order:-1}.guide-hero{padding-top:44px}}
+@media(max-width:600px){.evidence-table{font-size:12px}.evidence-table th,.evidence-table td{padding:10px 7px}.guide-hero h1{font-size:43px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How to identify a UK/PAL retro game copy","description":"A practical collector guide to identifying UK and European PAL physical game releases using serials, barcodes, packaging, language, edition and completeness evidence.","author":{"@type":"Organization","name":"GrailRaven"},"publisher":{"@type":"Organization","name":"GrailRaven"},"datePublished":"2026-10-11","dateModified":"2026-10-11","mainEntityOfPage":"https://grailraven.com/uk-pal-game-guide"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Does PAL mean a game is a UK copy?","acceptedAnswer":{"@type":"Answer","text":"No. A PAL release can be shared across several European markets. A serial or barcode may identify a UK-specific release in some cases, but shared identifiers often require packaging or language evidence."}},
+{"@type":"Question","name":"Does an SLES or SCES serial prove a PlayStation game is from the UK?","acceptedAnswer":{"@type":"Answer","text":"No. SLES and SCES serials are useful release identifiers, but the prefix alone is not country proof. Some serials are UK-specific while others are shared across multiple PAL territories."}},
+{"@type":"Question","name":"What photos should I ask a seller for?","acceptedAnswer":{"@type":"Answer","text":"Ask for clear photos of the front cover, back cover, spine, disc label, barcode or catalogue code, and manual. For multi-disc games, confirm every game disc is present."}}
+]}
+</script>
+</head>
+<body class="app-v2">
+<div class="v2-topbar">
+  <div class="v2-shell v2-nav">
+    <a class="v2-brand" href="index.html" aria-label="GrailRaven home">
+      <span class="v2-raven" aria-hidden="true"><img src="data:image/png;base64,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" alt=""></span>
+      <span><span class="v2-wordmark">GrailRaven</span><span class="v2-tagline">Collect · Verify · Own</span></span>
+    </a>
+    <button class="v2-menu-button" type="button" id="mobileNavButton" aria-expanded="false" aria-controls="primaryNav">Menu</button>
+    <div class="v2-links" id="primaryNav">
+      <a href="search.html">Search</a>
+      <a href="wishlist.html">Saved Hunts</a>
+      <a href="catalogue.html">Catalogue</a>
+      <a href="account.html">Account</a>
+      <a href="analyze.html">Listing checker</a>
+      <a class="active" href="uk-pal-game-guide.html">Guide</a>
+    </div>
+    <div class="v2-meta">games · data · collectors · higher standards</div>
+  </div>
+</div>
+<main class="guide">
+  <section class="guide-hero">
+    <div class="v2-shell">
+      <div class="eyebrow">Collector guide · PALScout</div>
+      <h1>How to identify a UK/PAL retro game copy.</h1>
+      <p class="lead">“PAL” is not the same thing as “UK copy.” For PS1, PS2 and Dreamcast collecting, the safest way to identify the right physical release is to combine serials, barcodes, packaging, language, edition and completeness evidence instead of trusting one label.</p>
+      <div class="guide-actions">
+        <a class="guide-btn primary" href="analyze.html">Check a listing</a>
+        <a class="guide-btn" href="search.html">Search GrailRaven</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="v2-shell guide-grid">
+    <article>
+      <div class="quick">
+        <strong>The short version</strong>
+        <p>Before buying, confirm six things: <strong>platform, PAL release family, serial/catalogue code, barcode, packaging/language evidence, and the exact edition/completeness state.</strong> If one identifier is shared between several countries, do not turn uncertainty into a guess—ask for better photos.</p>
+      </div>
+
+      <h2 id="pal-vs-uk">1. PAL does not automatically mean UK</h2>
+      <p>For the PlayStation 1, PlayStation 2 and Dreamcast releases GrailRaven currently covers, a PAL marking or PAL-family serial is useful evidence that you are looking at a European/PAL release. It does <strong>not</strong> necessarily identify the country-specific package.</p>
+      <p>Publishers often reused the same disc serial, product code or even barcode across several PAL territories. That means two copies can run on the same hardware while still having different cover text, manuals, ratings, inserts or market-specific packaging.</p>
+
+      <table class="evidence-table">
+        <thead><tr><th>Evidence state</th><th>What it means</th><th>Collector action</th></tr></thead>
+        <tbody>
+          <tr><td><span class="state exact">UK exact</span></td><td>A documented identifier directly supports the UK release.</td><td>Still confirm edition and completeness, but country identity is comparatively strong.</td></tr>
+          <tr><td><span class="state">Shared PAL</span></td><td>The identifier is used across more than one PAL territory.</td><td>Use cover, manual, language and other package evidence before calling it a UK copy.</td></tr>
+          <tr><td><span class="state review">Visual required</span></td><td>Identifiers overlap or reference evidence is not country-specific enough.</td><td>Ask for clear gallery photos and keep the result in review if evidence remains ambiguous.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="serials">2. Read the serial or catalogue code—but know its limits</h2>
+      <p>Serials are one of the fastest ways to narrow down a release. On PlayStation games these often look like <span class="code">SCES-00867</span> or <span class="code">SLES-01514</span>. Dreamcast releases use different product-code patterns such as <span class="code">MK-51184-50</span>.</p>
+      <p>The important part is not simply recognising the prefix. You need to know whether that <em>specific full code</em> is country-specific or shared.</p>
+
+      <div class="example">
+        <h3>Final Fantasy VII — PS1</h3>
+        <p>PALScout currently records original-release serial <span class="code">SCES-00867</span> and barcode <span class="code">0711719694328</span> as <strong>UK-exact evidence</strong>.</p>
+        <p>This is the straightforward case: the documented identifiers give stronger release-level confidence.</p>
+      </div>
+
+      <div class="example">
+        <h3>Silent Hill — PS1</h3>
+        <p>Serial <span class="code">SLES-01514</span> and barcode <span class="code">4988602555660</span> are recorded as <strong>shared PAL evidence</strong>.</p>
+        <p>Those identifiers can establish the release family without proving that an individual package is specifically the UK version. Packaging and manual evidence still matter.</p>
+      </div>
+
+      <h2 id="barcodes">3. Use the barcode as a second identifier</h2>
+      <p>A barcode can be stronger than a vague listing title, but it should not be treated as automatically country-specific. Some releases have useful UK-specific barcodes; others reuse one barcode across multiple territories.</p>
+      <p>When possible, compare the <strong>serial + barcode together</strong>. If they agree with a documented UK-exact record, confidence rises. If either is known to be shared, keep the country classification separate from basic PAL compatibility.</p>
+
+      <h2 id="packaging">4. Packaging and language can resolve shared PAL copies</h2>
+      <p>When the serial is shared, photos become evidence rather than decoration. Ask for the front, back and spine, plus the manual and disc label. Useful clues can include English-language packaging, country-specific rating marks, publisher/distributor text, “only for sale” wording, and package variants documented for a particular market.</p>
+      <p><strong>Do not infer too much from English alone.</strong> An English-language European release may be perfectly suitable for a UK collector while still not being a uniquely UK retail package.</p>
+
+      <div class="example">
+        <h3>Tombi! 2 — PS1</h3>
+        <p>PALScout records <span class="code">SCES-02147</span> in the European PAL family, while the current title evidence notes that UK and Dutch copies can overlap at serial level.</p>
+        <p>For this kind of title, the cover/manual language and package details are what resolve the individual copy.</p>
+      </div>
+
+      <h2 id="edition">5. Separate the edition before comparing copies</h2>
+      <p>Original releases, Platinum reissues, Director's Cuts, special editions, demos, promos and bundles should not automatically be treated as the same physical product. Edition changes can alter identifiers, packaging, included discs and value.</p>
+
+      <div class="example">
+        <h3>Silent Hill 2 — PS2</h3>
+        <p>The original PAL release is represented in PALScout by <span class="code">SLES-50382</span>, while the Director's Cut / Platinum family includes <span class="code">SLES-51156</span>.</p>
+        <p>A listing that merely says “Silent Hill 2 PAL” is therefore not enough for an exact-copy comparison.</p>
+      </div>
+
+      <h2 id="exceptions">6. Watch for unusual market histories</h2>
+      <p>Some games do not fit a neat “UK version versus European version” assumption. GrailRaven deliberately keeps these cases separate instead of inventing a normal UK retail release where the evidence does not support one.</p>
+
+      <div class="example">
+        <h3>Rule of Rose — PS2</h3>
+        <p>PALScout records the European serial <span class="code">SLES-54218</span>, but the current release intelligence treats the title as having <strong>no normal official UK retail bucket</strong>.</p>
+        <p>An English or European copy should therefore not be automatically labelled as a standard UK retail release simply because it is PAL-compatible.</p>
+      </div>
+
+      <div class="example">
+        <h3>Shenmue II — Dreamcast</h3>
+        <p>Product code <span class="code">MK-51184-50</span> sits in the European PAL family. This is a good example of why a European product code should not be read as country proof without supporting package evidence.</p>
+      </div>
+
+      <h2 id="complete">7. Confirm completeness after you identify the release</h2>
+      <p>Release identity answers “which version is this?” Completeness answers “what exactly is included?” They are different questions, and both matter when comparing physical copies.</p>
+      <p>Check for the correct disc or discs, original case, cover/inlay and manual. For multi-disc games, a listing described as “complete” should actually show all required game discs. Bonus demo discs, promotional items and magazine discs should also be separated from the main retail product rather than silently folded into it.</p>
+
+      <div class="checklist">
+        <h3>Seller-photo checklist</h3>
+        <ol>
+          <li>Front cover and full back cover.</li>
+          <li>Spine with title/product information visible.</li>
+          <li>Disc label showing the serial or catalogue code.</li>
+          <li>Barcode/EAN area in focus.</li>
+          <li>Manual front and language/printing details where relevant.</li>
+          <li>Every game disc for multi-disc releases.</li>
+        </ol>
+      </div>
+
+      <h2 id="mistakes">Common identification mistakes</h2>
+      <p><strong>“It says PAL, so it is the UK version.”</strong> PAL can identify a regional family without proving a UK-specific package.</p>
+      <p><strong>“SLES means UK.”</strong> The prefix is not enough. The full serial needs release-specific evidence.</p>
+      <p><strong>“The title matches, so the price comparison is valid.”</strong> Original/reissue, region and completeness can create different comparison buckets.</p>
+      <p><strong>“The description says complete.”</strong> Seller text is useful, but gallery evidence is stronger when the required components are actually visible.</p>
+      <p><strong>“English packaging means official UK retail.”</strong> Some European releases are English-friendly or shared across markets without being uniquely UK.</p>
+
+      <h2 id="workflow">A safer buying workflow</h2>
+      <p>Start by identifying the game and platform. Then resolve the release family from the serial/barcode. If the identifier is shared, inspect package evidence. Separate the exact edition. Confirm completeness. Only after those steps should you compare prices or decide whether a listing matches the copy you actually want.</p>
+      <p>This is the reasoning behind GrailRaven's <strong>Search → Filter → Compare → Alert</strong> approach: the marketplace result is only useful once the intended physical copy is defined precisely enough.</p>
+
+      <div class="guide-cta">
+        <h2>Have a listing open already?</h2>
+        <p>Paste the listing URL or text into the GrailRaven Listing Checker, add photos if needed, and PALScout will keep unsupported country/edition assumptions in review rather than forcing a match.</p>
+        <div class="guide-actions">
+          <a class="guide-btn primary" href="analyze.html">Check a listing</a>
+          <a class="guide-btn" href="catalogue.html">Browse the catalogue</a>
+        </div>
+      </div>
+
+      <h2 id="faq">UK/PAL identification FAQ</h2>
+      <div class="faq-guide">
+        <details>
+          <summary>Does PAL mean a game is a UK copy?</summary>
+          <p>No. PAL releases can be shared across several European territories. You need release-specific serial, barcode and sometimes packaging evidence to call an individual copy UK-specific.</p>
+        </details>
+        <details>
+          <summary>Does an SLES or SCES serial prove a PlayStation game is from the UK?</summary>
+          <p>No. The full serial is useful release evidence, but the prefix alone is not country proof. Some documented serials are UK-exact; others are shared across PAL territories.</p>
+        </details>
+        <details>
+          <summary>Can a barcode prove the country?</summary>
+          <p>Sometimes. A documented barcode can strongly support a UK-specific release, but barcodes can also be shared. Treat it as one piece of release evidence rather than a universal country code.</p>
+        </details>
+        <details>
+          <summary>What photos should I ask a seller for?</summary>
+          <p>Front cover, back cover, spine, disc label, barcode/catalogue code and manual. For multi-disc games, ask for a photo showing every game disc.</p>
+        </details>
+        <details>
+          <summary>Does GrailRaven guarantee compatibility or authenticity?</summary>
+          <p>No. PALScout is an evidence-based identification aid. Ambiguous or conflicting evidence remains in review, and collectors should verify the physical listing before purchase.</p>
+        </details>
+      </div>
+
+      <p class="updated">Guide published 11 October 2026 · Current launch scope: PS1, PS2 and Dreamcast UK/European PAL intelligence.</p>
+    </article>
+
+    <aside class="guide-side" aria-label="Guide contents">
+      <b>In this guide</b>
+      <a href="#pal-vs-uk">PAL vs UK</a>
+      <a href="#serials">Serials & catalogue codes</a>
+      <a href="#barcodes">Barcodes</a>
+      <a href="#packaging">Packaging & language</a>
+      <a href="#edition">Edition differences</a>
+      <a href="#exceptions">Unusual market histories</a>
+      <a href="#complete">Completeness</a>
+      <a href="#mistakes">Common mistakes</a>
+      <a href="#workflow">Buying workflow</a>
+      <a href="#faq">FAQ</a>
+    </aside>
+  </div>
+</main>
+
+<footer><div class="wrap foot"><div>© 2026 GrailRaven</div><div class="footlinks"><a href="index.html">Home</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div></footer>
+<script>
+(function(){
+ const button=document.querySelector("#mobileNavButton"),nav=document.querySelector("#primaryNav");
+ if(!button||!nav)return;
+ button.addEventListener("click",()=>{
+  const open=nav.classList.toggle("mobile-open");
+  button.setAttribute("aria-expanded",String(open));
+  button.textContent=open?"Close":"Menu";
+ });
+})();
+</script>
+</body>
+</html>
