@@ -624,3 +624,19 @@ Deployment run `38169240742` passed:
 - Worker version `59ee7b37-353a-408f-a683-e10d62606ad2`
 
 Next: manually test built-in examples FFVII UK, Silent Hill PAL, Rule of Rose, then verify the manual price comparison gate.
+
+
+## Immediate Listing Checker example-button fix ready to deploy
+
+Live testing found all three built-in example buttons were inert.
+
+Cause: legacy implicit DOM globals in the click handlers.
+
+Fixed with explicit querySelector-based handlers and a regression test.
+
+Validation run `38169769133`: 68/68 tests passed.
+
+Next:
+1. deploy current main
+2. retry FFVII UK first
+3. then Silent Hill PAL and Rule of Rose
