@@ -1102,5 +1102,5 @@ Findings fixed:
 - [x] Listing Checker browser title aligned with public navigation naming
 - [x] regression coverage added for the trust gates
 - [x] validation run `38169089612` passed 67/67 tests
-- [ ] deploy Listing Checker audit patch
+- [x] deploy Listing Checker audit patch — run `38169240742`
 - [ ] manually verify FFVII / Silent Hill / Rule of Rose example outcomes and manual pricing gate
