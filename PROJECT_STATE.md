@@ -1858,7 +1858,7 @@ See `NEXT_CHAT_HANDOFF.md` for the complete next-thread handoff.
 
 ## Public acquisition / build hardening — validated 11 October 2026
 
-A production-build hardening change is validated but not yet manually deployed.
+The production-build hardening change was deployed successfully on 11 October 2026.
 
 It:
 - excludes internal design/pricing lab HTML from the Cloudflare public build
@@ -1869,5 +1869,7 @@ It:
 - adds a public-build regression test
 
 Validation workflow run: `38155580640` — passed.
+Production deployment run: `38156024681` — passed 57/57 tests and deployed successfully.
+Worker version: `4771a6fb-676f-427b-8c2f-bc8a22f158cb`.
 
-Next action for this change: run the existing manual Cloudflare deployment workflow, then verify live metadata, robots and sitemap.
+Cloudflare deployment logs confirm the new robots/sitemap and production HTML assets were uploaded. Live custom-domain behavior still needs an external smoke check; add that to the deployment workflow so future deploys verify production automatically.
