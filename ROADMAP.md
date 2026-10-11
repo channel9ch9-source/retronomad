@@ -930,3 +930,20 @@ Public-product audit finding:
 - the Listing Checker still exposes the intentional September 2026 RetroTechCollector automatic-pricing connector
 - this predates the current PriceCharting-led provider strategy
 - do not remove silently; decide whether to retain, hide, or retire it before the next public-product cleanup
+
+
+### Public credibility + provider cleanup — 11 October 2026
+
+- [x] retire the old public RetroTechCollector developer-key pricing connector
+- [x] preserve manual Pricing v1 reference entry/storage/export
+- [x] preserve Listing Checker photo OCR / Tesseract dependency
+- [x] remove RTC provider/result fields and auto-fetch hooks
+- [x] replace stale public RetroNomad branding in source-visible content with GrailRaven
+- [x] replace "DESIGN PREVIEW" with truthful "EXAMPLE RESULTS" wording
+- [x] remove stale "early-stage prototype", "development-site", "future backend" and Phase 1 beta wording
+- [x] keep explicit disclosures that live marketplace discovery, automatic provider-backed pricing and background notifications are not enabled
+- [x] refresh Terms wording/date without weakening user-verification disclaimers
+- [x] add regression guards that RTC cannot accidentally reappear publicly and manual pricing/OCR remain intact
+- [x] full validation run `38158956959` passed
+- [ ] deploy bundled credibility/provider cleanup + security headers
+- [ ] verify live smoke check passes after deployment
