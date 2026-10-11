@@ -93,6 +93,148 @@ function detectGame(text,platform){
  }
  return bs>=8?best:null;
 }
+let photoFiles=[];
+let photoOcrText="";
+let photoOcrCandidates=[];
+let photoSignals=[];
+let galleryPhotoEvidence=[];
+function revokePhotoPreviews(){
+ document.querySelectorAll("#photoGrid img[data-object-url]").forEach(img=>{try{URL.revokeObjectURL(img.dataset.objectUrl);}catch(e){}});
+}
+function renderPhotoPreviews(){
+ revokePhotoPreviews();
+ const grid=document.querySelector("#photoGrid");grid.innerHTML="";
+ document.querySelector("#galleryChecklist").style.display=photoFiles.length?"block":"none";
+ photoFiles.forEach((file,i)=>{
+   if(!galleryPhotoEvidence[i])galleryPhotoEvidence[i]={disc:false,manual:false,case:false,barcode:false,condition:false};
+   const card=document.createElement("div");card.className="photocard";
+   const imgWrap=document.createElement("div");imgWrap.className="photoimg";
+   const img=document.createElement("img");const u=URL.createObjectURL(file);img.src=u;img.dataset.objectUrl=u;img.alt="Listing photo "+(i+1);
+   const label=document.createElement("span");label.textContent=(i+1)+". "+file.name;
+   imgWrap.append(img,label);card.appendChild(imgWrap);
+   const marks=document.createElement("div");marks.className="photomarks";
+   [["disc","Disc"],["manual","Manual"],["case","Case / cover"],["barcode","Barcode / spine"],["condition","Visible issue"]].forEach(([key,text])=>{
+     const lab=document.createElement("label"),cb=document.createElement("input");cb.type="checkbox";cb.checked=!!galleryPhotoEvidence[i][key];
+     cb.addEventListener("change",()=>{galleryPhotoEvidence[i][key]=cb.checked;updateGallerySummary();});
+     lab.append(cb,document.createTextNode(text));marks.appendChild(lab);
+   });
+   card.appendChild(marks);grid.appendChild(card);
+ });
+ updateGallerySummary();
+ document.querySelector("#photoHint").textContent=photoFiles.length?(photoFiles.length+" photo"+(photoFiles.length===1?"":"s")+" ready. Mark visible components after inspecting each image; OCR suggestions are separate."):"Best results: clear photos of the back cover, spine, disc label and barcode.";
+}
+function aggregateGalleryEvidence(){
+ const g={disc:false,manual:false,case:false,barcode:false,photoIssue:false,allDiscs:false,english:false,issues:[]};
+ for(const x of galleryPhotoEvidence){if(!x)continue;g.disc=g.disc||x.disc;g.manual=g.manual||x.manual;g.case=g.case||x.case;g.barcode=g.barcode||x.barcode;g.photoIssue=g.photoIssue||x.condition;}
+ g.allDiscs=!!document.querySelector("#allDiscsShown")?.checked;
+ g.english=!!document.querySelector("#galleryEnglish")?.checked;
+ if(document.querySelector("#issueCase")?.checked)g.issues.push("case damage");
+ if(document.querySelector("#issueDisc")?.checked)g.issues.push("disc damage / scratches");
+ if(document.querySelector("#issuePaper")?.checked)g.issues.push("cover / manual wear");
+ if(document.querySelector("#issueWriting")?.checked)g.issues.push("stickers / writing");
+ if(g.photoIssue&&!g.issues.length)g.issues.push("unspecified visible issue");
+ return g;
+}
+function galleryCompletenessSignal(g){
+ if(!photoFiles.length)return{value:"unknown",confidence:"None",reason:"No gallery evidence supplied"};
+ if(g.case&&g.manual&&g.allDiscs)return{value:"complete",confidence:"High",reason:"Case/cover, manual and all game discs are gallery-confirmed"};
+ const missing=[];
+ if(!g.case)missing.push("case/cover");
+ if(!g.manual)missing.push("manual");
+ if(!g.allDiscs)missing.push("all game discs");
+ const seen=[g.case&&"case/cover",g.manual&&"manual",(g.disc||g.allDiscs)&&"disc(s)",g.barcode&&"barcode/spine"].filter(Boolean);
+ return{value:"unknown",confidence:seen.length?"Medium":"None",reason:seen.length?("Gallery confirms "+seen.join(", ")+"; not enough to prove complete because "+missing.join(", ")+" "+(missing.length===1?"is":"are")+" unconfirmed."):"No required components confirmed from the gallery"};
+}
+function conditionSummary(g){
+ if(!photoFiles.length)return{label:"Not assessed",issues:[]};
+ if(g.issues.length)return{label:"Review — "+g.issues.join(", "),issues:g.issues};
+ return{label:"No issues marked (not proof of mint condition)",issues:[]};
+}
+function updateGallerySummary(){
+ const box=document.querySelector("#gallerySummary");if(!box)return;
+ const g=aggregateGalleryEvidence(),parts=[];
+ if(g.case)parts.push("case/cover");
+ if(g.manual)parts.push("manual");
+ if(g.disc)parts.push("disc(s)");
+ if(g.allDiscs)parts.push("all discs");
+ if(g.barcode)parts.push("barcode/spine");
+ if(g.english)parts.push("English/UK packaging");
+ const cond=conditionSummary(g);
+ box.textContent=parts.length?("Confirmed: "+parts.join(", ")+(cond.issues.length?". Condition flags: "+cond.issues.join(", ")+".":".")):"Nothing confirmed yet. Not seeing an item in a photo is not treated as evidence that it is missing.";
+}
+function cleanOcrText(text){
+ return (text||"").replace(/[|]/g,"I").replace(/\r/g,"").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();
+}
+function extractOcrCandidates(text){
+ const out=extractIdentifierCandidates(text),seen=new Set(out.map(normId));
+ const flexSerial=/(?:SLES|SCES|SLUS|SCUS|SLPS|SLPM|SCPS|SCPM|MK|T)\s*[-:]?\s*[A-Z0-9]{4,8}(?:\s*[-:]?\s*[A-Z0-9]{1,3})?/gi;
+ for(const m of (text||"").matchAll(flexSerial)){const v=m[0].replace(/\s+/g,"").replace(/:/g,"-");const k=normId(v);if(k&&!seen.has(k)){seen.add(k);out.push(v);}}
+ const lines=(text||"").split(/\n/);
+ for(const line of lines){
+   const digits=line.replace(/[^0-9]/g,"");
+   if(digits.length>=11&&digits.length<=14&&!seen.has(digits)){seen.add(digits);out.push(digits);}
+ }
+ return out;
+}
+function detectPhotoSignals(text){
+ const n=norm(text),out=[];
+ if(/only for sale in the uk|uk only|for sale in uk/.test(n))out.push({label:"UK sales wording",kind:"good"});
+ if(/\bbbfc\b/.test(n))out.push({label:"BBFC text",kind:"warn"});
+ if(/\belspa\b/.test(n))out.push({label:"ELSPA text",kind:"warn"});
+ if(/\bpal\b/.test(n))out.push({label:"PAL text",kind:"good"});
+ if(/\bplatinum\b/.test(n))out.push({label:"Platinum text",kind:"warn"});
+ if(/\bmanual\b|instruction booklet|instructions/.test(n))out.push({label:"Manual wording",kind:"good"});
+ if(/\bdisc\b|\bdisk\b/.test(n))out.push({label:"Disc wording",kind:"good"});
+ if(/\benglish\b/.test(n))out.push({label:"English wording",kind:"good"});
+ return out;
+}
+function renderPhotoSignals(){
+ const chips=document.querySelector("#ocrChips");chips.innerHTML="";
+ for(const x of photoSignals){const s=document.createElement("span");s.className="ocrchip "+x.kind;s.textContent=x.label;chips.appendChild(s);}
+ for(const id of photoOcrCandidates){const s=document.createElement("span");s.className="ocrchip good";s.textContent=id;chips.appendChild(s);}
+ const out=document.querySelector("#ocrText");
+ if(photoOcrText){out.style.display="block";out.textContent=photoOcrText;}else{out.style.display="none";out.textContent="";}
+}
+function photoEvidenceSummary(){
+ if(!photoFiles.length)return"No photos supplied";
+ const bits=[];
+ if(photoOcrText){
+   if(photoOcrCandidates.length)bits.push("OCR identifier"+(photoOcrCandidates.length>1?"s":"")+": "+photoOcrCandidates.join(", "));
+   if(photoSignals.length)bits.push(photoSignals.map(x=>x.label).join(", "));
+   if(!photoOcrCandidates.length&&!photoSignals.length)bits.push("OCR completed; no useful release text detected");
+ }else bits.push("Photos added; OCR not run");
+ const g=aggregateGalleryEvidence(),confirmed=[g.case&&"case",g.manual&&"manual",(g.disc||g.allDiscs)&&"disc(s)",g.barcode&&"barcode/spine"].filter(Boolean);
+ if(confirmed.length)bits.push("confirmed visible: "+confirmed.join(", "));
+ return bits.join(" · ");
+}
+async function scanListingPhotos(){
+ if(!photoFiles.length){document.querySelector("#photoHint").textContent="Choose at least one image first.";return;}
+ const btn=document.querySelector("#scanPhotos"),progress=document.querySelector("#ocrProgress"),bar=document.querySelector("#ocrBar"),hint=document.querySelector("#photoHint");
+ btn.disabled=true;progress.style.display="block";bar.style.width="2%";photoOcrText="";photoOcrCandidates=[];photoSignals=[];
+ if(typeof Tesseract==="undefined"){hint.textContent="OCR library could not load. Check the browser connection and try again.";btn.disabled=false;return;}
+ let worker=null;
+ try{
+   worker=await Tesseract.createWorker("eng",1,{logger:m=>{if(m.progress!=null){const base=photoFiles.length?Math.floor((m.progress/photoFiles.length)*90):0;bar.style.width=Math.min(92,Math.max(3,base))+"%";}}});
+   const texts=[];
+   for(let i=0;i<photoFiles.length;i++){
+     hint.textContent="Scanning photo "+(i+1)+" of "+photoFiles.length+"…";
+     const r=await worker.recognize(photoFiles[i]);
+     texts.push("[Photo "+(i+1)+"]\n"+cleanOcrText(r.data&&r.data.text));
+     bar.style.width=Math.round(((i+1)/photoFiles.length)*95)+"%";
+   }
+   photoOcrText=texts.join("\n\n");
+   photoOcrCandidates=extractOcrCandidates(photoOcrText);
+   photoSignals=detectPhotoSignals(photoOcrText);
+   renderPhotoSignals();updateAutoHints();bar.style.width="100%";
+   hint.textContent="Photo scan complete. OCR is candidate evidence: verify important serials/barcodes against the actual image.";
+ }catch(e){
+   hint.textContent="Photo OCR failed in this browser. The images were not uploaded; you can still classify the listing from text.";
+ }finally{
+   if(worker){try{await worker.terminate();}catch(e){}}
+   btn.disabled=false;setTimeout(()=>{progress.style.display="none";bar.style.width="0";},800);
+ }
+}
+
 function cleanUrlInput(value){
  let v=(value||"").trim();
  if(!v)return"";
