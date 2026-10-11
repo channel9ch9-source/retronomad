@@ -1052,7 +1052,7 @@ Audit findings and fixes:
 - [x] validation run `38166618478` passed 65/65 tests
 - [x] deploy retention-journey audit patch — run `38166781719`
 - [x] verify production smoke — passed attempt 1 in run `38166781719`
-- [ ] manually exercise Search -> Save -> Saved Hunts -> Account
+- [ ] manually verify Account sign-in -> automatic Saved Hunt sync
 
 
 ### Manual retention-path verification — reopen state finding 11 October 2026
@@ -1078,4 +1078,4 @@ Additional UX findings fixed in source:
 - [x] regression test added
 - [x] validation run `38168093423` passed 66/66 tests
 - [x] deploy reopen-state/label cleanup — run `38168228445`
-- [ ] manually verify update-in-place behavior after deploy
+- [x] manually verify update-in-place behavior after deploy — Silent Hill hunt updated £73 -> £68 with Saved Hunts count remaining 1
