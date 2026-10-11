@@ -37,3 +37,11 @@ test("Listing Checker sharing has clipboard fallback and clear feedback",()=>{
   assert.ok(source.includes('button.textContent="Copied ✓"'));
   assert.ok(source.includes('status.textContent="Summary copied."'));
 });
+
+
+test("Listing Checker share summary removes internal source suffixes",()=>{
+  assert.ok(source.includes('replace(/\\s*·\\s*text\\s*$/i,"")'));
+  assert.ok(source.includes('replace(/\\s*·\\s*serial\\s*$/i," (serial)")'));
+  assert.ok(source.includes('"Identifier: "+cleanDisplay(read("matchedId","None"))'));
+  assert.ok(source.includes('"Completeness: "+cleanDisplay(read("comp"))'));
+});
