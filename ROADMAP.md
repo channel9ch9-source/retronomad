@@ -1103,7 +1103,7 @@ Findings fixed:
 - [x] regression coverage added for the trust gates
 - [x] validation run `38169089612` passed 67/67 tests
 - [x] deploy Listing Checker audit patch — run `38169240742`
-- [ ] manually verify FFVII / Silent Hill / Rule of Rose example outcomes and manual pricing gate
+- [x] manually verify FFVII / Silent Hill / Rule of Rose example outcomes and manual pricing gate — live production pass 11 Oct 2026
 
 
 ### Listing Checker example-button bug — fixed 11 October 2026
@@ -1141,4 +1141,4 @@ Fix:
 - [x] add production smoke assertions that the deployed Listing Checker contains critical runtime helpers
 - [x] validation run `38173148176` passed 69/69 tests
 - [x] deploy runtime restoration — run `38177384405`
-- [ ] re-test main Analyse listing button and FFVII / Silent Hill / Rule of Rose examples — Analyse button + FFVII live pass; Silent Hill and final Rule of Rose verification remain
+- [x] re-test main Analyse listing button and FFVII / Silent Hill / Rule of Rose examples — all live paths passed
