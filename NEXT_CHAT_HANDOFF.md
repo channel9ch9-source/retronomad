@@ -612,3 +612,15 @@ Next:
 2. require production smoke to pass
 3. manually exercise FFVII UK example, Silent Hill PAL example, Rule of Rose example
 4. verify price comparison remains blocked for REVIEW/SEPARATE and only grades Comparison-ready evidence
+
+
+## Listing Checker audit deployed
+
+Deployment run `38169240742` passed:
+- 67/67 tests
+- 100-game guard intact
+- no D1 migrations
+- production smoke passed attempt 1
+- Worker version `59ee7b37-353a-408f-a683-e10d62606ad2`
+
+Next: manually test built-in examples FFVII UK, Silent Hill PAL, Rule of Rose, then verify the manual price comparison gate.
