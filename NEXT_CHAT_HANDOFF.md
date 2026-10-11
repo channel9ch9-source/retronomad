@@ -157,16 +157,29 @@ Do not buy Legendary until ready to run the real benchmark.
 
 Previous developer application was rejected after appeal.
 
+A new legitimate reconsideration request was submitted through eBay's official **"My account registration was rejected"** support path on 11 October 2026.
+
+Current reapplication positioning:
+- live public product at grailraven.com
+- business-domain contact email: contact@grailraven.com
+- intended use: eBay Buy Browse API, initially eBay UK
+- exact-copy collector search by platform / region / edition / completeness / price
+- listings link users back to eBay
+- Saved Hunts may later identify newly available matching listings
+- no scraping or bypassing access controls
+- no automated buying, selling, bidding or messaging
+- willingness to complete required Sandbox and production-access review
+
 Do not:
 - evade the rejection
 - scrape around access restrictions
 - create misleading accounts
 - spam applications
 
-Future plan:
-- reapply from a materially stronger position after the product is live and has stronger evidence
-- show legitimate public product, privacy/account controls, exact-copy classification and real user activity where available
-- explain that GrailRaven helps collectors identify relevant listings and sends users back to the marketplace
+Next eBay action:
+- wait for eBay's response to the reconsideration request
+- if approved, proceed transparently with Sandbox integration and the appropriate production-access process
+- if rejected again, do not immediately resubmit; strengthen product/traffic evidence before another attempt
 
 eBay remains a strategically valuable future integration.
 
