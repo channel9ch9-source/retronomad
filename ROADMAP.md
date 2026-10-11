@@ -1050,5 +1050,6 @@ Audit findings and fixes:
 - [x] Account copy explains automatic sync and keeps manual Sync as retry/control
 - [x] regression coverage added for the full retention journey
 - [x] validation run `38166618478` passed 65/65 tests
-- [ ] deploy retention-journey audit patch
-- [ ] verify production smoke and manually exercise Search -> Save -> Saved Hunts -> Account
+- [x] deploy retention-journey audit patch — run `38166781719`
+- [x] verify production smoke — passed attempt 1 in run `38166781719`
+- [ ] manually exercise Search -> Save -> Saved Hunts -> Account
