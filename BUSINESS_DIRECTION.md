@@ -299,3 +299,15 @@ Do not confuse:
 - user signups with willingness to pay
 
 The project should ultimately earn the right to continued investment through real collector behaviour.
+
+
+## First measured SEO acquisition experiment — 11 October 2026
+
+The first organic-acquisition page is an evidence-led guide on identifying UK/PAL physical-game copies.
+
+This deliberately follows the business filter:
+- acquisition: targets collectors with an active exact-copy identification problem
+- defensibility: demonstrates PALScout-style evidence handling rather than generic game-database content
+- product bridge: links directly into Search, Catalogue and Listing Checker
+
+Do not create a large volume of generic SEO articles by default. Let Search Console query/impression data and real product engagement inform the next content cluster.
