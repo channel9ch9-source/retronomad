@@ -2182,3 +2182,20 @@ Verified:
 This closes the Search -> Save -> Saved Hunts -> reopen/edit loop.
 
 Remaining manual retention check: Account sign-in -> automatic Saved Hunt sync.
+
+
+## Retention journey — fully verified live
+
+On 11 October 2026 the complete retention path passed manual production verification:
+
+Search -> Save Hunt -> Saved Hunts -> reopen/edit -> update in place -> Account passwordless sign-in -> automatic cloud sync.
+
+Verified:
+- selected hunt criteria persist correctly
+- existing hunts update in place without duplication
+- Saved Hunts count remains stable during edit
+- passwordless email sign-in succeeds
+- Account automatically syncs Saved Hunts after sign-in
+- the existing Silent Hill test hunt remained present after sync with the updated £68 delivered ceiling
+
+This closes the current Search/Saved Hunts/Account journey audit.
