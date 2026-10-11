@@ -13,6 +13,135 @@ for(const key of ["name","mark","domain","contactEmail","legacyPublicName"]){
   if(!String(brand[key]||"").trim())throw new Error(`brand.json is missing ${key}`);
 }
 
+const publicPages=new Map([
+  ["index.html",{
+    path:"/",
+    title:`${brand.name} — Find the right copy at the right price`,
+    description:`${brand.name} helps physical game collectors find and verify the exact copy they want, with UK/PAL release intelligence from PALScout.`,
+    index:true,
+    sitemap:true
+  }],
+  ["search.html",{
+    path:"/search.html",
+    title:`Search physical games — ${brand.name}`,
+    description:`Search ${brand.name} for the exact physical retro-game copy you want by platform, region, edition, completeness and price.`,
+    index:true,
+    sitemap:true
+  }],
+  ["catalogue.html",{
+    path:"/catalogue.html",
+    title:`Retro game catalogue — ${brand.name}`,
+    description:`Browse ${brand.name}'s physical game catalogue for PlayStation, PlayStation 2 and Dreamcast, with PALScout release-intelligence coverage.`,
+    index:true,
+    sitemap:true
+  }],
+  ["analyze.html",{
+    path:"/analyze.html",
+    title:`Listing checker — ${brand.name}`,
+    description:`Check a physical game listing with PALScout release, region, edition and completeness evidence before you buy.`,
+    index:true,
+    sitemap:true
+  }],
+  ["about.html",{
+    path:"/about.html",
+    title:`About — ${brand.name}`,
+    description:`Learn how ${brand.name} helps physical game collectors identify and hunt for the exact copy they want.`,
+    index:true,
+    sitemap:true
+  }],
+  ["wishlist.html",{
+    path:"/wishlist.html",
+    title:`Saved Hunts — ${brand.name}`,
+    description:`Manage your saved exact-copy game hunts in ${brand.name}.`,
+    index:false,
+    sitemap:false
+  }],
+  ["account.html",{
+    path:"/account.html",
+    title:`Account — ${brand.name}`,
+    description:`Sign in to manage your ${brand.name} account and cloud-synced Saved Hunts.`,
+    index:false,
+    sitemap:false
+  }],
+  ["privacy.html",{
+    path:"/privacy.html",
+    title:`Privacy — ${brand.name}`,
+    description:`Privacy information for ${brand.name} accounts, Saved Hunts and service providers.`,
+    index:false,
+    sitemap:false
+  }],
+  ["terms.html",{
+    path:"/terms.html",
+    title:`Terms — ${brand.name}`,
+    description:`Terms for using the ${brand.name} physical-game collector service.`,
+    index:false,
+    sitemap:false
+  }]
+]);
+const productionHtml=new Set(publicPages.keys());
+const legacySpacedUpper=brand.legacyPublicName.replace(/([a-z0-9])([A-Z])/g,"$1 $2").toUpperCase();
+
+function escapeHtml(value){
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+
+function applyStaticBrand(html){
+  const protectedBlock=/(<script\\b[\\s\\S]*?<\\/script>|<style\\b[\\s\\S]*?<\\/style>)/gi;
+  return html.split(protectedBlock).map((part,index)=>{
+    if(index%2===1)return part;
+    return part
+      .split(brand.legacyPublicName).join(brand.name)
+      .split(legacySpacedUpper).join(brand.name.toUpperCase());
+  }).join("");
+}
+
+function setMeta(html,selector,name,value){
+  const escaped=escapeHtml(value);
+  const patterns={
+    description:/<meta\\s+name=["']description["'][^>]*>/i,
+    robots:/<meta\\s+name=["']robots["'][^>]*>/i
+  };
+  const tag=`<meta name="${name}" content="${escaped}">`;
+  return patterns[selector]?.test(html)?html.replace(patterns[selector],tag):html.replace("</head>",tag+"\\n</head>");
+}
+
+function addSeo(html,page){
+  const base=`https://${brand.domain}`;
+  const url=base+page.path;
+  const title=escapeHtml(page.title);
+  const description=escapeHtml(page.description);
+  html=/<title>[\\s\\S]*?<\\/title>/i.test(html)
+    ?html.replace(/<title>[\\s\\S]*?<\\/title>/i,`<title>${title}</title>`)
+    :html.replace("</head>",`<title>${title}</title>\\n</head>`);
+  html=setMeta(html,"description","description",page.description);
+  html=setMeta(html,"robots","robots",page.index?"index,follow":"noindex,follow");
+  const tags=[
+    `<link rel="canonical" href="${escapeHtml(url)}">`,
+    `<meta property="og:site_name" content="${escapeHtml(brand.name)}">`,
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:title" content="${title}">`,
+    `<meta property="og:description" content="${description}">`,
+    `<meta property="og:url" content="${escapeHtml(url)}">`,
+    `<meta name="twitter:card" content="summary">`,
+    `<meta name="twitter:title" content="${title}">`,
+    `<meta name="twitter:description" content="${description}">`
+  ];
+  if(page.path==="/"){
+    tags.push(`<script type="application/ld+json">${JSON.stringify({
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      name:brand.name,
+      url:base+"/",
+      description:page.description
+    })}</script>`);
+  }
+  return html.replace("</head>",tags.join("\\n")+"\\n</head>");
+}
+
 const brandRuntime=`// Generated from brand.json. Public presentation only; no secrets here.\n(function(){\n  const brand=Object.freeze(${JSON.stringify(brand)});\n  window.APP_BRAND=brand;\n  const legacy=brand.legacyPublicName;\n  const legacySpacedUpper=legacy.replace(/([a-z0-9])([A-Z])/g,\"$1 $2\").toUpperCase();\n  const blocked=new Set([\"SCRIPT\",\"STYLE\",\"NOSCRIPT\",\"TEXTAREA\"]);\n  const replace=value=>{\n    if(typeof value!==\"string\")return value;\n    return value.split(legacy).join(brand.name).split(legacySpacedUpper).join(brand.name.toUpperCase());\n  };\n  function replaceTextNode(node){\n    const parent=node.parentElement;\n    if(!parent||blocked.has(parent.tagName))return;\n    const next=replace(node.nodeValue||\"\");\n    if(next!==node.nodeValue)node.nodeValue=next;\n  }\n  function applyTree(root){\n    if(!root)return;\n    if(root.nodeType===Node.TEXT_NODE){replaceTextNode(root);return;}\n    if(root.nodeType!==Node.ELEMENT_NODE&&root.nodeType!==Node.DOCUMENT_FRAGMENT_NODE)return;\n    if(root.nodeType===Node.ELEMENT_NODE&&blocked.has(root.tagName))return;\n    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);\n    let node;\n    while((node=walker.nextNode()))replaceTextNode(node);\n  }\n  function applyAttributes(root=document){\n    root.querySelectorAll?.(\"[title],[aria-label]\").forEach(el=>{\n      if(el.hasAttribute(\"title\")){\n        const value=replace(el.getAttribute(\"title\"));\n        if(value!==el.getAttribute(\"title\"))el.setAttribute(\"title\",value);\n      }\n      if(el.hasAttribute(\"aria-label\")){\n        const value=replace(el.getAttribute(\"aria-label\"));\n        if(value!==el.getAttribute(\"aria-label\"))el.setAttribute(\"aria-label\",value);\n      }\n    });\n  }\n  function apply(){\n    document.title=replace(document.title);\n    document.querySelectorAll('meta[name=\"description\"],meta[property=\"og:title\"],meta[property=\"og:description\"],meta[name=\"twitter:title\"],meta[name=\"twitter:description\"]').forEach(el=>{\n      if(el.content)el.content=replace(el.content);\n    });\n    document.querySelectorAll(\".mark\").forEach(el=>{\n      if(el.textContent.trim()===\"RN\")el.textContent=brand.mark;\n    });\n    applyTree(document.body);\n    applyAttributes();\n    const observer=new MutationObserver(mutations=>{\n      for(const mutation of mutations){\n        if(mutation.type===\"characterData\")replaceTextNode(mutation.target);\n        for(const node of mutation.addedNodes||[])applyTree(node);\n      }\n    });\n    observer.observe(document.body,{subtree:true,childList:true,characterData:true});\n  }\n  if(document.readyState===\"loading\")document.addEventListener(\"DOMContentLoaded\",apply,{once:true});\n  else apply();\n})();\n`;
 await writeFile(join(out,"brand-runtime.js"),brandRuntime,"utf8");
 
@@ -23,9 +152,12 @@ for(const entry of await readdir(root,{withFileTypes:true})){
   if(skip.has(entry.name))continue;
   if(!allowed.has(extname(entry.name)))continue;
   if(entry.name.startsWith("wrangler."))continue;
+  if(extname(entry.name)===".html"&&!productionHtml.has(entry.name))continue;
   const source=join(root,entry.name),dest=join(out,entry.name);
   if(extname(entry.name)===".html"){
     let html=await readFile(source,"utf8");
+    html=applyStaticBrand(html);
+    html=addSeo(html,publicPages.get(entry.name));
     const tag='<script src="brand-runtime.js" defer></script>';
     if(!html.includes(tag))html=html.includes("</head>")?html.replace("</head>",tag+"\n</head>"):tag+"\n"+html;
     await writeFile(dest,html,"utf8");
@@ -33,6 +165,26 @@ for(const entry of await readdir(root,{withFileTypes:true})){
     await copyFile(source,dest);
   }
 }
+
+const publicBase=`https://${brand.domain}`;
+await writeFile(join(out,"robots.txt"),[
+  "User-agent: *",
+  "Allow: /",
+  `Sitemap: ${publicBase}/sitemap.xml`,
+  ""
+].join("\n"),"utf8");
+
+const sitemapUrls=[...publicPages.values()]
+  .filter(page=>page.sitemap)
+  .map(page=>`  <url><loc>${publicBase}${page.path}</loc></url>`)
+  .join("\n");
+await writeFile(join(out,"sitemap.xml"),[
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  sitemapUrls,
+  '</urlset>',
+  ''
+].join("\n"),"utf8");
 
 await cp(join(root,"shared"),join(out,"shared"),{recursive:true});
 
