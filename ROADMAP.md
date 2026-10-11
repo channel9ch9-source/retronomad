@@ -963,3 +963,22 @@ Public-product audit finding:
 - [x] request indexing for `/search`
 - [x] request indexing for `/catalogue`
 - [ ] revisit Search Console after Google has had time to crawl/index and collect query data
+
+
+### First collector SEO/acquisition page — validated 11 October 2026
+
+- [x] create an evidence-led UK/PAL physical-game identification guide
+- [x] target exact-copy acquisition intent rather than generic retro-gaming content
+- [x] explain UK-exact vs shared-PAL vs visual-evidence-required identification
+- [x] include launch-set examples backed by existing PALScout evidence
+- [x] link readers into Search, Catalogue and Listing Checker
+- [x] add Article + FAQ structured data
+- [x] add indexed canonical production route `/uk-pal-game-guide`
+- [x] add guide to sitemap
+- [x] add Guide link across public navigation and homepage discovery
+- [x] add regression/build/smoke coverage
+- [x] validation run `38161759309` passed 61/61 tests
+- [ ] deploy first acquisition guide
+- [ ] confirm live production smoke passes
+- [ ] request indexing for `https://grailraven.com/uk-pal-game-guide` in Search Console after deployment
+- [ ] later measure impressions/clicks/query terms before deciding the next guide cluster
