@@ -1159,3 +1159,17 @@ Implemented:
 - [x] validation run `38179493562` passed 71/71 tests
 - [x] deploy sharing experiment — run `38180110251`
 - [ ] manually verify copied summary on a live result
+
+
+### Listing Checker share-control visibility fix — validated
+
+Live screenshot showed the deployed classification result without the expected Copy result summary control.
+
+Fix:
+- [x] render the share control directly in `analyze.html` source instead of relying on runtime DOM creation
+- [x] include `listing-share.js` directly from the Listing Checker source
+- [x] bind the source-rendered button in `listing-share.js`
+- [x] retain dynamic creation as a fallback
+- [x] add regression coverage for visible markup + event binding
+- [x] validation run `38180622109` passed 72/72 tests
+- [ ] deploy visibility fix and retry live copy action
