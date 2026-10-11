@@ -1157,4 +1157,5 @@ Implemented:
 - [x] build-time injection keeps the main analyser source untouched
 - [x] regression tests verify privacy-safe field selection and production-build inclusion
 - [x] validation run `38179493562` passed 71/71 tests
-- [ ] deploy and manually verify copied summary on a live result
+- [x] deploy sharing experiment — run `38180110251`
+- [ ] manually verify copied summary on a live result
