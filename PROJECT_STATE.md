@@ -2333,3 +2333,14 @@ Production deployment run `38180110251` succeeded:
 - Worker version: `3ecfd380-a5d4-45b0-b2b8-fdb83d59799c`
 
 Remaining check: manually verify the Copy result summary control and copied text on a live Listing Checker result.
+
+
+## Listing Checker share-control visibility fix — validated, pending deployment
+
+A live screenshot after the first sharing deployment showed no visible Copy result summary control even though the production build included the helper.
+
+The control is now rendered directly in `analyze.html`, with `listing-share.js` included directly from source. The helper now binds an already-rendered button and keeps dynamic creation only as a fallback.
+
+Validation run `38180622109`: 72/72 tests passed; public catalogue remains 100 games.
+
+Next: deploy and manually verify the visible button and clipboard output.
