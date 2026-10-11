@@ -897,8 +897,9 @@ Validated and ready for production deployment:
 - [x] statically replace legacy public-brand text outside scripts/styles in the Cloudflare build while preserving internal compatibility identifiers
 - [x] add public-build regression coverage
 - [x] validation workflow passed: run `38155580640`
-- [ ] run the normal manual Cloudflare production deployment
+- [x] run the normal manual Cloudflare production deployment — run `38156024681`
 - [ ] verify live canonical/meta/robots/sitemap behavior after deployment
+- [ ] add automated post-deploy production smoke checks so future deployments verify the live custom domain automatically
 
 Purpose:
 - improve organic acquisition/readiness
