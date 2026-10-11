@@ -1905,3 +1905,31 @@ A site-wide static CSP was deliberately omitted after audit showed that Listing 
 Validation run: `38156899006` — passed.
 
 Audit also surfaced an older intentional RetroTechCollector automatic-pricing connector in `analyze.html` (added 23 September 2026). It is not represented in the current PriceCharting-led business/provider roadmap. Decide whether to retain, hide or retire it rather than deleting it implicitly.
+
+
+## Public credibility/provider cleanup — validated, pending deployment
+
+On 11 October 2026 the old public RetroTechCollector developer-key connector was retired from Listing Checker.
+
+Preserved:
+- manual Pricing v1 reference entry
+- local pricing-reference save/clear/export
+- comparison gating
+- Listing Checker photo OCR using Tesseract.js
+
+Removed:
+- public RTC API-key field/buttons
+- RTC browser-session key handling
+- RTC catalogue/price calls
+- automatic USD→GBP provider fetch path
+- RTC provider-result fields
+
+Git history retains the old implementation if ever needed.
+
+Public copy was also refreshed to use GrailRaven consistently in source-visible content and remove stale prototype/design-preview/backend-required language, while continuing to state accurately that live marketplace discovery, automatic provider-backed pricing and background notifications are not yet enabled.
+
+This is bundled with the previously validated security-header work.
+
+Validation run: `38158956959` — passed regression tests, smoke-script syntax and Cloudflare build.
+
+Next action: run the normal manual Cloudflare production deployment and require the post-deploy live smoke step to pass.
