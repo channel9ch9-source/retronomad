@@ -665,3 +665,18 @@ Next:
 2. verify production smoke
 3. manually type Final Fantasy VII and click Analyse listing
 4. if that works, retry FFVII UK example, then Silent Hill PAL and Rule of Rose
+
+
+## Listing Checker runtime fix — deployed and primary action verified
+
+Deployment run `38177384405` passed with 69/69 tests and production smoke on attempt 1.
+Worker version: `3dfbbb9a-9cb2-4ad9-b6a0-2c6b133a12d7`.
+
+Live verification:
+- Analyse listing button works
+- FFVII with SCES-00867 resolves to Final Fantasy VII / PS1 / UK exact
+- STRONG evidence
+- COMPARISON-READY
+- no price grading without a reference
+
+Remaining: verify Silent Hill PAL review behavior and Rule of Rose separate-market behavior.
