@@ -53,6 +53,18 @@ async function verify(){
   assert(guide.body.includes('<link rel="canonical" href="https://grailraven.com/uk-pal-game-guide">'),"Guide canonical URL missing");
   assert(guide.body.includes("How to identify a UK/PAL retro game copy."),"Guide primary heading missing");
 
+
+  const analyze=await fetchText("/analyze");
+  assert(analyze.response.status===200,`Listing Checker returned ${analyze.response.status}`);
+  for(const token of [
+    "let photoFiles=[];",
+    'let photoOcrText="";',
+    "function aggregateGalleryEvidence",
+    "function photoEvidenceSummary",
+    "async function scanListingPhotos",
+    'document.querySelector("#analyse").addEventListener("click",analyse)'
+  ]) assert(analyze.body.includes(token),`Listing Checker runtime dependency missing in production: ${token}`);
+
   const account=await fetchText("/account");
   assert(account.response.status===200,`Account page returned ${account.response.status}`);
   assert(account.body.includes('<meta name="robots" content="noindex,follow">'),"Account page missing noindex");
