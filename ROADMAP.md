@@ -391,10 +391,12 @@ Progress:
 - [x] use accurate identity/business/project information
 - [x] reference business-domain contact email and live grailraven.com product
 - [x] state that GrailRaven will not scrape or bypass eBay controls
-- [ ] wait for eBay's reconsideration response
-- [ ] if approved, build/test the eBay adapter in Sandbox
+- [x] receive eBay reconsideration response — rejected almost immediately under unspecified internal eligibility/risk controls
+- [ ] park further eBay applications for now
+- [ ] strengthen public product / catalogue / authorised provider integrations / real-user evidence
+- [ ] reconsider transparent reapplication later from a materially stronger position
+- [ ] if eventually approved, build/test the eBay adapter in Sandbox
 - [ ] pursue the appropriate production-access review
-- [ ] if rejected again, strengthen product/traffic evidence before another attempt
 
 The classifier must remain marketplace-independent so users can paste listing data manually even without eBay API access.
 
