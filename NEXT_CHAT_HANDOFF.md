@@ -433,3 +433,14 @@ Next: Search Console URL Inspection for `https://grailraven.com/uk-pal-game-guid
 Google Search Console live test for `https://grailraven.com/uk-pal-game-guide` succeeded and an indexing request was submitted on 11 October 2026.
 
 Do not repeatedly submit it. Wait for crawl/index/query data before deciding the next SEO content cluster.
+
+
+## PriceCharting contact timing — do not contact yet
+
+User prefers not to bother PriceCharting unnecessarily.
+
+Decision on 11 October 2026:
+- do not contact PriceCharting now solely about the RetroNomad -> GrailRaven rename
+- PriceCharting remains inactive
+- revisit whether a brief rename confirmation is prudent only immediately before purchasing Legendary / starting real API production use
+- do not represent the old approval as if it originally named GrailRaven
