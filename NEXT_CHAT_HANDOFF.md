@@ -588,3 +588,27 @@ Search -> Save -> Saved Hunts -> reopen/edit -> update in place -> Account sign-
 The Silent Hill PS1 test hunt remained intact after sign-in/sync with the updated £68 ceiling.
 
 Treat the Search/Saved Hunts/Account retention audit as complete unless later changes touch this path.
+
+
+## Listing Checker audit patch — ready to deploy
+
+Validated run `38169089612`: 67/67 tests; 100-game guard intact.
+
+Key fixes:
+- no release-level Comparison-ready state from title recognition alone
+- photo-OCR-only path allowed after scanning
+- English/UK manual confirmation explicitly means visual listing-photo evidence
+- explicit identifiers shown in Evidence used
+- manual pricing references cannot bleed across comparison keys
+- future reference dates rejected at save
+- public Pricing v1 / legacy RetroNomad wording cleaned up
+- pricing export uses GrailRaven filename
+- eBay URL limitations clarified
+- optional manual pricing controls collapsed by default
+- browser title aligned to Listing Checker
+
+Next:
+1. deploy current main
+2. require production smoke to pass
+3. manually exercise FFVII UK example, Silent Hill PAL example, Rule of Rose example
+4. verify price comparison remains blocked for REVIEW/SEPARATE and only grades Comparison-ready evidence
