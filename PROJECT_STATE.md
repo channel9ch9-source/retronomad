@@ -2362,3 +2362,15 @@ Minor wording polish is validated but not yet deployed:
 - `Complete · text` -> `Complete`
 
 Validation run `38180874849`: 73/73 tests.
+
+
+## Listing Checker sharing — final production deployment
+
+Deployment run `38180978208` succeeded:
+- 73/73 tests passed
+- public catalogue remained 100 games
+- no D1 migrations pending
+- production smoke passed on attempt 1
+- Worker version: `1a8b6135-86ed-4e37-ace2-a2c5ccd6747e`
+
+The organic-sharing acquisition experiment is complete and live.
