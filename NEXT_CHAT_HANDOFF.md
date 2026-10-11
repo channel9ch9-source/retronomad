@@ -426,3 +426,10 @@ Deployment run `38162267076` passed:
 Current Worker version: `27af9073-ea88-4eeb-950f-78c0fa1d133b`.
 
 Next: Search Console URL Inspection for `https://grailraven.com/uk-pal-game-guide`; if Google's live test says it is available, request indexing once.
+
+
+## First acquisition guide indexing — complete
+
+Google Search Console live test for `https://grailraven.com/uk-pal-game-guide` succeeded and an indexing request was submitted on 11 October 2026.
+
+Do not repeatedly submit it. Wait for crawl/index/query data before deciding the next SEO content cluster.
