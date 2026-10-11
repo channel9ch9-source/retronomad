@@ -2065,3 +2065,19 @@ A new regression contract protects the audited journey.
 Validation run `38163291294`: 62/62 tests passed. Public catalogue remains 100 games.
 
 Next: deploy and visually verify the Catalogue heading on production.
+
+
+## Visible literal-newline bug — fixed, pending redeployment
+
+Following user-journey patch deployment run `38163408484`, the user reported visible `\n\n...` text at the top-left of all pages.
+
+Root cause was in `scripts/build-cloudflare.mjs`: SEO/head insertion paths emitted literal `\\n` strings instead of real newline characters. Browsers treated that non-whitespace text in the document head as visible body text.
+
+Fixed in source:
+- all SEO/head insertions now use real newlines
+- public-build regression checks all production pages
+- production smoke checks the homepage head for the same bug
+
+Validation run `38163755549`: 62/62 tests passed; 100-game public catalogue guard unchanged.
+
+A fresh Cloudflare deployment is required to remove the already-live bad build output.
