@@ -2305,3 +2305,19 @@ On 11 October 2026 the three intended production outcomes were manually verified
 The primary Analyse listing button also works independently of the built-in examples.
 
 Pricing remains descriptive and ungraded until the user supplies a manual reference. This closes the current Listing Checker input -> evidence/classification -> pricing-gate audit.
+
+
+## Organic-sharing acquisition experiment — validated, pending deployment
+
+A lightweight Listing Checker sharing feature is ready.
+
+Production build behavior:
+- injects `listing-share.js` on the Listing Checker
+- adds a `Copy result summary` control only inside the result area
+- copied summary contains derived verdict fields and the canonical GrailRaven Listing Checker URL
+- excludes raw seller/listing URL, item ID, pasted title/description, item price and postage
+- uses Clipboard API when available with a browser fallback
+
+Validation run `38179493562`: 71/71 tests passed; public catalogue remains 100 games.
+
+Next: deploy and manually verify the copied output from a live FFVII/Silent Hill result.
