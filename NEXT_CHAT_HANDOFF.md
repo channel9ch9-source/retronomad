@@ -516,3 +516,12 @@ Next:
 1. deploy current main through normal Cloudflare workflow
 2. require production smoke to pass
 3. manually test Search -> Save this hunt -> Saved Hunts -> Open in Search/edit -> Account sign-in/sync
+
+
+## Retention journey audit deployed
+
+Deployment run `38166781719` passed with 65/65 tests and production smoke on attempt 1.
+
+Current Worker version: `73fc344a-a4e6-42bd-b0cb-5d334159470e`.
+
+Remaining verification: manually test the live Search -> Save -> Saved Hunts -> reopen/edit -> Account/sync path.
