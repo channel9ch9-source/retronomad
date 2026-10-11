@@ -382,3 +382,16 @@ test("Listing Checker inline runtime initializes without missing helper referenc
   };
   vm.runInNewContext(inlineScripts[0],sandbox,{timeout:1000});
 });
+
+
+test("Listing Checker renders the share control directly and binds it",async()=>{
+  const analyze=await read("analyze.html");
+  const share=await read("listing-share.js");
+  for(const token of [
+    'id="copyResultSummary"',
+    'id="copyResultSummaryStatus"',
+    'src="listing-share.js"'
+  ]) assert.ok(analyze.includes(token),`Listing Checker share control missing: ${token}`);
+  assert.ok(share.includes('button.addEventListener("click",onCopy)'));
+  assert.ok(share.includes('if(button){'));
+});
