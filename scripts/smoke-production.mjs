@@ -22,6 +22,7 @@ async function verify(){
   assert(home.body.includes('<link rel="canonical" href="https://grailraven.com/">'),"Homepage canonical URL missing");
   assert(home.body.includes('<meta property="og:site_name" content="GrailRaven">'),"Homepage Open Graph site name missing");
   assert(home.body.includes('type="application/ld+json"'),"Homepage structured data missing");
+  assert(!home.body.split("</head>")[0].includes("\\n"),"Homepage head contains visible literal newline escape text");
   for(const [name,value] of [
     ["x-content-type-options","nosniff"],
     ["x-frame-options","DENY"],
