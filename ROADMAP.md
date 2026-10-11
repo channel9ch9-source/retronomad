@@ -924,7 +924,7 @@ Purpose:
 - [x] preserve Listing Checker photo OCR by deliberately not applying a site-wide static CSP while Tesseract loads from jsDelivr
 - [x] extend regression and production smoke contracts
 - [x] validation run `38156899006` passed
-- [ ] deploy security-header bundle and verify live headers
+- [x] deploy security-header bundle and verify live headers — run `38159086437`
 
 Public-product audit finding:
 - the Listing Checker still exposes the intentional September 2026 RetroTechCollector automatic-pricing connector
@@ -945,5 +945,5 @@ Public-product audit finding:
 - [x] refresh Terms wording/date without weakening user-verification disclaimers
 - [x] add regression guards that RTC cannot accidentally reappear publicly and manual pricing/OCR remain intact
 - [x] full validation run `38158956959` passed
-- [ ] deploy bundled credibility/provider cleanup + security headers
-- [ ] verify live smoke check passes after deployment
+- [x] deploy bundled credibility/provider cleanup + security headers — run `38159086437`
+- [x] verify live smoke check passes after deployment — attempt 1
