@@ -52,8 +52,12 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
 
   const account=await readBuilt("account.html");
   const wishlist=await readBuilt("wishlist.html");
+  const analyze=await readBuilt("analyze.html");
   assert.ok(account.includes('<meta name="robots" content="noindex,follow">'));
   assert.ok(wishlist.includes('<meta name="robots" content="noindex,follow">'));
+  assert.ok(analyze.includes('<script src="listing-share.js" defer></script>'),"Listing Checker sharing helper missing from production build");
+  assert.ok(analyze.includes(".listing-share-row{"),"Listing Checker sharing control styling missing from production build");
+  await fs.access(join(out,"listing-share.js"));
 
   const headers=await readBuilt("_headers");
   for(const required of [
