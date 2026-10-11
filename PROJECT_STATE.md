@@ -1967,3 +1967,13 @@ Completed:
 - Google confirmed both were added to the priority crawl queue
 
 Do not repeatedly resubmit the same URLs; wait for normal crawling/indexing and later use Search Console for impressions, queries, clicks and indexing diagnostics.
+
+
+## Resend production sending domain — verified 11 October 2026
+
+The Resend dashboard shows `grailraven.com` as **Verified**.
+
+Production transactional sender remains:
+- `GrailRaven <accounts@grailraven.com>`
+
+This closes the outstanding sending-domain verification item. The deployment already preserves the Resend API secret and the account backend reports transactional email delivery configured.
