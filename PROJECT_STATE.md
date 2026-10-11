@@ -2167,3 +2167,18 @@ Production deployment run `38168228445` succeeded:
 - Worker version: `902cfe88-b3e4-4ad4-9eb7-73124460ad54`
 
 User screenshot confirmed the reopened Silent Hill hunt now renders the canonical Game identified panel, preserves the saved filters and shows a clear Update Saved Hunt action instead of demo result cards.
+
+
+## Saved Hunt update-in-place — live verification passed
+
+On 11 October 2026, the live Silent Hill PS1 test hunt was edited from a £73 maximum delivered price to £68 and updated using the reopened Search edit flow.
+
+Verified:
+- the original hunt was updated in place
+- Saved Hunts count remained 1
+- no duplicate hunt was created
+- the updated criterion persisted as £68
+
+This closes the Search -> Save -> Saved Hunts -> reopen/edit loop.
+
+Remaining manual retention check: Account sign-in -> automatic Saved Hunt sync.
