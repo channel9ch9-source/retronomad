@@ -577,3 +577,14 @@ Result:
 Search -> Save -> reopen -> edit -> Saved Hunts is now manually verified.
 
 Remaining audit step: test Account passwordless sign-in and automatic Saved Hunt sync with the existing hunt.
+
+
+## Retention journey — complete
+
+User manually verified the full production path on 11 October 2026:
+
+Search -> Save -> Saved Hunts -> reopen/edit -> update in place -> Account sign-in -> automatic sync.
+
+The Silent Hill PS1 test hunt remained intact after sign-in/sync with the updated £68 ceiling.
+
+Treat the Search/Saved Hunts/Account retention audit as complete unless later changes touch this path.
