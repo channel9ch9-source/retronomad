@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
+import vm from "node:vm";
 
 async function read(name){return fs.readFile(new URL("../"+name,import.meta.url),"utf8");}
 
@@ -326,4 +327,58 @@ test("Listing Checker example buttons use explicit DOM lookups and run analysis"
     'analyse();'
   ]) assert.ok(analyze.includes(token),`Listing Checker example flow missing: ${token}`);
   assert.equal(analyze.includes('title.value="Final Fantasy 7 PS1 PAL UK complete black label"'),false);
+});
+
+
+test("Listing Checker inline runtime initializes without missing helper references",async()=>{
+  const html=await read("analyze.html");
+  for(const token of [
+    "let photoFiles=[];",
+    'let photoOcrText="";',
+    "let photoOcrCandidates=[];",
+    "let photoSignals=[];",
+    "let galleryPhotoEvidence=[];",
+    "function renderPhotoPreviews",
+    "function aggregateGalleryEvidence",
+    "function galleryCompletenessSignal",
+    "function conditionSummary",
+    "function updateGallerySummary",
+    "function photoEvidenceSummary",
+    "async function scanListingPhotos"
+  ]) assert.ok(html.includes(token),`Listing Checker missing runtime dependency: ${token}`);
+
+  const inlineScripts=[...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/gi)]
+    .map(m=>m[1])
+    .filter(Boolean);
+  assert.ok(inlineScripts.length>=1,"Listing Checker main inline script missing");
+
+  const fakeElement=()=>({
+    addEventListener(){},
+    setAttribute(){},
+    classList:{toggle(){return false;}},
+    style:{},
+    value:"",
+    checked:false,
+    textContent:"",
+    innerHTML:""
+  });
+  const sandbox={
+    window:{RELEASE_EVIDENCE:[]},
+    document:{
+      querySelector(){return fakeElement();},
+      querySelectorAll(){return[];},
+      createElement(){return fakeElement();},
+      createTextNode(){return{};},
+      body:{appendChild(){}}
+    },
+    localStorage:{getItem(){return null;},setItem(){},removeItem(){}},
+    URL,
+    Blob,
+    AbortController,
+    setTimeout(){return 0;},
+    clearTimeout(){},
+    alert(){},
+    console
+  };
+  vm.runInNewContext(inlineScripts[0],sandbox,{timeout:1000});
 });
