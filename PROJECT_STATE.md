@@ -2223,3 +2223,15 @@ Other fixes:
 Validation run `38169089612`: 67/67 tests passed. Public catalogue remains 100 games.
 
 Next: normal Cloudflare deploy, then manually test the three built-in examples and one gated manual price comparison.
+
+
+## Listing Checker audit patch deployed — 11 October 2026
+
+Production deployment run `38169240742` succeeded:
+- 67/67 tests passed
+- public catalogue remained 100 games
+- no D1 migrations pending
+- production smoke passed on attempt 1
+- Worker version: `59ee7b37-353a-408f-a683-e10d62606ad2`
+
+Remaining verification: manually exercise the FFVII UK, Silent Hill PAL and Rule of Rose examples plus the price-comparison gate.
