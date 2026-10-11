@@ -1010,7 +1010,7 @@ Findings fixed:
 - [x] preserve Saved Hunts -> Account path
 - [x] add regression coverage for the audited journey and stale-copy regressions
 - [x] validation run `38163291294` passed 62/62 tests
-- [ ] deploy user-journey audit patch
+- [x] deploy user-journey audit patch — run `38163942682`
 - [ ] visually confirm Catalogue heading typography on production
 
 
@@ -1027,5 +1027,5 @@ Fix:
 - [x] add public-build regression asserting no production page head contains literal `\\n`
 - [x] add live production-smoke assertion for the same regression
 - [x] validation run `38163755549` passed 62/62 tests
-- [ ] redeploy fixed build
-- [ ] visually confirm stray top-left text is gone
+- [x] redeploy fixed build — run `38163942682`
+- [x] visually confirm stray top-left text is gone — user confirmed 11 Oct 2026
