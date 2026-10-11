@@ -1977,3 +1977,38 @@ Production transactional sender remains:
 - `GrailRaven <accounts@grailraven.com>`
 
 This closes the outstanding sending-domain verification item. The deployment already preserves the Resend API secret and the account backend reports transactional email delivery configured.
+
+
+## First SEO/acquisition guide — validated, pending deployment
+
+On 11 October 2026 GrailRaven's first collector-focused acquisition page was built:
+
+`/uk-pal-game-guide`
+
+Working title:
+**How to identify a UK/PAL retro game copy**
+
+Strategy:
+- target collectors actively trying to identify a physical release
+- reinforce GrailRaven's exact-copy/PALScout differentiation
+- use useful standalone guidance rather than thin SEO copy
+- route relevant readers into Search, Catalogue and Listing Checker
+
+The guide covers:
+- PAL vs UK-specific identity
+- serial/catalogue-code evidence
+- barcodes
+- packaging/language evidence
+- edition separation
+- unusual market histories
+- completeness
+- seller-photo checklist
+- common identification mistakes
+
+Examples use existing launch evidence including Final Fantasy VII, Silent Hill, Tombi! 2, Silent Hill 2 editions, Rule of Rose and Shenmue II.
+
+It has its own canonical route, sitemap inclusion, Article/FAQ structured data, site navigation links, homepage discovery and production smoke coverage.
+
+Validation run `38161759309`: 61/61 tests passed; 100-game publication guard unchanged.
+
+Next: deploy, verify live smoke, then request Google indexing for the guide.
