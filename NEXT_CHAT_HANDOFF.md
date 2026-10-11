@@ -313,3 +313,14 @@ Validation run `38155580640` passed.
 Production deployment run `38156024681` also passed with 57/57 tests.
 Worker version: `4771a6fb-676f-427b-8c2f-bc8a22f158cb`.
 Cloudflare logs confirm the new production assets were uploaded. Add automated live-domain smoke verification to future deployments.
+
+
+## Public acquisition hardening fully verified — 11 October 2026
+
+The corrected deployment run `38156550993` succeeded and the new live-production smoke step passed on its first attempt.
+
+Cloudflare's canonical static-asset routes are extensionless (for example `/search`, not `/search.html`); sitemap/canonical metadata and smoke assertions were corrected accordingly.
+
+Current Worker version: `52c90563-d3bd-415a-ad2c-5d0dba23a7c7`.
+
+This milestone is closed. Future deploys now verify the live custom domain automatically after deployment.
