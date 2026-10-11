@@ -377,6 +377,34 @@ function syncLegacyFields(){
   document.querySelector("#complete").value=cib&&!boxDisc&&!disc?"cib":boxDisc&&!disc?"manual-optional":disc?"loose-ok":"any";
   document.querySelector("#excludePromo").checked=!document.querySelector("#editionPromo").checked;
 }
+function applyTargetToVisibleFilters(t={}){
+ const release=String(t.releasePreference||"pal-compatible");
+ const uk=release==="uk-preferred"||release==="uk-only";
+ const eu=release==="europe-pal";
+ document.querySelector("#regionUk").checked=uk||(!uk&&!eu);
+ document.querySelector("#regionEu").checked=eu||(!uk&&!eu);
+
+ const edition=String(t.editionPreference||"any");
+ document.querySelector("#releaseOriginal").checked=edition==="original"||edition==="budget-ok";
+ document.querySelector("#releaseBudget").checked=edition==="budget-ok";
+ document.querySelector("#releaseReissue").checked=edition==="budget-ok";
+ document.querySelector("#editionPromo").checked=t.excludePromo===false;
+
+ const complete=String(t.completeness||"any");
+ document.querySelector("#completeCib").checked=complete==="cib";
+ document.querySelector("#completeBoxDisc").checked=complete==="manual-optional";
+ document.querySelector("#completeDisc").checked=complete==="loose-ok";
+
+ document.querySelector("#condition").value=t.condition||"any";
+ document.querySelector("#maxPrice").value=t.maxDeliveredGbp!=null?"£"+t.maxDeliveredGbp:"£100";
+ document.querySelector("#english").checked=t.englishRequired===true;
+ document.querySelector("#englishSwitch").classList.toggle("on",document.querySelector("#english").checked);
+ syncLegacyFields();
+}
+function resetSaveButtonLabel(){
+ document.querySelector("#selectionSave").textContent=window.currentHuntId?"Update Saved Hunt":"Save this hunt";
+}
+
 function fallbackCatalogueResolution(query,platform){
  const q=String(query||"").trim().toLowerCase();
  const rows=catalogueIndex.filter(game=>
@@ -555,6 +583,7 @@ gameInput.addEventListener("input",e=>{
  document.querySelector("#searchStatus").textContent="";
  document.querySelector("#saveBtn").disabled=true;
  window.currentTarget=null;
+ resetSaveButtonLabel();
  scheduleCatalogueSuggestions(e.target.value);
 });
 gameInput.addEventListener("focus",()=>{if(gameInput.value.trim().length>=2)scheduleCatalogueSuggestions(gameInput.value);});
@@ -585,17 +614,17 @@ platformButtons.forEach(button=>button.addEventListener("click",()=>{
 }));
 
 const filterIds=["regionUk","regionUs","regionJp","regionEu","releaseOriginal","releaseBudget","releaseReissue","releaseLimited","editionStandard","editionCollector","editionPromo","completeCib","completeBoxDisc","completeDisc","condition","maxPrice"];
-filterIds.forEach(id=>{const el=document.querySelector("#"+id);el?.addEventListener("change",syncLegacyFields);el?.addEventListener("input",syncLegacyFields);});
+filterIds.forEach(id=>{const el=document.querySelector("#"+id);const changed=()=>{syncLegacyFields();resetSaveButtonLabel();};el?.addEventListener("change",changed);el?.addEventListener("input",changed);});
 document.querySelector("#englishToggle").addEventListener("click",()=>{
  const input=document.querySelector("#english"),sw=document.querySelector("#englishSwitch");
- input.checked=!input.checked;sw.classList.toggle("on",input.checked);
+ input.checked=!input.checked;sw.classList.toggle("on",input.checked);resetSaveButtonLabel();
 });
 document.querySelector("#resetFilters").addEventListener("click",()=>{
  ["regionUs","regionJp","regionEu","releaseBudget","releaseReissue","releaseLimited","editionCollector","editionPromo","completeBoxDisc","completeDisc"].forEach(id=>document.querySelector("#"+id).checked=false);
  ["regionUk","releaseOriginal","editionStandard","completeCib"].forEach(id=>document.querySelector("#"+id).checked=true);
  document.querySelector("#condition").value="any";document.querySelector("#maxPrice").value="£100";
  document.querySelector("#english").checked=true;document.querySelector("#englishSwitch").classList.add("on");
- syncLegacyFields();
+ syncLegacyFields();resetSaveButtonLabel();
 });
 document.querySelector("#mobileFilterButton").addEventListener("click",()=>{
  const panel=document.querySelector("#searchFilters"),button=document.querySelector("#mobileFilterButton"),open=panel.classList.toggle("mobile-open");
@@ -621,7 +650,6 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
   result={hunt,created:false,updated:true};
  }else{
   result=RetroNomadSavedHunts.create(target);
-  if(result.hunt?.id)window.currentHuntId=result.hunt.id;
  }
  status.innerHTML=(result.updated?"Saved Hunt updated. ":result.created?"Saved to your hunts. ":"This target was already saved. ")+'<a href="wishlist.html">Open Saved Hunts</a>.';
  document.querySelector("#selectionSave").textContent=result.updated?"Updated ✓":"Saved ✓";
@@ -660,9 +688,7 @@ document.querySelector("#saveBtn").addEventListener("click",async()=>{
  document.querySelector("#game").value=t.game||"Silent Hill";
  document.querySelector("#platform").value=t.platform||"PS1";
  platformButtons.forEach(b=>b.classList.toggle("active",b.dataset.platform===document.querySelector("#platform").value));
- document.querySelector("#condition").value=t.condition||"any";
- document.querySelector("#maxPrice").value=t.maxDeliveredGbp!=null?"£"+t.maxDeliveredGbp:"£100";
- document.querySelector("#english").checked=t.englishRequired===true;document.querySelector("#englishSwitch").classList.toggle("on",document.querySelector("#english").checked);
+ applyTargetToVisibleFilters(t);
  document.querySelector("#previewTerm").textContent=t.game;
  const restoredCanonical=(t.catalogueId&&catalogueIndex.find(g=>g.id===t.catalogueId))||catalogueIndex.find(g=>g.title===t.game&&g.platform===t.platform)||null;
  setHeroArtwork(restoredCanonical,t.game);
