@@ -207,3 +207,32 @@ test("first collector acquisition guide is evidence-led and internally linked",a
     assert.equal(guide.includes(retired),false,`guide should not expose retired provider: ${retired}`);
   }
 });
+
+
+test("new-visitor journey stays clear and production-facing",async()=>{
+  const home=await read("index.html");
+  const search=await read("search.html");
+  const catalogue=await read("catalogue.html");
+  const wishlist=await read("wishlist.html");
+  const account=await read("account.html");
+
+  assert.ok(home.includes('href="search.html">Search GrailRaven</a>'),"Homepage missing primary Search CTA");
+  assert.ok(home.includes('href="analyze.html">Check a listing</a>'),"Homepage missing Listing Checker CTA");
+
+  assert.ok(catalogue.includes("<h1>Browse the GrailRaven catalogue.</h1>"),"Catalogue hero copy drifted");
+  assert.ok(catalogue.includes('.catalogue-hero h1{margin:8px 0 10px;font-family:"Cinzel"'),"Catalogue hero must use the shared serif display family");
+  assert.ok(catalogue.includes('id="findGame"'),"Catalogue missing exact-game Search handoff");
+  assert.ok(catalogue.includes('id="saveGame"'),"Catalogue missing Save Hunt handoff");
+
+  assert.ok(search.includes("Collector intelligence · Exact-copy search"),"Search exposes stale/internal eyebrow copy");
+  assert.equal(search.includes("UI v2 preview"),false,"Search must not expose internal preview wording");
+  assert.equal(search.includes("being designed to filter"),false,"Search must not use stale prototype wording");
+  assert.ok(search.includes('id="selectionSave"'),"Search missing visible Save Hunt action after game identification");
+
+  assert.ok(wishlist.includes('href="account.html"'),"Saved Hunts missing Account path");
+  assert.equal(wishlist.includes("Account sync backend is not deployed"),false,"Saved Hunts exposes stale deployment wording");
+
+  assert.ok(account.includes("<h2>Account service unavailable</h2>"),"Account missing current service fallback");
+  assert.equal(account.includes("GitHub Pages"),false,"Account exposes stale hosting copy");
+  assert.equal(account.includes("Account backend not deployed yet"),false,"Account exposes stale backend copy");
+});
