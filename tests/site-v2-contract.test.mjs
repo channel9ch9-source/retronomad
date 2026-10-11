@@ -285,3 +285,25 @@ test("reopened Saved Hunts render canonical edit state instead of demo results",
     'Loaded from Saved Hunts. Adjust the filters, then update this hunt when ready.'
   ]) assert.ok(search.includes(token),`reopened Saved Hunt flow missing: ${token}`);
 });
+
+
+test("Listing Checker keeps release-level pricing evidence-gated",async()=>{
+  const analyze=await read("analyze.html");
+
+  assert.ok(analyze.includes('if(game&&!ev&&cls==="ready")'));
+  assert.ok(analyze.includes("A game-title match is not release proof."));
+  assert.ok(analyze.includes("Add a listing title or identifier, or scan the listing photos first."));
+  assert.ok(analyze.includes("I visually confirmed English / UK packaging in the listing photos."));
+  assert.ok(analyze.includes("const shownIds=[...new Set([explicitId,...candidates]"));
+
+  assert.ok(analyze.includes("function clearPricingValueFields()"));
+  assert.ok(analyze.includes("if(previousKey&&previousKey!==key)clearPricingValueFields()"));
+  assert.ok(analyze.includes("Reference date cannot be in the future."));
+
+  assert.ok(analyze.includes("Optional price comparison"));
+  assert.ok(analyze.includes("<h4>Price comparison</h4>"));
+  assert.ok(analyze.includes('a.download="grailraven-pricing-references.json"'));
+  assert.equal(analyze.includes('a.download="retronomad-pricing-v1.json"'),false);
+  assert.equal(analyze.includes('copy="RetroNomad cannot safely place this listing into a comparison bucket yet."'),false);
+  assert.equal(analyze.includes('Analyse a listing first so RetroNomad can build the exact pricing bucket.'),false);
+});
