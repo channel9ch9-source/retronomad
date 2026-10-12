@@ -380,3 +380,12 @@ Near-term order is now:
 6. review/sign the DocuSign agreement when it arrives.
 
 This does not change the decision to defer active community promotion until the marketplace/search loop is materially more complete.
+
+
+## Catalogue breadth milestone reached — 12 October 2026
+
+The IGDB-backed canonical catalogue is now live with 8,462 PS1/PS2/Dreamcast game-platform records while preserving the 100 PALScout-deep launch records.
+
+This removes catalogue breadth as the main immediate product blocker. The dominant remaining usefulness gap is authorised marketplace inventory and trustworthy pricing/comparison data.
+
+Do not interpret the broader catalogue as a reason to begin active community promotion yet; the prior distribution-timing decision still stands until the Search -> Filter -> Compare -> Alert loop has meaningful live inventory/pricing utility.
