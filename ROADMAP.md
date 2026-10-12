@@ -1336,3 +1336,15 @@ Smoke-script commit: `534ea8b4714772fad628d5f4b71ac36c9908801f`. No deployment o
 - [x] Search conservatively labels **Catalogue metadata** (not PALScout-deep), shows **Live listings not connected yet**, and offers **Save this hunt**
 - [ ] Optional: verify the new BASE_ONLY Saved Hunt is actually persisted and visible in Saved Hunts; availability of the button alone is not a save test
 - [ ] Resume approved PriceCharting real pricing/offers benchmark decision with the existing cost/provider gate; no new subscription or public source activation without user approval
+
+
+### Expanded catalogue → Search → Saved Hunts milestone closed — 12 October 2026
+
+- [x] Expanded 8,462-game public index passed production smoke (`38313317268`)
+- [x] User verified Catalogue totals, platform counts and game cards
+- [x] User screenshot confirmed BASE_ONLY **2006 FIFA World Cup / PS2** canonical identification in Search with honest metadata-only coverage and no fabricated inventory
+- [x] User confirmed that game successfully appears in **Saved Hunts** after saving
+- [ ] Decide with the user when to incur the documented PriceCharting Legendary subscription cost for a real 100-target pricing and Marketplace-offer benchmark
+- [ ] Once explicitly authorised, prepare paid benchmark credentials only as GitHub/Cloudflare secrets and run the hard-gated real workflow; assess actual UK/PAL coverage before public provider activation
+
+Continue prioritising commercial usefulness over feature count; no premature community promotion.
