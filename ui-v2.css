@@ -155,3 +155,6 @@ img{max-width:100%}
   .v2-hero-art span{left:14px;bottom:14px;font-size:26px;opacity:.65}
   .v2-hero-art small{display:none}
 }
+
+.v2-igdb-credit{width:min(1180px,calc(100% - 32px));margin:18px auto 28px;color:#7f8a93;font-size:10px;line-height:1.45;text-align:center}
+.v2-igdb-credit a{color:#c8d0d6;text-decoration:underline;text-underline-offset:2px}
