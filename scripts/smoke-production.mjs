@@ -54,6 +54,36 @@ async function verify(){
   assert(guide.body.includes("How to identify a UK/PAL retro game copy."),"Guide primary heading missing");
 
 
+  // Verify the same public catalogue index is available to both browse and hunt flows.
+  const cataloguePage=await fetchText("/catalogue");
+  assert(cataloguePage.response.status===200,`Catalogue returned ${cataloguePage.response.status}`);
+  const searchPage=await fetchText("/search");
+  assert(searchPage.response.status===200,`Search returned ${searchPage.response.status}`);
+  for(const [pageName,page] of [["Catalogue",cataloguePage],["Search",searchPage]]){
+    assert(page.body.includes('<script src="catalogue-index.js"></script>'),`${pageName} missing public catalogue index script`);
+    assert(page.body.includes('https://www.igdb.com/'),`${pageName} missing IGDB metadata attribution`);
+  }
+
+  const index=await fetchText("/catalogue-index.js");
+  assert(index.response.status===200,`Public catalogue index returned ${index.response.status}`);
+  const marker="window.BASE_CATALOGUE_INDEX=";
+  const offset=index.body.indexOf(marker);
+  assert(offset!==-1,"Public catalogue index assignment missing");
+  let games;
+  try{
+    games=JSON.parse(index.body.slice(offset+marker.length).trim().replace(/;\s*$/,""));
+  }catch(error){
+    throw new Error("Public catalogue index is not valid JSON: "+error.message);
+  }
+  assert(Array.isArray(games),"Public catalogue index is not an array");
+  assert(games.length>=8000,`Expanded catalogue unexpectedly small: ${games.length}`);
+  assert(games.filter(game=>game.coverage==="PALSCOUT_DEEP").length===100,"100 PALScout-deep records not preserved in public index");
+  assert(new Set(games.map(game=>game.id)).size===games.length,"Public catalogue index contains duplicate IDs");
+  for(const platform of ["PS1","PS2","Dreamcast"]){
+    assert(games.some(game=>game.platform===platform),`Public catalogue index missing ${platform}`);
+  }
+  assert(!index.body.includes('"artwork":'),"Unapproved artwork appeared in public catalogue index");
+
   const analyze=await fetchText("/analyze");
   assert(analyze.response.status===200,`Listing Checker returned ${analyze.response.status}`);
   for(const token of [
