@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: Type PROMOTE_IGDB_CATALOGUE after IGDB commercial approval is recorded
+        description: Type PROMOTE_IGDB_CATALOGUE after IGDB written commercial integration authorization is recorded
         required: true
         type: string
 
