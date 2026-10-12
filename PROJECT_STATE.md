@@ -2511,3 +2511,10 @@ The new production smoke test was manually triggered and passed: GitHub Actions 
 Live assertions include public Catalogue/Search availability, IGDB metadata attribution, a parseable 8,000+ game compact index with all three platforms and exactly 100 PALScout-deep entries, unique IDs and no artwork payload.
 
 Outstanding verification: browser visual Catalogue -> detail -> Search behavior with the expanded dataset. Next strategic dependency after that remains real licensed PriceCharting pricing / Marketplace coverage validation.
+
+
+## Live expanded Catalogue display — visually confirmed 12 October 2026
+
+User confirmed production Catalogue displays all expected game totals (8,462 overall; PS1 3,727, PS2 4,030, Dreamcast 705) with populated, scrollable game cards. Live smoke run `38313317268` previously passed. Platform-specific search/filter behaviour and canonical Catalogue -> Search navigation have **not yet been manually verified in this continuation**.
+
+Next: validate a Base catalogue detail record's **Find this game** handoff and conservative metadata-only coverage display in Search. Continue toward authorised PriceCharting pricing and Marketplace inventory assessment afterwards.
