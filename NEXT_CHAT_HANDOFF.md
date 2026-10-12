@@ -830,3 +830,30 @@ Fixes on main:
 Validation run `38277115940`: 73/73 passed.
 
 Next: rerun `Promote approved IGDB catalogue` with `PROMOTE_IGDB_CATALOGUE`.
+
+
+## IGDB full catalogue is now live
+
+Successful promotion run: `38300719987`.
+
+Current canonical catalogue:
+- 8,462 games
+- PS1 3,727 / PS2 4,030 / Dreamcast 705
+- 8,362 BASE_ONLY + 100 PALSCOUT_DEEP
+- all 100 deep seeds preserved/mapped
+- artwork 0 / disabled
+- search benchmark 24/24
+- index 1.376 MiB
+- median 44.74 ms / p95 82.95 ms
+
+Production:
+- D1 dataset `cat-455202e6a4daca830a8b` active
+- canonical promotion commit `fc958b5dd1e4b223d0bfc938040cdb2fa5068855`
+- Worker version `5574060c-3d30-4413-9de3-c17a0f1c8a88`
+- IGDB attribution included conditionally in production build
+- DocuSign still pending; interim written integration authorization remains the basis for proceeding
+
+Future promotion workflow now includes production smoke verification.
+Post-promotion validation run `38301997631`: 73/73 tests with 8,462-game build.
+
+Next: manually inspect live Catalogue/Search behavior with expanded data, then resume marketplace/pricing integration work rather than community promotion.
