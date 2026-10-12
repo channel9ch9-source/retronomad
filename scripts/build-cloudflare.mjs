@@ -179,6 +179,23 @@ for(const entry of await readdir(root,{withFileTypes:true})){
   }
 }
 
+const attributionCatalogue=JSON.parse(await readFile(join(root,"catalogue","base-catalogue.json"),"utf8"));
+const attributionGames=Array.isArray(attributionCatalogue)?attributionCatalogue:(attributionCatalogue.games||[]);
+const usesIgdbCatalogue=attributionGames.some(game=>
+  String(game?.externalRefs?.igdb||"").trim() ||
+  (game?.provenance||[]).some(row=>String(row?.source||"").toUpperCase().includes("IGDB"))
+);
+if(usesIgdbCatalogue){
+  const credit='<div class="v2-igdb-credit">Game catalogue metadata provided in part by <a href="https://www.igdb.com/" rel="noopener">IGDB.com</a>.</div>';
+  for(const pageName of ["index.html","search.html","catalogue.html","about.html"]){
+    const pagePath=join(out,pageName);
+    let html=await readFile(pagePath,"utf8");
+    if(html.includes("v2-igdb-credit"))continue;
+    html=html.includes("</main>")?html.replace("</main>",credit+"\n</main>"):html.replace("</body>",credit+"\n</body>");
+    await writeFile(pagePath,html,"utf8");
+  }
+}
+
 const publicBase=`https://${brand.domain}`;
 const securityHeaders=[
   "/*",
