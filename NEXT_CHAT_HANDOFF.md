@@ -876,3 +876,12 @@ Validation workflow run `38308267634` succeeded (including smoke-script syntax c
 **Next human action:** open [Smoke test GrailRaven production](https://github.com/channel9ch9-source/retronomad/actions/workflows/smoke-production.yml), choose **Run workflow** on `main`, and confirm its live checks pass. Then visually inspect `https://grailraven.com/catalogue` and `https://grailraven.com/search` for broad search, platform filters, deep-vs-base coverage, canonical game selection and Saved Hunt handoff. Direct live-site access was unavailable to the assistant in this chat, so do not mark visual testing completed.
 
 After verification, resume the authorised PriceCharting pricing + Marketplace-offer benchmark decision. Keep provider/artwork disabled, do not subscribe or activate new paid access without user approval, and do not begin premature community promotion.
+
+
+## Expanded catalogue live production smoke — passed 12 October 2026
+
+User manually dispatched `Smoke test GrailRaven production` on `main`. GitHub Actions run `38313317268` **completed successfully** (the `Verify live production domain` step passed). This validates the newly added live Catalogue/Search/index/attribution/artwork-gate assertions.
+
+Next is **browser-level visual verification**: inspect `https://grailraven.com/catalogue` for correct 8,462-game stats, populated browse cards, platform filtering and title search; follow a canonical detail card through `Find this game` to Search, where coverage should be represented conservatively. Then return to the authorised PriceCharting real benchmark decision. The assistant's direct web retrieval cannot inspect the live rendered UI in this chat, so do not claim visual verification has passed.
+
+Artwork and paid marketplace provider remain disabled; DocuSign pending.
