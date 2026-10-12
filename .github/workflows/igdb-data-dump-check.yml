@@ -1,0 +1,34 @@
+name: Check IGDB Data Dumps
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Check Data Dump access
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+        run: node scripts/igdb-data-dump-check.mjs
+
+      - name: Upload access report
+        uses: actions/upload-artifact@v7
+        with:
+          name: igdb-data-dump-access
+          path: benchmarks/igdb-data-dump-access.json
+          if-no-files-found: error
+          retention-days: 30
