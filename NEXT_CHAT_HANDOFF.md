@@ -795,3 +795,14 @@ Current safe sequence:
 Conditional IGDB attribution is already implemented in the public build and appears only when IGDB-backed canonical records are active.
 
 Validation run `38272734523`: 73/73 tests.
+
+
+## IGDB promotion gate ready
+
+Data Dump access check run `38273861123` passed:
+- 80 endpoints available
+- games, release_dates, covers and alternative_names all present
+
+User has set repository variable `IGDB_COMMERCIAL_APPROVED=true`.
+
+Next: run `Promote approved IGDB catalogue` with typed confirmation `PROMOTE_IGDB_CATALOGUE`. Keep artwork disabled and verify production after promotion.
