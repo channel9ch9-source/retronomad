@@ -1301,3 +1301,15 @@ Successful promotion run `38300719987`:
 - [x] post-promotion main validation `38301997631` passed 73/73 with 8,462-game build
 
 Next: manually inspect the live Catalogue/Search experience with the expanded data, then continue toward authorised marketplace/pricing integration. DocuSign remains pending.
+
+
+### Full-catalogue production verification — smoke extension committed 12 October 2026
+
+- [x] inspect source routes and confirm Catalogue/Search both consume `catalogue-index.js`
+- [x] strengthen the production smoke test to validate the expanded 8,000+ index, 100 PALScout-deep records, three platforms, unique IDs, IGDB attribution and artwork omission
+- [x] validate updated smoke script in CI — run `38308267634` passed
+- [ ] manually dispatch [Smoke test GrailRaven production](https://github.com/channel9ch9-source/retronomad/actions/workflows/smoke-production.yml) on `main` and confirm pass
+- [ ] visually check live Catalogue/Search across platforms, coverage distinctions and Saved Hunt handoff
+- [ ] resume PriceCharting real-benchmark readiness/expense decision; preserve provider and artwork gates until authorised
+
+Smoke-script commit: `534ea8b4714772fad628d5f4b71ac36c9908801f`. No deployment or source-data alteration was made by this verification step. The assistant could not browse the live site directly from its environment; browser verification remains outstanding.
