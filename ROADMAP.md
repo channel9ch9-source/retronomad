@@ -1320,3 +1320,11 @@ Smoke-script commit: `534ea8b4714772fad628d5f4b71ac36c9908801f`. No deployment o
 - [x] Dispatch `Smoke test GrailRaven production` on `main` — [run 38313317268](https://github.com/channel9ch9-source/retronomad/actions/runs/38313317268) passed, including `Verify live production domain`
 - [ ] Manually inspect visual browse/filter/search and canonical Catalogue -> Search handoff
 - [ ] Evaluate the paid PriceCharting benchmark when ready; keep artwork/inventory gates off pending provider validation
+
+
+### Expanded Catalogue visual counts/cards verified — 12 October 2026
+
+- [x] Live production smoke run `38313317268` passed
+- [x] User confirmed 8,462 total games, platform totals 3,727/4,030/705, and populated scrollable game cards on `/catalogue`
+- [ ] Manually verify Base catalogue card -> detail -> **Find this game** opens canonical game in Search, clearly showing metadata-only coverage
+- [ ] Resume PriceCharting paid benchmark decision and eventual authorised live-inventory validation; retain public provider/artwork gates
