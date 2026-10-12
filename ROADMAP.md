@@ -1328,3 +1328,11 @@ Smoke-script commit: `534ea8b4714772fad628d5f4b71ac36c9908801f`. No deployment o
 - [x] User confirmed 8,462 total games, platform totals 3,727/4,030/705, and populated scrollable game cards on `/catalogue`
 - [ ] Manually verify Base catalogue card -> detail -> **Find this game** opens canonical game in Search, clearly showing metadata-only coverage
 - [ ] Resume PriceCharting paid benchmark decision and eventual authorised live-inventory validation; retain public provider/artwork gates
+
+
+### BASE_ONLY Catalogue → Search live handoff — verified 12 October 2026
+
+- [x] User screenshot confirmed **2006 FIFA World Cup / PS2 / 2006** identified through Catalogue → **Find this game**
+- [x] Search conservatively labels **Catalogue metadata** (not PALScout-deep), shows **Live listings not connected yet**, and offers **Save this hunt**
+- [ ] Optional: verify the new BASE_ONLY Saved Hunt is actually persisted and visible in Saved Hunts; availability of the button alone is not a save test
+- [ ] Resume approved PriceCharting real pricing/offers benchmark decision with the existing cost/provider gate; no new subscription or public source activation without user approval
