@@ -2383,3 +2383,22 @@ On 12 October 2026, active external promotion was deliberately deferred.
 The current site is functional but does not yet provide the intended full marketplace-hunting value. The next priority remains product usefulness and authorised data access rather than driving community traffic to an incomplete experience.
 
 Passive SEO/indexing may continue while IGDB, marketplace and pricing dependencies are resolved.
+
+
+## IGDB interim commercial integration authorization — 12 October 2026
+
+IGDB has now explicitly told GrailRaven to proceed with the planned API/data integration while its legal team prepares the DocuSign partnership agreement.
+
+IGDB also enabled Data Dumps for the existing ClientID immediately.
+
+The expected agreement-signature email window is 2–3 weeks. If it does not arrive within that period, IGDB asked for a follow-up so they can escalate internally.
+
+Project state changes:
+- IGDB catalogue metadata integration is no longer blocked on agreement signature
+- the final agreement remains pending and must still be reviewed/signed
+- artwork remains conservatively disabled until agreement review or separate rights confirmation
+- public builds now conditionally add visible IGDB.com attribution when the canonical catalogue actually contains IGDB-backed records
+- the promotion workflow wording now treats written commercial integration authorization as sufficient for the catalogue promotion gate
+- a Data Dump access-check script/workflow has been added
+
+Validation run `38272734523`: 73/73 tests passed; current production catalogue remains 100 games until promotion is deliberately triggered.
