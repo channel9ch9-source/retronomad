@@ -758,3 +758,16 @@ Final wording deployment run `38180978208` passed with 73/73 tests and productio
 Worker version: `1a8b6135-86ed-4e37-ace2-a2c5ccd6747e`.
 
 Treat Listing Checker sharing as complete. Next priority should be a measured external distribution/feedback experiment, not more internal polish.
+
+
+## Current distribution decision
+
+Do not actively promote GrailRaven to Reddit/forums/collector communities yet.
+
+Wait until the product is materially more useful, ideally with:
+- broader approved IGDB catalogue
+- validated authorised live inventory source
+- credible release-safe pricing/reference layer
+- substantially complete Search -> Filter -> Compare -> Alert experience
+
+Passive search indexing can continue. Avoid premature launch traffic while the core data dependencies remain unresolved.
