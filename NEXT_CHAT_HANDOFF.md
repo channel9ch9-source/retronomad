@@ -885,3 +885,12 @@ User manually dispatched `Smoke test GrailRaven production` on `main`. GitHub Ac
 Next is **browser-level visual verification**: inspect `https://grailraven.com/catalogue` for correct 8,462-game stats, populated browse cards, platform filtering and title search; follow a canonical detail card through `Find this game` to Search, where coverage should be represented conservatively. Then return to the authorised PriceCharting real benchmark decision. The assistant's direct web retrieval cannot inspect the live rendered UI in this chat, so do not claim visual verification has passed.
 
 Artwork and paid marketplace provider remain disabled; DocuSign pending.
+
+
+## Live Catalogue browse confirmation — 12 October 2026
+
+The user visually confirmed `https://grailraven.com/catalogue` displays the expected **8,462** total records and platform counts (**PS1 3,727 / PS2 4,030 / Dreamcast 705**), with populated, scrollable catalogue cards. Combined with the passing live production smoke run `38313317268`, the catalogue size/display milestone is complete.
+
+**Next manual check:** open a game marked `Base catalogue` from the live Catalogue, click **Find this game**, and verify Search opens with the correct game/platform selection and honestly labels its coverage as `Catalogue metadata` (not PALScout evidence ready). Then test Save Hunt if needed. Do not treat this as verified until the user confirms.
+
+After this, prioritise authorised PriceCharting pricing/Marketplace real-coverage validation; retain the subscription and public-provider gates, and do not prematurely promote the product to communities.
