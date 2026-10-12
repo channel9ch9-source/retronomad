@@ -2502,3 +2502,12 @@ Outstanding:
 3. continue the PriceCharting benchmark decision without enabling a paid provider or artwork prematurely.
 
 The promotion remains live at 8,462 records as documented above; no new catalogue, D1, Worker or provider deployment was performed for this smoke-script-only change.
+
+
+## Expanded catalogue live smoke — passed 12 October 2026
+
+The new production smoke test was manually triggered and passed: GitHub Actions run `38313317268`; `Verify live production domain` succeeded.
+
+Live assertions include public Catalogue/Search availability, IGDB metadata attribution, a parseable 8,000+ game compact index with all three platforms and exactly 100 PALScout-deep entries, unique IDs and no artwork payload.
+
+Outstanding verification: browser visual Catalogue -> detail -> Search behavior with the expanded dataset. Next strategic dependency after that remains real licensed PriceCharting pricing / Marketplace coverage validation.
