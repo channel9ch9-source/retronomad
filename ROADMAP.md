@@ -1313,3 +1313,10 @@ Next: manually inspect the live Catalogue/Search experience with the expanded da
 - [ ] resume PriceCharting real-benchmark readiness/expense decision; preserve provider and artwork gates until authorised
 
 Smoke-script commit: `534ea8b4714772fad628d5f4b71ac36c9908801f`. No deployment or source-data alteration was made by this verification step. The assistant could not browse the live site directly from its environment; browser verification remains outstanding.
+
+
+### Expanded catalogue live smoke passed — 12 October 2026
+
+- [x] Dispatch `Smoke test GrailRaven production` on `main` — [run 38313317268](https://github.com/channel9ch9-source/retronomad/actions/runs/38313317268) passed, including `Verify live production domain`
+- [ ] Manually inspect visual browse/filter/search and canonical Catalogue -> Search handoff
+- [ ] Evaluate the paid PriceCharting benchmark when ready; keep artwork/inventory gates off pending provider validation
