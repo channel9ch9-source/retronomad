@@ -362,3 +362,21 @@ Active acquisition should therefore wait until the product has materially strong
 4. the live search/hunt loop is substantially closer to the intended end product.
 
 Passive organic indexing can continue while those dependencies are pending. Avoid manufacturing activity through premature Reddit/forum promotion just to create traffic.
+
+
+## IGDB integration can now proceed before signature — 12 October 2026
+
+IGDB explicitly authorised GrailRaven to proceed with the planned API/data offering integration while legal prepares the DocuSign agreement, and enabled Data Dumps for the project's ClientID.
+
+Business implication:
+The broader catalogue no longer needs to wait on the signature process. This is materially useful because catalogue breadth is one of the prerequisites for making GrailRaven useful enough for later acquisition.
+
+Near-term order is now:
+1. verify Data Dump access;
+2. record the written IGDB commercial integration authorization in the repository gate;
+3. promote the validated 8,433-game metadata catalogue with IGDB attribution;
+4. keep artwork disabled until the legal agreement is reviewed or image rights are otherwise confirmed;
+5. continue toward authorised marketplace/pricing coverage;
+6. review/sign the DocuSign agreement when it arrives.
+
+This does not change the decision to defer active community promotion until the marketplace/search loop is materially more complete.
