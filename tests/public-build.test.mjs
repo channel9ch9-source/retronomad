@@ -8,6 +8,9 @@ import { dirname, join } from "node:path";
 const here=dirname(fileURLToPath(import.meta.url));
 const root=join(here,"..");
 const out=join(root,"dist","public");
+const catalogueSource=JSON.parse(await fs.readFile(join(root,"catalogue","base-catalogue.json"),"utf8"));
+const catalogueRows=Array.isArray(catalogueSource)?catalogueSource:(catalogueSource.games||[]);
+const sourceUsesIgdb=catalogueRows.some(game=>String(game?.externalRefs?.igdb||"").trim()||(game?.provenance||[]).some(row=>String(row?.source||"").toUpperCase().includes("IGDB")));
 
 async function readBuilt(name){
   return fs.readFile(join(out,name),"utf8");
@@ -53,6 +56,11 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
   const account=await readBuilt("account.html");
   const wishlist=await readBuilt("wishlist.html");
   const analyze=await readBuilt("analyze.html");
+  for(const page of ["index.html","search.html","catalogue.html","about.html"]){
+    const built=await readBuilt(page);
+    assert.equal(built.includes("Game catalogue metadata provided in part by"),sourceUsesIgdb,`${page} IGDB attribution state mismatch`);
+    if(sourceUsesIgdb)assert.ok(built.includes('href="https://www.igdb.com/"'),`${page} missing IGDB attribution link`);
+  }
   assert.ok(account.includes('<meta name="robots" content="noindex,follow">'));
   assert.ok(wishlist.includes('<meta name="robots" content="noindex,follow">'));
   assert.ok(analyze.includes('<script src="listing-share.js" defer></script>'),"Listing Checker sharing helper missing from production build");
