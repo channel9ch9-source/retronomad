@@ -1242,3 +1242,34 @@ New Data Dump readiness:
 - [x] set repository variable `IGDB_COMMERCIAL_APPROVED=true` to record the written interim commercial integration authorization
 - [ ] promote the 8,433-game metadata catalogue with artwork still disabled
 - [ ] review/sign DocuSign agreement when received
+
+
+### First IGDB catalogue promotion attempt — failed safely, fix validated
+
+Promotion run `38275243763`:
+- fresh IGDB import succeeded
+- candidate: 8,458 games = PS1 3,724 / PS2 4,029 / Dreamcast 705
+- 8,358 BASE_ONLY + 100 PALSCOUT_DEEP
+- all 100 PALScout seed records enriched/mapped; unmapped 0
+- held provider records 38
+- suppressed same-title records 15
+- provider same-title review groups 32
+- seed ambiguities 3
+- ID collisions 0
+- invalid release years 0
+- explicit seed mappings 9
+- candidate validation passed
+- search benchmark 24/24 passed
+- compact index 1.375 MiB; median 58.08 ms; p95 106.24 ms
+- immutable D1 dataset was staged and verified but NOT activated
+- repository canonical catalogue was NOT committed and production was NOT deployed
+
+Failure cause:
+- obsolete app test asserted that the public catalogue must remain exactly 100 games
+- candidate correctly contained 8,458 games, so test failed with `8458 !== 100`
+
+Fix:
+- [x] replace exact-100 public-index assertion with invariant that index count equals canonical catalogue count, catalogue has >=100 games, and exactly 100 PALSCOUT_DEEP records remain
+- [x] add promotion preflight that tests the candidate as canonical before any remote D1 writes
+- [x] validation run `38277115940` passed 73/73 tests
+- [ ] rerun Promote approved IGDB catalogue
