@@ -2402,3 +2402,16 @@ Project state changes:
 - a Data Dump access-check script/workflow has been added
 
 Validation run `38272734523`: 73/73 tests passed; current production catalogue remains 100 games until promotion is deliberately triggered.
+
+
+## IGDB Data Dumps verified and commercial gate enabled
+
+The manual Data Dump check completed successfully in run `38273861123`.
+
+Result:
+- 80 IGDB Data Dump endpoints available
+- required catalogue dumps present: `games`, `release_dates`, `covers`, `alternative_names`
+
+The repository variable `IGDB_COMMERCIAL_APPROVED=true` has now been set to record IGDB's written interim authorization to proceed with the commercial API/data integration while DocuSign is pending.
+
+Next action: run the approved catalogue promotion workflow with confirmation `PROMOTE_IGDB_CATALOGUE`. Keep catalogue artwork disabled.
