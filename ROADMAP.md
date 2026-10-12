@@ -1240,7 +1240,7 @@ New Data Dump readiness:
 - [x] validation run `38272734523` passed 73/73 tests
 - [x] run the Data Dump access workflow — run `38273861123`; 80 endpoints available; required catalogue dumps present
 - [x] set repository variable `IGDB_COMMERCIAL_APPROVED=true` to record the written interim commercial integration authorization
-- [ ] promote the 8,433-game metadata catalogue with artwork still disabled
+- [x] promote the IGDB-backed metadata catalogue with artwork still disabled — final live candidate 8,462 games
 - [ ] review/sign DocuSign agreement when received
 
 
@@ -1272,4 +1272,32 @@ Fix:
 - [x] replace exact-100 public-index assertion with invariant that index count equals canonical catalogue count, catalogue has >=100 games, and exactly 100 PALSCOUT_DEEP records remain
 - [x] add promotion preflight that tests the candidate as canonical before any remote D1 writes
 - [x] validation run `38277115940` passed 73/73 tests
-- [ ] rerun Promote approved IGDB catalogue
+- [x] rerun Promote approved IGDB catalogue — run `38300719987` succeeded
+
+
+### IGDB catalogue promotion — live 12 October 2026
+
+Successful promotion run `38300719987`:
+- [x] fresh IGDB candidate: 8,462 games
+- [x] PS1 3,727 / PS2 4,030 / Dreamcast 705
+- [x] 8,362 BASE_ONLY + 100 PALSCOUT_DEEP
+- [x] all 100 PALScout seed records preserved and mapped
+- [x] held provider records 38
+- [x] suppressed same-title records 15
+- [x] provider same-title review groups 32
+- [x] seed ambiguities 3
+- [x] ID collisions 0
+- [x] invalid release years 0
+- [x] explicit seed mappings 9
+- [x] search quality benchmark 24/24
+- [x] search index 1.376 MiB
+- [x] median search 44.74 ms / p95 82.95 ms
+- [x] dataset `cat-455202e6a4daca830a8b` staged, verified and activated
+- [x] canonical catalogue committed as `fc958b5dd1e4b223d0bfc938040cdb2fa5068855`
+- [x] artwork remains 0 / disabled
+- [x] production build contains 8,462-game compact index and conditional IGDB.com attribution
+- [x] Cloudflare Worker version `5574060c-3d30-4413-9de3-c17a0f1c8a88`
+- [x] add production smoke verification to future catalogue-promotion workflow
+- [x] post-promotion main validation `38301997631` passed 73/73 with 8,462-game build
+
+Next: manually inspect the live Catalogue/Search experience with the expanded data, then continue toward authorised marketplace/pricing integration. DocuSign remains pending.
