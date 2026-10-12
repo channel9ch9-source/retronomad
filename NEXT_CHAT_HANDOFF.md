@@ -771,3 +771,27 @@ Wait until the product is materially more useful, ideally with:
 - substantially complete Search -> Filter -> Compare -> Alert experience
 
 Passive search indexing can continue. Avoid premature launch traffic while the core data dependencies remain unresolved.
+
+
+## IGDB status changed — interim integration authorization received
+
+On 12 October 2026 IGDB replied that:
+- legal is preparing the partnership agreement for DocuSign
+- signature instructions should arrive in ~2–3 weeks
+- GrailRaven may proceed now with the planned API/data integration
+- Data Dumps have already been enabled for the ClientID
+- follow up if DocuSign has not arrived within the stated window
+
+Do not continue treating IGDB metadata integration as blocked.
+
+Current safe sequence:
+1. run `Check IGDB Data Dumps`
+2. set repo variable `IGDB_COMMERCIAL_APPROVED=true` to record the written authorization
+3. run `Promote approved IGDB catalogue` with confirmation `PROMOTE_IGDB_CATALOGUE`
+4. keep `CATALOGUE_ARTWORK_ENABLED=false`
+5. verify full 8,433-game production catalogue, attribution and search performance
+6. review/sign the DocuSign agreement when received
+
+Conditional IGDB attribution is already implemented in the public build and appears only when IGDB-backed canonical records are active.
+
+Validation run `38272734523`: 73/73 tests.
