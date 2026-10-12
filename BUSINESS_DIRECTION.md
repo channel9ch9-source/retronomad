@@ -338,3 +338,27 @@ Result:
 - final collector-facing wording passed live verification
 
 This experiment is complete. The next growth priority should be external distribution/feedback rather than additional internal sharing polish.
+
+
+## Distribution timing — defer active promotion until the core product is materially more usable
+
+Decision confirmed 12 October 2026.
+
+Do not begin deliberate community promotion merely because the current public site is functional.
+
+The present product proves important foundations:
+- exact-release classification
+- Listing Checker
+- Saved Hunts
+- accounts/cloud sync
+- privacy-safe result sharing
+
+However, GrailRaven's main business promise is not the Listing Checker by itself. The intended value is Search -> Filter -> Compare -> Alert across real authorised marketplace inventory.
+
+Active acquisition should therefore wait until the product has materially stronger real-world utility, preferably after:
+1. IGDB partnership/legal terms are accepted and the broader approved catalogue can be promoted;
+2. at least one authorised inventory/marketplace source has been validated and connected;
+3. release-safe pricing/reference coverage is credible enough to support comparison;
+4. the live search/hunt loop is substantially closer to the intended end product.
+
+Passive organic indexing can continue while those dependencies are pending. Avoid manufacturing activity through premature Reddit/forum promotion just to create traffic.
