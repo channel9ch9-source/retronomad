@@ -2525,3 +2525,12 @@ Next: validate a Base catalogue detail record's **Find this game** handoff and c
 User-provided production screenshot after Catalogue **Find this game** action shows canonical **2006 FIFA World Cup** on **PS2**, release year **2006**, **Catalogue metadata** coverage, and **Game identified**. The page accurately reports **Live listings not connected yet**, with a **Save this hunt** action available; no inventory or release-specific proof was fabricated. This verifies the visual Catalogue → Search handoff for a BASE_ONLY record. Save persistence for this particular record has not yet been exercised.
 
 The main commercial work remains the licensed PriceCharting pricing and Marketplace-offer coverage benchmark, subject to paid-access approval and guardrails; IGDB artwork remains disabled and the final DocuSign contract remains pending.
+
+
+## Expanded catalogue Saved Hunt persistence — confirmed 12 October 2026
+
+User confirmed **2006 FIFA World Cup (PS2)** is displayed in Saved Hunts after saving it from Search, having arrived from the BASE_ONLY Catalogue record. This confirms a representative new IGDB game identity completes the public Catalogue → canonical Search → Saved Hunt creation/visibility flow.
+
+Combined with production smoke run `38313317268`, platform totals and populated cards, the expanded-catalogue integration QA milestone is complete. Separate filters/alert delivery and marketplace listing coverage are not established by this test.
+
+Next: plan real PriceCharting pricing/Marketplace benchmark under its existing hard gate and written commercial approval; do not incur subscription costs or activate the public provider until explicitly authorised by the user. Keep artwork disabled pending rights resolution and IGDB DocuSign outstanding.
