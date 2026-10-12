@@ -857,3 +857,22 @@ Future promotion workflow now includes production smoke verification.
 Post-promotion validation run `38301997631`: 73/73 tests with 8,462-game build.
 
 Next: manually inspect live Catalogue/Search behavior with expanded data, then resume marketplace/pricing integration work rather than community promotion.
+
+
+## Expanded catalogue live-check hardening — 12 October 2026
+
+After the 8,462-record promotion, source inspection confirmed Catalogue and Search both load the public compact index. The completed promotion workflow predated the newly added post-deploy smoke stage, so do not treat its successful deployment as a browser-level visual pass.
+
+Commit `534ea8b4714772fad628d5f4b71ac36c9908801f` strengthened `scripts/smoke-production.mjs` to assert:
+- live `/catalogue`, `/search` and `/catalogue-index.js` are available
+- both pages load the compact index and display IGDB metadata attribution
+- the public index parses and holds at least 8,000 records
+- exactly 100 PALSCOUT_DEEP records remain
+- IDs are unique and all three target platforms exist
+- no artwork payload is inadvertently public
+
+Validation workflow run `38308267634` succeeded (including smoke-script syntax check). This was CI validation, **not** execution of the new live smoke script.
+
+**Next human action:** open [Smoke test GrailRaven production](https://github.com/channel9ch9-source/retronomad/actions/workflows/smoke-production.yml), choose **Run workflow** on `main`, and confirm its live checks pass. Then visually inspect `https://grailraven.com/catalogue` and `https://grailraven.com/search` for broad search, platform filters, deep-vs-base coverage, canonical game selection and Saved Hunt handoff. Direct live-site access was unavailable to the assistant in this chat, so do not mark visual testing completed.
+
+After verification, resume the authorised PriceCharting pricing + Marketplace-offer benchmark decision. Keep provider/artwork disabled, do not subscribe or activate new paid access without user approval, and do not begin premature community promotion.
