@@ -894,3 +894,10 @@ The user visually confirmed `https://grailraven.com/catalogue` displays the expe
 **Next manual check:** open a game marked `Base catalogue` from the live Catalogue, click **Find this game**, and verify Search opens with the correct game/platform selection and honestly labels its coverage as `Catalogue metadata` (not PALScout evidence ready). Then test Save Hunt if needed. Do not treat this as verified until the user confirms.
 
 After this, prioritise authorised PriceCharting pricing/Marketplace real-coverage validation; retain the subscription and public-provider gates, and do not prematurely promote the product to communities.
+
+
+## Expanded Catalogue → Search handoff — visually passed 12 October 2026
+
+User supplied a screenshot after clicking **Find this game** from a base-only Catalogue entry. The live Search page correctly identifies **2006 FIFA World Cup**, **PS2**, **2006**, with **Catalogue metadata** coverage and **Game identified** state. It clearly states **Live listings not connected yet**, offers **Save this hunt**, and does not present fabricated marketplace inventory or pretend PALScout-deep evidence exists. The canonical Catalogue → Search transition and conservative UI presentation are therefore verified live for one BASE_ONLY title.
+
+Remaining optional end-to-end check: use **Save this hunt** and confirm the PS2 game appears in Saved Hunts with the canonical title and filters; avoid conflating the visible save button with a successful save. Then prioritise the authorised PriceCharting real pricing + offers benchmark decision, retaining the paid subscription, marketplace provider, and artwork gates until specifically approved.
