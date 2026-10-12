@@ -63,10 +63,15 @@ test("Catalogue v1 uses bounded browse rendering and canonical detail routes",as
   assert.ok(html.includes('import("./shared/catalogue-search-core.js")'));
 });
 
-test("Catalogue public index remains the guarded 100-game launch set",async()=>{
+test("Catalogue public index preserves the guarded 100-game PALScout set while allowing approved expansion",async()=>{
   const index=await read("catalogue-index.js");
-  const count=(index.match(/"id":/g)||[]).length;
-  assert.equal(count,100);
+  const catalogue=JSON.parse(await read("catalogue/base-catalogue.json"));
+  const games=Array.isArray(catalogue)?catalogue:(catalogue.games||[]);
+  const indexCount=(index.match(/"id":/g)||[]).length;
+  const deep=games.filter(game=>game.releaseIntelligence?.coverage==="PALSCOUT_DEEP");
+  assert.equal(indexCount,games.length);
+  assert.ok(games.length>=100);
+  assert.equal(deep.length,100);
 });
 
 test("Search accepts exact canonical Catalogue IDs and preserves them in hunt targets",async()=>{
