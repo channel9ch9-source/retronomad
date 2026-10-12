@@ -2374,3 +2374,12 @@ Deployment run `38180978208` succeeded:
 - Worker version: `1a8b6135-86ed-4e37-ace2-a2c5ccd6747e`
 
 The organic-sharing acquisition experiment is complete and live.
+
+
+## Distribution timing decision
+
+On 12 October 2026, active external promotion was deliberately deferred.
+
+The current site is functional but does not yet provide the intended full marketplace-hunting value. The next priority remains product usefulness and authorised data access rather than driving community traffic to an incomplete experience.
+
+Passive SEO/indexing may continue while IGDB, marketplace and pricing dependencies are resolved.
