@@ -2518,3 +2518,10 @@ Outstanding verification: browser visual Catalogue -> detail -> Search behavior 
 User confirmed production Catalogue displays all expected game totals (8,462 overall; PS1 3,727, PS2 4,030, Dreamcast 705) with populated, scrollable game cards. Live smoke run `38313317268` previously passed. Platform-specific search/filter behaviour and canonical Catalogue -> Search navigation have **not yet been manually verified in this continuation**.
 
 Next: validate a Base catalogue detail record's **Find this game** handoff and conservative metadata-only coverage display in Search. Continue toward authorised PriceCharting pricing and Marketplace inventory assessment afterwards.
+
+
+## Expanded catalogue base-only Search handoff — passed 12 October 2026
+
+User-provided production screenshot after Catalogue **Find this game** action shows canonical **2006 FIFA World Cup** on **PS2**, release year **2006**, **Catalogue metadata** coverage, and **Game identified**. The page accurately reports **Live listings not connected yet**, with a **Save this hunt** action available; no inventory or release-specific proof was fabricated. This verifies the visual Catalogue → Search handoff for a BASE_ONLY record. Save persistence for this particular record has not yet been exercised.
+
+The main commercial work remains the licensed PriceCharting pricing and Marketplace-offer coverage benchmark, subject to paid-access approval and guardrails; IGDB artwork remains disabled and the final DocuSign contract remains pending.
