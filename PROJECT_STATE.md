@@ -2487,3 +2487,18 @@ Production:
 The promotion workflow has since been hardened to run production smoke after future catalogue deployments. Validation run `38301997631` passed 73/73 tests with the 8,462-game catalogue.
 
 DocuSign remains pending; IGDB explicitly authorised integration to proceed in the interim.
+
+
+## Expanded catalogue live smoke hardening — 12 October 2026
+
+Post-promotion, `scripts/smoke-production.mjs` now checks the live Catalogue and Search routes, IGDB attribution, the public index JSON, at least 8,000 records, exactly 100 PALScout-deep records, three launch platforms, unique IDs and disabled artwork publication.
+
+Code commit: `534ea8b4714772fad628d5f4b71ac36c9908801f`.
+Source validation: GitHub Actions run `38308267634` passed; this does **not** mean the live smoke was executed.
+
+Outstanding:
+1. manually dispatch `Smoke test GrailRaven production` on `main` and check result;
+2. visually verify the expanded Catalogue/Search experience in a real browser;
+3. continue the PriceCharting benchmark decision without enabling a paid provider or artwork prematurely.
+
+The promotion remains live at 8,462 records as documented above; no new catalogue, D1, Worker or provider deployment was performed for this smoke-script-only change.
