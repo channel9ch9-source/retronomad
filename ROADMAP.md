@@ -1195,3 +1195,21 @@ Final production state:
 - Worker version `1a8b6135-86ed-4e37-ace2-a2c5ccd6747e`
 
 Next business step: move from product-internal work to a measured external distribution test.
+
+
+### Distribution timing decision — 12 October 2026
+
+Do not actively promote GrailRaven to collector communities yet.
+
+Reason:
+- the live site now demonstrates trustworthy classification, Saved Hunts, accounts and sharing
+- but the core commercial promise is still incomplete without broader approved catalogue data and authorised live marketplace/pricing data
+- early promotion now risks measuring reactions to missing dependencies rather than the intended Search -> Filter -> Compare -> Alert product
+
+Wait for a materially more useful product state, preferably including:
+- approved IGDB partnership terms and catalogue promotion
+- at least one validated authorised live marketplace/inventory source
+- credible release-safe pricing/reference data
+- a more complete live Search -> Filter -> Compare -> Alert loop
+
+Passive search indexing/SEO can continue, but no deliberate community launch/promotion yet.
