@@ -2415,3 +2415,33 @@ Result:
 The repository variable `IGDB_COMMERCIAL_APPROVED=true` has now been set to record IGDB's written interim authorization to proceed with the commercial API/data integration while DocuSign is pending.
 
 Next action: run the approved catalogue promotion workflow with confirmation `PROMOTE_IGDB_CATALOGUE`. Keep catalogue artwork disabled.
+
+
+## First IGDB promotion attempt — safe failure and correction
+
+Run `38275243763` rebuilt a fresh, valid IGDB-backed catalogue with 8,458 games:
+- PS1 3,724
+- PS2 4,029
+- Dreamcast 705
+- 8,358 BASE_ONLY
+- 100 PALSCOUT_DEEP
+- all 100 seed records preserved and mapped
+- 0 ID collisions
+- 0 invalid release years
+- 24/24 search-quality benchmark passed
+- search index 1.375 MiB; median 58.08 ms; p95 106.24 ms
+
+The run failed only after remote staging because `tests/site-v2-contract.test.mjs` still contained the obsolete invariant that the public catalogue must contain exactly 100 games. It failed with `8458 !== 100`.
+
+Safety state:
+- the staged D1 dataset was not activated
+- the canonical repository catalogue was not committed
+- no production deployment occurred
+- current main still contains the original 100-game catalogue
+
+Correction:
+- catalogue test now allows approved expansion while requiring exactly 100 PALSCOUT_DEEP records and index/canonical count parity
+- promotion workflow now regression-tests the candidate as canonical before any remote D1 staging
+- validation run `38277115940` passed 73/73 tests
+
+Next: rerun the promotion workflow.
