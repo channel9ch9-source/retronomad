@@ -58,6 +58,14 @@ jobs:
       - name: Prepare candidate + manifest
         run: node scripts/prepare-catalogue-promotion.mjs --input="$CANDIDATE" --out-dir=promotion-output
 
+      - name: Regression-test candidate as the canonical catalogue before remote writes
+        shell: bash
+        run: |
+          cp promotion-output/canonical-candidate.json catalogue/base-catalogue.json
+          npm run catalogue:build
+          npm test
+          git checkout -- catalogue/base-catalogue.json catalogue-index.js
+
       - name: Export immutable D1 dataset
         run: node scripts/export-catalogue-d1.mjs --input=promotion-output/canonical-candidate.json --manifest=promotion-output/manifest.json --out-dir=promotion-output/d1
 
