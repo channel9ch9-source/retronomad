@@ -2445,3 +2445,45 @@ Correction:
 - validation run `38277115940` passed 73/73 tests
 
 Next: rerun the promotion workflow.
+
+
+## IGDB full catalogue promoted to production — 12 October 2026
+
+Promotion workflow run `38300719987` completed successfully.
+
+Live canonical catalogue:
+- total: 8,462 games
+- PS1: 3,727
+- PS2: 4,030
+- Dreamcast: 705
+- BASE_ONLY: 8,362
+- PALSCOUT_DEEP: 100
+- all 100 original PALScout deep records preserved and mapped
+- artwork: 0
+
+Fresh-import review metrics:
+- held provider records: 38
+- suppressed same-title records: 15
+- provider same-title review groups: 32
+- seed ambiguities: 3
+- ID collisions: 0
+- invalid release years: 0
+- explicit seed mappings: 9
+
+Search benchmark:
+- 24/24 quality cases passed
+- compact index: 1.376 MiB
+- median: 44.74 ms
+- p95: 82.95 ms
+- max: 98.08 ms
+
+Production:
+- activated D1 dataset: `cat-455202e6a4daca830a8b`
+- canonical promotion commit: `fc958b5dd1e4b223d0bfc938040cdb2fa5068855`
+- production Worker version: `5574060c-3d30-4413-9de3-c17a0f1c8a88`
+- IGDB attribution is conditionally included by the production build because IGDB-backed records are now active
+- artwork remains disabled/absent pending agreement review
+
+The promotion workflow has since been hardened to run production smoke after future catalogue deployments. Validation run `38301997631` passed 73/73 tests with the 8,462-game catalogue.
+
+DocuSign remains pending; IGDB explicitly authorised integration to proceed in the interim.
