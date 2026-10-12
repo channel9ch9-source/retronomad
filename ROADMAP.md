@@ -1213,3 +1213,32 @@ Wait for a materially more useful product state, preferably including:
 - a more complete live Search -> Filter -> Compare -> Alert loop
 
 Passive search indexing/SEO can continue, but no deliberate community launch/promotion yet.
+
+
+### IGDB interim commercial integration authorization — 12 October 2026
+
+IGDB replied after the partnership details were submitted.
+
+Confirmed in writing:
+- [x] IGDB legal has been asked to prepare the partnership agreement for DocuSign
+- [x] expected signature email window: approximately 2–3 weeks
+- [x] GrailRaven may proceed in the meantime with the planned API/data integration so engineering is not delayed
+- [x] IGDB Data Dumps have already been enabled for the existing ClientID
+- [x] if no DocuSign email arrives within the stated window, follow up and IGDB will escalate internally
+
+Engineering interpretation:
+- IGDB is no longer a hard blocker for catalogue metadata integration
+- retain a separate record that the final legal agreement is still pending signature
+- keep artwork disabled until the agreement is reviewed, unless rights are separately confirmed earlier
+- add visible IGDB.com attribution automatically when an IGDB-backed public catalogue is active
+- existing 8,433-game metadata promotion pipeline can now move forward once the repository commercial-authorization gate is enabled
+
+New Data Dump readiness:
+- [x] add `scripts/igdb-data-dump-check.mjs`
+- [x] add manual `Check IGDB Data Dumps` workflow
+- [x] require games, release_dates, covers and alternative_names dump availability
+- [x] validation run `38272734523` passed 73/73 tests
+- [ ] run the Data Dump access workflow
+- [ ] set repository variable `IGDB_COMMERCIAL_APPROVED=true` to record the written interim commercial integration authorization
+- [ ] promote the 8,433-game metadata catalogue with artwork still disabled
+- [ ] review/sign DocuSign agreement when received
