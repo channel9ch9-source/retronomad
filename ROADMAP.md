@@ -1238,7 +1238,7 @@ New Data Dump readiness:
 - [x] add manual `Check IGDB Data Dumps` workflow
 - [x] require games, release_dates, covers and alternative_names dump availability
 - [x] validation run `38272734523` passed 73/73 tests
-- [ ] run the Data Dump access workflow
-- [ ] set repository variable `IGDB_COMMERCIAL_APPROVED=true` to record the written interim commercial integration authorization
+- [x] run the Data Dump access workflow — run `38273861123`; 80 endpoints available; required catalogue dumps present
+- [x] set repository variable `IGDB_COMMERCIAL_APPROVED=true` to record the written interim commercial integration authorization
 - [ ] promote the 8,433-game metadata catalogue with artwork still disabled
 - [ ] review/sign DocuSign agreement when received
