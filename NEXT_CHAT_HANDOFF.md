@@ -806,3 +806,27 @@ Data Dump access check run `38273861123` passed:
 User has set repository variable `IGDB_COMMERCIAL_APPROVED=true`.
 
 Next: run `Promote approved IGDB catalogue` with typed confirmation `PROMOTE_IGDB_CATALOGUE`. Keep artwork disabled and verify production after promotion.
+
+
+## IGDB promotion retry ready
+
+First promotion run `38275243763` failed safely.
+
+Fresh candidate was healthy:
+- 8,458 games
+- PS1 3,724 / PS2 4,029 / Dreamcast 705
+- 100/100 PALScout deep seeds preserved/mapped
+- validation passed
+- search benchmark 24/24
+- 1.375 MiB compact index
+- median 58.08 ms / p95 106.24 ms
+
+Failure was an obsolete test asserting exactly 100 public games (`8458 !== 100`). No D1 activation, repo commit or production deploy occurred.
+
+Fixes on main:
+- expansion-safe catalogue invariant
+- candidate-as-canonical preflight before remote writes
+
+Validation run `38277115940`: 73/73 passed.
+
+Next: rerun `Promote approved IGDB catalogue` with `PROMOTE_IGDB_CATALOGUE`.
