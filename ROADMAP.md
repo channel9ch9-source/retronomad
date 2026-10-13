@@ -1348,3 +1348,17 @@ Smoke-script commit: `534ea8b4714772fad628d5f4b71ac36c9908801f`. No deployment o
 - [ ] Once explicitly authorised, prepare paid benchmark credentials only as GitHub/Cloudflare secrets and run the hard-gated real workflow; assess actual UK/PAL coverage before public provider activation
 
 Continue prioritising commercial usefulness over feature count; no premature community promotion.
+
+
+### PriceCharting single-month real benchmark trial — approved budget 13 October 2026
+
+- [x] User agrees to try **one month only** of Legendary (~$49 USD as displayed by PriceCharting, checkout total subject to confirmation); continuing monthly spending not approved
+- [x] Source audit: provider code, token-safe benchmarks, 100-target offline fixtures, separate hard-gated real workflow exist; current main CI run `38314295596` passed
+- [ ] User completes **Legendary monthly** checkout and confirms purchase/renewal date (no card details or API token in chat)
+- [ ] Set cancellation reminder before next billing date; do not permit automatic ongoing expense without a positive decision
+- [ ] Store `PRICECHARTING_TOKEN` in GitHub Actions secret and set `PRICECHARTING_REAL_BENCHMARK=true` only when ready
+- [ ] Run real benchmark `mode=both` for 100 PALScout-deep targets and review downloaded results
+- [ ] Manually assess real UK/PAL game/edition matches, Marketplace availability, shipping feasibility, and whether inventory is credible
+- [ ] Decide cancel vs continue **before** renewal; keep public marketplace disabled until licensed source quality and costs justify activation
+
+The subscription itself has **not** yet been completed. Do not assume real coverage based on fixtures.
