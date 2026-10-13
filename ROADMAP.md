@@ -1460,3 +1460,14 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Evaluate independent exact US release/edition identities and permitted buyer/shipping coverage before any public provider activation
 - [ ] First Legendary month starts **13 October 2026**, likely renews **around 13 November 2026**, subject to account confirmation. Arrange pre-renewal reminder (suggest 10 November), cancel if not justified; *do not* assume the monthly subscription stops on its own
 - [ ] Make PriceCharting ongoing-use decision before next charge; no second month authorised
+
+
+### PriceCharting US game-specific offers pilot — complete 13 October 2026
+
+- [x] [Run 38451003997](https://github.com/channel9ch9-source/retronomad/actions/runs/38451003997) green; retrieved secure aggregate report
+- [x] Across **18** selected US game targets: **13 titles had offers**, **28 available offers with links**, **9 titles with CIB-worded offers**, **0 provider errors**
+- [x] 10/12 familiar titles with offers vs 3/6 rarer collector titles; PS1 8, PS2 16, Dreamcast 4 offers
+- [ ] Validate a small handful of actual offers' US physical release/edition/condition evidence, buyer/shipping viability, confidence status and working links; do **not** auto-MATCH based on provider title alone
+- [ ] Determine whether a real limited collector pilot (rather than further broad count benchmarks) could justify a subscribed inventory/pricing source
+- [ ] Confirm PriceCharting next billing date (~13 Nov 2026; not yet verified), arrange pre-renewal reminder/cancellation; no automatic second paid month
+- [ ] Keep public PriceCharting disabled, licensed raw API data private, and eBay access parked after denial
