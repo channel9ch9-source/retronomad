@@ -1,0 +1,47 @@
+name: Check PriceCharting US offer result window
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-offer-windows:
+    if: ${{ vars.PRICECHARTING_REAL_BENCHMARK == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Verify all offline tests
+        run: npm test
+
+      - name: Require existing private PriceCharting token
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$PRICECHARTING_TOKEN" || {
+            echo "PRICECHARTING_TOKEN secret is missing."
+            exit 1
+          }
+
+      - name: Compare two documented US Marketplace offer sort orders
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        run: node scripts/pricecharting-us-sort-window.mjs --out=benchmarks/pricecharting-us-sort-window.json
+
+      - name: Upload aggregate-only result window comparison
+        uses: actions/upload-artifact@v7
+        with:
+          name: pricecharting-us-offer-result-window
+          path: benchmarks/pricecharting-us-sort-window.json
+          if-no-files-found: error
+          retention-days: 14
