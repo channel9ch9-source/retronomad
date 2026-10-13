@@ -389,3 +389,16 @@ The IGDB-backed canonical catalogue is now live with 8,462 PS1/PS2/Dreamcast gam
 This removes catalogue breadth as the main immediate product blocker. The dominant remaining usefulness gap is authorised marketplace inventory and trustworthy pricing/comparison data.
 
 Do not interpret the broader catalogue as a reason to begin active community promotion yet; the prior distribution-timing decision still stands until the Search -> Filter -> Compare -> Alert loop has meaningful live inventory/pricing utility.
+
+
+## PriceCharting feasibility evidence — 13 October 2026
+
+Two real one-month Legendary-subscriber tests materially changed the inventory strategy:
+- pinned 100 PALScout games: **88** PAL reference-pricing candidates but only **26** safe exact UPC/EAN matches; **3** available marketplace offers, **0** confirmed UK-exact offers
+- unrestricted-by-title console-based PAL Marketplace availability: **5 PS1 + 3 PS2 + 0 Dreamcast = 8 offers returned in total**, with no evidence establishing UK purchasing/shipping availability
+
+The wider sample supports the conclusion that PriceCharting's Marketplace is **not adequate as GrailRaven's primary supply**. Published API documentation does not describe offers pagination; avoid treating eight as a guaranteed exhaustive total. PriceCharting's FAQ also calls out US/Canada buyer/seller support, suggesting additional limitations for a UK-targeted platform.
+
+Maintain the business objective and exact-copy search wedge, but **do not assume PriceCharting Marketplace solves the inventory blocker** and do not pay for recurring data access without a realistic near-term usefulness/revenue case. PriceCharting prices may still be useful as licensed release-safe reference data; this is a separate decision. Seek authorised UK-relevant feeds, partnerships or buyer-supplied listing workflows; do not evade eBay developer restrictions. Subscription renewal must be explicitly evaluated before next billing.
+
+Aggregate benchmark report: `PRICECHARTING_REAL_BENCHMARK_2026-10-13.md`.
