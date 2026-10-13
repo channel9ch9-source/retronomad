@@ -65,3 +65,21 @@ The API was queried six times, comparing `sort=lowest-price` and `sort=starts` u
 **Business interpretation:** The previously reported **24/24** first-pass US+JP *title+console price candidates* and the now-proven **153 distinct US returned Marketplace offers** make PriceCharting internationally **more promising than initial PAL-only results implied**, but do not justify automatically renewing a $49/month subscription for a pre-revenue site. The US 24/24 sample was *not* independently edition/barcode verified. In the documented product design, PriceCharting is primarily a potential **reference-pricing layer**, while eBay (if authorisation later granted) or another compliant provider would be the stronger goal for broad live marketplace discovery. No public GrailRaven provider was enabled by any benchmark.
 
 **Near-term action:** Stop further broad exploratory queries for now; focus on a scoped real product-use case and business need, or assess exact-release evidence for a few important US/JP games before contemplating public pricing claims. Confirm actual subscription renewal date and arrange cancellation before next monthly charge unless user explicitly decides it is justified. Licensed provider data must be handled/purged under PriceCharting's terms on subscription termination.
+
+
+## US Marketplace result-window comparison — 13 October 2026
+
+[GitHub Actions run 38448105573](https://github.com/channel9ch9-source/retronomad/actions/runs/38448105573) finished successfully. Its temporary aggregate-only artifact `pricecharting-us-offer-result-window` (id `11838772853`, expires 27 October 2026) was downloaded and read. It compares six authenticated requests to `/api/offers`, all using `status=available`, split between three US console IDs and two documented sorts `lowest-price` and `starts`.
+
+| US console | Cheapest-query offer rows | Recent-query offer rows | Different IDs in recent query | Distinct available IDs across both |
+| --- | ---: | ---: | ---: | ---: |
+| PS1 (G6) | 30 | 30 | 30 | **60** |
+| PS2 (G7) | 30 | 30 | 30 | **60** |
+| Dreamcast (G16) | 30 | 30 | 3 | **33** |
+| **Total** | **90** | **90** | **63** | **153** |
+
+**Interpretation:** all three console queries are demonstrably **partial result windows**: the distinct ID union across two supported sorts exceeds a single response's thirty rows. A returned count of 30 is not the entire market. PS1/PS2 sorted windows were completely disjoint; Dreamcast had 27 of 30 overlapping. Therefore **at least 153 distinct available US offers were observed** across these three console categories, not exactly 90. The true full offer count is **unknown** and may be substantially larger. This diagnostic does *not* establish API pagination, exhaustive search, or actual physical edition, seller/shipping eligibility, transaction quality or per-title coverage.
+
+[Official API documentation](https://www.pricecharting.com/api-documentation) lists `status`, `console`, `id`, `genre`, `condition-id`, and sorts (`name`, `starts`, `lowest-price`) for `/api/offers`; it does **not** document offset/page/limit controls. A single console-wide query is therefore **not an exhaustive feed**. To build a credible user-facing Find-this-game experience, use product-ID-specific authorised requests and assess available offers for actual collector targets; do not extrapolate title coverage from console-wide counts.
+
+**Business position:** US PriceCharting pricing presence remains promising (24/24 purposive US/JP targets have CIB/loose/new title+console candidates), but none of those physical release editions were independently verified, and the seller Marketplace is not yet validated as the full-size primary discovery engine. Do not automatically renew Legendary; first verify acquisition utility, exact releases, licence, and cost. Keep public provider off until proven viable. The one-month pilot remains within the user's budget limit.
