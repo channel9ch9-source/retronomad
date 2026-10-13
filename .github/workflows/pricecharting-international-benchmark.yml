@@ -1,0 +1,48 @@
+name: Check PriceCharting international coverage
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  international-benchmark:
+    if: ${{ vars.PRICECHARTING_REAL_BENCHMARK == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Verify offline US/JP benchmark tests
+        run: npm test
+
+      - name: Require existing private PriceCharting token
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$PRICECHARTING_TOKEN" || {
+            echo "PRICECHARTING_TOKEN secret missing"
+            exit 1
+          }
+
+      - name: Probe 24 US and Japanese prices and six console-wide Marketplace counts
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        run: node scripts/pricecharting-international-benchmark.mjs --out=benchmarks/pricecharting-international-small.json
+
+      - name: Upload aggregate report only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pricecharting-us-jp-small-benchmark
+          path: benchmarks/pricecharting-international-small.json
+          if-no-files-found: warn
+          retention-days: 14
