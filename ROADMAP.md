@@ -1362,3 +1362,13 @@ Continue prioritising commercial usefulness over feature count; no premature com
 - [ ] Decide cancel vs continue **before** renewal; keep public marketplace disabled until licensed source quality and costs justify activation
 
 The subscription itself has **not** yet been completed. Do not assume real coverage based on fixtures.
+
+
+### PriceCharting purchase reported — 13 October 2026
+
+- [x] User created a PriceCharting account and purchased one month of a "premium" subscription
+- [ ] Confirm it is **Legendary**, the API-enabled tier (Collector does not include API)
+- [ ] Note actual next billing date and set reminder before renewal
+- [ ] Find **API/Download** on signed-in subscription page; do not expose API token in chat
+- [ ] Configure the existing hard-gated GitHub real-benchmark secret and variable, then run pricing+offers
+- [ ] Audit real results before deciding whether to continue; no recurring subscription authorised beyond month one
