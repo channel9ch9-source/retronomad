@@ -938,3 +938,16 @@ Next guided user action:
 5. Schedule an early cancellation reminder based on confirmed renewal date; no further months authorised.
 
 Subscription was purchased by user directly; assistant has no billing access. No real API integration test has been run yet. The existing RetroNomad-name commercial approval is documented, but avoid asserting it originally named GrailRaven.
+
+
+## First real PriceCharting benchmark completed — 13 October 2026
+
+GitHub Actions [run 38428624620](https://github.com/channel9ch9-source/retronomad/actions/runs/38428624620) passed both REAL (non-fixture) pricing and Marketplace modes using the private token. The raw report artifact was downloaded and audited; it is not committed to the public repo because it contains licensed PriceCharting data. Durable aggregate analysis: **`PRICECHARTING_REAL_BENCHMARK_2026-10-13.md`**.
+
+Key metrics (100 PALScout-deep sample):
+- pricing: 88/100 PAL title candidates with CIB values, but only **26** safe exact UPC/EAN matches; 62 title-only candidates, 9 strict title rejections, 3 identifier/title conflicts; 43 UPC lookup errors among 72 evidence-barcode targets
+- Marketplace: **3 total available offers across 3/100 targets**, all PS1; PS2 0, Dreamcast 0; broad PAL-compatible MATCH 3, **UK-exact MATCH 0**; 0 benchmark provider-error rows
+- shipping/UK-delivered price and exact UK suitability still unverified
+- the offer result applies to the pinned 100 targets and existing title-safe matcher, not every listing on PriceCharting
+
+Decision: PriceCharting is promising for PAL reference pricing but **does not currently justify a paid subscription as GrailRaven's primary live marketplace inventory source**. Keep public provider disabled. Do not claim 88 exact-release price matches; do not renew automatically. A narrowly scoped investigation into full-PAL marketplace inventory and strict title matching may clarify remaining uncertainty before cancellation. Preserve licensing terms: raw API/CSV reports must be purged when subscription ends. Obtain next billing date and plan a cancellation reminder. IGDB artwork and eBay remain separately gated.
