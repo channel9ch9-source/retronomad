@@ -1013,3 +1013,18 @@ Marketplace console-category API responses: **US PS1 30, PS2 30, Dreamcast 30**;
 **Prepared manual six-request follow-up:** `Check PriceCharting US offer result window` workflow at `.github/workflows/pricecharting-us-sort-window.yml` on GitHub. Code `scripts/pricecharting-us-sort-window.mjs`, fixture tests `tests/pricecharting-us-sort-window.test.mjs`; compare `sort=lowest-price` versus `sort=starts` for three US consoles and report aggregate unique offer-ID overlap/counts ONLY (never individual IDs). Runs behind existing secret `PRICECHARTING_TOKEN` and variable `PRICECHARTING_REAL_BENCHMARK=true`, no new account/fee, no public integration. CI for workflow commit `1f8d08699139dcf6f5ae94df11d6aab15efa9738`: run `38447573716` green.
 
 **Next user action:** dispatch [Check PriceCharting US offer result window](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-us-sort-window.yml) on main; if green retrieve its private aggregate artifact `pricecharting-us-offer-result-window` and inspect whether distinct union >30. Then decide if larger US inventory merits further paid exploration, but do not renew Legendary without explicit approval. User has not yet supplied next billing date; prioritise obtaining it for cancellation reminder. Pricing-only business case remains uncertain because no exact release matching or paying users yet.
+
+
+## US Marketplace sort-window test completed — 13 October 2026
+
+The user manually ran **Check PriceCharting US offer result window** and [GitHub Actions run 38448105573](https://github.com/channel9ch9-source/retronomad/actions/runs/38448105573) succeeded. The aggregate-only artifact `pricecharting-us-offer-result-window` (id `11838772853`) was retrieved and inspected.
+
+Compare official `sort=lowest-price` vs `sort=starts` for console-filtered available US inventory:
+- US PS1: 30 in first result and 30 different in second, **60 distinct identified**
+- US PS2: 30 in first and 30 different in second, **60 distinct identified**
+- US Dreamcast: 30 in first and 3 new in second, **33 distinct identified**
+- Across 3 consoles, **153 distinct available offers demonstrably returned** by the six queries.
+
+This **PROVES individual 30-offer responses were nonexhaustive**; the earlier first-pass US '90' was not total marketplace size. Do **not** claim official documented API pagination or a 30-result hard limit, comprehensive accessible inventory, UK buyer eligibility, exact-release validity or international shipping. Full derived findings recorded in `PRICECHARTING_INTERNATIONAL_BENCHMARK_2026-10-13.md` (no licensed raw provider rows committed).
+
+Conclusion: PriceCharting's international pricing and US listings merit separate, realistic consideration, but **do not renew the $49/mo Legendary subscription automatically while pre-revenue**, particularly with no demonstrated exact-edition price match capability or paid demand. Keep PriceCharting public gate off. Future eBay Browse remains attractive with authorised access, but denied/rejected today; no scraping/circumvention. Rather than additional low-yield exploratory benchmarks, focus on how the provider would power a genuinely useful live Search → Filter → Compare → Alert product, and ask the user for actual next billing date so a cancellation reminder can be set before renewal. Parent GrailRaven is international; PALScout is UK/EU subset.
