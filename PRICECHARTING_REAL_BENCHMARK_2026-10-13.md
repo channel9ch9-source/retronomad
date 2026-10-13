@@ -61,3 +61,28 @@ Given the user's explicit one-month cost ceiling, **do not allow this result alo
 5. decide on cancellation before the renewal date; respect PriceCharting's post-subscription data purge terms.
 
 The website's public PriceCharting integration remains disabled, artwork remains disabled, and no user-facing real-data coverage claims should be made yet.
+
+
+## Follow-up: PAL console-wide depth diagnostic — 13 October 2026
+
+GitHub Actions [run 38440168377](https://github.com/channel9ch9-source/retronomad/actions/runs/38440168377) completed successfully. Manual `Check PriceCharting PAL Marketplace depth` workflow sent three authenticated GET requests to `/api/offers`, with `status=available` and the official PriceCharting PAL-console codes, **without** restricting to our benchmark's 100 game titles.
+
+| Console | Offer rows returned | Available, correct PAL console | Unique offered products |
+| --- | ---: | ---: | ---: |
+| PAL PlayStation (G72) | 5 | 5 | 5 |
+| PAL PlayStation 2 (G63) | 3 | 3 | 3 |
+| PAL Sega Dreamcast (G65) | 0 | 0 | 0 |
+| **Combined** | **8** | **8** | **8** |
+
+Source: aggregate-only Actions artifact `pricecharting-pal-marketplace-depth`, id `11835355629` (14-day retention, 27 October 2026). Raw individual listings, product details, prices, and authentication token were **not** uploaded by this diagnostic or committed to GitHub.
+
+Interpretation:
+- The initial 100-title test returned **3** available offers; this broader cross-console test returned **8**. Title/sample filtering therefore accounts for *some*, but not remotely enough, of the scarcity.
+- `/api/offers` is documented to accept `status` and `console` filters; documentation reviewed 13 October does **not** describe offer pagination, although undocumented caps cannot be ruled out. The exact interpretation is **eight returned offers**, not an independently certified grand total of all offers on the site.
+- No English-language packaging, UK-market edition, UK delivery price, UK buyer eligibility or shipping suitability was confirmed by the aggregate diagnostic.
+- PriceCharting's FAQ currently says Marketplace buyers/sellers are supported in **USA and Canada**; its same FAQ also discusses additional international shipping charges, so do **not** infer UK transactional eligibility without confirmation. In any case, eight PAL offers is not enough for GrailRaven's main UK/PAL inventory source.
+- Earlier pricing metrics remain separate: **88/100** PAL price candidates but only **26/100** exact UPC/EAN matches. Candidate title/console agreement is not exact physical-release evidence.
+
+**Decision for now:** reject PriceCharting Marketplace as GrailRaven's **primary** live inventory feed, keep provider disabled and avoid renewing $49/month merely for these offers. PriceCharting may still be evaluated separately as a reference-pricing source if release-safe matching and willingness to pay eventually justify the recurring licence. Pursue alternative **authorised** UK-relevant inventory APIs/partnerships; do not scrape or evade the eBay developer-access refusal.
+
+A decision about cancelling the one-month Legendary subscription is still required **before the user's actual renewal date**. Cancelling could terminate API access; check PriceCharting's confirmation about effective end date before assuming immediate or end-of-cycle cancellation. Licensed raw API/CSV data must be purged when subscription terminates; derived aggregate feasibility notes should not include redistributable proprietary records.
