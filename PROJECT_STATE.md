@@ -2595,3 +2595,10 @@ The 24/24 US/JP reference-pricing matches were game-title+console candidates **o
 [Run 38448105573](https://github.com/channel9ch9-source/retronomad/actions/runs/38448105573) validated 6 real API queries using 2 sorts for each US console category, without exposing individual licensed data. **153 distinct currently available US offer IDs observed**: PS1 60, PS2 60, Dreamcast 33; **each single sort query returned 30**, and all three console categories exposed more offers via different sorts. Thus 30 was a partial API result window, not evidence of only 30 offers per console. No page/offset parameters documented. Aggregate-only report is in `PRICECHARTING_INTERNATIONAL_BENCHMARK_2026-10-13.md`.
 
 No accurate worldwide inventory breadth, physical-release verified match rate, US product-specific inventory usefulness or delivery/buyer eligibility established. US/JP pricing: 24/24 purposively selected title+console candidates, 0 exact-release independently verified. Keep global ambition, dormant public PriceCharting integration, one-month cost control.
+
+
+## US game-specific Marketplace check prepared — 13 October 2026
+
+Following proof that console-wide offer searches return partial 30-row windows, next business gate is *product-specific acquisition usefulness*. `.github/workflows/pricecharting-us-game-hunts.yml` now runs a private, manual 18-US-game check for PS1/PS2/Dreamcast (12 familiar, six collector-interest games) via PriceCharting `id=<product>` offers filter; counts available matching offers and completeness wording without exporting individual licensed data or claiming exact physical edition/shipping suitability. Regression/CI run `38449379097` green. Public PriceCharting provider remains off.
+
+User confirmed one month of PriceCharting Legendary started 13 October 2026; expect next payment around 13 November, exact date unverified. Must plan cancellation/pre-renewal reminder; no further-month approval.
