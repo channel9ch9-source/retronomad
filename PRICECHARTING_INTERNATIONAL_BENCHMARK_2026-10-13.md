@@ -83,3 +83,32 @@ The API was queried six times, comparing `sort=lowest-price` and `sort=starts` u
 [Official API documentation](https://www.pricecharting.com/api-documentation) lists `status`, `console`, `id`, `genre`, `condition-id`, and sorts (`name`, `starts`, `lowest-price`) for `/api/offers`; it does **not** document offset/page/limit controls. A single console-wide query is therefore **not an exhaustive feed**. To build a credible user-facing Find-this-game experience, use product-ID-specific authorised requests and assess available offers for actual collector targets; do not extrapolate title coverage from console-wide counts.
 
 **Business position:** US PriceCharting pricing presence remains promising (24/24 purposive US/JP targets have CIB/loose/new title+console candidates), but none of those physical release editions were independently verified, and the seller Marketplace is not yet validated as the full-size primary discovery engine. Do not automatically renew Legendary; first verify acquisition utility, exact releases, licence, and cost. Keep public provider off until proven viable. The one-month pilot remains within the user's budget limit.
+
+
+## Game-specific US inventory feasibility — 13 October 2026
+
+After discovering that general US console offers return limited 30-row windows, the user ran a **product-ID-specific** Marketplace pilot on 18 chosen US games/platform pairs, using up to four correct-console/exact-normalized-title PriceCharting product variants per title.
+
+- [Successful real GitHub run 38451003997](https://github.com/channel9ch9-source/retronomad/actions/runs/38451003997)
+- Private, counts-only artifact `pricecharting-us-game-offer-benchmark` id `11839844500`, expires 27 October 2026
+- **18/18** have correct US-console game-title product candidates
+- **13/18** had at least one available offer with a public offer URL, **28 such offers** across all 18 games
+- **9/18** games had at least one offer whose provider completeness wording suggested CIB; **not independently verified**
+- **0 provider errors**
+- Segment split: **10/12 familiar games** with offers; **3/6 collector games** with offers
+- PS1: **5/6 titles** with offers / **8 offers**
+- PS2: **4/6 titles** with offers / **16 offers**
+- Dreamcast: **4/6 titles** with offers / **4 offers**
+- Rare collector targets with offers: *Tomba!* (PS1) 1, *Suikoden II* (PS1) 1, *Illbleed* (Dreamcast) 1
+- Rare collector targets with no returned offers: *Rule of Rose* (PS2), *Haunting Ground* (PS2), *Cannon Spike* (Dreamcast)
+- Also no returned offers for *Silent Hill* (PS1) and *Crazy Taxi* (Dreamcast) within checked variants
+
+This 18-game convenience sample is **not representative** of complete US marketplace inventory; each game checked at most four title-consistent product variants. An available offer with URL, title and region-console metadata is only a *candidate*: **0/28** have passed an independent exact-edition/barcode/photo verification, delivery/shipping eligibility is unknown, and CIB wording is not proof of contents. No user-facing offer was activated. Licensed offer IDs, private tokens, prices and sellers were not committed.
+
+### Business decision after the first three live benchmark rounds
+
+There is real **supplemental** Marketplace utility in US queries, especially common titles, but 28 candidates over 18 games and weaker rare-title availability cannot yet justify committing GrailRaven to $49/month indefinitely, nor does this establish reliable matching/alerts. PriceCharting US+JP current-price references exist for 24/24 purposively selected games but still lack independent exact physical edition verification. eBay Browse could later provide wider authorised listing search if official developer access is eventually granted; rejected access remains parked and must never be bypassed.
+
+**Next sensible product validation is not another raw volume count:** privately sample a few actual candidate listings for region/edition/completeness evidence, correct working links, eligible buyer destinations/postage, and what proportion can honestly be MATCH versus REVIEW. Build the minimum release-specific proof process without relaxing classifier rules. Check whether the previously approved (RetroNomad) public PriceCharting licence needs a GrailRaven name/international-scope confirmation before any live public deployment. Do not expose a token or enable the production provider in the meantime.
+
+The user bought only the month starting **13 October 2026**, renewal likely around **13 November 2026** pending account confirmation; cancel before any second charge unless user explicitly consents. When the subscription ends, purge licensed API/CSV reports according to provider terms.
