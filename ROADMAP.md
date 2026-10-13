@@ -1438,3 +1438,13 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Prioritise a real, licence-safe exact-copy collector user case and proper release mapping, not more speculative coverage counts
 - [ ] Obtain next paid subscription billing date and set a reminder; no second $49 month authorised automatically
 - [ ] Keep PriceCharting provider in production disabled until real inventory quality, commercial licence scope, attribution and operating costs justify activation
+
+
+### US PriceCharting result-window proof — completed 13 October 2026
+
+- [x] Run `38448105573` green; compare authorised API console filters with `lowest-price` vs `starts` sort
+- [x] Prove per-console 30 results are only a partial window: US PS1 **60**, PS2 **60**, Dreamcast **33** distinct IDs across two sorts = **153 observed US offers**, not an exhaustive total
+- [x] Correct earlier business interpretation: worldwide US Marketplace cannot be dismissed based on its first 30 offers/category; PAL and JP observations were returned counts, not guaranteed totals
+- [ ] Test the practical *user need*, not larger raw counts: authorised product-ID-specific US game discovery, physical edition proof and market/buyer eligibility
+- [ ] Check any documented limits/pagination with PriceCharting before claiming a complete feed
+- [ ] Confirm PriceCharting Legendary billing date and decide cancellation before renewal; existing paid month does not grant ongoing approval
