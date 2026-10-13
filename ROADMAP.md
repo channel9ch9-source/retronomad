@@ -1428,3 +1428,13 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Investigate reliable, licensed release identity for US and Japanese games if pursuing international valuation (title+console alone is **not** exact-edition evidence)
 - [ ] Keep subscription as **one-month trial** until commercial usefulness and user approval warrant recurring expense; find next billing date, arrange a reminder and cancel if not approved
 - [ ] Keep production PriceCharting and IGDB artwork separate/gated; do not use denied eBay developer access
+
+
+### US Marketplace offer-window test complete — 13 October 2026
+
+- [x] [Run 38448105573](https://github.com/channel9ch9-source/retronomad/actions/runs/38448105573) green; artifact verified
+- [x] Two sort orders prove each US console's 30-row API response is nonexhaustive; **60 distinct PS1 + 60 distinct PS2 + 33 distinct Dreamcast = at least 153 US offers**
+- [x] Document clear distinction: title+console price candidates (24/24, no exact editions verified), returned marketplace offers (>=153 US) and unknown total/UK-shipping/pagination
+- [ ] Prioritise a real, licence-safe exact-copy collector user case and proper release mapping, not more speculative coverage counts
+- [ ] Obtain next paid subscription billing date and set a reminder; no second $49 month authorised automatically
+- [ ] Keep PriceCharting provider in production disabled until real inventory quality, commercial licence scope, attribution and operating costs justify activation
