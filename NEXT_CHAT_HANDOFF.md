@@ -960,3 +960,20 @@ After run `38428624620` returned only 3 offers across the pinned 100 games, a se
 Source: `scripts/pricecharting-marketplace-depth.mjs`. Regression: `tests/pricecharting-marketplace-depth.test.mjs`. This diagnostic checks whether the very low 100-game offer count is primarily limited by the sample/exact-title matching rather than the broader PAL market. It does **not** prove sellers ship to the UK; API pagination/truncation is not established. It does not deploy/enable the public provider.
 
 **Next:** Verify CI on the latest commit `c965ff85a4bb42398eb8712439e6ccc4cd872426` passes. Ask the user to manually run **Check PriceCharting PAL Marketplace depth** on main only after CI passes. Inspect its small aggregate report and update the business verdict before renewing. Earlier code iteration on a newly written test briefly failed CI but was fixed before final workflow commit. Do not confuse with the prior successful full benchmark.
+
+
+## Second PriceCharting real test — PAL-wide inventory insufficient (13 October 2026)
+
+The user dispatched the new `Check PriceCharting PAL Marketplace depth` workflow. [Run 38440168377](https://github.com/channel9ch9-source/retronomad/actions/runs/38440168377) succeeded; artifact `pricecharting-pal-marketplace-depth` (id `11835355629`) was opened.
+
+**Real returned available PAL offers across whole-console API queries:**
+- PlayStation 1: **5** (5 unique products)
+- PlayStation 2: **3** (3 unique products)
+- Dreamcast: **0**
+- **Total: 8 offers**.
+
+This contrasts with **3 offers across the selected 100 launch games** in the earlier [run 38428624620](https://github.com/channel9ch9-source/retronomad/actions/runs/38428624620). The broad query reduces the probability that strict title matching alone explains the weak result. PriceCharting documents no pagination for `/api/offers`; avoid claiming a guaranteed exhaustive site-wide total. Its FAQ says the Marketplace supports USA/Canada for buyers and sellers (and separately contains international shipping text), so UK buyer suitability is also uncertain.
+
+**Decision:** PriceCharting Marketplace does **not** justify ongoing paid use as GrailRaven's primary UK/PAL listing source. Pricing remains potentially useful but only 26/100 safe UPC matches were measured, compared with 88 title candidates. Both test outcomes are recorded without committing licensed raw provider values in `PRICECHARTING_REAL_BENCHMARK_2026-10-13.md`.
+
+**Next:** Ask user for actual PriceCharting Legendary next billing/renewal date and offer a one-time reminder before renewal. Review subscription cancellation effective date to prevent unwanted recurring billing, but don't assume they have cancelled. Keep provider and artwork disabled. Pursue authorised UK-targeted live inventory alternatives and/or useful user-supplied listing URL workflows without circumventing eBay's denial. Keep IGDB agreement DocuSign review pending.
