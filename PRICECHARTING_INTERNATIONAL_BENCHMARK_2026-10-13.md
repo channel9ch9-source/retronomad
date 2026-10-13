@@ -112,3 +112,18 @@ There is real **supplemental** Marketplace utility in US queries, especially com
 **Next sensible product validation is not another raw volume count:** privately sample a few actual candidate listings for region/edition/completeness evidence, correct working links, eligible buyer destinations/postage, and what proportion can honestly be MATCH versus REVIEW. Build the minimum release-specific proof process without relaxing classifier rules. Check whether the previously approved (RetroNomad) public PriceCharting licence needs a GrailRaven name/international-scope confirmation before any live public deployment. Do not expose a token or enable the production provider in the meantime.
 
 The user bought only the month starting **13 October 2026**, renewal likely around **13 November 2026** pending account confirmation; cancel before any second charge unless user explicitly consents. When the subscription ends, purge licensed API/CSV reports according to provider terms.
+
+
+## Manual inspection of a real US offer: Tomba! PS1 — 13 October 2026
+
+User examined one PriceCharting Marketplace listing in-browser (reported displayed total **$134**, including **$5** shipping; the scope/geography of shipping was not confirmed). Seller's description claimed "Item, Box, And Manual", condition "Normal Wear" and "Cib like new with manual". The individual offer page showed three photos and seller feedback. These are website observations **not established as all available through the PriceCharting API**.
+
+An enlarged inside-case photo showed:
+- Tomba! branded disc with clearly visible **NTSC U/C**, ESRB **E** and Sony title/product code **SCUS-94236**.
+- Case holding disc and a visible printed booklet/paper insert on the left displaying a **Jersey Devil** advertisement. It could be an advert printed on the reverse of the Tomba! manual, but this photo does **not** establish the manual's cover/identity.
+- Earlier front-cover photograph appeared North American and black-label rather than Greatest Hits, but edition evidence is not exhaustively checked.
+- No independently confirmed playing-side condition, manual cover, unaltered original case/artwork, or buyer-location-specific delivery terms.
+
+**Correct GrailRaven evidence assessment:** title/platform and US disc region strongly supported by photo; original release likely; **complete-in-box still REVIEW** until the front of the original Tomba! instruction booklet is visible, and condition/delivery suitability remain unknown. Do not assume PriceCharting API necessarily exposes all seller photos or seller descriptions merely because its website does. If a user target demands true CIB + North American original edition, overall verdict stays **REVIEW**, with explicit per-attribute evidence and reason codes. This exercise reinforces prioritizing offer-evidence quality and per-attribute confidence instead of overclaiming 28 exact US matches from the quantitative benchmark.
+
+No photo or proprietary listing detail was committed to repository; this text is a qualitative outcome of user-provided visual inspection.
