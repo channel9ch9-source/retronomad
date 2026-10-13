@@ -2581,3 +2581,10 @@ The *global* GrailRaven brand and PALScout UK/EU subset remain distinct. Real in
 Available Marketplace offers *returned* by console queries: US PS1 **30**, PS2 **30**, Dreamcast **30**; JP PS1 **3**, PS2 **10**, Dreamcast **12**. Identical US 30-per-console indicates possible result-window cap; do NOT treat 90 as full US inventory count. Official offers docs show sort controls, no published pagination. Six-call manual sort-order comparative diagnostic prepared behind the original private GitHub token/variable gate; no public PriceCharting production switch. Prior PAL wide pool remains only 8 returned offers.
 
 No ongoing PriceCharting spend approved beyond existing one paid month. User needs subscription renewal date and plan for stopping auto-renewal. Public marketplace and artwork both remain gated.
+
+
+## US Marketplace API result-window confirmed incomplete — 13 October 2026
+
+Six-call guarded live [run 38448105573](https://github.com/channel9ch9-source/retronomad/actions/runs/38448105573) succeeded, artifact `11838772853` audited. Two supported sort orders returned **at least 60 distinct US PS1 offers, 60 distinct US PS2 offers and 33 distinct US Dreamcast offers** (153 total across consoles). Each individual sort query returned 30 offers, but the two PS1/PS2 result sets had zero overlap and the two Dreamcast sets differed by three offers. Thus initial 'US 90' cannot be treated as full inventory; each single response is incomplete. API pagination, full inventory totals, seller eligibility, release precision and international postage remain unverified.
+
+The 24/24 US/JP reference-pricing matches were game-title+console candidates **only**, not barcode/edition-verified. PriceCharting is more promising internationally than PAL benchmarks suggested, but recurring subscription has not been financially justified. No public provider access enabled. Full aggregate note `PRICECHARTING_INTERNATIONAL_BENCHMARK_2026-10-13.md`.
