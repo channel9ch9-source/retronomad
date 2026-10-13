@@ -1372,3 +1372,15 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Find **API/Download** on signed-in subscription page; do not expose API token in chat
 - [ ] Configure the existing hard-gated GitHub real-benchmark secret and variable, then run pricing+offers
 - [ ] Audit real results before deciding whether to continue; no recurring subscription authorised beyond month one
+
+
+### Real PriceCharting benchmarks — passed, coverage decision pending 13 October 2026
+
+- [x] Real GitHub Action `38428624620` ran pricing **and** Marketplace against 100 pinned targets
+- [x] Reports analysed and derived aggregate findings committed to `PRICECHARTING_REAL_BENCHMARK_2026-10-13.md` (not the raw licensed reports)
+- [x] Initial result: 88 PAL price-candidate targets, **26 safe exact UPC/EAN matches**
+- [x] Marketplace: **3 offers across 3 games**, all PS1; **0 UK-exact matches**, **0 API-error rows**
+- [ ] Investigate broad PAL marketplace depth and narrow strict-title matching issues with minimal additional calls; avoid overclaiming this 100-game sample
+- [ ] Establish subscription renewal date and set a cancellation reminder
+- [ ] Unless new evidence changes the assessment, do **not** keep paying $49/month solely to access 3 representative offers and ambiguous candidate prices
+- [ ] Pursue an authorised primary live inventory source without evading eBay's developer-access denial; keep PriceCharting public provider off
