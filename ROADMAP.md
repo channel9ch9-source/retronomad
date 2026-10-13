@@ -1394,3 +1394,14 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] User dispatches `Check PriceCharting PAL Marketplace depth` on main
 - [ ] Audit whether the overall PAL inventory is meaningful despite the 100-game sample, then decide whether the paid integration is justified
 - [ ] Get actual billing date and set cancellation reminder before next charge
+
+
+### PAL-console-wide PriceCharting availability — completed 13 October 2026
+
+- [x] Manual three-call [run 38440168377](https://github.com/channel9ch9-source/retronomad/actions/runs/38440168377) passed, private aggregate-only artifact recovered
+- [x] API returned 5 available PAL PS1, 3 PAL PS2, 0 PAL Dreamcast = **8** available offers across broad console filters; no evidence of pagination in published offers documentation
+- [x] Conclude this is not sufficient as GrailRaven's **primary** live UK/PAL Marketplace inventory source, regardless of title matcher refinements
+- [ ] User provides actual next Legendary billing date; arrange reminder and cancel before renewal unless user explicitly decides otherwise
+- [ ] Review authorised UK-retro inventory sources, retaining eBay denial safeguards, without paying new providers prematurely
+- [ ] Separate release-safe PriceCharting **pricing** usefulness decision from the weak Marketplace result
+- [ ] Keep PriceCharting public provider off; follow licensed-data purge rule at subscription expiry
