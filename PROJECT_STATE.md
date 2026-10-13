@@ -2609,3 +2609,10 @@ User confirmed one month of PriceCharting Legendary started 13 October 2026; exp
 Manual private PriceCharting run `38451003997` succeeded and report reviewed: 18/18 correct US-console game-title product candidates, **13/18** target games had at least one linked available offer, **28 offers** total, **9/18** had CIB-wording candidates, **0 provider errors**. Familiar games 10/12 covered, collector-interest games 3/6. PALScout-only matching cannot currently certify US release identity; **no exact US edition, condition or destination/postage independently verified**. Sample tests up to four matched product variants per title; no general US inventory coverage rate implied.
 
 Aggregate observations recorded in `PRICECHARTING_INTERNATIONAL_BENCHMARK_2026-10-13.md`. This establishes potential limited supplementary US inventory utility but not viability as a full Search → Filter → Compare → Alert provider. Public PriceCharting remains off. Next priority is small real-offer/manual proof QA rather than further console-wide counts. Trial month 13 Oct–approx 13 Nov; no renewal consent and billing date needs verification.
+
+
+## Tomba! PriceCharting API evidence audit prepared — 13 October 2026
+
+Manual browser photographs verified visible Tomba! US PS1 disc `NTSC U/C` and `SCUS-94236`, with matching `SCUS-94236` black-label front packaging; paper insert/manual likely present but not conclusively proven. Record remains **REVIEW** for strict CIB, while US-region and game edition confidence are high.
+
+To determine what the private PriceCharting *API* actually exposes (vs its public website), new manual [field audit workflow](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-tomba-field-audit.yml) was added and CI `38456515654` passed. Tests one available US Tomba! offer, querying both `/api/offers` and (if available) `/api/offer-details`, storing field-presence booleans/counts only; no individual licensed listing data, user info, prices, photos, URLs or token. Sold-offer details are not queried because those may include buyer PII. Public provider remains disabled. Next: user runs workflow and report is audited.
