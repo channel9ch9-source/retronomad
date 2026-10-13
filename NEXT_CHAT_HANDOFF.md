@@ -924,3 +924,17 @@ Pre-subscription review:
 - The historical written approval used the **RetroNomad** name; reassess whether a rename confirmation is prudent before actual public commercial display rather than claiming it was originally granted under GrailRaven.
 
 **Next user action:** subscribe via PriceCharting's official site to **Legendary monthly**, only if final checkout is within the user's intended one-month spend. Do not choose an annual plan. Once confirmed, record the paid-through/renewal date and proactively arrange a cancellation reminder before renewal; do not ask the user to paste the token or payment information into chat. Next securely store the API token as a GitHub Actions secret, explicitly enable the real benchmark gate, and run `mode=both`. Review the real reports, check UK/PAL listing practicality, and cancel unless the user explicitly authorises renewal. Artwork stays off and public marketplace stays disabled during benchmarking.
+
+
+## PriceCharting subscription purchased by user — 13 October 2026
+
+User reports creating a PriceCharting account and purchasing **one month of its "premium" subscription**. **Exact tier has not yet been independently confirmed**; the required API-enabled tier is **Legendary**, not Collector. Do not assume API access or a benchmark token exists until tier is verified on the PriceCharting subscriptions page.
+
+Next guided user action:
+1. Open `https://www.pricecharting.com/subscriptions` while signed in; confirm subscription tier says **Legendary**, and note renewal date.
+2. Click **API/Download** and verify that a private API token is available. **Never send token or screenshots showing token into chat.**
+3. Once confirmed, privately store the token as GitHub Actions repository secret `PRICECHARTING_TOKEN`; set repository variable `PRICECHARTING_REAL_BENCHMARK=true` only before the real controlled run.
+4. Run existing **Run PriceCharting real benchmark** workflow with `mode=both`. Download/analyse reports; preserve token privacy and do not activate public provider.
+5. Schedule an early cancellation reminder based on confirmed renewal date; no further months authorised.
+
+Subscription was purchased by user directly; assistant has no billing access. No real API integration test has been run yet. The existing RetroNomad-name commercial approval is documented, but avoid asserting it originally named GrailRaven.
