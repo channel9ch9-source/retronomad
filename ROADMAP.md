@@ -1481,3 +1481,14 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] User triggers [Audit PriceCharting Tomba offer API fields](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-tomba-field-audit.yml) and review private flags-only artifact
 - [ ] Based on field availability, design MATCH vs REVIEW treatment for per-offer US exact-release requirements; do not turn `has-pictures` into machine-visible cover/manual proof
 - [ ] Check actual next billing date, arrange reminder/cancel before second Legendary charge unless user explicitly authorises it
+
+
+### Tomba! API evidence audit — completed 13 October 2026
+
+- [x] [Real Tomba! audit #38457084910](https://github.com/channel9ch9-source/retronomad/actions/runs/38457084910) passed; boolean-only artifact `11844171373` reviewed
+- [x] One available offer inspected: offers API exposes listing URL, **main image**, **description**, condition, include/completeness claim and price; details API exposes `has-pictures: true` plus main image/condition/price
+- [x] No recognised API access to the **additional gallery photographs**, seller feedback, verified exact-release identifiers, shipping-cost quote or buyer destination eligibility
+- [x] Therefore no automatic exact-US-black-label-CIB MATCH; use **REVIEW** with source link and separate manual photo verification
+- [ ] Define and implement a minimal **REVIEW-first** private/end-to-end PriceCharting offer pilot rather than more volume-only diagnostics, keeping token server-side
+- [ ] Confirm PriceCharting public-display commercial permission under GrailRaven and potentially expanded US/Japan use before turning on production data; preserve attribution/license compliance
+- [ ] Secure actual subscription next-renewal date, plan cancellation before approx 13 Nov if no viable customer value; second month not approved
