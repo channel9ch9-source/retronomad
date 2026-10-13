@@ -43,3 +43,25 @@ The US Marketplace looks more promising than PAL, but the exactly-30 pattern mak
 **Next narrow diagnostic:** manually run `Check PriceCharting US offer result window`, which uses the existing GitHub secret and six further requests across two officially documented sort orders (`lowest-price` and `starts`) for the three US consoles. It outputs **aggregate-only counts and unique-overlap cardinalities**; no listing content. A union greater than 30 proves a single response is nonexhaustive (but not total stock or accessible pagination). Same union of 30 leaves limit vs actual supply unresolved. The workflow is manual/gated and the public provider remains disabled.
 
 User purchased **one month** of Legendary; **no renewal is authorised**. Find real next billing date and prompt to cancel before renewal unless the user chooses otherwise. Raw PriceCharting API/CSV data must be purged on termination; this report includes only non-proprietary aggregate feasibility metrics.
+
+
+## US Marketplace two-sort result-window diagnostic — 13 October 2026
+
+The dedicated manual [GitHub Actions run 38448105573](https://github.com/channel9ch9-source/retronomad/actions/runs/38448105573) passed all regression, token-guard, API and aggregate artifact stages. Report artifact: `pricecharting-us-offer-result-window`, id `11838772853`, expiring 27 October 2026. The report is **aggregate-only**: private offer IDs, individual listings and prices were not exported.
+
+The API was queried six times, comparing `sort=lowest-price` and `sort=starts` under `status=available` and each official US-console identifier.
+
+| US console | Lowest-price available offers returned | Recent available offers returned | Offers in recent sort not in lowest-price sort | Distinct offer IDs across both | Proves single-response incompleteness? |
+| --- | ---: | ---: | ---: | ---: | --- |
+| PS1 / G6 | 30 | 30 | **30** | **60** | Yes |
+| PS2 / G7 | 30 | 30 | **30** | **60** | Yes |
+| Dreamcast / G16 | 30 | 30 | **3** | **33** | Yes |
+| **All three consoles** | **90** | **90** | **63** | **153** | **All three** |
+
+**What is proven:** Every US console's first 30-offer response was **not an exhaustive available-offer list**: comparing two supported sort orders found different eligible offers. The earlier international summary's 'US 90' is only a number *returned by its first three queries*, not the total marketplace inventory; this test directly identifies at least **153 different US offers across the three consoles** at query time.
+
+**What is NOT proven:** We have not established actual total inventory counts, that 30 is an officially documented hard API response cap, completeness/pagination support, UK/JP buyer eligibility, international postage/delivered cost, or whether these offers match a meaningful proportion of collectors' exact release/edition criteria. A large share of offers may not be discoverable through a single broad console query. Use product-specific `/api/offers` as appropriate if later building a licensed integration, and confirm API retrieval semantics before promising comprehensive alerts.
+
+**Business interpretation:** The previously reported **24/24** first-pass US+JP *title+console price candidates* and the now-proven **153 distinct US returned Marketplace offers** make PriceCharting internationally **more promising than initial PAL-only results implied**, but do not justify automatically renewing a $49/month subscription for a pre-revenue site. The US 24/24 sample was *not* independently edition/barcode verified. In the documented product design, PriceCharting is primarily a potential **reference-pricing layer**, while eBay (if authorisation later granted) or another compliant provider would be the stronger goal for broad live marketplace discovery. No public GrailRaven provider was enabled by any benchmark.
+
+**Near-term action:** Stop further broad exploratory queries for now; focus on a scoped real product-use case and business need, or assess exact-release evidence for a few important US/JP games before contemplating public pricing claims. Confirm actual subscription renewal date and arrange cancellation before next monthly charge unless user explicitly decides it is justified. Licensed provider data must be handled/purged under PriceCharting's terms on subscription termination.
