@@ -2545,3 +2545,10 @@ No subscription has yet been purchased through the assistant. No real PriceChart
 Offline benchmark readiness: `tests/pricecharting-provider.test.mjs` exercises 100-game fixture pricing/offers workflows, and normal CI run `38314295596` passed. Real GitHub workflow requires secret `PRICECHARTING_TOKEN` and opt-in variable `PRICECHARTING_REAL_BENCHMARK=true`; the user should enter the secret only in GitHub, never in a chat message.
 
 Next: user purchases one month of **Legendary**, then configure the GitHub benchmark secret/gate and run `mode=both`. Review pricing coverage, offers, PAL edition safety and UK practicality before any public enablement. When subscription expires, purge licensed API/CSV data in line with provider documentation.
+
+
+## PriceCharting paid pilot initiated — user purchase 13 October 2026
+
+User confirms one month of PriceCharting "premium" was purchased through their own account. Which paid tier they selected has **not** yet been verified; only **Legendary** includes the API access needed for the planned benchmark. No token has been supplied to the assistant, and none should be pasted into chat.
+
+Next: user checks `https://www.pricecharting.com/subscriptions` for Legendary, next billing date, and **API/Download** availability. Once verified, securely set GitHub `PRICECHARTING_TOKEN` repository Actions secret and `PRICECHARTING_REAL_BENCHMARK=true` variable; then run `mode=both` benchmark. Plan cancellation before renewal. Public provider remains off; no real coverage data yet.
