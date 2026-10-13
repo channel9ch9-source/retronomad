@@ -1,0 +1,74 @@
+name: Validate private PriceCharting REVIEW pilot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review-pilot:
+    if: ${{ vars.PRICECHARTING_REAL_BENCHMARK == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Run all offline regression tests
+        run: npm test
+
+      - name: Generate synthetic private-review HTML sample
+        run: node scripts/pricecharting-review-preview.mjs --fixture --out=benchmarks/pricecharting-private-review-fixture
+
+      - name: Check fixture HTML is review-only and labels synthetic data
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          const file="benchmarks/pricecharting-private-review-fixture.html";
+          const html=fs.readFileSync(file,"utf8");
+          if (!html.includes("PRIVATE REVIEW-first prototype") || !html.includes("REVIEW — edition and completeness unverified")) throw new Error("Preview is not explicitly private / review-first.");
+          if (!html.includes("Fixture data, not a real offer.")) throw new Error("Synthetic data is not disclosed.");
+          if (html.includes("PRICECHARTING_TOKEN") || html.includes("PRIVATE-SELLER")) throw new Error("Preview leaked private data.");
+          const summary=JSON.parse(fs.readFileSync("benchmarks/pricecharting-private-review-fixture.json","utf8"));
+          if(summary.fixture!==true || summary.returnedOffers!==1 || summary.matchCount!==0 || summary.reviewCount!==1)throw new Error("Unexpected fixture pilot summary.");
+          NODE
+
+      - name: Require existing private PriceCharting token
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$PRICECHARTING_TOKEN" || {
+            echo "PRICECHARTING_TOKEN Actions secret not configured."
+            exit 1
+          }
+
+      - name: Validate real PriceCharting US offer pipeline without exporting licensed items
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        run: node scripts/pricecharting-review-preview.mjs --live --out=benchmarks/pricecharting-private-review-live
+
+      - name: Publish synthetic browser preview only
+        uses: actions/upload-artifact@v7
+        with:
+          name: pricecharting-review-fixture-html
+          path: |
+            benchmarks/pricecharting-private-review-fixture.html
+            benchmarks/pricecharting-private-review-fixture.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Publish aggregate-only live pipeline counters
+        uses: actions/upload-artifact@v7
+        with:
+          name: pricecharting-review-live-aggregate
+          path: benchmarks/pricecharting-private-review-live.json
+          if-no-files-found: error
+          retention-days: 14
