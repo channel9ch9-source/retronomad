@@ -951,3 +951,12 @@ Key metrics (100 PALScout-deep sample):
 - the offer result applies to the pinned 100 targets and existing title-safe matcher, not every listing on PriceCharting
 
 Decision: PriceCharting is promising for PAL reference pricing but **does not currently justify a paid subscription as GrailRaven's primary live marketplace inventory source**. Keep public provider disabled. Do not claim 88 exact-release price matches; do not renew automatically. A narrowly scoped investigation into full-PAL marketplace inventory and strict title matching may clarify remaining uncertainty before cancellation. Preserve licensing terms: raw API/CSV reports must be purged when subscription ends. Obtain next billing date and plan a cancellation reminder. IGDB artwork and eBay remain separately gated.
+
+
+## Low-cost PAL Marketplace breadth diagnostic prepared — 13 October 2026
+
+After run `38428624620` returned only 3 offers across the pinned 100 games, a separate manual `Check PriceCharting PAL Marketplace depth` GitHub Actions workflow was added at `.github/workflows/pricecharting-marketplace-depth.yml`. It uses the **existing** hard gate and secret; no new credential needed. It performs just **three** authorised GET queries (`status=available` plus each of the known PAL console IDs G72/G63/G65), constrained by the normal provider throttle, and writes **aggregate counts only** (no individual offers/IDs/prices) to a temporary private Actions artifact.
+
+Source: `scripts/pricecharting-marketplace-depth.mjs`. Regression: `tests/pricecharting-marketplace-depth.test.mjs`. This diagnostic checks whether the very low 100-game offer count is primarily limited by the sample/exact-title matching rather than the broader PAL market. It does **not** prove sellers ship to the UK; API pagination/truncation is not established. It does not deploy/enable the public provider.
+
+**Next:** Verify CI on the latest commit `c965ff85a4bb42398eb8712439e6ccc4cd872426` passes. Ask the user to manually run **Check PriceCharting PAL Marketplace depth** on main only after CI passes. Inspect its small aggregate report and update the business verdict before renewing. Earlier code iteration on a newly written test briefly failed CI but was fixed before final workflow commit. Do not confuse with the prior successful full benchmark.
