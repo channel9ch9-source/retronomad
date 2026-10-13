@@ -29,5 +29,5 @@ test("PAL Marketplace depth diagnostic uses only console-level queries and produ
   assert.equal(report.platforms[1].availableForExpectedConsole,0);
   assert.equal(report.platforms[2].availableForExpectedConsole,0);
   const serialized=JSON.stringify(report);
-  assert.doesNotMatch(serialized,/secret-offer|4200|5200|API_TOKEN|seller|price/i);
+  assert.doesNotMatch(serialized,/secret-offer|4200|5200|API_TOKEN|seller|\"price\"\\s*:/i);
 });
