@@ -2572,3 +2572,12 @@ Second manual real-token workflow `38440168377` succeeded: console-only availabl
 See `PRICECHARTING_REAL_BENCHMARK_2026-10-13.md` for metrics and caveats: no documented offers pagination, no UK delivery proof, and provider FAQ mentions US/Canada Marketplace buyer/seller support. Earlier 100-game real pricing test returned 88 PAL title candidates but only 26 safe exact UPC/EAN matches.
 
 Decision: **do not connect PriceCharting Marketplace to production or renew Legendary purely for inventory**. The one-month trial is still active until user billing/cancellation status is confirmed. Do not expose the token, commit licensed raw reports, or keep source data after subscription ends. Find an authorised UK-compatible inventory provider or better collector-led listing workflow, and evaluate standalone pricing separately.
+
+
+## PriceCharting US/JP real proof-of-concept — 13 October 2026
+
+The *global* GrailRaven brand and PALScout UK/EU subset remain distinct. Real international [run 38446958623](https://github.com/channel9ch9-source/retronomad/actions/runs/38446958623) succeeded with 0 provider errors: **12/12 US and 12/12 JP chosen console+title targets** each produced candidate CIB/loose/new reference values. These were deliberately popular titles, not a random sample. **0 exact US/JP physical editions were independently proven**. Result report has only aggregate coverage/counts and is recorded in `PRICECHARTING_INTERNATIONAL_BENCHMARK_2026-10-13.md`.
+
+Available Marketplace offers *returned* by console queries: US PS1 **30**, PS2 **30**, Dreamcast **30**; JP PS1 **3**, PS2 **10**, Dreamcast **12**. Identical US 30-per-console indicates possible result-window cap; do NOT treat 90 as full US inventory count. Official offers docs show sort controls, no published pagination. Six-call manual sort-order comparative diagnostic prepared behind the original private GitHub token/variable gate; no public PriceCharting production switch. Prior PAL wide pool remains only 8 returned offers.
+
+No ongoing PriceCharting spend approved beyond existing one paid month. User needs subscription renewal date and plan for stopping auto-renewal. Public marketplace and artwork both remain gated.
