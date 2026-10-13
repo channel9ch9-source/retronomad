@@ -212,6 +212,20 @@ export function createPriceChartingClient({
         sort
       }, OFFERS_CACHE_MS);
       return Array.isArray(data.offers) ? data.offers : [];
+    },
+    // This endpoint may include buyer PII for SOLD offers.
+    // Only use for a confirmed AVAILABLE offer, and never return raw detail to public code.
+    async getAvailableOfferDetails(offerId) {
+      const id = String(offerId || "").trim();
+      if (!/^[a-z0-9_-]{8,128}$/i.test(id)) {
+        throw providerError("pricecharting_offer_id_invalid", "A valid offer ID is required.", 400);
+      }
+      const detail = await request("/api/offer-details", { "offer-id": id }, OFFERS_CACHE_MS);
+      if (detail["is-sold"] === true || detail["is-ended"] === true ||
+          detail["offer-status"] === "sold" || detail["offer-status"] === "ended") {
+        throw providerError("pricecharting_offer_no_longer_available", "Offer is no longer available.", 409);
+      }
+      return detail;
     }
   };
 }
