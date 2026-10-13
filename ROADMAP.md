@@ -1405,3 +1405,14 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Review authorised UK-retro inventory sources, retaining eBay denial safeguards, without paying new providers prematurely
 - [ ] Separate release-safe PriceCharting **pricing** usefulness decision from the weak Marketplace result
 - [ ] Keep PriceCharting public provider off; follow licensed-data purge rule at subscription expiry
+
+
+### US/JP PriceCharting first-pass coverage test — ready 13 October 2026
+
+- [x] Reaffirm parent GrailRaven international scope; PALScout is UK/Europe, not whole market
+- [x] Verify official PriceCharting US (G6/G7/G16) and JP (G107/G108/G64) PS1/PS2/Dreamcast console IDs
+- [x] Add manual, gated international benchmark for **24 title+console pricing samples** (12 US / 12 JP) plus **six console-wide Marketplace counts**
+- [x] Aggregate-only no-price/no-offer-ID output; regression test added; CI run `38445850571` passed
+- [ ] User runs [Check PriceCharting international coverage](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-international-benchmark.yml) on main
+- [ ] Audit real result per region without claiming same-title results are fully verified physical edition matches
+- [ ] Reassess whether PriceCharting can economically support *international reference pricing* separately from live inventory, then make cancellation/renewal decision
