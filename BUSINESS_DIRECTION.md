@@ -402,3 +402,17 @@ The wider sample supports the conclusion that PriceCharting's Marketplace is **n
 Maintain the business objective and exact-copy search wedge, but **do not assume PriceCharting Marketplace solves the inventory blocker** and do not pay for recurring data access without a realistic near-term usefulness/revenue case. PriceCharting prices may still be useful as licensed release-safe reference data; this is a separate decision. Seek authorised UK-relevant feeds, partnerships or buyer-supplied listing workflows; do not evade eBay developer restrictions. Subscription renewal must be explicitly evaluated before next billing.
 
 Aggregate benchmark report: `PRICECHARTING_REAL_BENCHMARK_2026-10-13.md`.
+
+
+## International product positioning reaffirmed — 13 October 2026
+
+**GrailRaven is an international exact-copy collector service**, initially validating its acquisition intelligence through UK/European PAL launch targets. **PALScout is a regional/release intelligence layer** within the global parent product. Do not recast the whole business as UK-only because current engineering/benchmarks are PAL-led. A later sequence of US NTSC-U, Japanese NTSC-J, more marketplaces and platforms remains a documented ambition, subject to access, release-evidence quality and actual demand.
+
+Two paid PriceCharting benchmarks sampled **PAL only** (100 chosen games; then full PAL console offer categories). **They cannot establish US or JP PriceCharting price coverage or Marketplace offer depth.** The weak PAL Marketplace supply rules out using that subset as the primary launch live-inventory source, *not* PriceCharting as a potential worldwide reference-pricing source. PriceCharting's own site has separate US, PAL and Japanese price guides.
+
+**Distinct data roles:**
+- authorised live-inventory API such as future eBay Browse: active listings, seller/offer evidence, candidate search; eBay API eligibility remains rejected and cannot be bypassed;
+- PriceCharting: licensed *estimated current market prices* (loose/CIB/new etc.) calculated from historic sales, with region/edition matching and attribution; eBay's standard Browse listing API does not replace this valuation feed, and eBay's Marketplace Insights API is restricted.
+- release classification/compatibility/confidence: GrailRaven's own independent exact-copy intelligence.
+
+One month Legendary already purchased by user. **Do not assume renewal.** User is deciding whether to request a discretionary refund now vs use the remainder to measure US/JP price matching. The official website Terms/FAQ do not clearly promise general website subscription refunds, and real API calls have already been used. If refund requested, do not perform further real API benchmarks until the provider responds. If user opts to finish the month, a narrowly scoped US/JP *pricing* test would be useful and cannot be conflated with PAL exact release performance; cancellation before renewal is the default unless commercial value is demonstrated. Historical PriceCharting public-use permission was obtained under RetroNomad for the *described launch use*; confirm any materially expanded publicly displayed global use and name-change before production.
