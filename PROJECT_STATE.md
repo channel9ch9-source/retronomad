@@ -2534,3 +2534,14 @@ User confirmed **2006 FIFA World Cup (PS2)** is displayed in Saved Hunts after s
 Combined with production smoke run `38313317268`, platform totals and populated cards, the expanded-catalogue integration QA milestone is complete. Separate filters/alert delivery and marketplace listing coverage are not established by this test.
 
 Next: plan real PriceCharting pricing/Marketplace benchmark under its existing hard gate and written commercial approval; do not incur subscription costs or activate the public provider until explicitly authorised by the user. Keep artwork disabled pending rights resolution and IGDB DocuSign outstanding.
+
+
+## PriceCharting one-month pilot decision — 13 October 2026
+
+User is willing to spend approximately one monthly PriceCharting Legendary subscription (officially listed $49/month) on real **pricing and Marketplace-offer coverage validation**; ongoing spend is **not** authorised. Prepaid-only/one-month economic discipline: verify charges before completing checkout, document renewal date, arrange reminder and ensure cancellation before a second charge unless explicitly justified and approved.
+
+No subscription has yet been purchased through the assistant. No real PriceCharting token has been stored, no real benchmark has been run, and the public provider remains disabled.
+
+Offline benchmark readiness: `tests/pricecharting-provider.test.mjs` exercises 100-game fixture pricing/offers workflows, and normal CI run `38314295596` passed. Real GitHub workflow requires secret `PRICECHARTING_TOKEN` and opt-in variable `PRICECHARTING_REAL_BENCHMARK=true`; the user should enter the secret only in GitHub, never in a chat message.
+
+Next: user purchases one month of **Legendary**, then configure the GitHub benchmark secret/gate and run `mode=both`. Review pricing coverage, offers, PAL edition safety and UK practicality before any public enablement. When subscription expires, purge licensed API/CSV data in line with provider documentation.
