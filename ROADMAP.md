@@ -1416,3 +1416,15 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] User runs [Check PriceCharting international coverage](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-international-benchmark.yml) on main
 - [ ] Audit real result per region without claiming same-title results are fully verified physical edition matches
 - [ ] Reassess whether PriceCharting can economically support *international reference pricing* separately from live inventory, then make cancellation/renewal decision
+
+
+### International PriceCharting pricing/US-offer window — measured 13 October 2026
+
+- [x] Paid real US/JP test `38446958623` green; [aggregate analysis](PRICECHARTING_INTERNATIONAL_BENCHMARK_2026-10-13.md)
+- [x] 24/24 purposively selected US/JP target titles have correct-console CIB/loose/sealed reference-price candidates, **0 independent exact-release verification**
+- [x] Console-wide Marketplace responses: US **30/30/30**; JP **3/10/12** for PS1/PS2/Dreamcast, respectively. US 30 uniformity suggests a cap but does not prove one.
+- [x] Prepare six-request manual `Check PriceCharting US offer result window` (two official sorts across US PS1/PS2/Dreamcast), with token-safe, aggregate-only output and passing CI `38447573716`
+- [ ] User triggers this manual workflow and returned artifact is reviewed; if unique union >30, single-query results are incomplete
+- [ ] Investigate reliable, licensed release identity for US and Japanese games if pursuing international valuation (title+console alone is **not** exact-edition evidence)
+- [ ] Keep subscription as **one-month trial** until commercial usefulness and user approval warrant recurring expense; find next billing date, arrange a reminder and cancel if not approved
+- [ ] Keep production PriceCharting and IGDB artwork separate/gated; do not use denied eBay developer access
