@@ -2602,3 +2602,10 @@ No accurate worldwide inventory breadth, physical-release verified match rate, U
 Following proof that console-wide offer searches return partial 30-row windows, next business gate is *product-specific acquisition usefulness*. `.github/workflows/pricecharting-us-game-hunts.yml` now runs a private, manual 18-US-game check for PS1/PS2/Dreamcast (12 familiar, six collector-interest games) via PriceCharting `id=<product>` offers filter; counts available matching offers and completeness wording without exporting individual licensed data or claiming exact physical edition/shipping suitability. Regression/CI run `38449379097` green. Public PriceCharting provider remains off.
 
 User confirmed one month of PriceCharting Legendary started 13 October 2026; expect next payment around 13 November, exact date unverified. Must plan cancellation/pre-renewal reminder; no further-month approval.
+
+
+## US game-specific live PriceCharting outcome — 13 October 2026
+
+Manual private PriceCharting run `38451003997` succeeded and report reviewed: 18/18 correct US-console game-title product candidates, **13/18** target games had at least one linked available offer, **28 offers** total, **9/18** had CIB-wording candidates, **0 provider errors**. Familiar games 10/12 covered, collector-interest games 3/6. PALScout-only matching cannot currently certify US release identity; **no exact US edition, condition or destination/postage independently verified**. Sample tests up to four matched product variants per title; no general US inventory coverage rate implied.
+
+Aggregate observations recorded in `PRICECHARTING_INTERNATIONAL_BENCHMARK_2026-10-13.md`. This establishes potential limited supplementary US inventory utility but not viability as a full Search → Filter → Compare → Alert provider. Public PriceCharting remains off. Next priority is small real-offer/manual proof QA rather than further console-wide counts. Trial month 13 Oct–approx 13 Nov; no renewal consent and billing date needs verification.
