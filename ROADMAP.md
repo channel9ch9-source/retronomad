@@ -1492,3 +1492,17 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Define and implement a minimal **REVIEW-first** private/end-to-end PriceCharting offer pilot rather than more volume-only diagnostics, keeping token server-side
 - [ ] Confirm PriceCharting public-display commercial permission under GrailRaven and potentially expanded US/Japan use before turning on production data; preserve attribution/license compliance
 - [ ] Secure actual subscription next-renewal date, plan cancellation before approx 13 Nov if no viable customer value; second month not approved
+
+
+### Private REVIEW-first PriceCharting candidate integration — built 13 October 2026
+
+- [x] Implement server-only US game+console offers adapter, conservative title/platform filtering, safe PriceCharting URLs and image sources, USD item amount, clear PriceCharting attribution/linkback
+- [x] Always mark exact physical edition/completeness/condition/shipping unknown as **REVIEW**; never return MATCH or invent delivered GBP/total
+- [x] Add safe, escaped HTML REVIEW card renderer + **synthetic-only** preview harness; no licensed real listings in public GitHub artifacts
+- [x] Add manual secret-gated live-pipeline **aggregate-only** smoke test using the existing Actions token; do not enable public provider or create a website search route
+- [x] Regression tests green; CI [run 38460372330](https://github.com/channel9ch9-source/retronomad/actions/runs/38460372330) validated workflow commit
+- [x] Document gates/architecture in `PRICECHARTING_REVIEW_PILOT_V1.md`
+- [x] Schedule PriceCharting subscription decision reminder for 10 November 2026; actual next billing date still needs confirmation
+- [ ] User manually triggers [Validate private PriceCharting REVIEW pilot](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-review-pilot.yml) from main; review synthetic HTML and live-counts summary
+- [ ] Decide on secure access-controlled *real* seller preview and provider authorization update before allowing actual public user-facing offer cards
+- [ ] No automatic subscription continuation or public integration until value/licence/region accuracy/abuse controls are validated
