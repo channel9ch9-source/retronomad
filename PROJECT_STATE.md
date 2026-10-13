@@ -2552,3 +2552,14 @@ Next: user purchases one month of **Legendary**, then configure the GitHub bench
 User confirms one month of PriceCharting "premium" was purchased through their own account. Which paid tier they selected has **not** yet been verified; only **Legendary** includes the API access needed for the planned benchmark. No token has been supplied to the assistant, and none should be pasted into chat.
 
 Next: user checks `https://www.pricecharting.com/subscriptions` for Legendary, next billing date, and **API/Download** availability. Once verified, securely set GitHub `PRICECHARTING_TOKEN` repository Actions secret and `PRICECHARTING_REAL_BENCHMARK=true` variable; then run `mode=both` benchmark. Plan cancellation before renewal. Public provider remains off; no real coverage data yet.
+
+
+## First real PriceCharting pricing + offers benchmark — completed 13 October 2026
+
+Run `38428624620` passed, with real network calls (not synthetic fixtures) for 100 pinned PALScout-deep games. Full aggregate audit in `PRICECHARTING_REAL_BENCHMARK_2026-10-13.md`.
+
+Pricing: 88 targets have PAL title candidates with CIB pricing; only 26 have safe exact identifier matches. Ambiguous variants, strict title mismatches and UPC lookup failures mean no general 88/100 exact physical release claim is justified.
+
+Offers: 3 total available listings for 3 of the 100 games, all PS1; no offers for PS2/Dreamcast; 0 UK-exact results and 0 provider-error rows. This is likely inadequate as the primary UK collector Marketplace feed, but a narrow broad-PAL/normalization check should rule out avoidable sample/matching limitations before the final assessment.
+
+No public PriceCharting provider activation. User purchased only one month, so ongoing subscription must not be assumed or recommended without actual usefulness/affordability evidence. Check renewal date and schedule cancellation reminder; purge licensed data on subscription expiry. Do not commit raw report artifact to public GitHub.
