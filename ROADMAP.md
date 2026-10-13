@@ -1384,3 +1384,13 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Establish subscription renewal date and set a cancellation reminder
 - [ ] Unless new evidence changes the assessment, do **not** keep paying $49/month solely to access 3 representative offers and ambiguous candidate prices
 - [ ] Pursue an authorised primary live inventory source without evading eBay's developer-access denial; keep PriceCharting public provider off
+
+
+### PAL Marketplace breadth diagnostic — prepared 13 October 2026
+
+- [x] Real 100-game benchmark analyzed: 3 available offers, all PS1; 0 UK-exact; 26 safe exact price matches
+- [x] Add separate manual, three-call PriceCharting PAL-console-wide depth workflow, producing *aggregate counts only* with existing token/variable gate
+- [ ] Confirm CI for diagnostic workflow/code/test on latest main `c965ff85a4bb42398eb8712439e6ccc4cd872426`
+- [ ] User dispatches `Check PriceCharting PAL Marketplace depth` on main
+- [ ] Audit whether the overall PAL inventory is meaningful despite the 100-game sample, then decide whether the paid integration is justified
+- [ ] Get actual billing date and set cancellation reminder before next charge
