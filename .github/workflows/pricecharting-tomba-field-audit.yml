@@ -1,0 +1,45 @@
+name: Audit PriceCharting Tomba offer API fields
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-field-audit:
+    if: ${{ vars.PRICECHARTING_REAL_BENCHMARK == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Run full regression suite
+        run: npm test
+
+      - name: Require existing PriceCharting token
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$PRICECHARTING_TOKEN" || { echo "PRICECHARTING_TOKEN is missing."; exit 1; }
+
+      - name: Audit one US Tomba offer's list/detail field presence
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        run: node scripts/pricecharting-tomba-field-audit.mjs --out=benchmarks/pricecharting-tomba-field-audit.json
+
+      - name: Upload field-presence flags only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pricecharting-tomba-field-audit
+          path: benchmarks/pricecharting-tomba-field-audit.json
+          if-no-files-found: warn
+          retention-days: 14
