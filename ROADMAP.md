@@ -1471,3 +1471,13 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Determine whether a real limited collector pilot (rather than further broad count benchmarks) could justify a subscribed inventory/pricing source
 - [ ] Confirm PriceCharting next billing date (~13 Nov 2026; not yet verified), arrange pre-renewal reminder/cancellation; no automatic second paid month
 - [ ] Keep public PriceCharting disabled, licensed raw API data private, and eBay access parked after denial
+
+
+### Tomba! Marketplace API photo/description evidence check — ready 13 October 2026
+
+- [x] Inspect user's US Tomba! photo evidence: disc **NTSC U/C SCUS-94236** matches black-label case **SCUS-94236**, front/back cover consistent; apparent CIB manual remains not conclusively verified.
+- [x] Read PriceCharting official `/api/offers` and `/api/offer-details` docs; available offer list can include main `image-url` and `has-pictures` but seller gallery/description and buyer-specific delivery not assured. Details endpoint may include buyer PII for *sold* offers.
+- [x] Add one-off **Tomba! API field-presence-only** test, which fetches only one available listing's details, never logs/stores raw JSON/offer URLs/images/seller/buyer fields, no public provider changes. Privacy regression tested, CI [run 38456515654](https://github.com/channel9ch9-source/retronomad/actions/runs/38456515654) passed.
+- [ ] User triggers [Audit PriceCharting Tomba offer API fields](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-tomba-field-audit.yml) and review private flags-only artifact
+- [ ] Based on field availability, design MATCH vs REVIEW treatment for per-offer US exact-release requirements; do not turn `has-pictures` into machine-visible cover/manual proof
+- [ ] Check actual next billing date, arrange reminder/cancel before second Legendary charge unless user explicitly authorises it
