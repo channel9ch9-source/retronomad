@@ -986,3 +986,19 @@ User explicitly reminded that GrailRaven is envisioned as **an international col
 Operational distinction: eBay Browse (when authorised) = live searchable listings, multiple markets; PriceCharting = sale-derived market price **references** (not equivalent to active seller inventory), with separate US/PAL/JP products; GrailRaven = exact-release classification. eBay developer access was rejected twice including reconsideration 11 Oct; must not bypass via new identities, scraping or unauthorised feeds. Public provider still off.
 
 User asks whether to seek a PriceCharting Legendary refund. PriceCharting FAQ explains subscription cancellation; website TOS reviewed 13 Oct does not promise unconditional refunds, so any request is a **goodwill/discretionary** query, candidly disclosing that a small number of API validation calls were run. The user has already purchased one month and is pre-revenue/cost sensitive. Either (1) request refund promptly and **pause new paid API testing** until response, or (2) consciously use the paid period for a limited US/JP region-specific *pricing* coverage test, then cancel before renewal. Do not unilaterally choose or trigger another monthly charge. Confirm exact renewal date. Source detail in BUSINESS_DIRECTION.md.
+
+
+## Small US/Japan PriceCharting benchmark ready — 13 October 2026
+
+User opted to use the already-paid one-month Legendary period for a **small international benchmark**, rather than request an immediate refund. This is a test decision, **not** approval for another subscription month.
+
+New files on main:
+- `scripts/pricecharting-international-benchmark.mjs`
+- `tests/pricecharting-international-benchmark.test.mjs`
+- `.github/workflows/pricecharting-international-benchmark.yml` ("Check PriceCharting international coverage")
+
+The script tests 24 **purposively chosen** PS1/PS2/Dreamcast game+console targets (4 per platform in each of US/JP) for PriceCharting *title+console* matches and presence of CIB/loose/new reference prices (no actual prices exported); and the **six** official US/JP console API namespaces for aggregated available Marketplace-offer counts. Console IDs verified against official PriceCharting API table: US PS1 `G6`, PS2 `G7`, Dreamcast `G16`; JP PS1 `G107`, PS2 `G108`, Dreamcast `G64`. No independent US/JP barcode map yet, so **NO exact physical release can be certified by this test**. Japanese names may diverge from published romanizations; title mismatches need follow-up rather than a sweeping coverage claim.
+
+The benchmark never exports individual licensed prices, offers, seller details or API token; no public provider activation, and no new secret/variable required. It uses the existing `PRICECHARTING_TOKEN` GitHub Actions secret and `PRICECHARTING_REAL_BENCHMARK=true` hard gate, and is only manually triggered. GitHub CI **run 38445850571** succeeded on commit `a708c85d0ea15d68ab956d8ea4c70fcd2a449846`.
+
+**Immediate next user action:** Go to https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-international-benchmark.yml , choose `main`, click `Run workflow`. Ask user to report green/red. Then fetch GitHub workflow artifact `pricecharting-us-jp-small-benchmark`, analyse US vs JP pricing and the six Marketplace category counts, and update roadmap and international provider decision. If this shows business-worthy reference pricing, still do not renew without the user's approval or claim edition accuracy. Confirm subscription next billing date before cancellation deadline; purge licensed raw reports when subscription ends.
