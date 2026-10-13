@@ -2563,3 +2563,12 @@ Pricing: 88 targets have PAL title candidates with CIB pricing; only 26 have saf
 Offers: 3 total available listings for 3 of the 100 games, all PS1; no offers for PS2/Dreamcast; 0 UK-exact results and 0 provider-error rows. This is likely inadequate as the primary UK collector Marketplace feed, but a narrow broad-PAL/normalization check should rule out avoidable sample/matching limitations before the final assessment.
 
 No public PriceCharting provider activation. User purchased only one month, so ongoing subscription must not be assumed or recommended without actual usefulness/affordability evidence. Check renewal date and schedule cancellation reminder; purge licensed data on subscription expiry. Do not commit raw report artifact to public GitHub.
+
+
+## PriceCharting PAL-wide Marketplace inventory audit — 13 October 2026
+
+Second manual real-token workflow `38440168377` succeeded: console-only available-offer requests returned **5 PAL PS1**, **3 PAL PS2**, **0 PAL Dreamcast** offers (8 total, each from a distinct product). No 100-game title restriction or condition-specific filter was used. This supports the conclusion that live inventory coverage is *far too sparse* for GrailRaven's intended core UK/PAL Search → Compare → Alert product.
+
+See `PRICECHARTING_REAL_BENCHMARK_2026-10-13.md` for metrics and caveats: no documented offers pagination, no UK delivery proof, and provider FAQ mentions US/Canada Marketplace buyer/seller support. Earlier 100-game real pricing test returned 88 PAL title candidates but only 26 safe exact UPC/EAN matches.
+
+Decision: **do not connect PriceCharting Marketplace to production or renew Legendary purely for inventory**. The one-month trial is still active until user billing/cancellation status is confirmed. Do not expose the token, commit licensed raw reports, or keep source data after subscription ends. Find an authorised UK-compatible inventory provider or better collector-led listing workflow, and evaluate standalone pricing separately.
