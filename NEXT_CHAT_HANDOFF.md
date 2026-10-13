@@ -908,3 +908,19 @@ Remaining optional end-to-end check: use **Save this hunt** and confirm the PS2 
 User confirmed that **2006 FIFA World Cup (PS2)**, a BASE_ONLY game selected via Catalogue → Find this game, was successfully saved and appears in **Saved Hunts**. Together with the prior user screenshot of its conservative Catalogue metadata identification, the 8,462-game live catalogue smoke check, and the confirmed platform totals/cards, this closes the representative expanded-catalogue → Search → Save journey. This does *not* establish that all 8,462 records have deep PALScout release evidence or that live marketplace monitoring is available.
 
 **Next priority: PriceCharting real-world validation**. The paid-token benchmark scaffolding, fixtures, attribution paths and restricted workflow already exist. The next nonengineering decision is whether/when to purchase Legendary (documented approval: $50/month until $1k/month revenue) to test pricing AND Marketplace offers against the pinned 100 PALScout-deep launch targets. Do not subscribe, set token secrets, enable the live benchmark, or enable public provider access without the user's informed approval. Preserve the earlier decision to revisit brand-name confirmation right before actual API use, if prudent. No real PriceCharting coverage claims exist yet; eBay remains parked. DocuSign remains pending and artwork disabled.
+
+
+## PriceCharting one-month experiment authorised in principle — 13 October 2026
+
+The user agreed to try up to **one month** of PriceCharting Legendary for GrailRaven's real pricing and Marketplace-offer benchmarks, expressing that a continuing monthly expense would be difficult while the product has no revenue. This is consent to proceed with a capped one-month validation plan, **not** an instruction to subscribe automatically or authorisation for continuing recurring cost.
+
+Pre-subscription review:
+- PriceCharting's official Legendary page lists USD $49/month (confirm amount/taxes and monthly billing at checkout).
+- Existing `tests/pricecharting-provider.test.mjs` tests both deterministic 100-target offline benchmark modes.
+- GitHub Actions `Validate GrailRaven app` run `38314295596` passed, which runs the Node test suite.
+- The real workflow `.github/workflows/pricecharting-real-benchmark.yml` remains hard-gated on `PRICECHARTING_REAL_BENCHMARK=true` and private `PRICECHARTING_TOKEN` GitHub secret; it does **not** activate the public inventory provider.
+- Live PriceCharting coverage has **not** yet been measured.
+- PriceCharting API/CSV results must be purged after the subscription ends; preserve only nonlicensed analysis/decision notes once that occurs.
+- The historical written approval used the **RetroNomad** name; reassess whether a rename confirmation is prudent before actual public commercial display rather than claiming it was originally granted under GrailRaven.
+
+**Next user action:** subscribe via PriceCharting's official site to **Legendary monthly**, only if final checkout is within the user's intended one-month spend. Do not choose an annual plan. Once confirmed, record the paid-through/renewal date and proactively arrange a cancellation reminder before renewal; do not ask the user to paste the token or payment information into chat. Next securely store the API token as a GitHub Actions secret, explicitly enable the real benchmark gate, and run `mode=both`. Review the real reports, check UK/PAL listing practicality, and cancel unless the user explicitly authorises renewal. Artwork stays off and public marketplace stays disabled during benchmarking.
