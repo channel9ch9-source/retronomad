@@ -1448,3 +1448,15 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Test the practical *user need*, not larger raw counts: authorised product-ID-specific US game discovery, physical edition proof and market/buyer eligibility
 - [ ] Check any documented limits/pagination with PriceCharting before claiming a complete feed
 - [ ] Confirm PriceCharting Legendary billing date and decide cancellation before renewal; existing paid month does not grant ongoing approval
+
+
+### US game-specific live offers feasibility — ready 13 October 2026
+
+- [x] Prepare 18-title manual US PS1/PS2/Dreamcast offer benchmark using actual authorised PriceCharting product-ID-filtered listings
+- [x] Include 12 familiar titles and six rarer collector targets; bounded at four title+console product variants per game
+- [x] Report counts by game and completeness wording; **not** raw licensed offers, prices, seller data, UPCs, or unverified exact-release claims
+- [x] Secret and gate reused, no production activation or new subscription; regression/CI [run 38449379097](https://github.com/channel9ch9-source/retronomad/actions/runs/38449379097) passed
+- [ ] Run manual [US game-specific offer benchmark](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-us-game-hunts.yml), analyse whether actual desired games have offers
+- [ ] Evaluate independent exact US release/edition identities and permitted buyer/shipping coverage before any public provider activation
+- [ ] First Legendary month starts **13 October 2026**, likely renews **around 13 November 2026**, subject to account confirmation. Arrange pre-renewal reminder (suggest 10 November), cancel if not justified; *do not* assume the monthly subscription stops on its own
+- [ ] Make PriceCharting ongoing-use decision before next charge; no second month authorised
