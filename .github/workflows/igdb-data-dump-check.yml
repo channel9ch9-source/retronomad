@@ -19,13 +19,14 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Check Data Dump access
+      - name: Check Data Dump listing and required CSV table schemas (metadata only)
         env:
           IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
           IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
         run: node scripts/igdb-data-dump-check.mjs
 
-      - name: Upload access report
+      - name: Upload metadata-only access report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: igdb-data-dump-access
