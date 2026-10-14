@@ -117,6 +117,11 @@ async function reserveQuery(db,request,now,hashFn) {
     "ON CONFLICT(key) DO UPDATE SET valid_until=excluded.valid_until WHERE valid_until<=?"
   ).bind(now+GLOBAL_GAP_MS,now).run();
   if(!(global.meta?.changes>0))return {ok:false,status:429,code:"search_cooling_down"};
+  // Retain only short-lived pseudonymous buckets; never store raw visitor IPs.
+  try{
+    await db.prepare("DELETE FROM pricecharting_public_limits WHERE key LIKE 'ip:%' AND valid_until < ?")
+      .bind(now-24*60*60*1000).run();
+  }catch{/* Rate reservations above remain enforced even if housekeeping is delayed. */}
   return {ok:true};
 }
 
