@@ -66,7 +66,7 @@
   </div>
 </div>
 
-<div class="v2-demo-banner"><strong>EXAMPLE RESULTS:</strong> listings, prices, artwork blocks and result counts below illustrate the matching states while live marketplace discovery is not connected.</div>
+<div class="v2-demo-banner" id="demoBanner"><strong>EXAMPLE RESULTS:</strong> listings, prices, artwork blocks and result counts below illustrate the matching states while live marketplace discovery is not connected.</div>
 
 <header class="v2-hero" id="search">
   <div class="v2-hero-art" id="heroArt" aria-hidden="true">
@@ -79,7 +79,7 @@
     <div>
       <div class="v2-eyebrow">Collector intelligence · Exact-copy search</div>
       <h1>Find the exact copy.</h1>
-      <p>Define the game, region, release, edition and condition you want. GrailRaven builds the exact-copy target now; authorised marketplace results will connect to that target when a source is available.</p>
+      <p>Define the game and physical edition you want. Live US PriceCharting Marketplace candidates are available; UK/PAL searches continue using PALScout release intelligence while further marketplace coverage develops.</p>
       <div class="v2-searchrow">
         <div class="v2-searchbox-wrap">
           <label class="v2-searchbox" aria-label="Game search"><span>⌕</span><input id="game" value="Silent Hill" autocomplete="off" aria-autocomplete="list" aria-controls="catalogueSuggestions" aria-expanded="false" placeholder="Search Silent Hill, Final Fantasy VII, Shenmue..."></label>
@@ -105,7 +105,7 @@
       <div class="v2-filtergroup">
         <h3>Region</h3>
         <label class="v2-check"><input id="regionUk" type="checkbox" checked> UK PAL</label>
-        <label class="v2-check"><input id="regionUs" type="checkbox" disabled> NTSC-U (US) <span class="v2-planned">Planned</span></label>
+        <label class="v2-check"><input id="regionUs" type="checkbox"> NTSC-U (US marketplace)</label>
         <label class="v2-check"><input id="regionJp" type="checkbox" disabled> NTSC-J (Japan) <span class="v2-planned">Planned</span></label>
         <label class="v2-check"><input id="regionEu" type="checkbox"> Other Europe</label>
       </div>
@@ -136,7 +136,7 @@
         <button class="v2-toggle v2-toggle-button" type="button" id="englishToggle"><span>English packaging only</span><span class="v2-switch on" id="englishSwitch" aria-hidden="true"></span></button>
       </div>
       <div class="v2-filtergroup">
-        <h3>Max delivered price</h3>
+        <h3 id="maxPriceHeading">Max delivered price</h3>
         <input id="maxPrice" class="v2-price" value="£100" aria-label="Maximum delivered price">
       </div>
     </aside>
@@ -379,10 +379,12 @@ function syncLegacyFields(){
 }
 function applyTargetToVisibleFilters(t={}){
  const release=String(t.releasePreference||"pal-compatible");
+ const us=t.compatibility==="US_NTSC_U"||release==="us";
  const uk=release==="uk-preferred"||release==="uk-only";
  const eu=release==="europe-pal";
- document.querySelector("#regionUk").checked=uk||(!uk&&!eu);
- document.querySelector("#regionEu").checked=eu||(!uk&&!eu);
+ document.querySelector("#regionUs").checked=us;
+ document.querySelector("#regionUk").checked=!us&&(uk||(!uk&&!eu));
+ document.querySelector("#regionEu").checked=!us&&(eu||(!uk&&!eu));
 
  const edition=String(t.editionPreference||"any");
  document.querySelector("#releaseOriginal").checked=edition==="original"||edition==="budget-ok";
@@ -433,7 +435,7 @@ function buildTarget(canonicalOverride=null){
  return {
    catalogueId:canonical?.id||null,
    game:canonical?.title||typedGame,platform:canonical?.platform||selectedPlatform,
-   compatibility:"UK_EU_PAL",releasePreference:document.querySelector("#release").value,
+   compatibility:document.querySelector("#regionUs").checked?"US_NTSC_U":"UK_EU_PAL",releasePreference:document.querySelector("#regionUs").checked?"us":document.querySelector("#release").value,
    editionPreference:document.querySelector("#edition").value,completeness:document.querySelector("#complete").value,
    condition:document.querySelector("#condition").value,englishRequired:document.querySelector("#english").checked,
    excludeBundles:document.querySelector("#excludeBundles").checked,excludePromo:document.querySelector("#excludePromo").checked,
