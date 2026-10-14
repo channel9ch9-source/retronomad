@@ -11,6 +11,7 @@ function safeText(value,max=160){
   return typeof value==="string"?value.slice(0,max):null;
 }
 function integerOrNull(value){
+  if(value===null||value===undefined||value==="")return null;
   return Number.isSafeInteger(Number(value))&&Number(value)>=0?Number(value):null;
 }
 
