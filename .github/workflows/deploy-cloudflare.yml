@@ -61,6 +61,21 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           AUTH_EMAIL_WEBHOOK_SECRET: ${{ secrets.AUTH_EMAIL_WEBHOOK_SECRET }}
 
+      - name: Require existing PriceCharting subscription API secret
+        shell: bash
+        env:
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        run: |
+          test -n "$PRICECHARTING_TOKEN" || { echo "Missing PRICECHARTING_TOKEN; public Marketplace deployment stopped."; exit 1; }
+
+      - name: Provision private PriceCharting Worker secret
+        shell: bash
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PRICECHARTING_TOKEN: ${{ secrets.PRICECHARTING_TOKEN }}
+        run: printf '%s' "$PRICECHARTING_TOKEN" | npx wrangler secret put PRICECHARTING_TOKEN --config .wrangler.deploy.jsonc
+
       - name: Deploy Worker + static app
         run: npm run deploy:cloudflare
         env:
