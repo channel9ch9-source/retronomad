@@ -1506,3 +1506,14 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] User manually triggers [Validate private PriceCharting REVIEW pilot](https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-review-pilot.yml) from main; review synthetic HTML and live-counts summary
 - [ ] Decide on secure access-controlled *real* seller preview and provider authorization update before allowing actual public user-facing offer cards
 - [ ] No automatic subscription continuation or public integration until value/licence/region accuracy/abuse controls are validated
+
+
+### Private REVIEW-first PriceCharting pilot — manually verified 14 October 2026
+
+- [x] Authenticated [run 38573133929](https://github.com/channel9ch9-source/retronomad/actions/runs/38573133929) passed every test and both artifact uploads
+- [x] Synthetic HTML preview: 1 clearly marked fixture candidate, REVIEW 1, MATCH 0
+- [x] Real PriceCharting US Tomba! pipeline: 2 product variants, **1 safe linked offer**, **1 REVIEW**, **0 MATCH**, 1 image/condition/completeness, 0 verified exact releases/shipping
+- [x] No real provider offers/prices exposed in public repository artifacts; production provider still off
+- [ ] Confirm prior commercial-use agreement's RetroNomad → GrailRaven name change and global US/JP scope with provider *before* any public licensed-price/offer display; prefer single concise message
+- [ ] Decide whether to make secure access-controlled live preview and abuse-controlled backend lookup; don't enable unapproved public site or expose API token
+- [ ] Get exact next subscription billing date and maintain cancellation reminder for Nov 10; no automatic renewal approved
