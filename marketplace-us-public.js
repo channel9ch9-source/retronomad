@@ -4,6 +4,12 @@
  const $=id=>document.getElementById(id);
  let currentController=null;
  const us=()=>Boolean($("regionUs")?.checked);
+ function displayTitle(title,platform){
+  const raw=String(title||"").trim();
+  const norm=raw.toLowerCase().replace(/[’']/g,"").replace(/[^a-z0-9]+/g," ").trim();
+  // The catalogue's European Tombi! is called Tomba! in the US.
+  return platform==="PS1"&&norm==="tombi"?"Tomba!":raw;
+ }
  function link(value,type){
   try{
    const url=new URL(String(value||""));
@@ -119,5 +125,5 @@
    if(currentController===ctrl)currentController=null;
   }
  }
- window.GrailRavenUSMarketplace={init,current,stop,run,toggle};
+ window.GrailRavenUSMarketplace={init,current,stop,run,toggle,displayTitle};
 })();
