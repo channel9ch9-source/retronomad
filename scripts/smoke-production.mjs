@@ -110,7 +110,14 @@ async function verify(){
   assert(health.response.headers.get("x-content-type-options")==="nosniff","Health API missing nosniff");
   assert(health.response.headers.get("x-frame-options")==="DENY","Health API missing frame protection");
   assert((health.response.headers.get("content-security-policy")||"").includes("default-src 'none'"),"Health API missing restrictive CSP");
-  assert(healthJson.marketplaceConfigured===false,"Marketplace provider unexpectedly enabled");
+  assert(healthJson.marketplaceConfigured===false,"Saved Hunt monitor marketplace provider unexpectedly enabled");
+  assert(healthJson.usMarketplaceEnabled===true,"Public US PriceCharting Marketplace route/secret is not active");
+  assert(searchPage.body.includes('id="regionUs" type="checkbox">'),"US Marketplace region checkbox not enabled");
+  const browser=await fetchText("/marketplace-us-public.js");
+  assert(browser.response.status===200&&browser.body.includes("GrailRavenUSMarketplace"),"US Marketplace browser client unavailable");
+  // Invalid title fails without making a paid API request.
+  const badUs=await fetchText("/api/marketplace/pricecharting/us?game=A&platform=PS1");
+  assert(badUs.response.status===400,`Public US Marketplace validation returned ${badUs.response.status}`);
   assert(healthJson.notificationsConfigured===false,"Notification provider unexpectedly enabled");
 
   const www=await fetch(wwwOrigin+"/search?smoke=1",{redirect:"manual"});
