@@ -119,3 +119,10 @@ The most promising new partner identified is **RetroFix**, with two lower-confid
 **Ask RetroFix next** as third potential partner after Chillout Games and eStarland (already contacted by owner). No more generic retailer research is needed before doing this high-relevance enquiry and waiting for partner responses. Benchmark template: `INVENTORY_COVERAGE_BENCHMARK_V1.md`. No new API code or spending yet.
 
 Research checked 14 Oct 2026 from official retailer sites; offers/prices and stock change continually.
+
+
+## RetroFix outreach status — 14 October 2026
+
+The owner confirmed **the third retailer partnership enquiry was sent to RetroFix / MyRetroFix** at the published contact email, `info@myretrofix.co.uk`. This requests an authorised read-only stock feed/API and permitted GrailRaven commercial display, as opposed to scraping or a generic affiliate link.
+
+**Current outreach: 3 enquiries SENT, awaiting responses:** Chillout Games (UK), eStarland (US, via business-development contact), RetroFix / MyRetroFix (UK/international stock). No supplier has confirmed data rights, product feed access, fees, or technical feasibility yet. Avoid more redundant outreach until replies or an agreed next sourcing pass. Consider polite follow-up after roughly 5–7 working days where necessary. The 20-game coverage benchmark template is prepared but unrun.
