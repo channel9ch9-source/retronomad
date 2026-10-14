@@ -1095,3 +1095,16 @@ Completed source and documentation:
 GitHub CI for workflow code commit `07ce0e73bb957ee0663fbafd45cac947780b25fe`: successful [run 38460372330](https://github.com/channel9ch9-source/retronomad/actions/runs/38460372330). This does **not** mean the manually triggered live pilot ran yet.
 
 **Next user action:** Open https://github.com/channel9ch9-source/retronomad/actions/workflows/pricecharting-review-pilot.yml and click **Run workflow** on `main`. Report green/red, then inspect and interpret synthetic HTML + real counts-only artifact. Do not tell user that public GrailRaven site shows PriceCharting listings; no production route/provider/secret has been enabled. If pilot passes, next engineering decision concerns a securely access-controlled preview (separate from public site) vs provider permission confirmation. Need confirm PriceCharting's previous RetroNomad-name approval covers public GrailRaven US use before actually displaying real licensed listings to website visitors. User bought **one month only**; another month NOT authorised.
+
+
+## First private REVIEW pilot manual workflow green — 14 October 2026
+
+The user ran [Validate private PriceCharting REVIEW pilot, run 38573133929](https://github.com/channel9ch9-source/retronomad/actions/runs/38573133929). It **passed all steps**: tests, synthetic HTML fixture creation/verification, real paid-token PriceCharting US candidate lookup and fixture/live aggregate artifacts.
+
+Both artifacts were fetched and inspected:
+- Synthetic-only `pricecharting-review-fixture-html`, id `11898074184`, expiry 28 Oct: 1 synthetic candidate, REVIEW 1, MATCH 0, explicit fixture wording, PriceCharting source/URL and USD item-price-only display.
+- **Real** `pricecharting-review-live-aggregate`, id `11897849236`, expiry 28 Oct: Tomba! PS1 US, **2** product variants, **1** available listing, REVIEW **1**, MATCH **0**, 1 safe offer URL, 1 main thumbnail, 1 seller completeness wording, 1 condition wording, 0 buyer-specific shipping, 0 exact-edition independently verified.
+
+Audit recorded in `PRICECHARTING_REVIEW_PILOT_V1.md`. Real licensed listing details were **never published to GitHub**, no Cloudflare production secret or public site route exists, and the browser demo HTML is synthetic only. Do not imply public integration is live. 
+
+**Next:** Decide whether to seek a single provider written confirmation of RetroNomad → GrailRaven rebrand and US/JP global data/use licence before any public API price/Marketplace display. Only after licensing and economics are addressed should a secure access-controlled private preview or carefully guarded production pilot be considered. Date reminder Nov 10 exists; expected next $49 charge around Nov 13 (verify subscription billing). User wants practical progress, minimal unnecessary provider contact, no extra recurring expense.
