@@ -78,3 +78,14 @@ User has **not** authorised sending outreach automatically. Confirm wording/cont
 
 **DESK_RESEARCH_COMPLETE / PARTNER_ACCESS_UNVERIFIED / NO_EMAILS_SENT / NO_FEEDS_ENABLED**.
 Next after owner approval of outreach: contact first candidates, ask about allowed formats/commercial use, and benchmark only authorised sample responses. Continue IGDB paperwork in parallel. Do not expand UI merely to add unverified search links.
+
+
+## Outreach status update — 14 October 2026
+
+**User confirms BOTH initial enquiries were sent on 14 October 2026.** These are not draft/pending:
+- **Chillout Games / Retro-Games** — request for a legitimate in-stock feed/API, item detail/region/condition/completeness, photo/data-use permission and commercial terms.
+- **eStarland** — request routed through **Business development / wholesale / dropship / products distribution** contact, rather than Affiliate program inquiries, since the affiliate contact links to a registration form and the owner wanted pre-registration data-access clarification.
+
+No response or permission yet; do not assert feed/API exists for either. Recommended non-pushy follow-up only if no answer after approximately **5–7 working days** (around 21–23 October 2026; business days depend on locality). Ask to forward to the correct team if necessary.
+
+**Next task:** while waiting, shortlist additional high-relevance lawful retailer inventory feeds and prepare a concrete 20-game cross-region coverage benchmark, but don't start coding a new adapter without a permitted sample or documented API. Keep messages and partnership data private; do not put personal contact details/API credentials in repo.
