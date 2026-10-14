@@ -47,3 +47,16 @@ The private pilot is deliberately *one implementation milestone* prior to a real
 ## Economic guard
 
 One-month Legendary subscription began **13 October 2026**. Expected renewal about **13 November 2026** (verify exact billing date); a reminder is scheduled for **10 November 2026**. Do not continue a paid month automatically. Purge PriceCharting API/CSV data after the subscription ends, consistent with documented terms.
+
+
+## First manual authenticated pilot run — completed 14 October 2026
+
+The user manually triggered [GitHub Actions run 38573133929](https://github.com/channel9ch9-source/retronomad/actions/runs/38573133929), which completed successfully. **Every step passed**, including the entire offline regression suite, synthetic private HTML checks, real PriceCharting API pipeline and artifact uploads.
+
+Two reports were downloaded and inspected:
+- Synthetic browser preview: `pricecharting-review-fixture-html` (artifact id `11898074184`, 14-day retention through 28 October 2026). **Fixture only**: one synthetic REVIEW result, zero MATCH, with source credit, item price only and unverified-attributes warnings. Contains no real seller listing.
+- Real API aggregate: `pricecharting-review-live-aggregate` (artifact id `11897849236`, retention through 28 October 2026). **Not a fixture**: Tomba! US PS1, **2** provider product candidates, **1** available listing result, **1** REVIEW, **0** MATCH, **1** safe PriceCharting offer URL, **1** main thumbnail, **1** seller-stated completeness field, **1** condition field, **0** buyer-specific shipping prices, **0** independently verified exact editions.
+
+**Interpretation:** The server-only PriceCharting US listing normalization/classification pipeline works for a representative real game and preserves required uncertainties. The fixture renderer works syntactically and is labeled synthetic. This does **not** establish a production route, actual PriceCharting listing presentation to a browser, universal correctness, multi-photo verification, shipping/region confirmation, public-use permission under current brand, or sustainable paid-user value. All actual licensed offer values remain outside public GitHub artifacts.
+
+**Next recommended gate:** ask PriceCharting for a concise written confirmation that the previously approved RetroNomad commercial data display/Marketplace offer use also covers its rebrand GrailRaven and intended American/Japanese variants. This should be done *once* and only before potential public display, not repeatedly. Separately evaluate a secure private preview and abuse-controlled Cloudflare server route only if business cost can be justified. Maintain provider **OFF** in production while awaiting permission and explicit subscription renewal decision.
