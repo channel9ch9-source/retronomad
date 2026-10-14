@@ -1532,3 +1532,12 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Verify live https://grailraven.com/search US NTSC-U option, real PriceCharting linked REVIEW results, source attribution and 429/503 handling
 - [ ] Continue learning real offer availability and collector utility without overclaiming exact-release verification
 - [ ] Stop licensed public feed / purge cached and stored provider data if the single-month Legendary trial is cancelled (10 Nov reminder; expected renewal ~13 Nov)
+
+
+### Live public US PriceCharting deployment — 14 October 2026
+
+- [x] Owner ran [Cloudflare deployment 38579823383](https://github.com/channel9ch9-source/retronomad/actions/runs/38579823383) — all stages, migrations, Worker secret installation and live production smoke passed
+- [x] Production smoke confirmed `usMarketplaceEnabled:true`, US Search checkbox & JS, and invalid API query validation on the public domain (no provider charge)
+- [ ] End-to-end browser QA: user looks up Tomba! PS1 NTSC-U and checks real REVIEW offers/PriceCharting linkback and USD asking prices
+- [ ] If no response, determine catalogue resolution, 429 throttle, provider API errors or missing offer coverage; avoid claiming nonfixture display without evidence
+- [ ] Continue enforcing renewal economics (reminder Nov 10; expected billing Nov 13), attribution and authorised-data purge on cancellation
