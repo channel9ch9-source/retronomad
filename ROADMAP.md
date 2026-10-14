@@ -1517,3 +1517,18 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Confirm prior commercial-use agreement's RetroNomad → GrailRaven name change and global US/JP scope with provider *before* any public licensed-price/offer display; prefer single concise message
 - [ ] Decide whether to make secure access-controlled live preview and abuse-controlled backend lookup; don't enable unapproved public site or expose API token
 - [ ] Get exact next subscription billing date and maintain cancellation reminder for Nov 10; no automatic renewal approved
+
+
+### Public US PriceCharting REVIEW-first v1 — prepared 14 October 2026
+
+- [x] User explicitly chose to display PriceCharting offers publicly, without additional vendor communication
+- [x] Build same-origin server-side PriceCharting US endpoint, real US PS1/PS2/Dreamcast game/title candidate lookups, REVIEW-only whitelist and PriceCharting attribution
+- [x] Preserve USD asking price; physical region, exact edition, condition, CIB, shipping, delivered GBP and deal scoring unverified
+- [x] Enable distinct NTSC-U Marketplace Search region; keep UK/PAL and disabled monitors untouched; add review-only cards, original seller links and failure states
+- [x] Protect paid provider secret server-side, D1 distributed throttles and 5-minute edge cache; short-lived hashed IP buckets; add regression tests
+- [x] Add migration, private Worker secret provisioning to manual deploy, smoke checks and privacy notice
+- [x] Full architecture / activation / deactivation notes `PRICECHARTING_PUBLIC_V1.md`
+- [ ] Confirm latest CI green; manually trigger [Deploy app to Cloudflare](https://github.com/channel9ch9-source/retronomad/actions/workflows/deploy-cloudflare.yml)
+- [ ] Verify live https://grailraven.com/search US NTSC-U option, real PriceCharting linked REVIEW results, source attribution and 429/503 handling
+- [ ] Continue learning real offer availability and collector utility without overclaiming exact-release verification
+- [ ] Stop licensed public feed / purge cached and stored provider data if the single-month Legendary trial is cancelled (10 Nov reminder; expected renewal ~13 Nov)
