@@ -1603,3 +1603,14 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [x] RetroFix / MyRetroFix inventory + affiliate data rights enquiry sent by owner (`info@myretrofix.co.uk`)
 - [ ] Await provider replies. No supplier API/feed permissions or contracts yet; use `INVENTORY_COVERAGE_BENCHMARK_V1.md` when an authorised sample is supplied
 - [ ] Follow up politely after approximately 5–7 working days without reply, if appropriate
+
+
+### IGDB partner Data Dump metadata preflight — 14 October 2026
+
+- [x] Confirm documented IGDB daily dump endpoint API and five-minute signed URL; no credentials or signed URLs in repository
+- [x] Extend existing `Check IGDB Data Dumps` workflow to fetch required **CSV schema metadata** for games/release_dates/covers/alternative_names, without downloading licensed data
+- [x] Check essential fields and emit safe aggregate `igdb-data-dump-access.json` report; block on missing fields/schema drift; upload artifact even when schema review needed
+- [x] Add fixture tests guarding metadata checks and avoiding signed URL leakage; docs `IGDB_DUMP_SCHEMA_PREFLIGHT.md`
+- [ ] User manually triggers [IGDB dump preflight](https://github.com/channel9ch9-source/retronomad/actions/workflows/igdb-data-dump-check.yml) using existing secret-gated Actions workflow, share green/red and readiness flags
+- [ ] Design/develop read-only fixture-tested CSV relational importer only after real schema review; compare with proven 8,433-row API-backed dry candidate
+- [ ] Await and review actual IGDB DocuSign agreement, preserve commercial promotion gate until signed/accepted and conditions recorded
