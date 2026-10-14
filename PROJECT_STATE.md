@@ -2632,3 +2632,10 @@ Private code-only implementation landed: `backend/pricecharting-review-pilot.js`
 `scripts/pricecharting-review-preview.mjs` offers synthetic HTML preview and real API **aggregate-only** smoke check, to avoid uploading licensed offer rows to artifacts in the PUBLIC GitHub repository. Tests `tests/pricecharting-review-pilot.test.mjs` and Actions workflow `.github/workflows/pricecharting-review-pilot.yml` added; source workflow commit's CI [38460372330](https://github.com/channel9ch9-source/retronomad/actions/runs/38460372330) passed. Architecture/permission gates in `PRICECHARTING_REVIEW_PILOT_V1.md`.
 
 Need user to run the manual private pilot workflow; provider validation still pending. No production visibility, no public provider enabling, no source-cost renewal approval. Cancellation reminder scheduled for 10 November 2026.
+
+
+## Verified private US PriceCharting REVIEW pilot run — 14 October 2026
+
+User-triggered [GitHub Actions run 38573133929](https://github.com/channel9ch9-source/retronomad/actions/runs/38573133929) completed successfully. Read both artifacts: synthetic HTML preview id `11898074184` (1 fixture REVIEW, 0 MATCH) and real-token aggregate report id `11897849236`. Real lookup found 2 US PS1 Tomba! pricecharting product variants and one available linked offer; classification **REVIEW** 1, **MATCH** 0, with main thumbnail and seller-stated condition/contents. No buyer-specific shipping, delivered price or independently verified exact US edition. Both artifacts retained only 14 days (until Oct 28).
+
+This proves the *private server-side candidate pipeline* works for one observed US title and trusted URL, not that any licensed live listings are displayed to public site visitors. Production PriceCharting provider remains disabled, no public HTTP route/production token, public preview contains synthetic HTML only. Follow `PRICECHARTING_REVIEW_PILOT_V1.md`. Prior written permission is under RetroNomad; consider a one-time GrailRaven/global-use clarification before public licensed results, and continue one-month fee discipline.
