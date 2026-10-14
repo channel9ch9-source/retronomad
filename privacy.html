@@ -41,7 +41,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 48px;color:var(--muted);f
     </div>
     <div class="card">
       <h3>Abuse prevention</h3>
-      <p>To limit sign-in-email abuse, GrailRaven applies per-email throttling and a short-lived pseudonymous client bucket derived from the Cloudflare connection address. The raw address is not stored in the GrailRaven abuse-limit table; the derived bucket rotates daily and old rate-event rows are pruned after about 24 hours.</p>
+      <p>To limit sign-in-email abuse, GrailRaven applies per-email throttling and a short-lived pseudonymous client bucket derived from the Cloudflare connection address. The public US Marketplace lookup also uses daily rotating hashed client buckets and shared request limits to protect the licensed API allowance. The raw address is not stored in these GrailRaven rate-limit tables; expired Marketplace buckets are pruned after approximately 24 hours when new searches are accepted.</p>
     </div>
   </div>
 
@@ -52,7 +52,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 48px;color:var(--muted);f
 
   <div class="card" style="margin-top:14px">
     <h3>Service providers</h3>
-    <p>Cloudflare provides hosting, request handling and D1 database infrastructure. Resend is used for transactional passwordless sign-in email where configured. Those services process the data needed to deliver their infrastructure or email functions.</p>
+    <p>Cloudflare provides hosting, request handling and D1 database infrastructure. Resend is used for transactional passwordless sign-in email where configured. PriceCharting supplies the US Marketplace offers shown on Search, including seller-provided listing thumbnails and prices. Opening its offers or viewing its externally hosted images may send requests to PriceCharting or its image hosts. Those services process data needed to deliver their infrastructure or services.</p>
   </div>
 
   <div class="card" style="margin-top:14px">
@@ -62,7 +62,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 48px;color:var(--muted);f
 
   <div class="card" style="margin-top:14px">
     <h3>Marketplace and catalogue data</h3>
-    <p>Public catalogue browsing does not require an account. Live marketplace discovery, autonomous alerts and advertising are not currently enabled. If GrailRaven adds new account-data uses, analytics, advertising, payment processing or additional providers, this notice will be updated before those uses are enabled.</p>
+    <p>Public catalogue browsing and US PriceCharting Marketplace searches do not require an account. US Marketplace results are seller-stated candidates, not verified exact releases; asking prices are in USD, with shipping unverified. Automated marketplace alerts and advertising are not currently enabled. If GrailRaven adds new account-data uses, analytics, advertising, payment processing or additional providers, this notice will be updated before those uses are enabled.</p>
   </div>
 
   <p class="note">Last updated: 9 October 2026.</p>
