@@ -1561,3 +1561,16 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Check a wider set of titles from prior benchmark (e.g. `Suikoden II` PS1, `Illbleed` Dreamcast) to validate multiple-game usefulness and offer diversity; 30s global query gap, 4 unique queries/client/15min
 - [ ] Audit API price semantics against webpage: prior seller page showed `$134 including $5 shipping`, public UI incorrectly asserts `item-only` and `USD prices exclude shipping` without independent basis. Amend to neutral **listed price**, destination shipping **unverified**, and add regression test before next deploy.
 - [ ] Audit maximum product variants (current top **2**) and up to **12** displayed offer cards; clearly distinguish source scarcity from search truncation
+
+
+### Inventory-provider feasibility — desk research 14 October 2026
+
+- [x] Evaluate concrete UK and US original preowned retro inventory retailers rather than adding outbound marketplace-search shortcuts
+- [x] **Chillout Games / Retro-Games** identified: one retailer, genuine item photos, original/Platinum/region/completeness item details, high UK PALScout fit; no feed or commercial republication rights established
+- [x] **eStarland** identified: US retro game retailer with PS1/PS2/Dreamcast preowned inventory and condition choices; supplier-supplied stock photos may not prove physical edition; no authorised data feed yet
+- [x] Confirm Awin and Webgains publisher feed mechanisms exist but no suitable original physical retro-game participating merchant's stock has been verified; avoid irrelevant digital gaming catalogue
+- [x] Feasibility memo: `INVENTORY_PROVIDER_FEASIBILITY_2026-10-14.md`
+- [ ] Obtain user's approval for short inquiries to Chillout Games and eStarland; do not send unapproved messages
+- [ ] Verify partners will supply authorised current offer-level fields and allow commercial display/deep links/images/cache and specify fees/referral arrangements
+- [ ] Benchmark 20 collector-target queries in authorised sample feeds; record exact region, edition, CIB, real in-stock count, source refresh, shipping limitations and overlap
+- [ ] Integrate second source **only** if accuracy and commercial terms justify the engineering cost
