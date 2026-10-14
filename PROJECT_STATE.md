@@ -2688,3 +2688,8 @@ Desk research added **RetroFix / MyRetroFix** as highest-priority third approach
 Other weaker candidates: **Lukie Games** (US, demonstrated Tomba NTSC product with Game Only option; rights unverified) and **Retro Console Store** (published 5% affiliate programme, feed unverified). Full source URLs in `INVENTORY_PROVIDER_FEASIBILITY_2026-10-14.md`.
 
 Built `INVENTORY_COVERAGE_BENCHMARK_V1.md`: fixed 20 user buying intents across US/UK PS1, PS2 and Dreamcast with original release/CIB, regional title alias traps, Platinum/Greatest Hits traps, repros, stocking/photograph trust checks and a truthful pending-results template. **Benchmark is not run**, other sources' offer counts are unknown. Next: user approves/sends short RetroFix feed enquiry, await current partners' responses and evaluate source against the 20 actual queries once access is licensed. No premature coding, scraping or paid subscriptions.
+
+
+## RetroFix inventory partnership enquiry sent — 14 October 2026
+
+The owner confirms sending RetroFix / MyRetroFix its authorised inventory feed partnership enquiry. Initial outreach is now **Chillout Games, eStarland, RetroFix: all sent and awaiting responses**. No API permissions, licences or new live inventory feeds have been confirmed by these retailers. The 20-game benchmark in `INVENTORY_COVERAGE_BENCHMARK_V1.md` is prepared but not run. Continue separately with IGDB legal work; no unlicensed scraping or new paid feed subscriptions while waiting.
