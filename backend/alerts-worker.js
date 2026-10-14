@@ -700,6 +700,7 @@ export default {
         authEmailProvider: authEmailProvider(env),
         serverClassificationReady: true,
         marketplaceConfigured: Boolean(env.MARKETPLACE_PROVIDER && env.MARKETPLACE_PROVIDER !== "disabled"),
+        usMarketplaceEnabled: String(env.PRICECHARTING_PUBLIC_ENABLED)==="true" && Boolean(env.PRICECHARTING_TOKEN),
         notificationsConfigured: Boolean(env.NOTIFICATION_PROVIDER && env.NOTIFICATION_PROVIDER !== "disabled")
       }, 200, env, request);
     }
