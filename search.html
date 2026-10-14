@@ -338,11 +338,14 @@ function hideCatalogueSelection({restorePreview=false}={}){
 }
 function renderCatalogueSelection(game,resolution,row,providers=[]){
  const panel=document.querySelector("#catalogueSelection");
- setHeroArtwork(game,game.title);
- document.querySelector("#selectionTitle").textContent=game.title;
+ const usMarket=window.GrailRavenUSMarketplace?.current()===true;
+ const displayName=usMarket?window.GrailRavenUSMarketplace.displayTitle(game.title,game.platform):game.title;
+ // US listing photos, not the PAL catalogue, must establish the physical US edition.
+ setHeroArtwork(usMarket?null:game,displayName);
+ document.querySelector("#selectionTitle").textContent=displayName;
  document.querySelector("#selectionPlatform").textContent=game.platform;
  document.querySelector("#selectionYear").textContent=game.releaseYear||"Release year unavailable";
- document.querySelector("#selectionCoverage").textContent=coverageLabel(game.coverage);
+ document.querySelector("#selectionCoverage").textContent=usMarket?"US Marketplace · REVIEW only":coverageLabel(game.coverage);
  document.querySelector("#selectionMatch").textContent=matchLabel(row,resolution);
  document.querySelector("#selectionCopy").textContent=
    game.coverage==="PALSCOUT_DEEP"
@@ -440,7 +443,9 @@ function buildTarget(canonicalOverride=null){
  const canonical=canonicalOverride||((resolution?.status==="resolved"||resolution?.status==="corrected")?resolution.top?.game:null);
  return {
    catalogueId:canonical?.id||null,
-   game:canonical?.title||typedGame,platform:canonical?.platform||selectedPlatform,
+   game:document.querySelector("#regionUs").checked
+      ?window.GrailRavenUSMarketplace.displayTitle(canonical?.title||typedGame,canonical?.platform||selectedPlatform)
+      :(canonical?.title||typedGame),platform:canonical?.platform||selectedPlatform,
    compatibility:document.querySelector("#regionUs").checked?"US_NTSC_U":"UK_EU_PAL",releasePreference:document.querySelector("#regionUs").checked?"us":document.querySelector("#release").value,
    editionPreference:document.querySelector("#edition").value,completeness:document.querySelector("#complete").value,
    condition:document.querySelector("#condition").value,englishRequired:document.querySelector("#english").checked,
@@ -542,7 +547,8 @@ function setSelectedPlatform(platform){
 function selectCatalogueSuggestion(row){
  if(!row?.game)return;
  selectedSuggestionMatch=row;
- gameInput.value=row.game.title;
+ gameInput.value=window.GrailRavenUSMarketplace?.current()
+    ?window.GrailRavenUSMarketplace.displayTitle(row.game.title,row.game.platform):row.game.title;
  setSelectedPlatform(row.game.platform);
  document.querySelector("#previewTerm").textContent=row.game.title;
  setHeroArtwork(row.game,row.game.title);
