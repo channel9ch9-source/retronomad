@@ -1583,3 +1583,14 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Await written responses and evaluate authorised inventory feed, rights, availability refresh and commercial terms; follow up after 5–7 working days if no answer
 - [ ] Research other original physical retro retailer candidates in parallel, without scraping or assuming feed availability
 - [ ] Prepare small region/edition/CIB-sensitive test set and integrate only once a source passes access + inventory-value gates
+
+
+### Second inventory sourcing round and coverage benchmark — 14 October 2026
+
+- [x] Identify next high-fit retro shop with a published partner programme: **RetroFix / MyRetroFix** (UK with PAL, NTSC-U and NTSC-J item listings), official https://myretrofix.co.uk/partner/ ; still no rights to feed/display
+- [x] Cross-check actual individual in-stock RetroFix Dreamcast PAL and US CIB product examples with condition/region fields; its programme offers affiliate referrals but is not confirmation of an item-data feed
+- [x] Backup US candidate **Lukie Games** verified product pages, including an NTSC Tomba Game Only record (FILTERED for CIB), feed/affiliate rights unverified; lower-priority **Retro Console Store** affiliate 5% has no proven feed or stock coverage
+- [x] Create stable, diverse 20 collector search **benchmark template** `INVENTORY_COVERAGE_BENCHMARK_V1.md`, crossing original vs reissue, physical regions and disc/manual, for future authorised sample inventory
+- [ ] User chooses whether to send third partnership enquiry to RetroFix (`info@myretrofix.co.uk`) asking specifically about allowed read-only item-level feed, image/data reuse and refresh, *before* affiliate sign-up
+- [ ] Wait for actual Chillout Games and eStarland replies; do not count nonexistent partner feeds as in-progress integrations
+- [ ] Run 20-game inventory coverage test only when a partner gives authorised sample, and score **new relevant copies**, not catalogued games or search links
