@@ -254,8 +254,10 @@ test("Search Saved Hunt workflow preserves current filters and edits in place",a
     'document.querySelector("#selectionSave").textContent=window.currentHuntId?"Update Saved Hunt":"Save this hunt"'
   ]) assert.ok(search.includes(token),`Search missing Saved Hunt round-trip protection: ${token}`);
 
+  assert.ok(search.includes('id="regionUs" type="checkbox">'),"US Marketplace region should now be available");
+  assert.ok(search.includes('marketplace-us-public.js'),"Public US REVIEW client must load in Search");
+  assert.ok(search.includes('window.GrailRavenUSMarketplace.run(t,status)'),"US search must call the server-side PriceCharting bridge");
   for(const token of [
-    'id="regionUs" type="checkbox" disabled',
     'id="regionJp" type="checkbox" disabled',
     'id="releaseLimited" type="checkbox" disabled',
     'id="editionCollector" type="checkbox" disabled'
