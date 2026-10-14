@@ -21,6 +21,7 @@
 
 import { runHunt } from "./monitor-core.js";
 import { evaluateNormalizedCandidates } from "./search-engine.js";
+import { PUBLIC_PC_PATH, handlePublicPriceChartingSearch } from "./pricecharting-public.js";
 import {
   normalizeEmail, validEmail, randomToken, sha256Hex, isoAfterMinutes,
   isoAfterDays, sessionTokenFromRequest, sessionCookie, clearSessionCookie,
@@ -701,6 +702,10 @@ export default {
         marketplaceConfigured: Boolean(env.MARKETPLACE_PROVIDER && env.MARKETPLACE_PROVIDER !== "disabled"),
         notificationsConfigured: Boolean(env.NOTIFICATION_PROVIDER && env.NOTIFICATION_PROVIDER !== "disabled")
       }, 200, env, request);
+    }
+
+    if (u.pathname === PUBLIC_PC_PATH) {
+      return handlePublicPriceChartingSearch(request, env);
     }
 
     if (request.method === "GET" && u.pathname === "/api/auth/verify") {
