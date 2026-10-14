@@ -2693,3 +2693,8 @@ Built `INVENTORY_COVERAGE_BENCHMARK_V1.md`: fixed 20 user buying intents across 
 ## RetroFix inventory partnership enquiry sent — 14 October 2026
 
 The owner confirms sending RetroFix / MyRetroFix its authorised inventory feed partnership enquiry. Initial outreach is now **Chillout Games, eStarland, RetroFix: all sent and awaiting responses**. No API permissions, licences or new live inventory feeds have been confirmed by these retailers. The 20-game benchmark in `INVENTORY_COVERAGE_BENCHMARK_V1.md` is prepared but not run. Continue separately with IGDB legal work; no unlicensed scraping or new paid feed subscriptions while waiting.
+
+
+## IGDB Data Dump metadata readiness check — 14 October 2026
+
+IGDB commercial agreement still pending (IGDB partner said DocuSign within 2–3 weeks), but Data Dump access was enabled and first index check previously succeeded. Built `shared/igdb-dump-readiness.js` (required games/release_dates/covers/alternative_names CSV fields); enhanced `scripts/igdb-data-dump-check.mjs` to query each endpoint's **metadata only**, check schema fields and create a safe report. Signed S3 URLs and API credentials never saved; no CSV downloaded, provider artwork/rows published, canonical catalogue/D1 changed. Tests `tests/igdb-dump-readiness.test.mjs`; explanatory `IGDB_DUMP_SCHEMA_PREFLIGHT.md`. Manual Actions trigger needed to see current real IGDB per-table schemas. The API-based 8,433-game dry candidate still validated and unpublished; `IGDB_COMMERCIAL_APPROVED` is not enabled. Next: run manual schema preflight, then plan private CSV relation parser if green; legal review before publication.
