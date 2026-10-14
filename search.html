@@ -407,6 +407,7 @@ function applyTargetToVisibleFilters(t={}){
  document.querySelector("#english").checked=t.englishRequired===true;
  document.querySelector("#englishSwitch").classList.toggle("on",document.querySelector("#english").checked);
  syncLegacyFields();
+  window.GrailRavenUSMarketplace?.toggle();
 }
 function resetSaveButtonLabel(){
  document.querySelector("#selectionSave").textContent=window.currentHuntId?"Update Saved Hunt":"Save this hunt";
