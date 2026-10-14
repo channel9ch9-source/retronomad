@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {US_PRICECHARTING_CONSOLES,searchUsPriceChartingReview,renderPrivateReviewHtml}
+import {US_PRICECHARTING_CONSOLES,searchUsPriceChartingReview,renderPrivateReviewHtml,usMarketplaceGameTitle}
   from "../backend/pricecharting-review-pilot.js";
 
 test("US PriceCharting review pilot has correct console namespaces",()=>{
@@ -116,4 +116,36 @@ test("reject unsupported platforms, missing titles and cross-region assumptions"
  for(const target of [{game:"Tomba!",platform:"PS5"},{game:"",platform:"PS1"},{game:"Tomba!"}]) {
   await assert.rejects(searchUsPriceChartingReview(target),{code:"invalid_target"});
  }
+});
+
+test("EU catalogue Tombi! is queried as US Tomba!, without mutating the European title",async()=>{
+ assert.equal(usMarketplaceGameTitle("Tombi!","PS1"),"Tomba!");
+ assert.equal(usMarketplaceGameTitle("Tombi","PS1"),"Tomba!");
+ assert.equal(usMarketplaceGameTitle("Tombi!","PS2"),"Tombi!");
+ assert.equal(usMarketplaceGameTitle("Tomba!","PS1"),"Tomba!");
+ const queries=[];
+ const client={
+  async searchProducts(q){
+   queries.push(q);
+   return [{id:"real-us-product", "console-name":"Playstation","product-name":"Tomba!"}];
+  },
+  async getProductById(id){
+   assert.equal(id,"real-us-product");
+   return {id,"console-name":"Playstation","product-name":"Tomba!"};
+  },
+  async getOffers({productId,consoleId}){
+   assert.equal(productId,"real-us-product");
+   assert.equal(consoleId,"G6");
+   return [{"offer-id":"available-us-offer","offer-status":"available",
+    "console-name":"Playstation","product-name":"Tomba!",
+    "offer-url":"/offer/available-us-offer","image-url":"https://www.pricecharting.com/img/item.jpg",
+    price:13400,"include-string":"Item, Box, and Manual","condition-string":"Normal Wear"}];
+  }
+ };
+ const found=await searchUsPriceChartingReview({game:"Tombi!",platform:"PS1"},{client});
+ assert.deepEqual(queries,["Tomba! Playstation"]);
+ assert.equal(found.target.game,"Tomba!");
+ assert.equal(found.rows.length,1);
+ assert.equal(found.rows[0].title,"Tomba!");
+ assert.equal(found.rows[0].match.state,"REVIEW");
 });
