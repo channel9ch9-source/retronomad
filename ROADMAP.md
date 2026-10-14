@@ -1574,3 +1574,12 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Verify partners will supply authorised current offer-level fields and allow commercial display/deep links/images/cache and specify fees/referral arrangements
 - [ ] Benchmark 20 collector-target queries in authorised sample feeds; record exact region, edition, CIB, real in-stock count, source refresh, shipping limitations and overlap
 - [ ] Integrate second source **only** if accuracy and commercial terms justify the engineering cost
+
+
+### Inventory provider initial outreach completed — 14 October 2026
+
+- [x] Owner sent the first authorised data-access enquiry to Chillout Games (UK, PAL and imported originals)
+- [x] Owner sent the second enquiry to eStarland (US, NTSC-U originals) via business-development contact, because affiliate enquiry linked to a registration page
+- [ ] Await written responses and evaluate authorised inventory feed, rights, availability refresh and commercial terms; follow up after 5–7 working days if no answer
+- [ ] Research other original physical retro retailer candidates in parallel, without scraping or assuming feed availability
+- [ ] Prepare small region/edition/CIB-sensitive test set and integrate only once a source passes access + inventory-value gates
