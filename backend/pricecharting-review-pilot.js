@@ -21,6 +21,20 @@ function trimVariant(s) {
   return String(s||"").replace(/\s*[\[(][^\])]+[\])]\s*$/g,"").trim();
 }
 function matchesTitle(a,b) {return norm(a) === norm(trimVariant(b));}
+
+// The main GrailRaven catalogue is region-neutral / EU-informed. Its canonical
+// title is not necessarily what a US marketplace uses (e.g. Tombi! vs Tomba!).
+// Add deliberate, edition-safe regional aliases here, never a blind global
+// substitution for games with similar titles.
+const US_MARKETPLACE_GAME_TITLES = Object.freeze({
+  PS1:Object.freeze({
+    tombi:"Tomba!"
+  })
+});
+export function usMarketplaceGameTitle(title,platform) {
+  const raw=String(title||"").trim();
+  return US_MARKETPLACE_GAME_TITLES[platform]?.[norm(raw)] || raw;
+}
 function matchesConsole(value,expected) {
   return String(value||"").toLowerCase() === expected.name.toLowerCase();
 }
@@ -109,7 +123,7 @@ function candidateFromOffer(target,offer,product,consoleInfo) {
 
 export async function searchUsPriceChartingReview(target, options={}) {
   const platform=String(target?.platform||"");
-  const game=String(target?.game||"").trim();
+  const game=usMarketplaceGameTitle(target?.game,platform);
   if (!game || game.length>160 || !US_PRICECHARTING_CONSOLES[platform]) {
     throw Object.assign(new Error("Provide a game title and US PS1, PS2, or Dreamcast platform."),{code:"invalid_target"});
   }
