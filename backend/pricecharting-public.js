@@ -2,7 +2,13 @@
 // Licensed PriceCharting responses stay on the server and are intentionally
 // restricted to REVIEW-first metadata. No raw API payloads or secret tokens.
 import { searchUsPriceChartingReview } from "./pricecharting-review-pilot.js";
-import { authClientRateKey } from "./alerts-worker.js";
+import { sha256Hex } from "./auth-core.js";
+
+async function hashedClientKey(request,now){
+  const ip=String(request?.headers?.get?.("cf-connecting-ip")||"").trim();
+  if(!ip)return "";
+  return sha256Hex("pricecharting-public|"+now.toISOString().slice(0,10)+"|"+ip);
+}
 
 export const PUBLIC_PC_PATH="/api/marketplace/pricecharting/us";
 const EDGE_TTL_SECONDS=300;
@@ -19,7 +25,6 @@ function responseJson(payload,status=200){
       "x-content-type-options":"nosniff",
       "x-frame-options":"DENY",
       "referrer-policy":"strict-origin-when-cross-origin",
-      "access-control-allow-origin":"null",
       "vary":"Origin"
     }
   });
@@ -133,7 +138,7 @@ export async function handlePublicPriceChartingSearch(request,env,options={}) {
   }
   const now=options.now ?? Date.now();
   try {
-    const gate=await reserveQuery(env.DB,request,now,options.hashFn||authClientRateKey);
+    const gate=await reserveQuery(env.DB,request,now,options.hashFn||hashedClientKey);
     if(!gate.ok)return responseJson({error:gate.code,message:"Please try again shortly."},gate.status);
     const search=options.search||((target)=>searchUsPriceChartingReview(target,{
       token:env.PRICECHARTING_TOKEN,
