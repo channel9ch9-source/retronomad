@@ -1551,3 +1551,13 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [x] Add US naming regression coverage and full green [CI 38583899146](https://github.com/channel9ch9-source/retronomad/actions/runs/38583899146)
 - [ ] Manually re-run [Deploy app to Cloudflare](https://github.com/channel9ch9-source/retronomad/actions/workflows/deploy-cloudflare.yml) on main, then live-search US PS1 Tomba!, verify real offers/links
 - [ ] Later expand curated regional marketplace title mapping (e.g. UK vs US names) with source-confirmed aliases, not naive global renaming
+
+
+### Real US PriceCharting card visually confirmed by user — 14 October 2026
+
+- [x] [Corrected Cloudflare deploy 38585003573](https://github.com/channel9ch9-source/retronomad/actions/runs/38585003573) green
+- [x] First real nonfixture listing displayed on live https://grailraven.com/search: **Tomba! US PS1**, 1 PriceCharting offer, **USD 134.00**, seller CIB/condition wording, seller photograph, source linkback, REVIEW state
+- [x] Correct US regional title display, while canonical European `Tombi!` remains preserved
+- [ ] Check a wider set of titles from prior benchmark (e.g. `Suikoden II` PS1, `Illbleed` Dreamcast) to validate multiple-game usefulness and offer diversity; 30s global query gap, 4 unique queries/client/15min
+- [ ] Audit API price semantics against webpage: prior seller page showed `$134 including $5 shipping`, public UI incorrectly asserts `item-only` and `USD prices exclude shipping` without independent basis. Amend to neutral **listed price**, destination shipping **unverified**, and add regression test before next deploy.
+- [ ] Audit maximum product variants (current top **2**) and up to **12** displayed offer cards; clearly distinguish source scarcity from search truncation
