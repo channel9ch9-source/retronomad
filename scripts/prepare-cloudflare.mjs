@@ -59,6 +59,9 @@ const vars={
   PUBLIC_CONTACT_EMAIL:String(brand.contactEmail||""),
   AUTH_EMAIL_FROM:process.env.AUTH_EMAIL_FROM||`${PUBLIC_BRAND_NAME} <${TRANSACTIONAL_EMAIL}>`,
   MARKETPLACE_PROVIDER:"disabled",
+  // Independent from PALScout scheduled hunts. Explicit user opt-in to a limited
+  // public REVIEW-only US inventory source; requires a separate Worker secret.
+  PRICECHARTING_PUBLIC_ENABLED:"true",
   NOTIFICATION_PROVIDER:"disabled",
   CHECK_INTERVAL_MINUTES:"60"
 };
