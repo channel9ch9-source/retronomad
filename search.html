@@ -444,7 +444,7 @@ function buildTarget(canonicalOverride=null){
    editionPreference:document.querySelector("#edition").value,completeness:document.querySelector("#complete").value,
    condition:document.querySelector("#condition").value,englishRequired:document.querySelector("#english").checked,
    excludeBundles:document.querySelector("#excludeBundles").checked,excludePromo:document.querySelector("#excludePromo").checked,
-   maxDeliveredGbp:numberOrNull(document.querySelector("#maxPrice").value)
+   maxDeliveredGbp:document.querySelector("#regionUs").checked?null:numberOrNull(document.querySelector("#maxPrice").value)
  };
 }
 function renderLiveResults(rows){
