@@ -2679,3 +2679,12 @@ Most promising contacts: UK **Chillout Games / Retro-Games** (same operator, str
 ## Two initial inventory provider enquiries sent — 14 October 2026
 
 The owner sent GrailRaven partnership enquiries to **Chillout Games** and **eStarland** asking about a legitimate live product feed/API, rights to display listing data and imagery, region/edition/completeness details and commercial terms. eStarland's affiliate contact routed to registration, so owner used the business-development channel. This is **outreach only**, not access approval or a new integration. Wait approximately 5–7 working days for initial responses, then consider a follow-up. Track further progress in `INVENTORY_PROVIDER_FEASIBILITY_2026-10-14.md`. No additional retailer commitment, paid subscription or inventory feed active.
+
+
+## Second inventory provider research + fixed benchmark — 14 October 2026
+
+Desk research added **RetroFix / MyRetroFix** as highest-priority third approach. Its public partner programme `https://myretrofix.co.uk/partner/` offers free applications and referral affiliate collaboration, and individual live game pages show PAL/US region, CIB condition and availability, potentially excellent exact-copy evidence. Crucially, programme is mostly oriented to collaborating retro-game stores and says nothing affirmative about authorised CSV/XML/API feeds, photo republication or commercial comparison permission. The user has **not yet contacted RetroFix**; Chillout Games and eStarland enquiries were confirmed sent.
+
+Other weaker candidates: **Lukie Games** (US, demonstrated Tomba NTSC product with Game Only option; rights unverified) and **Retro Console Store** (published 5% affiliate programme, feed unverified). Full source URLs in `INVENTORY_PROVIDER_FEASIBILITY_2026-10-14.md`.
+
+Built `INVENTORY_COVERAGE_BENCHMARK_V1.md`: fixed 20 user buying intents across US/UK PS1, PS2 and Dreamcast with original release/CIB, regional title alias traps, Platinum/Greatest Hits traps, repros, stocking/photograph trust checks and a truthful pending-results template. **Benchmark is not run**, other sources' offer counts are unknown. Next: user approves/sends short RetroFix feed enquiry, await current partners' responses and evaluate source against the 20 actual queries once access is licensed. No premature coding, scraping or paid subscriptions.
