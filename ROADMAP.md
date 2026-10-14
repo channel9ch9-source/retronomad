@@ -1541,3 +1541,13 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] End-to-end browser QA: user looks up Tomba! PS1 NTSC-U and checks real REVIEW offers/PriceCharting linkback and USD asking prices
 - [ ] If no response, determine catalogue resolution, 429 throttle, provider API errors or missing offer coverage; avoid claiming nonfixture display without evidence
 - [ ] Continue enforcing renewal economics (reminder Nov 10; expected billing Nov 13), attribution and authorised-data purge on cancellation
+
+
+### Tomba! cross-region launch bug — fixed awaiting redeploy (14 October 2026)
+
+- [x] Diagnosed 0 US results despite prior provider offer: the Europe/PAL catalogue resolves typed **Tomba** to **Tombi!**, which fails exact US PriceCharting title lookup
+- [x] Map UK `Tombi!` to US `Tomba!` for US PS1 Marketplace API and display only, preserving canonical catalogue ID and REVIEW-only discipline
+- [x] Show US REVIEW coverage label rather than misleading PALScout-deep region identity
+- [x] Add US naming regression coverage and full green [CI 38583899146](https://github.com/channel9ch9-source/retronomad/actions/runs/38583899146)
+- [ ] Manually re-run [Deploy app to Cloudflare](https://github.com/channel9ch9-source/retronomad/actions/workflows/deploy-cloudflare.yml) on main, then live-search US PS1 Tomba!, verify real offers/links
+- [ ] Later expand curated regional marketplace title mapping (e.g. UK vs US names) with source-confirmed aliases, not naive global renaming
