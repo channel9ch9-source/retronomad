@@ -1594,3 +1594,12 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] User chooses whether to send third partnership enquiry to RetroFix (`info@myretrofix.co.uk`) asking specifically about allowed read-only item-level feed, image/data reuse and refresh, *before* affiliate sign-up
 - [ ] Wait for actual Chillout Games and eStarland replies; do not count nonexistent partner feeds as in-progress integrations
 - [ ] Run 20-game inventory coverage test only when a partner gives authorised sample, and score **new relevant copies**, not catalogued games or search links
+
+
+### Three retailer data-feed enquiries sent — 14 October 2026
+
+- [x] Chillout Games partnership enquiry sent by owner
+- [x] eStarland business-development inventory partnership enquiry sent by owner
+- [x] RetroFix / MyRetroFix inventory + affiliate data rights enquiry sent by owner (`info@myretrofix.co.uk`)
+- [ ] Await provider replies. No supplier API/feed permissions or contracts yet; use `INVENTORY_COVERAGE_BENCHMARK_V1.md` when an authorised sample is supplied
+- [ ] Follow up politely after approximately 5–7 working days without reply, if appropriate
