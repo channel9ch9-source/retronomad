@@ -1108,3 +1108,21 @@ Both artifacts were fetched and inspected:
 Audit recorded in `PRICECHARTING_REVIEW_PILOT_V1.md`. Real licensed listing details were **never published to GitHub**, no Cloudflare production secret or public site route exists, and the browser demo HTML is synthetic only. Do not imply public integration is live. 
 
 **Next:** Decide whether to seek a single provider written confirmation of RetroNomad → GrailRaven rebrand and US/JP global data/use licence before any public API price/Marketplace display. Only after licensing and economics are addressed should a secure access-controlled private preview or carefully guarded production pilot be considered. Date reminder Nov 10 exists; expected next $49 charge around Nov 13 (verify subscription billing). User wants practical progress, minimal unnecessary provider contact, no extra recurring expense.
+
+
+## Public US PriceCharting Marketplace integration prepared — 14 October 2026
+
+Owner explicitly requested to proceed with real PriceCharting data **publicly on GrailRaven**, and instructed not to bother PriceCharting about rebranding. Do not ask for name confirmation again. Attribution, paid-subscription terms and strict release confidence remain in force. **Do not claim launch until manual production deployment succeeds.**
+
+Implementation now committed to main:
+- `backend/pricecharting-public.js`: same-origin guarded `GET /api/marketplace/pricecharting/us?game=...&platform=...`; uses existing real US REVIEW-only adapter, item-only USD prices, thumbnails and provider linkback, whitelisted metadata only. Never exposes token, raw provider payloads, seller/buyer PII, assumed CIB, verified physical edition, shipping or GBP.
+- `backend/alerts-worker.js`: route wired with separate `PRICECHARTING_PUBLIC_ENABLED`, health field `usMarketplaceEnabled`. Scheduled saved hunts and notifications remain disabled; US listings do **not** use PALScout UK classifier.
+- `backend/migrations/0006_pricecharting_public_limits.sql`: distributed D1 30-second global reservation plus max 4 per hashed visitor/15min; 5-minute Cloudflare cached same-game results; expired hashed buckets deleted. No raw IP retention.
+- `marketplace-us-public.js` + `search.html`: public enabled NTSC-U checkbox; real US result cards REVIEW-only with external offer and PriceCharting attribution links, USD asking prices only, seller-stated completeness/condition; clear errors/zero-results and honest limitations; preserved separate PAL search and US saved hunt target.
+- `scripts/prepare-cloudflare.mjs`: independent public US enable flag true (opted in by owner), existing `MARKETPLACE_PROVIDER` and `NOTIFICATION_PROVIDER` disabled.
+- `.github/workflows/deploy-cloudflare.yml`: requires existing Actions `PRICECHARTING_TOKEN` and sets Cloudflare Worker secret privately before deployment, in addition to existing Resend/etc. No automatic Worker deployment was added.
+- `scripts/smoke-production.mjs`: validates public US flag, browser asset, enabled filter, and invalid-parameter 400 without paid API calls.
+- `tests/pricecharting-public.test.mjs`: validates sanitization, review-only output, cache/rate limit, fail-closed, secret non-exposure; `tests/site-v2-contract.test.mjs` updated for newly supported US checkbox.
+- Privacy disclosure updated. Full engineering/operations and kill switch in `PRICECHARTING_PUBLIC_V1.md`.
+
+**NEXT REQUIRED USER STEP:** after verifying latest GitHub validations green on main, ask user to manually run [Deploy app to Cloudflare](https://github.com/channel9ch9-source/retronomad/actions/workflows/deploy-cloudflare.yml) and report green/red. Then independently verify deployment logs, `/health` `usMarketplaceEnabled:true`, live `/search` US filter, and one real PriceCharting offer using e.g. Tomba! US PS1 (could hit global cooldown or no inventory). No provider outreach is required by user. Existing single-month paid term started 13 Oct; 10 Nov cancellation reminder already exists, renewal expected 13 Nov pending billing date confirmation.
