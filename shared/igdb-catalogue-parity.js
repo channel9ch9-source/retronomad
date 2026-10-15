@@ -44,7 +44,7 @@ function selectCsvTitles(records,platform,stats){
  stats.csvSelectedAfterTitleDedup=selected.length;
  return selected;
 }
-export function reconcileIgdbCatalogueParity({csvRecords,apiCatalogue,seedCatalogue,mappings}){
+export function reconcileIgdbCatalogueParity({csvRecords,apiCatalogue,seedCatalogue,mappings,apiDryReview=null}){
  if(!Array.isArray(csvRecords)||!csvRecords.length)throw Error("No private CSV records");
  requireDocument(apiCatalogue,"API candidate");
  requireDocument(seedCatalogue,"PALScout seed");
@@ -69,6 +69,65 @@ export function reconcileIgdbCatalogueParity({csvRecords,apiCatalogue,seedCatalo
    if(record.typeBucket==="INCLUDE_CANDIDATE")s.csvInclude++;
    else if(record.typeBucket==="REVIEW")s.csvReview++;
    else s.csvExcluded++;
+  }
+ }
+ const csvById=new Map();
+ for(const record of csvRecords)csvById.set(String(record.id),record);
+ const diagnostics={
+  reviewEvidenceAvailable:Boolean(apiDryReview),
+  previousApiImport:{
+   perPlatformRawFetched:{},perPlatformIncludeCandidates:{},perPlatformSelected:{},
+   reportedHeldProviderRecords:null,reportedSuppressedSameTitleRecords:null,
+   reportedSeedAmbiguities:null,reportedCanonicalIdCollisions:null
+  },
+  missingCsvReference:{
+   sourceOnlyNewIdentity:0,sourceIdPresentOtherPlatforms:0,
+   affectedDeepSeeds:0,affectedBaseOnly:0
+  },
+  missingSelectedCsvPair:{
+   apiHeldAmbiguousCanonicalTitle:0,apiSuppressedSameTitle:0,
+   apiHeldSeedAmbiguity:0,apiHeldCanonicalIdCollision:0,
+   matchesExistingDeepSeedTitleOrAlias:0,noReviewEvidenceOfCause:0
+  },
+  aliases:{
+   apiBaseWithCsvAdditionalAliases:0,apiBaseWithApiAdditionalAliases:0,
+   csvAdditionalAliasCount:0,apiAdditionalAliasCount:0,
+   csvExtraWhereApiHasZeroAliases:0,csvExtraWhereApiHasTenOrMoreAliases:0
+  }
+ };
+ const reviewReasons=new Map();
+ if(apiDryReview){
+  if(!apiDryReview.mergeSummary||apiDryReview.mergeSummary.proposedTotalGames!==apiCatalogue.games.length)
+   throw Error("Private API import report does not match candidate count");
+  for(const platform of PLATFORMS){
+   const stats=apiDryReview.platforms?.[platform];
+   if(!stats||!Number.isInteger(stats.fetched))throw Error("Missing private API platform counters");
+   diagnostics.previousApiImport.perPlatformRawFetched[platform]=stats.fetched;
+   diagnostics.previousApiImport.perPlatformIncludeCandidates[platform]=stats.includeCandidates;
+   diagnostics.previousApiImport.perPlatformSelected[platform]=stats.selectedCanonicalRecords;
+  }
+  const m=apiDryReview.mergeSummary;
+  diagnostics.previousApiImport.reportedHeldProviderRecords=m.heldProviderRecords;
+  diagnostics.previousApiImport.reportedSuppressedSameTitleRecords=m.suppressedSameTitleRecords;
+  diagnostics.previousApiImport.reportedSeedAmbiguities=m.seedAmbiguities;
+  diagnostics.previousApiImport.reportedCanonicalIdCollisions=m.idCollisions;
+  for(const group of apiDryReview.review?.ambiguousProviderTitleGroups||[]){
+   for(const item of group.records||[]){
+    if(String(item.igdbId)===String(group.selectedIgdbId??""))continue;
+    const reason=group.decision==="HOLD_AMBIGUOUS_SAME_TITLE"?
+     "apiHeldAmbiguousCanonicalTitle":"apiSuppressedSameTitle";
+    reviewReasons.set(key(group.platform,requireRecordId(item.igdbId)),reason);
+   }
+  }
+  for(const event of apiDryReview.review?.seedAmbiguities||[]){
+   const items=[...(event.providerRows||[]),...(event.held||[]),
+    ...(event.igdbId?[{igdbId:event.igdbId}]:[])];
+   for(const item of items){
+    reviewReasons.set(key(event.platform,requireRecordId(item.igdbId)),"apiHeldSeedAmbiguity");
+   }
+  }
+  for(const item of apiDryReview.review?.idCollisions||[]){
+   reviewReasons.set(key(item.platform,requireRecordId(item.igdbId)),"apiHeldCanonicalIdCollision");
   }
  }
  const selectedPairs=new Set();
@@ -107,7 +166,14 @@ export function reconcileIgdbCatalogueParity({csvRecords,apiCatalogue,seedCatalo
   if(apiByPair.has(pair)){duplicateApiRefs++;continue;}
   apiByPair.set(pair,game);
   const csv=csvByPair.get(pair);
-  if(!csv){apiMissingCsv++;stats.apiRefsAbsentFromCsv++;continue;}
+  if(!csv){
+   apiMissingCsv++;stats.apiRefsAbsentFromCsv++;
+   if(csvById.has(id))diagnostics.missingCsvReference.sourceIdPresentOtherPlatforms++;
+   else diagnostics.missingCsvReference.sourceOnlyNewIdentity++;
+   if(seed)diagnostics.missingCsvReference.affectedDeepSeeds++;
+   else diagnostics.missingCsvReference.affectedBaseOnly++;
+   continue;
+  }
   if(csv.typeBucket==="EXCLUDE_NON_BASE"||csv.typeBucket==="EXCLUDE_VERSION"){
    apiExcludedRef++;stats.apiRefsExcluded++;
   }
@@ -117,9 +183,21 @@ export function reconcileIgdbCatalogueParity({csvRecords,apiCatalogue,seedCatalo
    const csvYear=csv.releaseYearByPlatform?.[game.platform]??null;
    const apiYear=game.releaseYear??null;
    if(csvYear!==apiYear){apiYearDrift++;stats.apiBaseYearDrift++;}
-   const aliases=new Set((game.aliases||[]).map(norm).filter(Boolean));
-   const missing=(csv.aliases||[]).some(alias=>norm(alias)!==norm(game.title)&&!aliases.has(norm(alias)));
-   if(missing){apiMissingAliases++;stats.apiBaseMissingAliases++;}
+   const apiAliases=new Set((game.aliases||[]).map(norm).filter(Boolean).filter(n=>n!==norm(game.title)));
+   const csvAliases=new Set((csv.aliases||[]).map(norm).filter(Boolean).filter(n=>n!==norm(csv.name)));
+   const csvExtra=[...csvAliases].filter(n=>!apiAliases.has(n));
+   const apiExtra=[...apiAliases].filter(n=>!csvAliases.has(n));
+   if(csvExtra.length){
+    apiMissingAliases++;stats.apiBaseMissingAliases++;
+    diagnostics.aliases.apiBaseWithCsvAdditionalAliases++;
+    diagnostics.aliases.csvAdditionalAliasCount+=csvExtra.length;
+    if(!apiAliases.size)diagnostics.aliases.csvExtraWhereApiHasZeroAliases++;
+    if(apiAliases.size>=10)diagnostics.aliases.csvExtraWhereApiHasTenOrMoreAliases++;
+   }
+   if(apiExtra.length){
+    diagnostics.aliases.apiBaseWithApiAdditionalAliases++;
+    diagnostics.aliases.apiAdditionalAliasCount+=apiExtra.length;
+   }
   }
  }
  let mappingMissing=0,mappingWrongRef=0,mappingWrongTitle=0,mappingExcluded=0;
@@ -143,6 +221,17 @@ export function reconcileIgdbCatalogueParity({csvRecords,apiCatalogue,seedCatalo
   const platform=pair.split("|")[0];
   platforms[platform].selectedCsvMissingFromApi++;
   selectedCsvMissingFromApi++;
+  const reason=reviewReasons.get(pair);
+  if(reason){
+   diagnostics.missingSelectedCsvPair[reason]++;
+   continue;
+  }
+  const row=csvByPair.get(pair);
+  const csvNames=new Set([row.name,...(row.aliases||[])].map(norm).filter(Boolean));
+  const isSeedNeighbour=seedCatalogue.games.some(g=>
+   g.platform===platform&&[g.title,...(g.aliases||[])].some(x=>csvNames.has(norm(x))));
+  if(isSeedNeighbour)diagnostics.missingSelectedCsvPair.matchesExistingDeepSeedTitleOrAlias++;
+  else diagnostics.missingSelectedCsvPair.noReviewEvidenceOfCause++;
  }
  const expectedSeeds=seedCatalogue.games.filter(g=>g.releaseIntelligence?.coverage==="PALSCOUT_DEEP").length;
  const apiSeedCount=apiCatalogue.games.filter(g=>g.releaseIntelligence?.coverage==="PALSCOUT_DEEP").length;
@@ -168,7 +257,7 @@ export function reconcileIgdbCatalogueParity({csvRecords,apiCatalogue,seedCatalo
   csvGameTypes:{include:csvIncluded,review:csvReview,excluded:csvExcluded},
   csvCandidatePlatformPairs:[...csvByPair.values()].filter(r=>r.typeBucket==="INCLUDE_CANDIDATE").length,
   apiMappedPlatformPairs:apiByPair.size,
-  checks,platforms,failedChecks:failed,
+  checks,platforms,diagnostics,failedChecks:failed,
   aggregateOnly:true,noRawProviderRecords:true,noProviderIdentifiers:true,
   noCanonicalChanges:true,noD1Changes:true,noArtworkPublished:true,
   commercialApprovalUnchanged:true
