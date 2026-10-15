@@ -42,8 +42,9 @@ export function summarizePrivateParityRecheck(targets,apiRows,{platformIds}={}){
   const id=idString(row.id);
   if(!wanted.has(id))throw Error("Unexpected provider game ID returned by private recheck");
   if(found.has(id))throw Error("Duplicate provider ID returned by private recheck");
-  if(!Array.isArray(row.platforms))throw Error("Missing platform list on by-ID recheck");
-  found.set(id,new Set(row.platforms.map(x=>Number(x))));
+  const platforms=row.platforms??[];
+  if(!Array.isArray(platforms))throw Error("Invalid platform list on by-ID recheck");
+  found.set(id,new Set(platforms.map(x=>Number(x))));
  }
  const summarize=entries=>{
   const output={total:entries.length,stillPresentWithRequestedPlatform:0,
