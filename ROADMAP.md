@@ -1722,3 +1722,12 @@ No public deployment, D1 changes, artwork, commercial gate changes or new provid
 - [ ] Run a modest diversity sanity check of currently live PriceCharting US stock using previously selected **Suikoden II (PS1)** and **Illbleed (Dreamcast)**; log *actual offers*, REGION and REVIEW uncertainty, no fabricated postage, no coverage generalisation from single title.
 - [ ] Await Chillout Games / eStarland / RetroFix partner responses, then use prepared 20-intent **inventory coverage benchmark** against any authorised sample feed to prioritise a second source. No unauthorised retailer scraping or invented inventory.
 - [ ] Review the PriceCharting single-subscription renewal/cancellation decision already recorded for November and avoid automatic new paid sources; IGDB DocuSign outstanding while expanded catalogue retained at owner's instruction.
+
+
+### Public offer smoke after approved production deploy — 15 October 2026
+
+- [x] Owner ran [successful production deployment 38812129004](https://github.com/channel9ch9-source/retronomad/actions/runs/38812129004); all **132 tests passed**, production smoke passed, and **8,462-game index** retained
+- [x] Neutral USD listed price and delivery-unverified UI and server response are now deployed (supersedes preceding "not yet deployed" roadmap entry)
+- [ ] Owner verifies **Suikoden II PS1** and **Illbleed Dreamcast** live public US search results, offer counts/links and REVIEW/price/postage wording; respect 30-second global cooldown, allow for 5-minute cache, and avoid assuming private 4-variant test equals public 2-variant query
+- [ ] If either previously positive title has zero public offers, inspect exact matched product variants and live provider response before changing search logic; keep seller data/tokens private
+- [ ] Once public search's usefulness is verified, assess any authorized reply from three prospective stock feed partners (Chillout Games, eStarland, RetroFix) and incremental 20-intent coverage. No new unapproved paid commitment.
