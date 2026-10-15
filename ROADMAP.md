@@ -1614,3 +1614,16 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] User manually triggers [IGDB dump preflight](https://github.com/channel9ch9-source/retronomad/actions/workflows/igdb-data-dump-check.yml) using existing secret-gated Actions workflow, share green/red and readiness flags
 - [ ] Design/develop read-only fixture-tested CSV relational importer only after real schema review; compare with proven 8,433-row API-backed dry candidate
 - [ ] Await and review actual IGDB DocuSign agreement, preserve commercial promotion gate until signed/accepted and conditions recorded
+
+
+### IGDB CSV offline importer foundation — 15 October 2026
+
+- [x] User manually ran data-dump schema workflow: [run 38743846480](https://github.com/channel9ch9-source/retronomad/actions/runs/38743846480) success, 79 endpoints, four required CSV schemas READY
+- [x] Commit bounded streaming CSV parser, strict array/reference and platform-specific year parsing (`shared/igdb-dump-csv.js`)
+- [x] Build cautious games/release_dates/covers/alternative_names join across explicitly verified PS1/PS2/Dreamcast IDs (`shared/igdb-dump-relations.js`)
+- [x] Add private, local-only, explicit-opt-in CSV preview CLI emitting just aggregate counts; never licensed rows or presigned S3 URLs (`scripts/igdb-dump-local-preview.mjs`)
+- [x] Regression-test multiline quoted CSV, chunk splits, date/alias/cover joins, malformed structures and fail-closed labels; [validation 38744792902](https://github.com/channel9ch9-source/retronomad/actions/runs/38744792902) passed
+- [x] Describe runbook, missing table joins, legal and no-publication gate in `IGDB_CSV_RELATIONAL_DRY_RUN.md`
+- [ ] **Real private CSV shape compatibility**: validate IGDB's current array/null encodings, game_type numeric refs and timestamp format without publishing a row
+- [ ] Add game_types relation and other full-API metadata as needed to maintain safe inclusion/exclusion and preserve all 100 PALScout seed identities
+- [ ] Compare CSV importer against existing 8,433-game API dry-run before any promotion; wait for signed IGDB legal agreement
