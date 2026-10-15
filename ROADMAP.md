@@ -1662,3 +1662,15 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Review/sign IGDB legal agreement before enabling commercial approval or deploying full catalogue/artwork
 
 **No production deployment from parity workflow.** Historical 8,433 API entries and CSV 8,235 eligible provider identities are not numerically equivalent before per-platform normalisation. The latest 9-table full CSV audit itself passed.
+
+
+### First CSV/API parity run red; root cause corrected — 15 October 2026
+
+- [x] First private parity owner-run [38783788562](https://github.com/channel9ch9-source/retronomad/actions/runs/38783788562): real nine-table CSV and synthetic tests passed; parity correctly returned REVIEW_REQUIRED but mistakenly counted **8,362 historical BASE_ONLY canonical rows as changed PALScout seeds**, due to using the existing full repository canonical catalogue as initial seed
+- [x] Identify 12 October `Promote canonical catalogue` commit: `catalogue/base-catalogue.json` is no longer just 100 launch seeds (contrary to some stale handoff descriptions)
+- [x] Correct private run to recreate API candidate using only 100 PALSCOUT_DEEP records, restore the full original file in `finally`, and regression-test this exact 8,362-base record failure; [fixed-code CI 38784894662](https://github.com/channel9ch9-source/retronomad/actions/runs/38784894662) green
+- [ ] Owner reruns [private IGDB CSV/API parity](https://github.com/channel9ch9-source/retronomad/actions/workflows/igdb-private-catalogue-parity.yml) on main to obtain **actual corrected parity verdict**
+- [ ] Investigate any post-fix CSV/API one-reference, alias, selected-record or snapshot discrepancies using aggregate counts
+- [ ] Independently reconcile previous repository canonical full-promotion commit with handoff/publication/licence claims before any next IGDB public action
+
+No production deploy or signed IGDB legal agreement as part of this parity fix.
