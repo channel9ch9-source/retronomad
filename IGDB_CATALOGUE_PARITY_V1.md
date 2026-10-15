@@ -1,5 +1,7 @@
 # IGDB private catalogue parity gate — 15 October 2026
 
+> **CRITICAL status correction (15 October 2026):** The full IGDB-backed canonical catalogue was already published on 12 October via [successful promotion run 38300719987](https://github.com/channel9ch9-source/retronomad/actions/runs/38300719987). Dataset `cat-455202e6a4daca830a8b`: **8,462 games** (PS1 3,727 / PS2 4,030 / Dreamcast 705), committed in `fc958b5`, activated in remote D1 and deployed to Cloudflare. [Successful production build/smoke 38585003573](https://github.com/channel9ch9-source/retronomad/actions/runs/38585003573) deployed the same **8,462** on 14 October. Therefore older assertions that only 100 PALScout games are publicly served are **incorrect**. The 100 is the protected PALScout-deep subset. The promotion's `IGDB_COMMERCIAL_APPROVED=true` was observed **on 12 October only**; signed agreement and present flag state remain unverified. See [IGDB_PUBLICATION_AUDIT_2026-10-15.md](IGDB_PUBLICATION_AUDIT_2026-10-15.md). **No further public promotion or rollback without licensing assessment and explicit authorisation.**
+
 **Status: implementation and fixture regressions added; a real same-run parity verdict is NOT yet available.** Do not confuse the successfully completed nine-table CSV relationship audit with CSV/API catalogue equivalence.
 
 ## Why the raw totals differ
@@ -77,3 +79,10 @@ The ephemeral runner now emits an evidence-qualified `verdict`. A guarded **reco
 **No repeat private full-data run is needed just to chase a green badge.** The 15 October run already supplies enough evidence to proceed with *private* catalogue engineering while retaining manual holds and commercial/legal publication gates. If source data changes or the IGDB signed contract introduces new terms, rerun the private benchmark then. Strict 100-seed and nine-mapping gates must always remain in place.
 
 **Not verified/approved:** public IGDB catalogue promotion, pending DocuSign agreement, copyright/artwork rights, and historical 12 October GitHub full catalogue promotion versus older deployment claims. Keep production gates closed pending separate review.
+
+
+## 15 October 2026 — actual public publication verified by Actions records
+
+> **CRITICAL status correction (15 October 2026):** The full IGDB-backed canonical catalogue was already published on 12 October via [successful promotion run 38300719987](https://github.com/channel9ch9-source/retronomad/actions/runs/38300719987). Dataset `cat-455202e6a4daca830a8b`: **8,462 games** (PS1 3,727 / PS2 4,030 / Dreamcast 705), committed in `fc958b5`, activated in remote D1 and deployed to Cloudflare. [Successful production build/smoke 38585003573](https://github.com/channel9ch9-source/retronomad/actions/runs/38585003573) deployed the same **8,462** on 14 October. Therefore older assertions that only 100 PALScout games are publicly served are **incorrect**. The 100 is the protected PALScout-deep subset. The promotion's `IGDB_COMMERCIAL_APPROVED=true` was observed **on 12 October only**; signed agreement and present flag state remain unverified. See [IGDB_PUBLICATION_AUDIT_2026-10-15.md](IGDB_PUBLICATION_AUDIT_2026-10-15.md). **No further public promotion or rollback without licensing assessment and explicit authorisation.**
+
+**Next operational choice:** confirm the signed IGDB DocuSign agreement and current GitHub variable; if publication is not authorised, coordinate a 100-deep-only site/source/D1 recovery plan (there was no previous active D1 dataset in the activation log) and request approval before changing live services. Older sections are historical and are superseded by this audit.
