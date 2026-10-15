@@ -1,5 +1,7 @@
 # Catalogue Promotion + D1 Sync Pipeline
 
+> **CRITICAL status correction (15 October 2026):** The full IGDB-backed canonical catalogue was already published on 12 October via [successful promotion run 38300719987](https://github.com/channel9ch9-source/retronomad/actions/runs/38300719987). Dataset `cat-455202e6a4daca830a8b`: **8,462 games** (PS1 3,727 / PS2 4,030 / Dreamcast 705), committed in `fc958b5`, activated in remote D1 and deployed to Cloudflare. [Successful production build/smoke 38585003573](https://github.com/channel9ch9-source/retronomad/actions/runs/38585003573) deployed the same **8,462** on 14 October. Therefore older assertions that only 100 PALScout games are publicly served are **incorrect**. The 100 is the protected PALScout-deep subset. The promotion's `IGDB_COMMERCIAL_APPROVED=true` was observed **on 12 October only**; signed agreement and present flag state remain unverified. See [IGDB_PUBLICATION_AUDIT_2026-10-15.md](IGDB_PUBLICATION_AUDIT_2026-10-15.md). **No further public promotion or rollback without licensing assessment and explicit authorisation.**
+
 Last updated: 6 October 2026
 
 ## Purpose
@@ -207,3 +209,10 @@ Do not set `IGDB_COMMERCIAL_APPROVED=true` until agreement execution/confirmatio
 
 
 Partnership details were sent to IGDB on 7 October 2026. The next external dependency is receipt of the legal agreement. The production publication gate remains closed until agreement execution/confirmation.
+
+
+## 15 October 2026 — actual public publication verified by Actions records
+
+> **CRITICAL status correction (15 October 2026):** The full IGDB-backed canonical catalogue was already published on 12 October via [successful promotion run 38300719987](https://github.com/channel9ch9-source/retronomad/actions/runs/38300719987). Dataset `cat-455202e6a4daca830a8b`: **8,462 games** (PS1 3,727 / PS2 4,030 / Dreamcast 705), committed in `fc958b5`, activated in remote D1 and deployed to Cloudflare. [Successful production build/smoke 38585003573](https://github.com/channel9ch9-source/retronomad/actions/runs/38585003573) deployed the same **8,462** on 14 October. Therefore older assertions that only 100 PALScout games are publicly served are **incorrect**. The 100 is the protected PALScout-deep subset. The promotion's `IGDB_COMMERCIAL_APPROVED=true` was observed **on 12 October only**; signed agreement and present flag state remain unverified. See [IGDB_PUBLICATION_AUDIT_2026-10-15.md](IGDB_PUBLICATION_AUDIT_2026-10-15.md). **No further public promotion or rollback without licensing assessment and explicit authorisation.**
+
+**Next operational choice:** confirm the signed IGDB DocuSign agreement and current GitHub variable; if publication is not authorised, coordinate a 100-deep-only site/source/D1 recovery plan (there was no previous active D1 dataset in the activation log) and request approval before changing live services. Older sections are historical and are superseded by this audit.
