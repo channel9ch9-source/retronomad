@@ -1,0 +1,34 @@
+name: Private IGDB real CSV format probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/igdb-real-dump-format-probe.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: igdb-private-csv-format-probe
+  cancel-in-progress: false
+
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Regression tests
+        run: npm test
+      - name: Read bounded samples of actual IGDB CSV dumps (no raw data persisted)
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+        run: node scripts/igdb-real-dump-format-probe.mjs
