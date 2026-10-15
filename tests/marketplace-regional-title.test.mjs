@@ -23,3 +23,11 @@ test("public Search forwards regional title to provider, without losing canonica
  assert.match(source,/window\.GrailRavenUSMarketplace\.run\(t,status\)/);
  assert.match(source,/US Marketplace · REVIEW only/);
 });
+
+
+test("US Marketplace price label does not claim API listed prices exclude delivery",async()=>{
+ const source=await readFile(new URL("../marketplace-us-public.js",import.meta.url),"utf8");
+ assert.match(source,/Listed price · destination delivery unverified/);
+ assert.match(source,/USD listed prices may or may not include a shipping component/);
+ assert.doesNotMatch(source,/Item only · shipping unknown|Asking prices in USD exclude shipping/);
+});
