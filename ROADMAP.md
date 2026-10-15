@@ -1627,3 +1627,15 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] **Real private CSV shape compatibility**: validate IGDB's current array/null encodings, game_type numeric refs and timestamp format without publishing a row
 - [ ] Add game_types relation and other full-API metadata as needed to maintain safe inclusion/exclusion and preserve all 100 PALScout seed identities
 - [ ] Compare CSV importer against existing 8,433-game API dry-run before any promotion; wait for signed IGDB legal agreement
+
+
+### IGDB complete real CSV nine-table relationship test PASSED — 15 October 2026
+
+- [x] Partner-enabled real dump format sampled privately: [format probe 38777510750](https://github.com/channel9ch9-source/retronomad/actions/runs/38777510750), all 9 CSV schemas/formats parsed, brace arrays and ISO-like dates confirmed
+- [x] Correct safe `LONG[]` brace parsing, zero-valued `game_types` ref, and corresponding regression fixtures; no general loosening of ID validation
+- [x] Connect four initial tables + five missing metadata tables (`game_types`, `platforms`, `genres`, `involved_companies`, `companies`), including company role flags and strict platform ID checks
+- [x] **FULL REAL PRIVATE RUN SUCCESS**: [Actions 38779044747](https://github.com/channel9ch9-source/retronomad/actions/runs/38779044747) processed 493 MiB, 382,264 games, 8,722 three-platform game records; 8,235 include candidates, 278 review, 133 non-base exclusions, 76 version exclusions; 0 missing type/genre/company relations
+- [x] Temporary licensed CSV files deleted; no provider raw rows, source URLs or secrets published, no canonical/D1/artwork changes
+- [x] Full result memo `IGDB_REAL_CSV_VALIDATION_2026-10-15.md`
+- [ ] Privately compare complete CSV importer to existing 8,433-game API-based candidate: dedup/title/version filter parity, PALScout 100-seed identities, explicit regional mappings and collision/unknown handling
+- [ ] Obtain/review IGDB DocuSign agreement; activate approved catalogue only once commercial rights and public attribution/artwork terms are verified
