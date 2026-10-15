@@ -66,7 +66,7 @@ export async function inspectIgdbDumpRelations(
   if(!game)continue;
   // Covers can be variant records; only the cover referenced by the game row
   // may be taken as its primary image. No actual IGDB image is published.
-  if(game.coverRef&&id!==game.coverRef)continue;
+  if(!game.coverRef||id!==game.coverRef)continue;
   if(!String(row.image_id||"").trim())continue;
   game.hasCoverMetadata=true;
   counts.matchedCovers++;
