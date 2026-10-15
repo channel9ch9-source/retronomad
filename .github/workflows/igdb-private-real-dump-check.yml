@@ -1,0 +1,35 @@
+name: Private IGDB real CSV relationships
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Regression tests before downloading private data
+        run: npm test
+      - name: Download private IGDB CSVs and verify nine related tables
+        run: node scripts/igdb-private-real-dump-check.mjs
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+          IGDB_PRIVATE_REAL_DUMP_CONFIRM: PRIVATE_TEST_ONLY
+      - name: Upload aggregate-only result, never CSVs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: igdb-private-csv-aggregate-check
+          path: benchmarks/igdb-private-real-dump-check.json
+          if-no-files-found: warn
+          retention-days: 7
