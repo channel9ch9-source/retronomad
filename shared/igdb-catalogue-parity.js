@@ -174,3 +174,21 @@ export function reconcileIgdbCatalogueParity({csvRecords,apiCatalogue,seedCatalo
   commercialApprovalUnchanged:true
  };
 }
+
+// Prepare a *private* API dry-run baseline from deep PALScout seed records only.
+// Historical canonical repositories can already contain thousands of BASE_ONLY
+// entries; those are not original launch seeds and must not be passed as input.
+export function selectPalScoutParitySeeds(source){
+ requireDocument(source,"existing canonical");
+ const seen=new Set();
+ const seeds=[];
+ for(const game of source.games){
+  if(game.releaseIntelligence?.coverage!=="PALSCOUT_DEEP")continue;
+  if(!Object.hasOwn(perPlatform(),game.platform)||!game.id||seen.has(game.id))
+   throw Error("Invalid or duplicate protected PALScout seed");
+  seen.add(game.id);
+  seeds.push(game);
+ }
+ if(seeds.length!==100)throw Error("Expected exactly 100 protected PALScout seeds");
+ return {...source,games:seeds};
+}
