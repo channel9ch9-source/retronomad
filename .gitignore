@@ -8,3 +8,7 @@ backend/alerts-worker.generated.js
 .env.*
 promotion-output/
 .catalogue-d1-test/
+
+# Partner-supplied inventory, licensing proofs and local count reports: NEVER commit
+private-retailer-feeds/
+private-retailer-reports/
