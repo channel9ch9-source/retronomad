@@ -9,7 +9,7 @@ import {Readable,Transform} from "node:stream";
 import {parseIgdbCsv,igdbRef} from "../shared/igdb-dump-csv.js";
 import {inspectIgdbDumpRelations} from "../shared/igdb-dump-relations.js";
 import {enrichIgdbDumpRelations} from "../shared/igdb-dump-enrichment.js";
-import {reconcileIgdbCatalogueParity} from "../shared/igdb-catalogue-parity.js";
+import {reconcileIgdbCatalogueParity,selectPalScoutParitySeeds} from "../shared/igdb-catalogue-parity.js";
 
 const endpointNames=["games","release_dates","covers","alternative_names","game_types","platforms","genres","involved_companies","companies"];
 const required={
@@ -121,9 +121,7 @@ async function run(){
   const canonicalPath="catalogue/base-catalogue.json";
   const existingText=await fs.readFile(canonicalPath,"utf8");
   const existing=JSON.parse(existingText);
-  const seeds=existing.games.filter(g=>g.releaseIntelligence?.coverage==="PALSCOUT_DEEP");
-  if(seeds.length!==100)throw Error("Expected exactly 100 protected private PALScout seeds");
-  const seedCatalogue={...existing,games:seeds};
+  const seedCatalogue=selectPalScoutParitySeeds(existing);
   try{
    // Temporarily substitute just the historical seed set for the PRIVATE
    // child process; no git push, D1, upload or production deployment.
