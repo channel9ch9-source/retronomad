@@ -29,6 +29,8 @@ test("Cloudflare public build exposes only production HTML and emits discovery m
   for(const internal of ["design-preview.html","pricing-coverage.html"]){
     await assert.rejects(fs.access(join(out,internal)),{code:"ENOENT"});
   }
+  await assert.rejects(fs.access(join(out,"shared","retailer-feed-benchmark.js")),{code:"ENOENT"});
+
 
   for(const page of ["index.html","search.html","catalogue.html","wishlist.html","account.html","analyze.html","about.html","uk-pal-game-guide.html","privacy.html","terms.html"]){
     const built=await readBuilt(page);
