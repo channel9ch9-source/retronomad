@@ -152,6 +152,7 @@ export function benchmarkRetailerFeed(rows,rights,config,{now=new Date(),maxAgeH
   missingPrices:0,missingDelivery:0
  }));
  const keys=new Set(),seen=new Set();
+ const allKnownNames=[...new Set(RETAILER_BENCHMARK_TARGETS.flatMap(t=>[t.game,...(t.aliases||[])].map(norm)))];
  const counters={inputRows:rows.length,invalidRows:0,duplicateRows:0,
   outOfStock:0,staleOrUnknownFreshness:0,unmatchedGameOrPlatform:0,
   eligibleInStockRecords:0,uniquePotentialListings:0};
@@ -197,11 +198,18 @@ export function benchmarkRetailerFeed(rows,rights,config,{now=new Date(),maxAgeH
    const agg=out[i];agg.inStockCandidates++;
    // Only explicit contradictions are FILTERED. Claims of original/CIB/region
    // or actual photographs never independently verify a particular copy.
-   const wrongMarket=market&&market!=="EU_PAL"&&market!==t.market;
+   const wrongMarket=market && (t.market==="US"?market!=="US":market==="US"||market==="JP");
    const wrongEdition=/greatest hits|platinum|reissue|budget|essentials|demo|promo|repro|fake|bootleg/.test(edition);
    const wrongContents=/disc only|game only|loose|no manual|missing manual|case only|box only|manual only|repro|fake|bootleg/.test(completeness);
    const notGame=!!itemType&&itemType!=="game"&&itemType!=="video game";
-   if(wrongMarket||wrongEdition||wrongContents||notGame){agg.filtered++;continue;}
+   const acceptedNames=[t.game,...(t.aliases||[])].map(norm);
+   const listingTitle=norm(title);
+   // A clear named sequel/other benchmark title in the retailer title
+   // contradicts a shorter declared "game" field (e.g. Silent Hill 2).
+   const contradictsTitle=allKnownNames.some(name=>!acceptedNames.includes(name)&&
+     name.length>norm(game).length&&
+     (listingTitle===name||listingTitle.startsWith(name+" ")));
+   if(wrongMarket||wrongEdition||wrongContents||notGame||contradictsTitle){agg.filtered++;continue;}
    agg.review++;
    keys.add(id);
    if(/cib|complete|game box and manual/.test(completeness))agg.cibSellerClaims++;
