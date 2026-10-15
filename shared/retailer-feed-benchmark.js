@@ -142,6 +142,9 @@ export function parseRetailerFeed(text,format="csv"){
 export function benchmarkRetailerFeed(rows,rights,config,{now=new Date(),maxAgeHours=168}={}){
  requireRetailerBenchmarkRights(rights,config,now);
  requireCondition(Array.isArray(rows)&&rows.length<=MAX_ROWS,"FEED_TOO_MANY_ROWS");
+ requireCondition(rows.length>0&&MANDATORY.every(key=>rows.some(row=>
+  row&&typeof row==="object"&&Object.hasOwn(row,config.columns[key]))),
+  "FEED_EMPTY_OR_REQUIRED_COLUMNS_ABSENT");
  requireCondition(Number.isFinite(maxAgeHours)&&maxAgeHours>0&&maxAgeHours<=720,
    "FRESHNESS_THRESHOLD_INVALID");
  const ts=new Date(now).getTime();
