@@ -1648,3 +1648,17 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [x] Confirm earlier nine-dump real CSV validation 38779044747 and data-safe documentation in `IGDB_REAL_CSV_VALIDATION_2026-10-15.md`; no CSV rows, download signatures or artwork shipped to site/repository
 - [ ] **Next priority:** private CSV versus API candidate parity reconciliation (8,235 type-eligible provider records versus 8,433 canonical API-based game/platform rows; not directly comparable until normalization), regional aliases/mappings, platform duplicates, collision gates, 100 PALScout seeds; aggregate-only QA
 - [ ] Wait for actual IGDB DocuSign agreement and check attribution/artwork/caching restrictions before authorising any public catalogue promotion
+
+
+### Next private IGDB catalogue parity gate — implementation ready 15 October 2026
+
+- [x] Inspect confirmed 9-table CSV run and API import/dedup/filter/seed architecture before comparing non-equivalent counts
+- [x] Add private aggregate-only comparator for per-platform IGDB IDs, eligible Main Game group winners, held same-title collisions, category exclusions, 100 PALScout identities, nine explicit mappings, aliases and release-year drift
+- [x] Add synthetic 100-seed and cross-platform/alias/type/dedup/privacy regression tests
+- [x] Add a **new opt-in, non-deploying manual workflow** [Private IGDB CSV/API parity](https://github.com/channel9ch9-source/retronomad/actions/workflows/igdb-private-catalogue-parity.yml) that regenerates the API candidate privately on the same runner and deletes all provider row-level files
+- [x] Document privacy controls, fail-closed categories and operator runbook in `IGDB_CATALOGUE_PARITY_V1.md`
+- [ ] Owner runs private CSV/API parity workflow on main **once CI is green**, then review aggregate `PARITY_PASS`, `REVIEW_REQUIRED` or `RUN_FAILED_REVIEW_NEEDED` result
+- [ ] If discrepancies, determine snapshot drift vs title/version filter vs seed/collision logic using private counts; do not change public catalogue without evidence
+- [ ] Review/sign IGDB legal agreement before enabling commercial approval or deploying full catalogue/artwork
+
+**No production deployment from parity workflow.** Historical 8,433 API entries and CSV 8,235 eligible provider identities are not numerically equivalent before per-platform normalisation. The latest 9-table full CSV audit itself passed.
