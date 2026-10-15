@@ -71,11 +71,17 @@ export function igdbRef(value,{optional=false}={}){
 
 export function igdbRefs(value){
  const raw=String(value??"").trim();
- if(!raw||raw==="[]")return [];
+ if(!raw||raw==="[]"||raw==="{}")return [];
  let values;
  if(raw.startsWith("[")){
   try{values=JSON.parse(raw);}catch{throw new Error("Invalid IGDB reference array");}
   if(!Array.isArray(values))throw new Error("Invalid IGDB reference array");
+ }else if(raw.startsWith("{")){
+  // Actual IGDB CSV Data Dumps use PostgreSQL-style numeric array literals:
+  // {123,456}, {}. Never eval arbitrary arrays or accept quoted values.
+  if(!/^\{\s*(?:[1-9][0-9]*(?:\s*,\s*[1-9][0-9]*)*)?\s*\}$/.test(raw))
+   throw new Error("Invalid IGDB numeric brace array");
+  values=raw.slice(1,-1).trim()?raw.slice(1,-1).split(",").map(x=>x.trim()):[];
  }else if(/^[1-9][0-9]*$/.test(raw)){
   values=[raw];
  }else throw new Error("Unsupported IGDB reference array encoding");
