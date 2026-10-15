@@ -39,7 +39,7 @@ export async function enrichIgdbDumpRelations(base,extra,{platformIds}={}){
 
  const types=new Map();
  for await(const row of extra.gameTypes){
-  const id=igdbRef(row.id);
+  const id=igdbRef(row.id,{allowZero:true});
   if(types.has(id))throw new Error("Duplicate game type ref");
   types.set(id,String(row.type||"").trim());
  }
@@ -90,7 +90,7 @@ export async function enrichIgdbDumpRelations(base,extra,{platformIds}={}){
   else game.typeBucket="REVIEW";
   game.status=game.typeBucket==="INCLUDE_CANDIDATE"?"CANDIDATE_NOT_RETAIL_VERIFIED":game.typeBucket;
   typeCounts[game.typeBucket]++;
-  if(game.gameTypeRef&&!label)missing.gameType++;
+  if(game.gameTypeRef!==null && game.gameTypeRef!==undefined&&!label)missing.gameType++;
   game.genres=game.genreRefs.flatMap(id=>{
    const name=genres.get(id);if(!name){missing.genre++;return [];}return [name];
   });
