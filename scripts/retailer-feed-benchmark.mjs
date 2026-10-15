@@ -3,7 +3,7 @@
 // Usage documented in RETAILER_FEED_INTAKE_V1.md. All logs are fixed safe strings.
 import fs from "node:fs/promises";
 import path from "node:path";
-import {parseRetailerFeed,benchmarkRetailerFeed} from "../shared/retailer-feed-benchmark.js";
+import {parseRetailerFeed,benchmarkRetailerFeed,requireRetailerBenchmarkRights} from "../shared/retailer-feed-benchmark.js";
 
 const options=Object.fromEntries(process.argv.slice(2).map(arg=>{
  const i=arg.indexOf("=");
@@ -16,12 +16,15 @@ async function main(){
  const format=path.extname(feed).toLowerCase()===".csv"?"csv":
   path.extname(feed).toLowerCase()===".json"?"json":null;
  if(!format)throw new Error("UNSUPPORTED_FEED_FORMAT");
- const [raw,configRaw,rightsRaw]=await Promise.all([
-  fs.readFile(feed,"utf8"),fs.readFile(mapping,"utf8"),fs.readFile(rights,"utf8")
+ // Refuse unapproved/expired sources before reading any vendor inventory bytes.
+ const [configRaw,rightsRaw]=await Promise.all([
+  fs.readFile(mapping,"utf8"),fs.readFile(rights,"utf8")
  ]);
  let config,permission;
  try{config=JSON.parse(configRaw);permission=JSON.parse(rightsRaw);}
  catch{throw new Error("CONFIG_JSON_INVALID");}
+ requireRetailerBenchmarkRights(permission,config);
+ const raw=await fs.readFile(feed,"utf8");
  const rows=parseRetailerFeed(raw,format);
  const report=benchmarkRetailerFeed(rows,permission,config);
  const result=JSON.stringify(report,null,2)+"\n";
