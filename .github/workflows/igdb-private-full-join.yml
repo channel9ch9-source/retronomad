@@ -1,4 +1,4 @@
-# This explicit private test re-runs only when this workflow definition changes,
+# This explicit private test re-runs on this 15 October CSV type-ID compatibility fix,
 # or when an operator deliberately dispatches it. No scheduled dump downloads.
 name: Private IGDB full CSV join test
 
