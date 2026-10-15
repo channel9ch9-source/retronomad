@@ -1,0 +1,40 @@
+name: Private IGDB CSV versus API catalogue parity
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: private-igdb-csv-api-parity
+  cancel-in-progress: false
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 85
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Run synthetic regression suite
+        run: npm test
+      - name: Compare complete private CSV source to freshly rebuilt API candidate
+        run: node scripts/igdb-private-real-dump-check.mjs
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+          IGDB_PRIVATE_REAL_DUMP_CONFIRM: PRIVATE_TEST_ONLY
+          IGDB_PRIVATE_PARITY_CONFIRM: PRIVATE_CSV_API_PARITY_ONLY
+      - name: Upload aggregate-only parity verdict
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: igdb-private-catalogue-parity-aggregate
+          path: benchmarks/igdb-private-catalogue-parity.json
+          if-no-files-found: error
+          retention-days: 7
