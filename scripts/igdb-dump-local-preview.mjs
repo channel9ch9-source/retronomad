@@ -4,6 +4,7 @@ import {createReadStream} from "node:fs";
 import {access,stat} from "node:fs/promises";
 import {parseIgdbCsv} from "../shared/igdb-dump-csv.js";
 import {inspectIgdbDumpRelations} from "../shared/igdb-dump-relations.js";
+import {enrichIgdbDumpRelations} from "../shared/igdb-dump-enrichment.js";
 
 function flag(name){
  const prefix="--"+name+"=";
@@ -14,13 +15,23 @@ const paths={
  games:flag("games"),
  releaseDates:flag("release-dates"),
  covers:flag("covers"),
- alternativeNames:flag("alternative-names")
+ alternativeNames:flag("alternative-names"),
+ gameTypes:flag("game-types"),
+ platforms:flag("platforms"),
+ genres:flag("genres"),
+ involvedCompanies:flag("involved-companies"),
+ companies:flag("companies")
 };
 const required={
  games:["id","name","platforms"],
  releaseDates:["id","game","platform","date"],
  covers:["id","game","image_id"],
- alternativeNames:["id","game","name"]
+ alternativeNames:["id","game","name"],
+ gameTypes:["id","type"],
+ platforms:["id","name"],
+ genres:["id","name"],
+ involvedCompanies:["id","game","company","developer","publisher"],
+ companies:["id","name"]
 };
 for(const [label,file] of Object.entries(paths)){
  if(!file)throw new Error("Missing local CSV argument for "+label);
@@ -42,7 +53,10 @@ const tables=Object.fromEntries(Object.entries(paths).map(([key,file])=>[
  parseIgdbCsv(createReadStream(file,{encoding:"utf8",highWaterMark:64*1024}),{requiredColumns:required[key]})
 ]));
 
-const report=await inspectIgdbDumpRelations(tables,{platformIds});
+const report=await enrichIgdbDumpRelations(
+  await inspectIgdbDumpRelations(tables,{platformIds}),
+  tables,{platformIds}
+);
 // Report only aggregate statistics. Never print actual game rows, seller data,
 // third-party CSV records, signed download URLs or input file paths.
 console.log(JSON.stringify({
@@ -54,5 +68,8 @@ console.log(JSON.stringify({
  recordsExported:false,
  typeClassificationNotYetSupported:report.typeClassificationNotYetSupported,
  counts:report.counts,
- platformStats:report.platformStats
+ platformStats:report.platformStats,
+ typeCounts:report.typeCounts,
+ linkedCompanyRelations:report.linkedCompanyRelations,
+ missing:report.missing
 },null,2));
