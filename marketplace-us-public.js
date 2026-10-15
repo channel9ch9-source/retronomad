@@ -66,7 +66,7 @@
   if($("demoBanner"))$("demoBanner").hidden=true;
   const rows=Array.isArray(data?.candidates)?data.candidates:[];
   $("resultsHeading").textContent=rows.length+" US PriceCharting offer"+(rows.length===1?"":"s")+" for “"+target.game+"”";
-  $("resultNote").textContent="Available Marketplace candidates only. All are REVIEW: real US edition, completeness, disc condition and delivery must be verified with the seller. Asking prices in USD exclude shipping. Selection filters are not proof of offer attributes.";
+  $("resultNote").textContent="Available Marketplace candidates only. All are REVIEW: confirm the actual release, completeness and disc condition with the seller. USD listed prices may or may not include a shipping component; delivery to your destination is not verified. Selection filters are not proof of offer attributes.";
   for(const row of rows){
    if(row?.status!=="REVIEW")continue;
    const href=link(row.url,"offer"),attribution=link(row.attribution?.url,"credit");
@@ -94,7 +94,7 @@
    source.href=attribution;source.target="_blank";source.rel="noopener noreferrer";
    const price=append(card,"div","v2-pricecol");
    append(price,"div","v2-price","USD "+Number(row.itemPrice).toFixed(2));
-   append(price,"p","","Item only · shipping unknown");
+   append(price,"p","","Listed price · destination delivery unverified");
   }
   if(!output.childElementCount)append(output,"p","v2-preview-note","No available US Marketplace listings were returned for this title. Other sellers may still have copies.");
  }
