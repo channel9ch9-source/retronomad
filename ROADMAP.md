@@ -1674,3 +1674,17 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [ ] Independently reconcile previous repository canonical full-promotion commit with handoff/publication/licence claims before any next IGDB public action
 
 No production deploy or signed IGDB legal agreement as part of this parity fix.
+
+
+### Private IGDB parity second red result and targeted diagnosis — 15 October 2026
+
+- [x] [Second manual private parity run #38785556076](https://github.com/channel9ch9-source/retronomad/actions/runs/38785556076): CSV and regression stages green; corrected seed baseline 100/100 + curated mappings 9/9, API rebuilt candidate 8,377, no base title/year drift or excluded refs
+- [x] Identify remaining review differences: 1 API provider ID absent from CSV, 502 API base catalogue entries with some CSV-only alternative names, 115 CSV selected platform/game pairs not in API candidate; cannot assume direct equivalence to historical 8,433 entries
+- [x] Add aggregate-only diagnostic categories from API dry-import review: held same-title collision, seed ambiguity, canonical ID collision, seed-name neighbourhood, remaining unexplained selections; per-platform raw API counts and alias direction/breadth
+- [x] Add **private read-only by-ID API spot-check** for only unmatched source IDs, classifying same-platform present, platform changed, no record; IDs/rows never logged, stored or uploaded
+- [x] Add synthetic regression tests for redaction, held ambiguity, alias direction and unmatched-ID recheck
+- [ ] Confirm latest main CI green, then manually rerun [private parity workflow](https://github.com/channel9ch9-source/retronomad/actions/workflows/igdb-private-catalogue-parity.yml) once to obtain reason-bucket counts
+- [ ] Diagnose unaccounted matched-platform API IDs and decide whether importer paging/holds are responsible; maintain REVIEW_REQUIRED until explained and safeguards intact
+- [ ] IGDB DocuSign agreement still needs receipt, review and signing before any further licensed public promotion
+
+No public deployment, D1 changes, artwork, commercial gate changes or new provider subscription.
