@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {reconcileIgdbCatalogueParity} from "../shared/igdb-catalogue-parity.js";
+import {reconcileIgdbCatalogueParity,selectPalScoutParitySeeds} from "../shared/igdb-catalogue-parity.js";
 
 const labels=["PS1","PS2","Dreamcast"];
 function fixture(){
@@ -84,4 +84,19 @@ test("mismatching explicit provider title fails closed without provider titles i
  assert.equal(result.status,"REVIEW_REQUIRED");
  assert.equal(result.checks.mappingWrongTitle,1);
  assert.ok(!JSON.stringify(result).includes("Wrong mapping secret title"));
+});
+
+test("seed-only private API rebuild ignores thousands of previously imported base records",()=>{
+ const f=fixture();
+ const historicBase=Array.from({length:8362},(_,i)=>({
+  id:"ps1:historic-base-"+i,title:"Old base "+i,platform:"PS1",
+  releaseIntelligence:{coverage:"BASE_ONLY"}
+ }));
+ const source={schemaVersion:1,games:[...f.seedCatalogue.games,...historicBase]};
+ const selected=selectPalScoutParitySeeds(source);
+ assert.equal(source.games.length,8462);
+ assert.equal(selected.games.length,100);
+ assert.equal(selected.games.every(g=>g.releaseIntelligence.coverage==="PALSCOUT_DEEP"),true);
+ assert.equal(source.games.length,8462);
+ assert.throws(()=>selectPalScoutParitySeeds({games:historicBase}),/100 protected/);
 });
