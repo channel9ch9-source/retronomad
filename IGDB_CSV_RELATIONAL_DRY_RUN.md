@@ -63,3 +63,12 @@ Safety: no API secret, signed S3 URL, raw CSV, title list, provider record or ar
 **Next manual action:** Run this workflow once from `main` and share whether green or red; then inspect the `igdb-private-csv-aggregate-check` artifact for counts and missing relation totals. Never paste the provider token or presigned download URL into chat.
 
 Legal partnership agreement is still pending; `IGDB_COMMERCIAL_APPROVED` remains closed.
+
+
+## COMPLETED real-data validation — 15 October 2026 (supersedes earlier unrun instructions)
+
+**Actual full nine-dump test has now PASSED**, not just been prepared. Official private [run 38779044747](https://github.com/channel9ch9-source/retronomad/actions/runs/38779044747) streamed, joined and classified real partner IGDB CSVs: about **493 MiB**, **382,264** game records scanned, **8,722** associated with PS1/PS2/Dreamcast, **8,235** classified INCLUDE_CANDIDATE, **278** REVIEW, **133** EXCLUDE_NON_BASE, **76** EXCLUDE_VERSION, and **zero** unresolved type/genre/company reference joins. The run deleted temporary CSV files and exported no raw rows. The earlier bounded [format probe 38777510750](https://github.com/channel9ch9-source/retronomad/actions/runs/38777510750) separately demonstrated real PostgreSQL brace-arrays and ISO-like dates.
+
+The test code and safe metadata joins now also include game_types, platform names, genres, involved_company roles and company names, including the legitimate `game_types.id=0` value. The previous sections describing only four tables, untested synthetic parsing, and the optional manual action are historical, **not the current status**. Full aggregate evidence and remaining parity/legal gates: `IGDB_REAL_CSV_VALIDATION_2026-10-15.md`.
+
+The current task is NOT another full CSV download: next compare the new CSV representation to the existing, separately validated **8,433-game API-based candidate**, preserving the 100 PALScout seed mappings and edition caution. No IGDB public catalogue/cover promotion or commercial approval until the actual DocuSign agreement is signed and terms are reviewed.
