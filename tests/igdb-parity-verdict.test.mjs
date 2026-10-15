@@ -43,7 +43,8 @@ test("only evidence-accounted intentional holds and small source snapshot differ
  const report=safeReport(),r=resolveIgdbParityOutcome(report);
  assert.equal(r.status,"RECONCILED_WITH_REVIEW_HOLDS");
  assert.equal(r.exactParity,false);
- assert.equal(r.allDifferencesExplained,true);
+ assert.equal(r.allDifferencesAccountedFor,true);
+ assert.equal(r.allDifferencesExplained,false);
  assert.equal(r.publicationApproved,false);
  assert.equal(r.heldProviderRecordsStillExcluded,true);
  assert.equal(r.heldSeedCandidatePairs,114);
@@ -92,5 +93,6 @@ test("exact parity passes only without failed checks",()=>{
  const result=resolveIgdbParityOutcome(r);
  assert.equal(result.status,"PARITY_PASS");
  assert.equal(result.exactParity,true);
+ assert.equal(result.allDifferencesAccountedFor,true);
  assert.equal(result.publicationApproved,false);
 });
