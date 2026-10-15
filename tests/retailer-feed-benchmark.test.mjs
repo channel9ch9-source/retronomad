@@ -199,3 +199,13 @@ test("CLI refuses unapproved rights before touching any retailer feed",async()=>
  assert.equal(proc.stdout,"");
  await assert.rejects(stat(out),{code:"ENOENT"});
 });
+
+
+test("a wrong supplier column mapping must fail, not report zero stock",()=>{
+ const valid=row("test-001");
+ assert.throws(()=>benchmarkRetailerFeed([valid],rights,{
+  ...config,columns:{...columns,game:"nonexistent_game_column"}
+ },{now:at}),/FEED_EMPTY_OR_REQUIRED_COLUMNS_ABSENT/);
+ assert.throws(()=>benchmarkRetailerFeed([],rights,config,{now:at}),
+  /FEED_EMPTY_OR_REQUIRED_COLUMNS_ABSENT/);
+});
