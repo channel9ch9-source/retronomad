@@ -9,7 +9,11 @@
 <link rel="stylesheet" href="production-v2.css">
 <style>
 .gr-hidden{display:none!important}
-.v2-inline-status{margin-top:10px;color:#94a0aa;font-size:12px}
+.v2-inline-status{color:#a6b0bb;font-size:12px}
+.v2-search-run{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px}
+.v2-search-submit{border:1px solid #817966;background:#181715;color:#f5f1e8;border-radius:10px;padding:10px 18px;min-height:42px;font-size:13px;font-weight:800;cursor:pointer}
+.v2-search-submit:hover,.v2-search-submit:focus-visible{border-color:#e6d9bb;background:#26231c}
+.v2-search-submit:disabled{opacity:.6;cursor:wait}
 .v2-check:has(input:disabled){opacity:.55;cursor:not-allowed}.v2-planned{margin-left:auto;color:#a9945f;font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
 .v2-inline-status a,.v2-inline-status button{color:#fff;text-decoration:underline;background:none;border:0;padding:0;cursor:pointer;font:inherit}
 .v2-toggle-button{border:0;background:transparent;padding:0;width:100%;text-align:left;cursor:pointer}
@@ -93,7 +97,10 @@
           <button class="v2-platform" data-platform="Dreamcast" type="button">Dreamcast</button>
         </div>
       </div>
-      <div id="searchStatus" class="v2-inline-status"></div>
+      <div class="v2-search-run">
+        <button id="searchBtn" class="v2-search-submit" type="button">Search listings</button>
+        <div id="searchStatus" class="v2-inline-status" role="status" aria-live="polite"></div>
+      </div>
     </div>
   </div>
 </header>
@@ -234,7 +241,6 @@
       <div id="liveResults" class="v2-cards"></div>
       <div id="resultNote" class="v2-preview-note">These are example result cards showing the approved MATCH / REVIEW / FILTERED layout. GrailRaven will replace them with authorised live marketplace results when a source is connected.</div>
 
-      <button id="searchBtn" class="gr-hidden" type="button">Search</button>
       <button id="saveBtn" class="gr-hidden" type="button" disabled>Save hunt</button>
       <div id="saved" class="gr-hidden"></div>
       <div id="target" class="gr-hidden"><h3 id="targetTitle"></h3><div id="targetText"></div><div id="chips"></div></div>
@@ -488,6 +494,10 @@ function renderLiveResults(rows){
  }
 }
 async function runSearch(options={}){
+ const button=document.querySelector("#searchBtn");
+ if(button.disabled)return;
+ button.disabled=true;
+ try{
   window.GrailRavenUSMarketplace?.stop();
  await catalogueSearchReady;
  const resolution=options.canonicalGame
@@ -527,6 +537,9 @@ async function runSearch(options={}){
   if(!providers.length)return;
  const rows=await window.RetroNomadSearchPipeline.run(t);
  renderLiveResults(rows);
+ }finally{
+  button.disabled=false;
+ }
 }
 document.querySelector("#searchBtn").addEventListener("click",runSearch);
 
@@ -592,6 +605,7 @@ function scheduleCatalogueSuggestions(value){
 }
 
 gameInput.addEventListener("input",e=>{
+ window.GrailRavenUSMarketplace?.stop();
  const value=e.target.value.trim()||"your search";
  selectedSuggestionMatch=null;
  hideCatalogueSelection({restorePreview:true});
@@ -627,21 +641,40 @@ document.addEventListener("click",event=>{if(!event.target.closest(".v2-searchbo
 const platformButtons=[...document.querySelectorAll(".v2-platform")];
 platformButtons.forEach(button=>button.addEventListener("click",()=>{
  setSelectedPlatform(button.dataset.platform);
+ markResultsNeedRefresh();
  if(gameInput.value.trim().length>=2)scheduleCatalogueSuggestions(gameInput.value);
 }));
 
+// Changing preferences must not leave old seller offers displayed as if they were
+// filtered to the newly selected search. A new provider lookup requires a deliberate
+// Search listings click/Enter; never auto-spend a PriceCharting request here.
+function markResultsNeedRefresh(){
+ const panel=document.querySelector("#catalogueSelection");
+ const listings=document.querySelector("#liveResults");
+ if(panel.hidden&&!listings.childElementCount)return;
+ window.GrailRavenUSMarketplace?.stop();
+ panel.hidden=true;
+ listings.replaceChildren();
+ document.querySelector("#demoResults").style.display="none";
+ if(document.querySelector("#demoBanner"))document.querySelector("#demoBanner").hidden=true;
+ resultsHeading.textContent="Search settings changed";
+ document.querySelector("#resultNote").textContent="Earlier results have been cleared. Click Search listings or press Enter to run the updated search. US offers remain REVIEW-only; edition and condition filters are not verified.";
+ document.querySelector("#searchStatus").textContent="Filters changed — search again to update listings.";
+ document.querySelector("#saveBtn").disabled=true;
+ window.currentTarget=null;
+}
 const filterIds=["regionUk","regionUs","regionJp","regionEu","releaseOriginal","releaseBudget","releaseReissue","releaseLimited","editionStandard","editionCollector","editionPromo","completeCib","completeBoxDisc","completeDisc","condition","maxPrice"];
-filterIds.forEach(id=>{const el=document.querySelector("#"+id);const changed=()=>{syncLegacyFields();resetSaveButtonLabel();};el?.addEventListener("change",changed);el?.addEventListener("input",changed);});
+filterIds.forEach(id=>{const el=document.querySelector("#"+id);const changed=()=>{syncLegacyFields();resetSaveButtonLabel();markResultsNeedRefresh();};el?.addEventListener("change",changed);el?.addEventListener("input",changed);});
 document.querySelector("#englishToggle").addEventListener("click",()=>{
  const input=document.querySelector("#english"),sw=document.querySelector("#englishSwitch");
- input.checked=!input.checked;sw.classList.toggle("on",input.checked);resetSaveButtonLabel();
+ input.checked=!input.checked;sw.classList.toggle("on",input.checked);resetSaveButtonLabel();markResultsNeedRefresh();
 });
 document.querySelector("#resetFilters").addEventListener("click",()=>{
  ["regionUs","regionJp","regionEu","releaseBudget","releaseReissue","releaseLimited","editionCollector","editionPromo","completeBoxDisc","completeDisc"].forEach(id=>document.querySelector("#"+id).checked=false);
  ["regionUk","releaseOriginal","editionStandard","completeCib"].forEach(id=>document.querySelector("#"+id).checked=true);
  document.querySelector("#condition").value="any";document.querySelector("#maxPrice").value="£100";
  document.querySelector("#english").checked=true;document.querySelector("#englishSwitch").classList.add("on");
- syncLegacyFields();resetSaveButtonLabel();
+ syncLegacyFields();resetSaveButtonLabel();markResultsNeedRefresh();
 });
 document.querySelector("#mobileFilterButton").addEventListener("click",()=>{
  const panel=document.querySelector("#searchFilters"),button=document.querySelector("#mobileFilterButton"),open=panel.classList.toggle("mobile-open");
