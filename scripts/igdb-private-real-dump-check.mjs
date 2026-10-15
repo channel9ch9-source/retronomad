@@ -10,6 +10,7 @@ import {parseIgdbCsv,igdbRef} from "../shared/igdb-dump-csv.js";
 import {inspectIgdbDumpRelations} from "../shared/igdb-dump-relations.js";
 import {enrichIgdbDumpRelations} from "../shared/igdb-dump-enrichment.js";
 import {reconcileIgdbCatalogueParity,selectPalScoutParitySeeds} from "../shared/igdb-catalogue-parity.js";
+import {preparePrivateParityRecheck,summarizePrivateParityRecheck} from "../shared/igdb-private-parity-recheck.js";
 
 const endpointNames=["games","release_dates","covers","alternative_names","game_types","platforms","genres","involved_companies","companies"];
 const required={
@@ -143,6 +144,35 @@ async function run(){
    const parity=reconcileIgdbCatalogueParity({
     csvRecords:full.records,apiCatalogue,seedCatalogue,mappings,apiDryReview
    });
+   if(parity.checks.selectedCsvMissingFromApi||parity.checks.apiRefsAbsentFromCsv){
+    // Only unmatched IDs are queried privately, in batches below IGDB's
+    // documented maximum. No raw URLs, titles, source IDs or payloads logged.
+    const targets=preparePrivateParityRecheck(full.records,apiCatalogue);
+    try{
+     const got=[];
+     for(let i=0;i<targets.ids.length;i+=80){
+      const batch=targets.ids.slice(i,i+80);
+      const response=await fetch("https://api.igdb.com/v4/games",{
+       method:"POST",
+       headers:{"Client-ID":id,Authorization:"Bearer "+token,"Content-Type":"text/plain",Accept:"application/json"},
+       body:"fields id,platforms; where id = ("+batch.join(",")+"); limit 500;",
+       signal:AbortSignal.timeout(45_000)
+      });
+      if(!response.ok)throw Error("PRIVATE_BY_ID_FETCH_FAILURE");
+      const page=await response.json();
+      if(!Array.isArray(page))throw Error("PRIVATE_BY_ID_RESPONSE_NOT_ARRAY");
+      got.push(...page);
+      await new Promise(resolve=>setTimeout(resolve,300));
+     }
+     parity.diagnostics.liveApiByIdRecheck=summarizePrivateParityRecheck(targets,got,{platformIds});
+    }catch{
+     // A transient lookup failure is not permission to accept mismatches.
+     parity.diagnostics.liveApiByIdRecheck={
+      status:"TARGETED_PRIVATE_API_ID_RECHECK_UNAVAILABLE",
+      noRawIdsExported:true,noCanonicalChanges:true
+     };
+    }
+   }
    await fs.writeFile(parityReportPath,JSON.stringify({
     ...parity,checkedAt:new Date().toISOString(),
     apiCandidateRegeneratedPrivately:true,apiCandidateBuiltFrom100PalScoutSeeds:true,
