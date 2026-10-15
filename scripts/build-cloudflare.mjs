@@ -231,6 +231,9 @@ await writeFile(join(out,"sitemap.xml"),[
 ].join("\n"),"utf8");
 
 await cp(join(root,"shared"),join(out,"shared"),{recursive:true});
+// This permission-gated partner benchmark belongs to private/offline engineering,
+// not publicly served application code or Cloudflare Workers.
+await rm(join(out,"shared","retailer-feed-benchmark.js"),{force:true});
 
 const catalogueDocument=JSON.parse(await readFile(join(root,"catalogue","base-catalogue.json"),"utf8"));
 const catalogueSearchAliases=JSON.parse(await readFile(join(root,"catalogue","search-aliases.json"),"utf8"));
