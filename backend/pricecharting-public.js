@@ -81,7 +81,7 @@ export function publicReviewPayload(data){
     candidates:rows,
     sourceCredit:"Offers and pricing via PriceCharting",
     sourceUrl:"https://www.pricecharting.com",
-    notice:"These are seller-stated listings, not verified exact releases. Inspect original seller photos, contents, condition and destination-specific shipping. USD prices exclude postage."
+    notice:"These are seller-stated listings, not verified exact releases. Inspect original seller photos, contents and condition. The USD listed price is not a verified delivered total; destination-specific shipping and any shipping already included in the listing price are unconfirmed."
   };
 }
 
