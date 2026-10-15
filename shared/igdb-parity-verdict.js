@@ -5,10 +5,10 @@ export function resolveIgdbParityOutcome(report){
  if(!report||!report.checks||!report.diagnostics||!Array.isArray(report.failedChecks))
   throw new Error("Invalid private parity report");
  const checks=report.checks,diagnostics=report.diagnostics;
- const flags={exactParity:false,allDifferencesExplained:false,publicationApproved:false,
+ const flags={exactParity:false,allDifferencesExplained:false,allDifferencesAccountedFor:false,publicationApproved:false,
    heldProviderRecordsStillExcluded:true,snapshotDifferencesNeedLaterReview:true};
  if(report.status==="PARITY_PASS"&&report.failedChecks.length===0)
-  return {...flags,exactParity:true,allDifferencesExplained:true,
+  return {...flags,exactParity:true,allDifferencesExplained:true,allDifferencesAccountedFor:true,
    snapshotDifferencesNeedLaterReview:false,status:"PARITY_PASS",reason:"EXACT_PROVIDER_ID_PARITY"};
  if(report.status!=="REVIEW_REQUIRED")return {...flags,status:"REVIEW_REQUIRED",reason:"PREVIOUS_CHECK_FAILED"};
  const hardBlockers=[
@@ -55,7 +55,7 @@ export function resolveIgdbParityOutcome(report){
  return {...flags,
   status:"RECONCILED_WITH_REVIEW_HOLDS",
   reason:"HELD_AMBIGUOUS_SEEDS_AND_SMALL_SOURCE_SNAPSHOT_DIFFERENCES",
-  allDifferencesExplained:true,heldSeedCandidatePairs:seedHolds,
+  allDifferencesAccountedFor:true,heldSeedCandidatePairs:seedHolds,
   csvOnlyIdsAbsentFromLiveApi:csvSnapshotOnly,
   apiOnlyIdsAbsentFromCsv:checks.apiRefsAbsentFromCsv
  };
