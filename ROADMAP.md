@@ -1639,3 +1639,12 @@ The subscription itself has **not** yet been completed. Do not assume real cover
 - [x] Full result memo `IGDB_REAL_CSV_VALIDATION_2026-10-15.md`
 - [ ] Privately compare complete CSV importer to existing 8,433-game API-based candidate: dedup/title/version filter parity, PALScout 100-seed identities, explicit regional mappings and collision/unknown handling
 - [ ] Obtain/review IGDB DocuSign agreement; activate approved catalogue only once commercial rights and public attribution/artwork terms are verified
+
+
+### IGDB real nine-table validation reconfirmed / next parity gate — 15 October 2026
+
+- [x] **LATEST owner-run private CSV audit green**: [GitHub run 38781329561](https://github.com/channel9ch9-source/retronomad/actions/runs/38781329561) on `cacda59e3e8c`; all regression, real data and safe-artifact stages passed
+- [x] Real full private data report: 382,264 game rows scanned, 8,722 attached game identities across launch platforms, 8,235 type candidates, 278 REVIEW, 133 EXCLUDE_NON_BASE, 76 EXCLUDE_VERSION; zero unresolved game-type, genre or company-reference relationships
+- [x] Confirm earlier nine-dump real CSV validation 38779044747 and data-safe documentation in `IGDB_REAL_CSV_VALIDATION_2026-10-15.md`; no CSV rows, download signatures or artwork shipped to site/repository
+- [ ] **Next priority:** private CSV versus API candidate parity reconciliation (8,235 type-eligible provider records versus 8,433 canonical API-based game/platform rows; not directly comparable until normalization), regional aliases/mappings, platform duplicates, collision gates, 100 PALScout seeds; aggregate-only QA
+- [ ] Wait for actual IGDB DocuSign agreement and check attribution/artwork/caching restrictions before authorising any public catalogue promotion
