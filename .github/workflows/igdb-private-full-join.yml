@@ -1,0 +1,35 @@
+name: Private IGDB full CSV join test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/igdb-private-full-join.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: igdb-private-full-join
+  cancel-in-progress: false
+
+jobs:
+  private-join:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Run regression tests before licensed CSV access
+        run: npm test
+      - name: Join the nine actual private IGDB CSV dumps (no artifact, no publication)
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+          IGDB_PRIVATE_FULL_DUMP_CONFIRM: YES_PRIVATE_NONPUBLISHING_TEST
+        run: node scripts/igdb-private-full-dump-join.mjs
