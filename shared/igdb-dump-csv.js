@@ -60,9 +60,12 @@ export async function* parseIgdbCsv(chunks,{requiredColumns=[],maxFieldChars=1_0
  if(recordCount===0)throw new Error("CSV has no data rows");
 }
 
-export function igdbRef(value,{optional=false}={}){
+export function igdbRef(value,{optional=false,allowZero=false}={}){
  const input=String(value??"").trim();
  if(optional&&!input)return null;
+ // IGDB game_types includes id=0 (Main Game in older enum-compatible data).
+ // Only explicit reference fields may opt in to accepting zero.
+ if(allowZero&&input==="0")return 0;
  if(!/^[1-9][0-9]*$/.test(input))throw new Error("Invalid IGDB reference");
  const id=Number(input);
  if(!Number.isSafeInteger(id))throw new Error("IGDB reference is not a safe integer");
