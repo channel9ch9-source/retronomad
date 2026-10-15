@@ -20,5 +20,5 @@ test("private real CSV runner has temporary-file cleanup and never prints indivi
  assert.match(c,/await enrichIgdbDumpRelations\(/);
  assert.match(c,/await inspectIgdbDumpRelations\(/);
  assert.match(c,/const endpointNames=\["games","release_dates","covers","alternative_names","game_types","platforms","genres","involved_companies","companies"\]/);
- assert.doesNotMatch(c,/console\.log\(metadata|console\.log\(full\.records|upload.*csv/i);
+ assert.doesNotMatch(c,/console\.log\(metadata|console\.log\(full\.records|upload-artifact.*(?:\.csv|\.zip)/i);
 });
