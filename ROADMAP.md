@@ -1688,3 +1688,16 @@ No production deploy or signed IGDB legal agreement as part of this parity fix.
 - [ ] IGDB DocuSign agreement still needs receipt, review and signing before any further licensed public promotion
 
 No public deployment, D1 changes, artwork, commercial gate changes or new provider subscription.
+
+
+### Third CSV/API parity diagnostic: holds accounted for — 15 October 2026
+
+- [x] Read owner-run [private parity 38790005402](https://github.com/channel9ch9-source/retronomad/actions/runs/38790005402) complete aggregate: 8,377 API candidate entries; 100/100 seed identities; 9/9 curated mappings; zero matched base title/year/alias drift and excluded-game reference mistakes
+- [x] Explain the 115 CSV-selected entries missing in API candidate: **114 tracked seed-ambiguity review holds** + **1 CSV identity absent from live API by-ID query**
+- [x] Explain **1** API-only game/platform reference: present with same platform in live API but not daily CSV; PS2/Dreamcast raw API/CSV count shifts align with small potential snapshot differences
+- [x] Correct earlier 502 aliases false-positive; normalized canonical/self-name handling shows 0 substantive aliases missing
+- [x] Implement strict evidence-qualified `RECONCILED_WITH_REVIEW_HOLDS` verdict alongside exact `PARITY_PASS`, without removing any held candidates or weakening 100-seed/9-mapping safety; unsafe/unaccounted/source-unavailable cases remain red
+- [x] Add synthetic negative regressions for source lookup failure, altered platform, unexpected volume of mismatches, held ID collision and seed/mapping/title/year/alias regression
+- [ ] Optionally verify fresh private reconciled verdict after new provider snapshot or relevant importer changes; **do not ask owner to rerun full nine CSVs merely to turn an understood red run green**
+- [ ] Preserve 114 held seed-ambiguous provider records in private review queue; no automatic catalogue insertion
+- [ ] Independently resolve IGDB DocuSign terms/publication rights and contradictory October 12 canonical promotion versus public-site status before any full catalogue promotion, artwork or live deployment
