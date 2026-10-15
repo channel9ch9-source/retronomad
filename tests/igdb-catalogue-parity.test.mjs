@@ -100,3 +100,57 @@ test("seed-only private API rebuild ignores thousands of previously imported bas
  assert.equal(source.games.length,8462);
  assert.throws(()=>selectPalScoutParitySeeds({games:historicBase}),/100 protected/);
 });
+
+
+test("private reconciliation explains missing CSV selections from held-title review evidence",()=>{
+ const f=fixture();
+ const base=f.apiCatalogue.games.find(g=>g.platform==="PS1"&&g.externalRefs.igdb==="101");
+ assert.ok(base);
+ f.apiCatalogue.games=f.apiCatalogue.games.filter(g=>g!==base);
+ const p={fetched:0,includeCandidates:0,selectedCanonicalRecords:0};
+ const apiDryReview={
+  mergeSummary:{
+   proposedTotalGames:f.apiCatalogue.games.length,heldProviderRecords:1,
+   suppressedSameTitleRecords:0,seedAmbiguities:0,idCollisions:0
+  },
+  platforms:{PS1:p,PS2:p,Dreamcast:p},
+  review:{
+   ambiguousProviderTitleGroups:[{
+    platform:"PS1",decision:"HOLD_AMBIGUOUS_SAME_TITLE",selectedIgdbId:null,
+    records:[{igdbId:101,name:"Private record never exported"}]
+   }],seedAmbiguities:[],idCollisions:[]
+  }
+ };
+ const result=reconcileIgdbCatalogueParity({...f,apiDryReview});
+ assert.equal(result.status,"REVIEW_REQUIRED");
+ assert.equal(result.checks.selectedCsvMissingFromApi,1);
+ assert.equal(result.diagnostics.missingSelectedCsvPair.apiHeldAmbiguousCanonicalTitle,1);
+ assert.equal(result.diagnostics.missingSelectedCsvPair.noReviewEvidenceOfCause,0);
+ assert.equal(result.diagnostics.reviewEvidenceAvailable,true);
+ assert.ok(!JSON.stringify(result).includes("Private record never exported"));
+ assert.throws(()=>reconcileIgdbCatalogueParity({
+  ...f,apiDryReview:{...apiDryReview,mergeSummary:{proposedTotalGames:999}}
+ }),/does not match/);
+});
+test("private reconciliation separates CSV-only alias enrichment from API-only names",()=>{
+ const f=fixture();
+ const row=f.csvRecords.find(g=>g.id===101);
+ row.aliases.push("Extra CSV name", "Another alias");
+ const result=reconcileIgdbCatalogueParity(f);
+ assert.equal(result.checks.apiBaseMissingAliases,2);
+ assert.equal(result.diagnostics.aliases.csvAdditionalAliasCount,4);
+ assert.equal(result.diagnostics.aliases.apiBaseWithCsvAdditionalAliases,2);
+ assert.equal(result.diagnostics.aliases.apiBaseWithApiAdditionalAliases,0);
+ assert.ok(!JSON.stringify(result).includes("Extra CSV name"));
+});
+test("private reconciliation counts API provider references absent from CSV separately",()=>{
+ const f=fixture();
+ const item=f.apiCatalogue.games.find(g=>g.platform==="PS1"&&g.externalRefs.igdb==="101");
+ item.externalRefs.igdb="9999";
+ const result=reconcileIgdbCatalogueParity(f);
+ assert.equal(result.checks.apiRefsAbsentFromCsv,1);
+ assert.equal(result.diagnostics.missingCsvReference.sourceOnlyNewIdentity,1);
+ assert.equal(result.diagnostics.missingCsvReference.affectedBaseOnly,1);
+ assert.equal(result.diagnostics.missingSelectedCsvPair.matchesExistingDeepSeedTitleOrAlias,0);
+ assert.ok(!JSON.stringify(result).includes("9999"));
+});
