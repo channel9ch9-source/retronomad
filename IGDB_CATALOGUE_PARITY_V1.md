@@ -50,3 +50,30 @@ A new private diagnostic extends `shared/igdb-catalogue-parity.js` to classify C
 **Next operator action:** once main CI passes, manually run [Private IGDB CSV/API parity](https://github.com/channel9ch9-source/retronomad/actions/workflows/igdb-private-catalogue-parity.yml) one more time. Inspect aggregate `diagnostics.previousApiImport`, `diagnostics.missingSelectedCsvPair`, `diagnostics.aliases`, `diagnostics.liveApiByIdRecheck` and `platforms`. The job may remain red legitimately as a **review gate**, not a failed CSV parser. Use the new counts to decide whether to fix API paging/seed collision logic, explicitly hold ambiguous source rows, or accept documented snapshot differences *without* falsely calling them equivalent. Do not relax hard seed/mapping/identity controls.
 
 No public catalogue promotion, D1 mutation, IGDB legal-approval toggle, provider artwork publication or Cloudflare deployment is part of this debugging.
+
+
+## Third real private run — bounded reconciliation reached (15 October 2026)
+
+Owner ran [private CSV/API parity #38790005402](https://github.com/channel9ch9-source/retronomad/actions/runs/38790005402). It produced `REVIEW_REQUIRED` because the **old gate demanded literal identity across different source snapshots**, even for explicitly held provider records. Import and regression steps passed.
+
+New detailed evidence:
+- API candidate generated solely from the 100 protected seeds: **8,377** canonical game/platform records.
+- CSV: **8,722** relevant unique provider game records; **8,235** type-inclusion candidates BEFORE per-platform dedup and seed reconciliation.
+- **100/100** seed identities and **9/9** curated mappings safe; **zero** platform-matched base title, release-year or real alias differences; **zero** referenced exclusions.
+- **115** CSV selected (platform, provider game) identities absent from API candidate: **114 explicitly in existing seed-ambiguity hold events**, not accidentally dropped; **1** absent from the targeted live API lookup and therefore a *possible* daily snapshot boundary/deletion, **not conclusively proven**.
+- **1** API candidate provider identity absent from the CSV: targeted live API confirms the same platform; this is consistent with a later addition/source snapshot mismatch.
+- Full API platform attachment counts PS1 3,977 / PS2 4,313 / Dreamcast 741 versus CSV 3,977 / 4,314 / 740. The PS2 -1 and Dreamcast +1 account for the two small source mismatches.
+- Earlier **502 alias differences were an overcount** from comparing against API canonical title while CSV alias normalization included redundant self-names; corrected comparison of normalized canonical title/aliases showed **zero** substantive differences.
+
+### Carefully separated verdicts
+
+Added `shared/igdb-parity-verdict.js` and synthetic negative tests:
+- `PARITY_PASS`: actual exact identity/metadata parity and zero failed checks.
+- `RECONCILED_WITH_REVIEW_HOLDS`: the only differences are explicit, still-excluded **seed ambiguity review holds** plus at most three tiny, directly checked same-platform API/dump snapshot gaps. The count breakdown must match the private targeted live API recheck exactly. This is **not exact parity** and **not publication approval**; source timing remains to be reviewed.
+- `REVIEW_REQUIRED`: any unexplained omission, unexpectedly large snapshot delta, absent private review evidence, live API unavailable, different-platform record, unmatched source count, duplicate reference, title/year/alias drift, broken mapped seed or unsafe exclusion.
+
+The ephemeral runner now emits an evidence-qualified `verdict`. A guarded **reconciled** verdict does not fail CI solely because it is not exact parity. Held candidates remain excluded and their identifiers never appear in artifacts. All regressions are synthetic and are automatically checked by normal CI.
+
+**No repeat private full-data run is needed just to chase a green badge.** The 15 October run already supplies enough evidence to proceed with *private* catalogue engineering while retaining manual holds and commercial/legal publication gates. If source data changes or the IGDB signed contract introduces new terms, rerun the private benchmark then. Strict 100-seed and nine-mapping gates must always remain in place.
+
+**Not verified/approved:** public IGDB catalogue promotion, pending DocuSign agreement, copyright/artwork rights, and historical 12 October GitHub full catalogue promotion versus older deployment claims. Keep production gates closed pending separate review.
