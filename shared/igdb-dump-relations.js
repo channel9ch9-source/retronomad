@@ -36,6 +36,11 @@ export async function inspectIgdbDumpRelations(
    platforms:relevant.map(x=>wanted.get(x)),
    platformIds:relevant,
    coverRef:coverId,hasCoverMetadata:false,
+   gameTypeRef:(row.game_type&&String(row.game_type).trim()!=="0")?igdbRef(row.game_type):null,
+   versionParentRef:row.version_parent?igdbRef(row.version_parent):null,
+   genreRefs:igdbRefs(row.genres),involvedCompanyRefs:igdbRefs(row.involved_companies),
+   genres:[],developers:[],publishers:[],gameTypeLabel:null,
+   typeBucket:"REVIEW",
    aliases:[],releaseYearByPlatform:{},
    status:"REVIEW_GAME_TYPE_AND_RELEASE",
    // Deliberately do not treat a release date as proof of region / retail edition.
@@ -43,8 +48,6 @@ export async function inspectIgdbDumpRelations(
   });
   counts.selectedGames++;
  }
- const coverIds=new Set();
- for(const game of byGame.values())if(game.coverRef)coverIds.add(game.coverRef);
  for await(const row of releaseDates){
   counts.scannedReleaseDates++;
   const gameId=igdbRef(row.game,{optional:true});
