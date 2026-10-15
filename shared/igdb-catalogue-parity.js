@@ -281,3 +281,18 @@ export function selectPalScoutParitySeeds(source){
  if(seeds.length!==100)throw Error("Expected exactly 100 protected PALScout seeds");
  return {...source,games:seeds};
 }
+
+
+/**
+ * Private, in-memory selectors for a diagnostic by-ID API recheck.
+ * Never serialize or upload the result: it contains provider identifiers.
+ */
+export function selectPrivateCsvParityPairs(records){
+ if(!Array.isArray(records))throw Error("Expected private CSV candidate records");
+ const pairs=[];
+ for(const platform of PLATFORMS){
+  const selected=selectCsvTitles(records,platform,perPlatform()[platform]);
+  for(const row of selected)pairs.push({platform,igdbId:requireRecordId(row.id)});
+ }
+ return pairs;
+}
