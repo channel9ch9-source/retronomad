@@ -10,11 +10,11 @@ async function csv(text){
 }
 async function fixture(){
  return {
-  games:await csv('id,name,platforms,cover,game_type,version_parent,genres,involved_companies\n100,Tomba!,{7},900,1,,"{20,21}","{50,51}"\n101,Bonus DLC,{7},,2,,{},{}\n102,Revision,{23},,1,100,{},{}\n103,Other,{100},,1,,{},{}\n'),
+  games:await csv('id,name,platforms,cover,game_type,version_parent,genres,involved_companies\n100,Tomba!,{7},900,0,,"{20,21}","{50,51}"\n101,Bonus DLC,{7},,2,,{},{}\n102,Revision,{23},,1,100,{},{}\n103,Other,{100},,1,,{},{}\n'),
   releaseDates:await csv('id,game,platform,date\n1,100,7,1998-11-01 00:00:00+00\n2,102,23,1999-09-01\n'),
   covers:await csv('id,game,image_id\n900,100,cov_alpha\n901,102,cov_wrong\n'),
   alternativeNames:await csv('id,game,name\n70,100,Tombi!\n'),
-  gameTypes:await csv('id,type\n1,Main Game\n2,DLC / Addon\n'),
+  gameTypes:await csv('id,type\n0,Main Game\n2,DLC / Addon\n'),
   platforms:await csv('id,name\n7,PlayStation\n23,Dreamcast\n'),
   genres:await csv('id,name\n20,Platform\n21,Adventure\n'),
   involvedCompanies:await csv('id,game,company,developer,publisher\n50,100,88,true,false\n51,100,89,false,true\n'),
