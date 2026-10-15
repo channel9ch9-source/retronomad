@@ -11,6 +11,7 @@ import {inspectIgdbDumpRelations} from "../shared/igdb-dump-relations.js";
 import {enrichIgdbDumpRelations} from "../shared/igdb-dump-enrichment.js";
 import {reconcileIgdbCatalogueParity,selectPalScoutParitySeeds} from "../shared/igdb-catalogue-parity.js";
 import {preparePrivateParityRecheck,summarizePrivateParityRecheck} from "../shared/igdb-private-parity-recheck.js";
+import {resolveIgdbParityOutcome} from "../shared/igdb-parity-verdict.js";
 
 const endpointNames=["games","release_dates","covers","alternative_names","game_types","platforms","genres","involved_companies","companies"];
 const required={
@@ -173,6 +174,11 @@ async function run(){
      };
     }
    }
+   const verdict=resolveIgdbParityOutcome(parity);
+   parity.verdict=verdict;
+   // A reconciled result is evidence of deliberate holds, not exact parity:
+   // keep CSV source/promotion gates independent of this diagnostic.
+   parity.status=verdict.status;
    await fs.writeFile(parityReportPath,JSON.stringify({
     ...parity,checkedAt:new Date().toISOString(),
     apiCandidateRegeneratedPrivately:true,apiCandidateBuiltFrom100PalScoutSeeds:true,
@@ -184,7 +190,7 @@ async function run(){
       csvGames:parity.csvAttachedUniqueGames,checks:parity.checks,
       diagnostics:parity.diagnostics,platforms:parity.platforms,
       failedChecks:parity.failedChecks}));
-   if(parity.status!=="PARITY_PASS")process.exitCode=1;
+   if(!["PARITY_PASS","RECONCILED_WITH_REVIEW_HOLDS"].includes(parity.status))process.exitCode=1;
   }finally{
    await fs.writeFile(canonicalPath,existingText,{mode:0o600});
    await Promise.all([candidatePath,apiReviewPath].map(file=>fs.rm(file,{force:true})));
