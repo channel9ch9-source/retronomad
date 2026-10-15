@@ -160,6 +160,7 @@ catch(e){
   failureCategory:"PRIVATE_RUNNER_OR_SOURCE_ERROR",aggregateOnly:true,noRawProviderRecords:true,
   noCanonicalChanges:true,noD1Changes:true,commercialApprovalUnchanged:true
  },null,2)+"\n");
- console.error("Private IGDB CSV verification stopped; see safe aggregate report. "+String(e.message||"").replace(/https?:\/\/\S+/g,"[URL_REDACTED]"));
+ if(doParity)console.error("Private CSV/API parity runner stopped; source details are suppressed. See aggregate-only artifact.");
+ else console.error("Private IGDB CSV verification stopped; see safe aggregate report. "+String(e.message||"").replace(/https?:\/\/\S+/g,"[URL_REDACTED]"));
  process.exitCode=1;
 }finally{await fs.rm(tmp,{recursive:true,force:true});}
