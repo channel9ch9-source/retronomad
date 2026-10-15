@@ -180,3 +180,22 @@ test("CLI reads local CSV and writes only aggregate redacted report with no prov
   if(process.platform!=="win32")assert.equal((await stat(out)).mode&0o777,0o600);
  }
 });
+
+
+test("CLI refuses unapproved rights before touching any retailer feed",async()=>{
+ const dir=await mkdtemp(path.join(tmpdir(),"gr-rights-first-"));
+ const mapping=path.join(dir,"mapping.json");
+ const permission=path.join(dir,"rights.json");
+ const out=path.join(dir,"should-not-exist.json");
+ await writeFile(mapping,JSON.stringify(config));
+ await writeFile(permission,JSON.stringify({...rights,privateBenchmarkAllowed:false}));
+ const script=fileURLToPath(new URL("../scripts/retailer-feed-benchmark.mjs",import.meta.url));
+ const proc=spawnSync(process.execPath,[script,
+  "--feed="+path.join(dir,"MISSING-SENSITIVE-PRIVATE-FEED.csv"),
+  "--mapping="+mapping,"--rights="+permission,"--out="+out],{encoding:"utf8"});
+ assert.equal(proc.status,1);
+ assert.match(proc.stderr,/PRIVATE_BENCHMARK_PERMISSION_REQUIRED/);
+ assert.doesNotMatch(proc.stderr,/ENOENT|MISSING-SENSITIVE-PRIVATE-FEED/);
+ assert.equal(proc.stdout,"");
+ await assert.rejects(stat(out),{code:"ENOENT"});
+});
