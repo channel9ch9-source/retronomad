@@ -111,25 +111,34 @@ async function run(){
  await fs.writeFile(reportPath,JSON.stringify(output,null,2)+"\n");
  console.log("PRIVATE IGDB REAL CSV TEST COMPLETE: "+JSON.stringify({counts:full.counts,platformStats:full.platformStats,typeCounts:full.typeCounts,missing:full.missing}));
  if(doParity){
-  // Rebuild on the same private runner. The old 8,433-entry candidate was an
-  // earlier snapshot; do not treat its number as current source truth.
-  // The existing API dry importer can log raw titles on error; suppress all
-  // child output and export only the safe reconciliation summary.
+  // The repository canonical source was expanded on 12 October; it is NOT
+  // an appropriate 8k-entry seed for recreating the original API dry run.
+  // Use only the 100 protected PALScout seeds and always restore the
+  // canonical file on the ephemeral runner before emitting an audit result.
   const day=new Date().toISOString().slice(0,10);
   const candidatePath="benchmarks/igdb-dry-import-proposed-"+day+".json";
   const apiReviewPath="benchmarks/igdb-dry-import-review-"+day+".json";
+  const canonicalPath="catalogue/base-catalogue.json";
+  const existingText=await fs.readFile(canonicalPath,"utf8");
+  const existing=JSON.parse(existingText);
+  const seeds=existing.games.filter(g=>g.releaseIntelligence?.coverage==="PALSCOUT_DEEP");
+  if(seeds.length!==100)throw Error("Expected exactly 100 protected private PALScout seeds");
+  const seedCatalogue={...existing,games:seeds};
   try{
+   // Temporarily substitute just the historical seed set for the PRIVATE
+   // child process; no git push, D1, upload or production deployment.
+   await fs.writeFile(canonicalPath,JSON.stringify(seedCatalogue)+"\n",{mode:0o600});
    const exitCode=await new Promise((resolve,reject)=>{
+    // The old dry importer can print licensed row titles in exception paths.
     const child=spawn(process.execPath,["scripts/igdb-dry-import.mjs"],{
      stdio:"ignore",env:process.env,signal:AbortSignal.timeout(25*60*1000)
     });
     child.once("error",reject);
     child.once("close",resolve);
    });
-   if(exitCode!==0)throw Error("Private API candidate rebuild failed; no source rows logged");
-   const [apiCatalogue,seedCatalogue,mappings]=await Promise.all([
+   if(exitCode!==0)throw Error("Private seed-only API candidate rebuild failed");
+   const [apiCatalogue,mappings]=await Promise.all([
     fs.readFile(candidatePath,"utf8").then(JSON.parse),
-    fs.readFile("catalogue/base-catalogue.json","utf8").then(JSON.parse),
     fs.readFile("catalogue/provider-mappings/igdb.json","utf8").then(JSON.parse)
    ]);
    const parity=reconcileIgdbCatalogueParity({
@@ -137,14 +146,16 @@ async function run(){
    });
    await fs.writeFile(parityReportPath,JSON.stringify({
     ...parity,checkedAt:new Date().toISOString(),
-    apiCandidateRegeneratedPrivately:true,csvAndApiComparedOnSameRunner:true,
-    publishedCatalogueUnchanged:true
+    apiCandidateRegeneratedPrivately:true,apiCandidateBuiltFrom100PalScoutSeeds:true,
+    originalRepositoryCatalogueEntries:existing.games.length,
+    csvAndApiComparedOnSameRunner:true,publishedCatalogueUnchanged:true
    },null,2)+"\n",{mode:0o600});
    console.log("PRIVATE CSV/API PARITY "+parity.status+" (aggregate only): "+
     JSON.stringify({apiEntries:parity.apiCandidateCount,
       csvGames:parity.csvAttachedUniqueGames,checks:parity.checks,failedChecks:parity.failedChecks}));
    if(parity.status!=="PARITY_PASS")process.exitCode=1;
   }finally{
+   await fs.writeFile(canonicalPath,existingText,{mode:0o600});
    await Promise.all([candidatePath,apiReviewPath].map(file=>fs.rm(file,{force:true})));
   }
  }
