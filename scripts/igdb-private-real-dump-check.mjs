@@ -4,10 +4,12 @@ import {createReadStream,createWriteStream} from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import {pipeline} from "node:stream/promises";
+import {spawn} from "node:child_process";
 import {Readable,Transform} from "node:stream";
 import {parseIgdbCsv,igdbRef} from "../shared/igdb-dump-csv.js";
 import {inspectIgdbDumpRelations} from "../shared/igdb-dump-relations.js";
 import {enrichIgdbDumpRelations} from "../shared/igdb-dump-enrichment.js";
+import {reconcileIgdbCatalogueParity} from "../shared/igdb-catalogue-parity.js";
 
 const endpointNames=["games","release_dates","covers","alternative_names","game_types","platforms","genres","involved_companies","companies"];
 const required={
@@ -22,10 +24,14 @@ const required={
  companies:["id","name"]
 };
 const id=process.env.IGDB_CLIENT_ID,secret=process.env.IGDB_CLIENT_SECRET;
+const parityFlag=String(process.env.IGDB_PRIVATE_PARITY_CONFIRM||"");
+if(parityFlag && parityFlag!=="PRIVATE_CSV_API_PARITY_ONLY")throw Error("Unrecognised private parity gate");
+const doParity=parityFlag==="PRIVATE_CSV_API_PARITY_ONLY";
 if(process.env.IGDB_PRIVATE_REAL_DUMP_CONFIRM!=="PRIVATE_TEST_ONLY")throw Error("Explicit private-test confirmation required");
 if(!id||!secret)throw Error("IGDB private Actions credentials required");
 const tmp=await fs.mkdtemp(path.join(os.tmpdir(),"igdb-private-"));
 const reportPath="benchmarks/igdb-private-real-dump-check.json";
+const parityReportPath="benchmarks/igdb-private-catalogue-parity.json";
 async function fetchJson(url,init={}){
  const r=await fetch(url,{...init,signal:AbortSignal.timeout(45_000)});
  if(!r.ok)throw Error("Private IGDB metadata request failed HTTP "+r.status);
@@ -104,11 +110,56 @@ async function run(){
  await fs.mkdir("benchmarks",{recursive:true});
  await fs.writeFile(reportPath,JSON.stringify(output,null,2)+"\n");
  console.log("PRIVATE IGDB REAL CSV TEST COMPLETE: "+JSON.stringify({counts:full.counts,platformStats:full.platformStats,typeCounts:full.typeCounts,missing:full.missing}));
+ if(doParity){
+  // Rebuild on the same private runner. The old 8,433-entry candidate was an
+  // earlier snapshot; do not treat its number as current source truth.
+  // The existing API dry importer can log raw titles on error; suppress all
+  // child output and export only the safe reconciliation summary.
+  const day=new Date().toISOString().slice(0,10);
+  const candidatePath="benchmarks/igdb-dry-import-proposed-"+day+".json";
+  const apiReviewPath="benchmarks/igdb-dry-import-review-"+day+".json";
+  try{
+   const exitCode=await new Promise((resolve,reject)=>{
+    const child=spawn(process.execPath,["scripts/igdb-dry-import.mjs"],{
+     stdio:"ignore",env:process.env,signal:AbortSignal.timeout(25*60*1000)
+    });
+    child.once("error",reject);
+    child.once("close",resolve);
+   });
+   if(exitCode!==0)throw Error("Private API candidate rebuild failed; no source rows logged");
+   const [apiCatalogue,seedCatalogue,mappings]=await Promise.all([
+    fs.readFile(candidatePath,"utf8").then(JSON.parse),
+    fs.readFile("catalogue/base-catalogue.json","utf8").then(JSON.parse),
+    fs.readFile("catalogue/provider-mappings/igdb.json","utf8").then(JSON.parse)
+   ]);
+   const parity=reconcileIgdbCatalogueParity({
+    csvRecords:full.records,apiCatalogue,seedCatalogue,mappings
+   });
+   await fs.writeFile(parityReportPath,JSON.stringify({
+    ...parity,checkedAt:new Date().toISOString(),
+    apiCandidateRegeneratedPrivately:true,csvAndApiComparedOnSameRunner:true,
+    publishedCatalogueUnchanged:true
+   },null,2)+"\n",{mode:0o600});
+   console.log("PRIVATE CSV/API PARITY "+parity.status+" (aggregate only): "+
+    JSON.stringify({apiEntries:parity.apiCandidateCount,
+      csvGames:parity.csvAttachedUniqueGames,checks:parity.checks,failedChecks:parity.failedChecks}));
+   if(parity.status!=="PARITY_PASS")process.exitCode=1;
+  }finally{
+   await Promise.all([candidatePath,apiReviewPath].map(file=>fs.rm(file,{force:true})));
+  }
+ }
+
 }
 try{await run();}
 catch(e){
  await fs.mkdir("benchmarks",{recursive:true});
  await fs.writeFile(reportPath,JSON.stringify({mode:"PRIVATE_IGDB_REAL_DUMP_CHECK",status:"FAILED_REVIEW_NEEDED",failureCategory:String(e.message||"").slice(0,220).replace(/https?:\/\/\S+/g,"[URL_REDACTED]"),noCanonicalChanges:true,noD1Changes:true,noArtworkPublished:true,noRawCsvInArtifact:true},null,2)+"\n");
+ if(doParity)await fs.writeFile(parityReportPath,JSON.stringify({
+  mode:"PRIVATE_IGDB_CSV_API_CANONICAL_PARITY",status:"RUN_FAILED_REVIEW_NEEDED",
+  // Never copy provider title, URL, token, or untrusted exception detail into parity artifact.
+  failureCategory:"PRIVATE_RUNNER_OR_SOURCE_ERROR",aggregateOnly:true,noRawProviderRecords:true,
+  noCanonicalChanges:true,noD1Changes:true,commercialApprovalUnchanged:true
+ },null,2)+"\n");
  console.error("Private IGDB CSV verification stopped; see safe aggregate report. "+String(e.message||"").replace(/https?:\/\/\S+/g,"[URL_REDACTED]"));
  process.exitCode=1;
 }finally{await fs.rm(tmp,{recursive:true,force:true});}
