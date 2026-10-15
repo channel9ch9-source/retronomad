@@ -36,7 +36,7 @@ export async function inspectIgdbDumpRelations(
    platforms:relevant.map(x=>wanted.get(x)),
    platformIds:relevant,
    coverRef:coverId,hasCoverMetadata:false,
-   gameTypeRef:(row.game_type&&String(row.game_type).trim()!=="0")?igdbRef(row.game_type):null,
+   gameTypeRef:String(row.game_type??"").trim()===""?null:igdbRef(row.game_type,{allowZero:true}),
    versionParentRef:row.version_parent?igdbRef(row.version_parent):null,
    genreRefs:igdbRefs(row.genres),involvedCompanyRefs:igdbRefs(row.involved_companies),
    genres:[],developers:[],publishers:[],gameTypeLabel:null,
