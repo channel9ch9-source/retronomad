@@ -61,6 +61,10 @@ test("public US Marketplace returns only whitelisted REVIEW fields with visible 
  assert.equal(j.candidates[0].itemPrice,134);
  assert.equal(j.candidates[0].postage,null);
  assert.equal(j.candidates[0].deliveredTotal,null);
+
+ assert.match(j.notice,/not a verified delivered total/);
+ assert.match(j.notice,/shipping already included in the listing price are unconfirmed/);
+ assert.doesNotMatch(j.notice,/prices exclude postage|item only/i);
  assert.equal(j.candidates[0].currency,"USD");
  assert.equal(j.candidates[0].attribution.url,"https://www.pricecharting.com/offers?product=123");
  assert.equal(j.candidates[0].url,"https://www.pricecharting.com/offer/offer-123");
