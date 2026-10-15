@@ -50,3 +50,16 @@ Resolve exact IGDB platform IDs from the existing private platform-inventory ben
 4. Only after agreement/sign-off and full promotion review decide whether the CSV importer should power periodic catalogue updates.
 
 **Safety status:** `SYNTHETIC_TESTED / PRIVATE_ONLY / NO_REAL_CSV_TEST / NO_PUBLICATION`.
+
+
+## Nine-table private real-dump test ready — 15 October 2026
+
+A separate opt-in GitHub workflow now exists: [Private IGDB real CSV relationships](https://github.com/channel9ch9-source/retronomad/actions/workflows/igdb-private-real-dump-check.yml). This test is **NOT an importer deployment** and must be explicitly launched. It downloads the real nine IGDB partner CSVs into a temporary runner directory, runs the current importer and relationship enrichment, emits only aggregate counts into a 7-day private Actions artifact and deletes the temporary directory.
+
+The nine tables are: `games`, `release_dates`, `covers`, `alternative_names`, `game_types`, `platforms`, `genres`, `involved_companies`, `companies`. The platform IDs are resolved from the private `platforms` dump and cross-checked. Both the stable provider IDs and the game_type/genre/developer/publisher relationships are processed as private data. It flags CSV encoding or relationship mismatches rather than silently publishing anything.
+
+Safety: no API secret, signed S3 URL, raw CSV, title list, provider record or artwork is written to a public artifact or Git commit; no production D1 writes, no catalogue replacement, no approval variable changes; all private downloads are removed at job end. The job has a 55-minute maximum and a per-download size ceiling. Any failure requires review, not relaxing the safety gate. It is possible IGDB uses data representations the fixture importer does not support; if so, we will adapt from **aggregate-only** diagnostics.
+
+**Next manual action:** Run this workflow once from `main` and share whether green or red; then inspect the `igdb-private-csv-aggregate-check` artifact for counts and missing relation totals. Never paste the provider token or presigned download URL into chat.
+
+Legal partnership agreement is still pending; `IGDB_COMMERCIAL_APPROVED` remains closed.
