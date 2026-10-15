@@ -1,3 +1,5 @@
+# This explicit private test re-runs only when this workflow definition changes,
+# or when an operator deliberately dispatches it. No scheduled dump downloads.
 name: Private IGDB full CSV join test
 
 on:
