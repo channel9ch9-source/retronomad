@@ -1,5 +1,7 @@
 # GrailRaven IGDB publication status audit — 15 October 2026
 
+> **Owner decision — 15 October 2026 (supersedes rollback suggestion):** Keep GrailRaven's expanded **8,462-game catalogue published**. The owner confirms that IGDB's latest written email gave a go-ahead to proceed with the API and data offering while the DocuSign partnership agreement is prepared. This is the basis for continuing as currently deployed; the **formal signed agreement remains outstanding** and must be reviewed when delivered. **Do not initiate a 100-game rollback, disable the existing catalogue, change `IGDB_COMMERCIAL_APPROVED`, redeploy Cloudflare, change D1, or contact IGDB again solely over this audit.** The audit's historical evidence stays valid; its earlier recommendation to roll back pending signature has been declined. Preserve current expanded catalogue and continue ordinary private QA and partnership follow-up.
+
 ## Outcome: previous "only 100 games public" handoff statements are false
 
 This audit is based on authoritative **successful GitHub Actions job logs** and repository file/workflow inspection. An independent direct HTTP fetch of the current production domain was not available during this session. However, the **14 October production smoke test did fetch and pass against grailraven.com** after a build that included 8,462 titles. The practical deployment risk is therefore real, not merely a speculative repo-file discrepancy.
@@ -28,9 +30,9 @@ This audit is based on authoritative **successful GitHub Actions job logs** and 
 - Current GitHub repository variable `IGDB_COMMERCIAL_APPROVED`, actual current D1 active pointer after the October promotion, and current DNS-to-Worker routing were not read via authenticated Cloudflare APIs. Distinguish observed historical success from current state.
 - A green catalogue CSV/API `RECONCILED_WITH_REVIEW_HOLDS` audit does **not** grant legal authority for continued public publication.
 
-## Recommended next operational decision, not executed by this audit
+## Contingency recovery outline — not authorised or currently requested
 
-**If no signed IGDB agreement explicitly permits public use**, pause further public IGDB promotion and promptly confirm the present licence position with IGDB. The user should check **GitHub → Settings → Secrets and variables → Actions → Variables** for `IGDB_COMMERCIAL_APPROVED`, and set it to `false` or remove it **unless documentary commercial-use approval is already established**. This prevents repeat invocation of the gated *promotion* workflow, **but does not remove the existing public data**.
+**Superseded by the owner's decision to keep the expanded catalogue published.** IGDB's latest email authorised proceeding with API/data integration while legal prepares the DocuSign agreement; preserve the deployed catalogue. The procedures below are a hypothetical contingency only if new IGDB instructions or final agreement terms require reconsideration. No instruction to alter the current GitHub approval variable or contact IGDB again arises from this audit.
 
 Restoring a 100-PALScout-only public catalogue requires a coordinated **new approved baseline build**, not merely switching D1 pointers. A fully planned rollback would need to:
 1. Make a clean private/source-safe 100-game dataset/index from the known protected `PALSCOUT_DEEP` rows, respecting whether any seed fields already include IGDB-enriched metadata.
@@ -40,4 +42,4 @@ Restoring a 100-PALScout-only public catalogue requires a coordinated **new appr
 5. Add an execution-of-IGDB-agreement gate to ordinary Cloudflare deployments *if they would serve IGDB-backed rows*, and verify attribution/retention restrictions from the executed licence.
 6. Test preflight regressions and a non-production build first. Only carry out the public rollback after a clear operator authorisation; no prod rollback was authorised or performed in this audit.
 
-**Status at audit completion:** investigation/documentation only; no change to Cloudflare, D1 active pointer, provider credentials, GitHub repository approval flags, public catalogue, or IGDB partnership correspondence. The licence/rollback choice remains **open**, and the signed agreement has not been received in this chat.
+**Status following owner clarification:** keep the 8,462-game expanded catalogue published. IGDB emailed written permission to proceed with API/data integration ahead of the signature, according to the owner and the prior email text; DocuSign is still pending. No change to Cloudflare, D1, GitHub approval variables, provider credentials, catalogue or outreach has been made by this audit. A rollback is **not requested**.
