@@ -135,12 +135,13 @@ async function run(){
     child.once("close",resolve);
    });
    if(exitCode!==0)throw Error("Private seed-only API candidate rebuild failed");
-   const [apiCatalogue,mappings]=await Promise.all([
+   const [apiCatalogue,mappings,apiDryReview]=await Promise.all([
     fs.readFile(candidatePath,"utf8").then(JSON.parse),
-    fs.readFile("catalogue/provider-mappings/igdb.json","utf8").then(JSON.parse)
+    fs.readFile("catalogue/provider-mappings/igdb.json","utf8").then(JSON.parse),
+    fs.readFile(apiReviewPath,"utf8").then(JSON.parse)
    ]);
    const parity=reconcileIgdbCatalogueParity({
-    csvRecords:full.records,apiCatalogue,seedCatalogue,mappings
+    csvRecords:full.records,apiCatalogue,seedCatalogue,mappings,apiDryReview
    });
    await fs.writeFile(parityReportPath,JSON.stringify({
     ...parity,checkedAt:new Date().toISOString(),
@@ -150,7 +151,9 @@ async function run(){
    },null,2)+"\n",{mode:0o600});
    console.log("PRIVATE CSV/API PARITY "+parity.status+" (aggregate only): "+
     JSON.stringify({apiEntries:parity.apiCandidateCount,
-      csvGames:parity.csvAttachedUniqueGames,checks:parity.checks,failedChecks:parity.failedChecks}));
+      csvGames:parity.csvAttachedUniqueGames,checks:parity.checks,
+      diagnostics:parity.diagnostics,platforms:parity.platforms,
+      failedChecks:parity.failedChecks}));
    if(parity.status!=="PARITY_PASS")process.exitCode=1;
   }finally{
    await fs.writeFile(canonicalPath,existingText,{mode:0o600});
