@@ -139,7 +139,7 @@ export function parseRetailerFeed(text,format="csv"){
  return rows.map(row=>Object.fromEntries(headers.map((h,i)=>[h,row[i]])));
 }
 
-export function benchmarkRetailerFeed(rows,rights,config,{now=new Date(),maxAgeHours=168}={}){
+export function benchmarkRetailerFeed(rows,rights,config,{now=new Date(),maxAgeHours=168,fixture=false}={}){
  requireRetailerBenchmarkRights(rights,config,now);
  requireCondition(Array.isArray(rows)&&rows.length<=MAX_ROWS,"FEED_TOO_MANY_ROWS");
  requireCondition(rows.length>0&&MANDATORY.every(key=>rows.some(row=>
@@ -226,7 +226,7 @@ export function benchmarkRetailerFeed(rows,rights,config,{now=new Date(),maxAgeH
  counters.uniquePotentialListings=keys.size;
  return {
   schemaVersion:1,status:"PRIVATE_BENCHMARK_ONLY",source:config.provider,
-  generatedAt:new Date(ts).toISOString(),fixture:false,
+  generatedAt:new Date(ts).toISOString(),fixture:fixture===true,
   scope:"20 fixed collector intents; partner-supplied local feed only",
   permissionCheck:"DOCUMENTED_REFERENCE_REQUIRED_NOT_INDEPENDENTLY_VERIFIED",
   publicationApproved:false,actualOfferPublicationEnabled:false,
