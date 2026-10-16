@@ -95,7 +95,7 @@ test("full offline retailer pipeline produces identical safe aggregate-only resu
    assert.equal(report.summary.intentsWithReviewCandidates,7);
    assert.equal(report.intents.find(x=>x.id==="GR01").review,1);
    assert.equal(report.intents.find(x=>x.id==="GR02").review,1);
-   assert.equal(report.intents.find(x=>x.id==="GR03").filtered,1);
+   assert.equal(report.intents.find(x=>x.id==="GR03").filtered,2); // Platinum UK plus wrong-market US
    assert.equal(report.intents.find(x=>x.id==="GR04").review,1);
    assert.equal(report.intents.find(x=>x.id==="GR07").filtered,1);
    assert.equal(report.intents.find(x=>x.id==="GR07").review,1);
