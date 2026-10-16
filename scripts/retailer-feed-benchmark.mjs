@@ -12,7 +12,9 @@ const options=Object.fromEntries(process.argv.slice(2).map(arg=>{
 async function main(){
  const {feed,mapping,rights,out}=options;
  if(!feed||!mapping||!rights||!out||Object.keys(options).some(k=>
-  !["feed","mapping","rights","out"].includes(k)))throw new Error("MISSING_OR_UNKNOWN_ARGUMENTS");
+  !["feed","mapping","rights","out","synthetic-fixture"].includes(k))||
+  (options["synthetic-fixture"]!==undefined&&options["synthetic-fixture"]!=="true"))
+  throw new Error("MISSING_OR_UNKNOWN_ARGUMENTS");
  const format=path.extname(feed).toLowerCase()===".csv"?"csv":
   path.extname(feed).toLowerCase()===".json"?"json":null;
  if(!format)throw new Error("UNSUPPORTED_FEED_FORMAT");
@@ -26,7 +28,7 @@ async function main(){
  requireRetailerBenchmarkRights(permission,config);
  const raw=await fs.readFile(feed,"utf8");
  const rows=parseRetailerFeed(raw,format);
- const report=benchmarkRetailerFeed(rows,permission,config);
+ const report=benchmarkRetailerFeed(rows,permission,config,{fixture:options["synthetic-fixture"]==="true"});
  const result=JSON.stringify(report,null,2)+"\n";
  // Only fixed-target/aggregate output can ever be written. Never include raw data.
  await fs.mkdir(path.dirname(out),{recursive:true});
