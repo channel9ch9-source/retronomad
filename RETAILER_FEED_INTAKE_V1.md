@@ -83,3 +83,14 @@ Output has only the fixed target names and aggregate counts; it does not include
 5. Only after rights, coverage and source safety are demonstrated: design a server-side adapter, securely hosted private feed fetch and refreshed inventory layer **behind a new explicit activation flag**. Separate implementation and launch approvals.
 
 Current plan: wait for retailer replies; **no new paid subscription, network import or public activation**. The IGDB catalogue and existing PriceCharting REVIEW service are untouched.
+
+
+## 16 October 2026 — verified end-to-end with deliberately fictional inputs
+
+- [End-to-end test and green GitHub CI 38945239126](https://github.com/channel9ch9-source/retronomad/actions/runs/38945239126) ran the **real offline CLI** twice, once for fully synthetic CSV and once for equivalent JSON. It generated temporary local rights/mapping files with clearly fictional retailer identity and domains, then checked that both aggregate results agreed.
+- New `tests/retailer-feed-cli-e2e.test.mjs` verifies all 20 intents, predictable review/filtered examples, sold/stale/duplicate/bad URL safeguards, aggregate-only output, no fake supplier URLs/IDs/price/permission text in report or stdout, report not overwritten and private file permissions. Temporary fixture files are deleted.
+- The optional CLI argument `--synthetic-fixture=true` is **for test data only** and causes report `fixture:true`. **Do not use it on genuine licensed retailer records**, for which the default report `fixture:false` applies. The flag does not bypass permission checks.
+- The `tests/public-build.test.mjs` check and `scripts/build-cloudflare.mjs` exclude `shared/retailer-feed-benchmark.js` from public Cloudflare assets. The CLI and tests are never exposed as public webpages.
+- This green outcome proves software behaviour on a **manufactured sample**, not actual stock, agreement rights, true partner coverage or public launch readiness.
+
+**External status as of 16 October:** The owner has received no replies yet from Chillout Games, eStarland or RetroFix. Their initial enquiries are recent; wait until next week to consider one polite follow-up rather than contacting them immediately.
