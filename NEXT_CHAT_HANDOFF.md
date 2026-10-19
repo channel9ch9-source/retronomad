@@ -1332,3 +1332,14 @@ Prepared and executed an end-to-end **fully synthetic** local CSV/JSON dry run v
 5. Work towards an actually useful **Search -> Filter -> Compare -> Alert** with authorised live stock. Then measure real user interest/return usage/Saved Hunts/clicks and try a carefully validated paid tier (provisional ~£3.99/month), aiming for first paying customer -> £100 monthly recurring -> steadily positive net profit. These are hypotheses/checkpoints, not guaranteed results or deadlines.
 
 **Documentation-only update:** no code, website, provider access, subscription, partner contact or deployment is authorised by this handoff.
+
+
+## 19 October 2026 — US Marketplace candidate → Listing Checker handoff (draft PR #1)
+
+**Development change prepared, NOT deployed:** [PR #1](https://github.com/channel9ch9-source/retronomad/pull/1), branch `feature/offer-review-handoff-20261019`. Add `Check this copy in Listing Checker` to real public US PriceCharting offer cards. On a deliberate same-tab click, transfer only seller-supplied title/description, original approved offer URL and requested game/platform through expiring (10-minute), consume-once browser session storage. Prefill the Listing Checker and present an explicit manual release/edition/contents/condition/delivery evidence checklist. The existing original-offer link remains. No seller data in query strings, account records, telemetry or Cloudflare request bodies.
+
+**Accuracy gate:** US offers continue to be **REVIEW** candidates. The existing Listing Checker PALScout verdict is UK/PAL-focused; the handoff explicitly warns that a non-UK verdict is not an assessment of whether an offer meets a US target. No completeness, barcode, region, shipping, price or MATCH state is inferred from a seller title or checklist. USD asking price is **not** copied into GBP reference fields. No additional provider/API call or public listing permission implied.
+
+**Testing:** `tests/offer-review-handoff.test.mjs` covers allowed offer URLs, unsupported platform, expiry, one-time transfer, prefilled seller claims, explicit non-certification, and page wiring. Non-deploying PR CI [run #39293302153](https://github.com/channel9ch9-source/retronomad/actions/runs/39293302153) passed. Further review/merge and separately authorised manual production deployment remain outstanding. Existing 8,462 IGDB catalogue, PriceCharting source, D1/Cloudflare settings, commercial flags and Saved Hunts are unchanged.
+
+**Business-development note:** Owner intends to open GrailRaven Instagram/X accounts and may make **one courteous request to an official eBay social account to route their rejected legitimate Developer Program application to a human reviewer**. This is a contact-channel experiment, not a new account application, bypass, representation that access was granted, or reason to pause independent provider work. No social handles/contact actions confirmed in this record.

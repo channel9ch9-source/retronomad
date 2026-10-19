@@ -89,6 +89,15 @@
    append(body,"p","v2-desc","Inspect the original photos for edition, disc, case and manual. Buyer-specific shipping is unknown.");
    const offer=append(body,"a","","View actual offer and seller photographs ↗");
    offer.href=href;offer.target="_blank";offer.rel="noopener noreferrer";
+   const check=append(body,"a","","Check this copy in Listing Checker →");
+   check.href="/analyze";check.className="v2-offer-check";
+   check.style.cssText="display:inline-block;margin:10px 0 0;font-weight:650;text-decoration:underline";
+   check.addEventListener("click",event=>{
+     if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+     const saved=window.GrailRavenListingHandoff?.storeCandidate(row,target);
+     if(!saved)return; // Manual checker still opens, without a misleading handoff.
+     event.preventDefault();window.location.assign("/analyze?grOfferReview=1");
+   });
    const credit=append(body,"p","v2-provider-attribution","Source: ");
    const source=append(credit,"a","","PriceCharting Marketplace");
    source.href=attribution;source.target="_blank";source.rel="noopener noreferrer";
