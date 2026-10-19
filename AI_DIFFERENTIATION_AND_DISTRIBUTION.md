@@ -81,3 +81,27 @@ Risks and limits:
 8. Charge and evaluate net margins and traffic/referrals; expand only if there is a commercially justified repeatable customer channel. The B2C website must remain useful on its own.
 
 **Standing decision:** B2B/AI distribution is a credible *option*, not an immediate second launch. Prioritise the inventory bottleneck and income-producing collector utility. No new provider spend, marketing launch, API/public integration, dataset promotion, Cloudflare/D1 change, licence interpretation or outreach is authorised by this document.
+
+
+## Owner-approved platform architecture and two-track business sequencing — 19 October 2026
+
+**Standing architectural decision (approved by owner):** When practical, GrailRaven's physical-release identification, rule evaluation, evidence/provenance and release-safe match decisions **must be reusable, provider-independent domain technology**, not logic locked into the public Search page, a single marketplace adapter, an AI model's prompt, or a future customer-specific integration. Build **one trustworthy verification core**, not separate competing matching engines for consumer and business products.
+
+### Architecture rules for future work
+
+1. **Pure domain/verification core:** keep canonical release identities, physical market/territory, edition, identifiers, condition/completeness evidence, classification confidence, and `MATCH / REVIEW / FILTERED` decisions independent of user interface, provider identity, source credentials and transport. Preserve current shared-core architecture; extend it instead of rewriting/duplicating it.
+2. **Provider adapters at boundaries:** ingest only legitimately accessible retailer/marketplace inputs through adapter/normalisation contracts; pass source provenance and freshness to the core, which makes release decisions. Avoid a provider-specific “certified match” shortcut.
+3. **Reuse the same core in separate callers:** collector web UI, Saved Hunts monitor, Listing Checker, and later a private licensed B2B verification/API surface should invoke the same tested domain logic. Browser/server implementations should preserve shared fixtures and parity tests. **Do not build or expose a public B2B API now.**
+4. **Evidence-first typed outputs:** return the requested vs observed release attributes, supporting/contradictory evidence, uncertain/missing fields, decision state and explainable reason codes. Only assert *verified* when evidence meets defined thresholds; a seller's claim is not proof.
+5. **Rights and trust boundaries:** distinguish independently authored GrailRaven release rules/validated derivative insights from IGDB, PriceCharting and retailer/eBay source data. Preserve per-field permissions/provenance, caching and redistribution limitations so a later B2B response cannot accidentally sublicense upstream data or user content. Keep secrets, customer hunts, uploaded photos and personal information outside commercial B2B responses.
+6. **Cost-conscious:** do not refactor functional production code merely to prepare an unproven API; apply these rules during the next useful feature, preserve existing tests, and weigh maintenance cost against measurable collector accuracy/retention and future commercial optionality.
+
+**Two related potential offerings:**
+- **GrailRaven for Collectors (primary launch and first proof of value):** `Search → Filter → Compare → Alert`; subscription/permissioned referrals are hypotheses until live correct-copy inventory, repeat use and payment demand are measured.
+- **GrailRaven Intelligence (owner explicitly wishes to explore later):** business-focused verification intelligence for retailers, collector tools and AI shopping/agent systems, with possible metered usage fees, B2B subscriptions, embedded/white-label tools and separately permitted referrals. No existing AI integration, signed B2B contract or commercial API.
+
+**Sequencing is a default priority, not a rigid dependency:** prove the verification technology through real collector workflows **first** because it creates demonstrable accuracy and exposes real data gaps. It is reasonable to gather **low-cost prospective B2B customer feedback in parallel** (once there is a concrete demonstrable verification use case), but **do not delay collector utility to implement a generic external API, payments, service-level support or speculative third-party features**. A small rights-cleared B2B pilot can be justified later by explicit customer interest and economics; a fully finished consumer feature list is not a prerequisite for interviews or such a narrowly proven pilot.
+
+**Commercial validation gates:** (1) useful, permitted inventory and reliable verification, (2) measurable collector benefit and willingness to pay, (3) field-level licensing/provenance review, (4) evidence of B2B willingness to pay, (5) narrowly scoped authenticated pilot and positive unit economics. The same codebase may serve both audiences, but the data rights, contracts and buyer needs can differ.
+
+**Immediate priority remains** authorised inventory coverage and exact-copy usefulness, not general API productisation. Nothing in this architectural decision authorises partner contact, spend, live deployment, data redistribution, new integrations or changes to production flags.
