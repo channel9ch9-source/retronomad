@@ -1802,3 +1802,21 @@ Owner reaffirmed GrailRaven's goal of becoming a **reliable income-producing col
 **Social accounts / outreach (owner-reported):** Instagram and X GrailRaven profiles were established with consistent handle **@grailravengames**. Owner sent one private Instagram message to an eBay account asking for referral to a human Developer Program contact after the existing rejection. **No response, approval or new marketplace licence confirmed.** Do not reapply through misleading accounts or bypass eBay developer eligibility rules; await a response and continue authorised independent inventory work.
 
 **Next commercial priority:** Partner feed replies from Chillout Games, eStarland and RetroFix (initial enquiries 14 October) remain the inventory bottleneck, not this completed handoff. Existing private rights-gated CSV/JSON intake and synthetic E2E benchmark are ready; do not rebuild. On an actual written-permissioned partner reply, assess terms, sample, region/edition/condition/stock freshness and 20-intent incremental useful coverage before production integration. Preserve 8,462-game IGDB catalogue, public US REVIEW gating and existing infrastructure; no new deployment or paid provider is implied by this note.
+
+
+## 19 October 2026 — AI competition and licensing-safe B2B optionality recorded
+
+Strategic reference: [AI_DIFFERENTIATION_AND_DISTRIBUTION.md](AI_DIFFERENTIATION_AND_DISTRIBUTION.md). **Four hypothesised moats:** verified exact physical releases; authorised cross-marketplace inventory; genuinely continuous exact-copy hunts/alerts; specialist independently validated release evidence plus appropriately licensed pricing. Generic title lookup, price comparisons or a chat interface alone are not defensible.
+
+**Now, in priority order:**
+- [ ] Keep inventory access as the immediate business bottleneck: await written partner responses and privately benchmark correct-copy UK/US stock against the fixed 20-intent test (rights-gated feed intake already complete).
+- [ ] Expand trustworthy release evidence and preserve honest MATCH / REVIEW / FILTERED with documented provenance, not misleading inflated “verified” coverage.
+- [ ] Complete authorised Search → Filter → Compare → Alert and test its accuracy/collector usefulness against AI shopping and native marketplace tools on the same real targets.
+- [ ] Validate meaningful collector retention and willingness to pay before building broad new channels.
+
+**Later only, after consumer utility evidence:**
+- [ ] Audit upstream provider terms, field-level provenance, first-party intellectual property and sublicensing/third-party display rights for any paid B2B service.
+- [ ] Interview prospective retailer/agent-tool buyers; confirm an actual paid problem before building an API.
+- [ ] Pilot a narrow authenticated release-verification API with rights-cleared data for 1–2 customers; measure matching precision, conversion, referrals and net margins.
+
+**Messaging:** “Find the right copy. Know why it matches.” Treat as positioning/aspiration, not proof every listing is verified. B2B could generate metered API income, retailer SaaS and permissioned referrals; it is **not** an integration, contract or guaranteed AI recommendation source today. No Cloudflare/D1/IGDB change, scraping, new spend, marketing launch or provider sublicensing is approved by this note.
