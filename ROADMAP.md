@@ -1820,3 +1820,25 @@ Strategic reference: [AI_DIFFERENTIATION_AND_DISTRIBUTION.md](AI_DIFFERENTIATION
 - [ ] Pilot a narrow authenticated release-verification API with rights-cleared data for 1–2 customers; measure matching precision, conversion, referrals and net margins.
 
 **Messaging:** “Find the right copy. Know why it matches.” Treat as positioning/aspiration, not proof every listing is verified. B2B could generate metered API income, retailer SaaS and permissioned referrals; it is **not** an integration, contract or guaranteed AI recommendation source today. No Cloudflare/D1/IGDB change, scraping, new spend, marketing launch or provider sublicensing is approved by this note.
+
+
+## 19 October 2026 — confirmed reusable-core decision: Collectors first, Intelligence later
+
+**Owner decision:** Preserve a **single provider-independent physical-release verification/evidence core** that can serve the collector website, Listing Checker, Saved Hunts and future rights-cleared commercial clients. Do not fork classifier logic into separate frontend/marketplace/AI-specific engines. See [AI_DIFFERENTIATION_AND_DISTRIBUTION.md](AI_DIFFERENTIATION_AND_DISTRIBUTION.md), [PRODUCT_VISION.md](PRODUCT_VISION.md), and [BUSINESS_DIRECTION.md](BUSINESS_DIRECTION.md).
+
+**Architecture checklist to apply opportunistically during real collector feature work** (not an order to perform a risky refactor immediately):
+- [ ] Keep release-identification decisions in shared/pure domain modules decoupled from provider adapter, browser DOM, Cloudflare transport and client-specific APIs; extend current shared cores rather than duplicating them.
+- [ ] Ensure adapters normalise legitimately obtained listing evidence and keep provenance/freshness; the shared classifier emits `MATCH/REVIEW/FILTERED` plus reasons and missing/conflicting evidence, with browser/server fixtures and regression parity.
+- [ ] Preserve field-level data rights/redistribution restrictions and privacy boundaries; never assume IGDB, PriceCharting or retailer data is sublicensable via a future paid API.
+
+**Phase A — GrailRaven for Collectors (primary):**
+- [ ] Use existing rights-gated intake when written-authorised Chillout Games/eStarland/RetroFix feed samples arrive; measure additional real, relevant exact-copy inventory. No unlicensed scraping or premature chasers.
+- [ ] Deepen independent physical-release evidence and trustworthy exact-copy checks without inflated verified-coverage claims.
+- [ ] Complete valuable licensed `Search → Filter → Compare → Alert`, then measure collector repeat use, accuracy and willingness to pay.
+
+**Phase B — GrailRaven Intelligence (serious later opportunity, not a launch commitment):**
+- [ ] At an appropriate inexpensive point, interview prospective retailer/collector-app/AI-tool customers about a *demonstrable* release verification problem and payment willingness; this discovery can overlap Phase A.
+- [ ] Before any B2B product, audit first-party vs upstream data rights, permitted output/caching/sublicensing, privacy and commercial economics; design an isolated authenticated, rate-limited verification boundary that invokes the same shared core.
+- [ ] Only after customer evidence, test a narrow rights-cleared paid/private API or embedded verification pilot with 1–2 willing businesses. Explore metered requests, B2B subscriptions, embedded/white-label tools and approved referral models, with net margin and attribution measurement.
+
+**Guardrail:** No new live API, independent enterprise backend, production deployment, data-sharing promise, provider spend or changes to IGDB/Cloudflare/D1/marketplace permissions are authorised by this roadmap record.
