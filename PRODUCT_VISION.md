@@ -170,3 +170,10 @@ Until validated providers are enabled, the product should make limitations expli
 The architecture should allow future US/Japanese intelligence without making PALScout the entire product identity.
 
 The parent brand may change again in the future; core architecture must remain independent of that choice.
+
+
+## AI-era product differentiation and future distribution — 19 October 2026
+
+Strategic record: [AI_DIFFERENTIATION_AND_DISTRIBUTION.md](AI_DIFFERENTIATION_AND_DISTRIBUTION.md). An ordinary title-search engine is not a defensible product as AI shopping improves. GrailRaven aims to develop four **evidence-tested** strengths: trustworthy physical release/edition identification; authorised multi-source current inventory; precise continuous Saved Hunt monitoring; and proprietary/rights-cleared release evidence plus suitable licensed pricing intelligence. Not yet proven superiority over AI.
+
+Proposed messaging: **“Find the right copy. Know why it matches.”** Existing `MATCH / REVIEW / FILTERED` uncertainty remains a product trust guarantee. A later, separately validated and licensed B2B service might serve retailers or AI shopping assistants with GrailRaven-owned classification insights, diversifying revenue and distribution; this is not a current requirement and must not divert effort from useful consumer `Search → Filter → Compare → Alert` and legitimate inventory coverage. Third-party source records and prices cannot be sublicensed merely because they are accessible to the GrailRaven website.
