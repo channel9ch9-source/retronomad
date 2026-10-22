@@ -1842,3 +1842,16 @@ Strategic reference: [AI_DIFFERENTIATION_AND_DISTRIBUTION.md](AI_DIFFERENTIATION
 - [ ] Only after customer evidence, test a narrow rights-cleared paid/private API or embedded verification pilot with 1–2 willing businesses. Explore metered requests, B2B subscriptions, embedded/white-label tools and approved referral models, with net margin and attribution measurement.
 
 **Guardrail:** No new live API, independent enterprise backend, production deployment, data-sharing promise, provider spend or changes to IGDB/Cloudflare/D1/marketplace permissions are authorised by this roadmap record.
+
+
+## 22 October 2026 — strict IGDB compliance is a release-blocking requirement
+
+Owner has explicitly made **extremely careful IGDB/Twitch contract compliance** a standing development priority given the potentially severe personal financial impact of legal costs. Read and apply [IGDB_CONTRACT_COMPLIANCE_GUARDRAILS.md](IGDB_CONTRACT_COMPLIANCE_GUARDRAILS.md) **before any IGDB-related production change**. The checklist is a BLOCKING rights/attribution/marketing/privacy/contract-status gate, not optional polish.
+
+- [ ] Confirm provider licensing and original-vs-third-party data/cover-art rights for each integration or public display, preserve field provenance and no IGDB-derived B2B sublicensing by assumption.
+- [ ] Verify existing build-injected IGDB credit on the actual generated and live pages **and all relevant page types**, not only source HTML; update/agree attribution as needed.
+- [ ] Preserve REVIEW uncertainty, existing image publication gates, protected auth/private information and approved partner access controls.
+- [ ] On a complaint/takedown, preserve evidence, promptly investigate/contain, and respond to any applicable deadline. **No guaranteed cease-and-desist grace period**; takedown does not automatically settle prior infringement or claims.
+- [ ] Do not record licence as fully executed until confirmed, or publicly commit contract/signature/ClientID/personal details.
+
+No website change or deployment is authorised by this documentation-only update.
