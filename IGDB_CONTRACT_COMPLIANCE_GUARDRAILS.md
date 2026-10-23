@@ -61,3 +61,16 @@ Useful official references (for general information, not a guarantee of outcome)
 - **Next step:** Review the exact proposed deployment against this checklist when substantive new functionality is ready; no app change, Cloudflare deployment or provider negotiation is authorised by creating this document.
 
 **Standing rule: GrailRaven must never knowingly choose an unlicensed shortcut over its operator's financial security.**
+
+
+## 23 October 2026 — IGDB legal team declines revisions and interpretation
+
+**Owner-shared response from IGDB representative Christian:** IGDB/Twitch cannot amend its **standard commercial agreements** or provide a legal interpretation of the contractual indemnification wording. Christian acknowledges the Twitch Developer Services Agreement covers a broader set of Twitch services than the comparatively limited IGDB API use case. IGDB remains willing to proceed, but explicitly says the owner may decline the DocuSign request if they choose not to accept the standard terms. **No liability cap, contractual carve-out, indemnity waiver or formal risk estimate was offered.** The reply is not an assessment that GrailRaven itself violates the agreement or is safe from claims.
+
+**State:** Owner has not confirmed signing or declining the DocuSign addendum; keep status **awaiting owner decision, NOT executed**. Do not mark executed, request another application or make live/public licensing changes automatically.
+
+**Important existing-use dependency:** The 8,462-game public catalogue contains IGDB-backed metadata under earlier written go-ahead to proceed while final terms were prepared. The ordinary Twitch Developer Services Agreement says using Program Materials can bind a developer even before signing a separate addendum. Christian's “decline DocuSign and no further action needed” refers to the DocuSign signing process; **do not construe it as a written continuing licence to run a public commercial IGDB-backed catalogue indefinitely after declining**, nor as a release of obligations arising from existing use. If the owner decides to decline, review whether to pause further ingestion / remove or replace exposed IGDB-backed material, obtain unambiguous scope clarification if necessary and protect the owner's written keep-published preference through an explicitly agreed plan. Do not unilaterally roll back or modify D1/Cloudflare.
+
+**Decision considerations:** The addendum's named GrailRaven end-user purpose, zero fee and attribution remain useful. Broad, not evidently capped individual indemnification remains a financial-risk tradeoff; no evidence of imminent claim or reliable probability exists. Comply with [IGDB_CONTRACT_COMPLIANCE_GUARDRAILS.md](IGDB_CONTRACT_COMPLIANCE_GUARDRAILS.md). If affordability precludes paying counsel, free small-business contract clinics may offer a short assessment; availability must be checked, and no clinic replaces a signed contractual cap.
+
+**No change to live site, account configuration, rights-gates or deployments from this documentation update.**
