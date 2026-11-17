@@ -99,12 +99,14 @@ export function createSearchMatcher() {
  function completenessCheck(target,c){
   const pref=target.completeness;
   const v=lower(c.completeness).trim();
+  if(c.missingGameDisc===true)
+   return{state:"filter",reason:"Incomplete copy: a game disc is missing."};
   // Even when the customer selects "any", a box-only offer or a
   // game missing a required disc must not qualify as a usable copy.
   if(v==="case_only"||/\b(?:case only|box only|artwork only|cover only|empty case|empty box|no game|game not included|without (?:the )?game|no (?:game )?(?:disc|disk)|(?:disc|disk) not included)\b/.test(v))
    return{state:"filter",reason:"Listing does not contain a usable game copy."};
   if(/\b(?:missing (?:a |one |the )?(?:disc|disk)(?:\s*\d+)?|(?:disc|disk)\s*\d+\s+missing)\b/.test(v))
-   return{state:"filter",reason:"A game disc is missing from the copy."};
+   return{state:"filter",reason:"Incomplete copy: a game disc is missing."};
   if(pref==="any"){
    if(/\b(?:incomplete|not complete|almost complete|partial set)\b/.test(v))
     return{state:"review",reason:"Copy is described as incomplete; usability requires review."};
