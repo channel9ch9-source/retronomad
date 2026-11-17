@@ -86,7 +86,7 @@ test("case projection never returns synthetic raw hashes, actor IDs, URLs, right
     "demo-user-alpha","demo-user-beta","demo-seller-does-not-exist",
     "synthetic-local-demo","APPROVED_PRIVATE_REVIEW","sha256",
     "listingSnapshotHash","evidenceManifestHash","targetHash",
-    "subjectUserId","grant","reviewerToken","canonicalUrl"
+    "subjectUserId","demo-grant-alpha","demo-grant-beta","reviewerToken","canonicalUrl"
    ])assert.equal(text.includes(privateValue),false,privateValue);
   }
  }
