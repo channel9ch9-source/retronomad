@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'">
+  <title>GrailRaven · Offline Review Desk</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b0d11;--panel:#151a20;--panel2:#1b2129;--line:#29313b;--txt:#f1f0e9;--muted:#a7aeb7;--faint:#77818c;--gold:#e2c78a;--blue:#aacbdf;--danger:#e9a9aa;--good:#b7d1ba;font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--txt);min-height:100vh}
+    button,select{font:inherit}button{cursor:pointer}
+    button:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+    .notice{background:#242019;border-bottom:1px solid #614d2c;color:#f1dfb6;padding:10px 24px;text-align:center;font-size:13px}
+    .shell{max-width:1536px;margin:auto;padding:24px 28px 64px}
+    .top{display:flex;align-items:center;gap:17px;justify-content:space-between;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:13px}.mark{width:42px;height:42px;border:1px solid var(--gold);border-radius:12px;display:grid;place-items:center;color:var(--gold);font-weight:800;letter-spacing:-1px}
+    .brand strong{display:block;font-size:17px;letter-spacing:.7px}.brand small{color:var(--muted);font-size:12px;letter-spacing:.5px}
+    .scenario{display:grid;gap:5px}.scenario label{font-size:12px;color:var(--muted)}select{background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:10px 34px 10px 12px;min-width:235px}
+    .intro{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin:28px 0 23px}.intro h1{font-size:clamp(27px,3.1vw,39px);margin:3px 0 8px;letter-spacing:-1.2px}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700}.intro p{margin:0;color:var(--muted);max-width:720px}.demo-clock{color:var(--faint);font-size:12px}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:23px}
+    .stat{border:1px solid var(--line);border-radius:13px;background:var(--panel);padding:17px}.stat label{display:block;color:var(--muted);font-size:12px}.stat b{font-size:27px;line-height:1.6;font-weight:650}
+    .layout{display:grid;grid-template-columns:minmax(260px,320px) minmax(0,1fr);gap:18px}
+    .panel{border:1px solid var(--line);background:var(--panel);border-radius:16px;min-width:0;overflow:hidden}
+    .panelhead{padding:21px 21px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .panelhead h2{font-size:15px;margin:0}.panelhead small{color:var(--muted)}
+    .sidebar .filter{margin:0 14px 12px;width:calc(100% - 28px)}.queue{padding:0 9px 12px;display:grid;gap:5px}
+    .case{background:transparent;color:inherit;border:1px solid transparent;border-radius:10px;text-align:left;display:block;width:100%;padding:14px}
+    .case:hover{background:var(--panel2)}.case[aria-current="true"]{border-color:#685b43;background:#24231f}
+    .case .title{font-weight:650}.case .sub{display:block;font-size:12px;color:var(--muted);margin:5px 0 9px}.case .bottom{display:flex;gap:8px;align-items:center;justify-content:space-between}
+    .pill{display:inline-block;font-size:11px;font-weight:700;border:1px solid #48566a;border-radius:100px;padding:2px 9px;color:var(--blue);background:#202d37}
+    .pill.needs{color:var(--gold);background:#302919;border-color:#67562f}.pill.review{color:var(--blue)}.pill.active{color:var(--good);background:#203027;border-color:#445d49}
+    .case-id{font-size:11px;color:var(--faint)}.detail{padding:28px 30px 30px}
+    .detail-top{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}.detail h2{font-size:clamp(22px,2.3vw,30px);margin:11px 0 7px;letter-spacing:-.7px}
+    .subtitle{color:var(--muted);margin:0 0 19px}
+    .rule{border:0;border-top:1px solid var(--line);margin:22px 0}
+    .truth{background:#26231d;border:1px solid #625438;border-radius:10px;padding:14px 16px;display:flex;gap:11px;align-items:flex-start}.truth strong{color:var(--gold);display:block}.truth p{margin:4px 0 0;color:#e4d7bb;font-size:13px}
+    .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mini{background:var(--panel2);border-radius:11px;padding:15px}.mini label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}.mini b{font-size:13px;font-weight:650;word-break:break-word}
+    .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin:24px 0 19px}.tab{border:0;background:none;color:var(--muted);padding:12px 14px;border-bottom:2px solid transparent}.tab[aria-selected="true"]{color:var(--txt);border-color:var(--gold)}
+    h3{font-size:14px;margin:0 0 12px}.gridlist{display:grid;gap:8px}.evidence{display:flex;gap:10px;align-items:flex-start;background:var(--panel2);border-radius:9px;padding:11px 13px}.dot{width:9px;height:9px;border-radius:100px;background:#c19d5d;margin-top:6px;flex:none}.evidence strong{font-size:13px;display:block}.evidence small{font-size:12px;color:var(--muted)}
+    .timeline{border-left:1px solid #555a61;margin:12px 0 5px 7px;padding:0 0 0 22px;display:grid;gap:17px}.entry{position:relative}.entry:before{content:"";position:absolute;left:-28px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--gold)}.entry b{font-size:13px}.entry time{font-size:12px;color:var(--faint);display:block;margin-top:3px}
+    .muted{color:var(--muted)}.empty{text-align:center;padding:65px 24px;color:var(--muted)}.empty h3{font-size:18px;color:var(--txt)}.none{font-size:13px;padding:12px 0;color:var(--good)}.foot{color:var(--faint);font-size:12px;margin-top:26px}
+    @media(max-width:860px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.detail{padding:21px}.intro{margin-top:22px}}
+    @media(max-width:520px){.shell{padding:15px}.stats{gap:8px}.stat{padding:12px}.two{grid-template-columns:1fr}.notice{padding:9px 12px}}
+  </style>
+</head>
+<body>
+  <div class="notice"><strong>Offline development demo.</strong> Fictional case data only. No reviewer login, real photos, verification authority, live inventory or database connection.</div>
+  <main class="shell">
+    <header class="top">
+      <div class="brand"><div class="mark" aria-hidden="true">GR</div><div><strong>GRAILRAVEN</strong><small>REVIEW DESK · CONCEPT BUILD</small></div></div>
+      <div class="scenario"><label for="scenario">Simulated access scenario — not a login</label><select id="scenario"></select></div>
+    </header>
+    <section class="intro">
+      <div><div class="eyebrow">Physical copy intelligence</div><h1>Evidence review desk</h1><p>Inspect fictional assigned cases, see missing release evidence, and examine a read-only review timeline. Every case remains unverified.</p></div>
+      <div class="demo-clock">Fixed fixture date: 17 Nov 2026 · 20:30 UTC</div>
+    </section>
+    <section class="stats" aria-label="Synthetic case summary">
+      <div class="stat"><label>Assigned cases</label><b id="total">0</b></div>
+      <div class="stat"><label>Needs evidence</label><b id="need">0</b></div>
+      <div class="stat"><label>Review queue</label><b id="queuecount">0</b></div>
+      <div class="stat"><label>Verified copies</label><b>0</b></div>
+    </section>
+    <div class="layout">
+      <aside class="panel sidebar">
+        <div class="panelhead"><h2>Assigned cases</h2><small id="visible-count"></small></div>
+        <label for="filter" class="sr">Filter cases</label>
+        <select id="filter" class="filter">
+          <option value="All">All cases</option>
+          <option value="Needs evidence">Needs evidence</option>
+          <option value="Review queue">Review queue</option>
+          <option value="In review">In review</option>
+        </select>
+        <div class="queue" id="case-list"></div>
+      </aside>
+      <section class="panel" aria-label="Selected case" id="details">
+        <div class="empty"><h3>Select a case</h3><p>Only synthetic, access-scoped case summaries are shown.</p></div>
+      </section>
+    </div>
+    <p class="foot">This prototype is not part of grailraven.com. It makes no external requests, does not store changes, and cannot approve or notify a verified match. Evidence slots are simulated metadata—not photographs.</p>
+  </main>
+  <script type="module" src="./ui.js"></script>
+</body>
+</html>
