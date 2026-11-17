@@ -6,7 +6,8 @@ export function createSearchMatcher() {
  const PAL_MARKETS=new Set(["UK_EXACT","UK_SHARED_PAL","PAL_SHARED","UK_COMPATIBLE_EU_ENGLISH","UK_VISUAL_REQUIRED","PAL_EUROPE","EUROPEAN_ENGLISH_MATERIALS"]);
  const UK_STRONG=new Set(["UK_EXACT"]);
  const UK_SHARED=new Set(["UK_EXACT","UK_SHARED_PAL"]);
- const ORIGINAL_EDITIONS=new Set(["original","original / black label","original / not flagged"]);
+ const ORIGINAL_EDITIONS=new Set(["original","original / black label"]);
+ const UNCERTAIN_EDITIONS=new Set(["original / not flagged","unknown","unverified","unclear"]);
  const BUDGET_EDITIONS=new Set(["platinum","budget","budget / reissue","greatest hits","essentials"]);
  const PROMO_EDITIONS=new Set(["demo","promo","demo / promo","promotional"]);
 
@@ -63,9 +64,12 @@ export function createSearchMatcher() {
  }
  function editionCheck(target,c){
   const pref=target.editionPreference;
+  const e=lower(c.edition).trim();
+  // Explicit unofficial editions are never eligible physical copies, even with "any" selected.
+  if(/^(?:reproduction|replica|counterfeit|bootleg)(?: copy| edition)?$/.test(e))return{state:"filter",reason:"Unofficial or reproduction copy is excluded."};
   if(pref==="any")return{state:"ok"};
-  const e=lower(c.edition);
-  if(!e)return{state:"review",reason:"Edition is not confirmed."};
+  if(!e||UNCERTAIN_EDITIONS.has(e))return{state:"review",reason:"Edition is not confirmed; no evidence of the original or a permitted reissue."};
+  if(/^(?:not original|non[ -]?original)$/.test(e))return{state:"review",reason:"Edition description does not establish an eligible release."};
   if(PROMO_EDITIONS.has(e)||e.includes("demo")||e.includes("promo"))return{state:"filter",reason:"Demo/promo edition does not match the target."};
   if(pref==="original"){
    if(ORIGINAL_EDITIONS.has(e)||e.includes("original")||e.includes("black label"))return{state:"ok"};
@@ -136,14 +140,23 @@ export function createSearchMatcher() {
   }
   return{state:"ok"};
  }
+ // Missing, blank and invalid amounts are NOT zero-priced listings.
+ function knownNonnegativeAmount(value){
+  if(value==null||typeof value==="boolean"||(typeof value==="string"&&!value.trim()))return null;
+  const amount=Number(value);
+  return Number.isFinite(amount)&&amount>=0?amount:null;
+ }
+ function deliveredPrice(candidate){
+  const confirmed=knownNonnegativeAmount(candidate.deliveredGbp);
+  if(confirmed!==null)return confirmed;
+  return String(candidate.currency||"").toUpperCase()==="GBP"
+   ?knownNonnegativeAmount(candidate.total):null;
+ }
  function priceCheck(target,candidate){
   if(!target.maxDeliveredGbp)return{state:"ok"};
-  const gbp=Number(candidate.deliveredGbp);
-  if(Number.isFinite(gbp)){
+  const gbp=deliveredPrice(candidate);
+  if(gbp!==null){
    return gbp<=target.maxDeliveredGbp?{state:"ok"}:{state:"filter",reason:"Delivered price is above the target ceiling."};
-  }
-  if(String(candidate.currency||"").toUpperCase()==="GBP"&&Number.isFinite(Number(candidate.total))){
-   return Number(candidate.total)<=target.maxDeliveredGbp?{state:"ok"}:{state:"filter",reason:"Delivered price is above the target ceiling."};
   }
   return{state:"review",reason:"Delivered GBP price is not available, so the price ceiling cannot be checked."};
  }
@@ -190,8 +203,7 @@ export function createSearchMatcher() {
    reasons:state==="FILTERED"?filtered:state==="REVIEW"?review:[],
    notes:soft,
    preferenceRank:rankPreference(target,c),
-   deliveredGbp:Number.isFinite(Number(candidate.deliveredGbp))?Number(candidate.deliveredGbp):
-    (String(candidate.currency||"").toUpperCase()==="GBP"&&Number.isFinite(Number(candidate.total))?Number(candidate.total):null)
+   deliveredGbp:deliveredPrice(candidate)
   };
  }
 

@@ -37,6 +37,12 @@ export function diffNewMatches(rows = [], seenKeys = new Set()) {
   return qualifyingMatches(rows).filter(row => !seenKeys.has(matchKey(row)));
 }
 
+function knownDeliveredGbp(value){
+  if(value==null||typeof value==="boolean"||(typeof value==="string"&&!value.trim()))return null;
+  const number=Number(value);
+  return Number.isFinite(number)&&number>=0?number:null;
+}
+
 export function matchRecord(huntId, row, ts = new Date().toISOString()) {
   return {
     huntId,
@@ -44,7 +50,7 @@ export function matchRecord(huntId, row, ts = new Date().toISOString()) {
     externalId: String(row.externalId || ""),
     title: String(row.title || ""),
     canonicalUrl: String(row.canonicalUrl || ""),
-    deliveredGbp: Number.isFinite(Number(row.match?.deliveredGbp)) ? Number(row.match.deliveredGbp) : null,
+    deliveredGbp: knownDeliveredGbp(row.match?.deliveredGbp),
     firstSeenAt: ts,
     lastSeenAt: ts,
     lastMatchState: "MATCH"
@@ -66,7 +72,7 @@ export function notificationPayload(hunt, row, ts = new Date().toISOString()) {
       externalId: String(row.externalId || ""),
       title: String(row.title || ""),
       canonicalUrl: String(row.canonicalUrl || ""),
-      deliveredGbp: Number.isFinite(Number(row.match?.deliveredGbp)) ? Number(row.match.deliveredGbp) : null,
+      deliveredGbp: knownDeliveredGbp(row.match?.deliveredGbp),
       classification: row.classification || null
     }
   };
