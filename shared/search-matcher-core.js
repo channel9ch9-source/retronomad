@@ -89,7 +89,7 @@ export function createSearchMatcher() {
   const noManual=v==="no_manual"||v==="missing manual"||/\b(?:no manual|manual missing|missing manual|without (?:the )?manual|manual not included)\b/.test(v);
   const discOnly=v==="disc_only"||v==="loose"||/\b(?:disc only|disk only|loose|no case)\b/.test(v);
   const caseOnly=v==="case_only"||/\b(?:case only|box only|artwork only|cover only|empty case)\b/.test(v);
-  const incomplete=v==="incomplete"||/\b(?:incomplete|not complete|almost complete|missing (?:a |one )?(?:disc|disk|game)|partial set)\b/.test(v);
+  const incomplete=v==="incomplete"||/\b(?:incomplete|not complete|almost complete|missing (?:a |one )?(?:disc|disk|game)|no game|partial set)\b/.test(v);
   // Negated or partial descriptions must never pass as complete merely
   // because they contain the substring "complete".
   const complete=!noManual&&!discOnly&&!caseOnly&&!incomplete&&(v==="cib"||/\bcomplete\b/.test(v));
