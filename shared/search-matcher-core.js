@@ -64,11 +64,12 @@ export function createSearchMatcher() {
  }
  function editionCheck(target,c){
   const pref=target.editionPreference;
-  if(pref==="any")return{state:"ok"};
   const e=lower(c.edition).trim();
+  // Explicit unofficial editions are never eligible physical copies, even with "any" selected.
+  if(/^(?:reproduction|replica|counterfeit|bootleg)(?: copy| edition)?$/.test(e))return{state:"filter",reason:"Unofficial or reproduction copy is excluded."};
+  if(pref==="any")return{state:"ok"};
   if(!e||UNCERTAIN_EDITIONS.has(e))return{state:"review",reason:"Edition is not confirmed; no evidence of the original or a permitted reissue."};
   if(/^(?:not original|non[ -]?original)$/.test(e))return{state:"review",reason:"Edition description does not establish an eligible release."};
-  if(/^(?:reproduction|replica|counterfeit|bootleg)$/.test(e))return{state:"filter",reason:"Unofficial or reproduction copy is excluded."};
   if(PROMO_EDITIONS.has(e)||e.includes("demo")||e.includes("promo"))return{state:"filter",reason:"Demo/promo edition does not match the target."};
   if(pref==="original"){
    if(ORIGINAL_EDITIONS.has(e)||e.includes("original")||e.includes("black label"))return{state:"ok"};
