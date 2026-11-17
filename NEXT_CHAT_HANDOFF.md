@@ -1409,3 +1409,15 @@ Owner is explicitly considering competitive resilience against general-purpose A
 **Decision considerations:** The addendum's named GrailRaven end-user purpose, zero fee and attribution remain useful. Broad, not evidently capped individual indemnification remains a financial-risk tradeoff; no evidence of imminent claim or reliable probability exists. Comply with [IGDB_CONTRACT_COMPLIANCE_GUARDRAILS.md](IGDB_CONTRACT_COMPLIANCE_GUARDRAILS.md). If affordability precludes paying counsel, free small-business contract clinics may offer a short assessment; availability must be checked, and no clinic replaces a signed contractual cap.
 
 **No change to live site, account configuration, rights-gates or deployments from this documentation update.**
+
+
+## 17 November 2026 — shared physical-copy match accuracy hardening merged (NOT deployed)
+
+**Current owner-authorised development step COMPLETED:** Follow-up audit of the provider-independent matching core. See [MATCHER_ACCURACY_HARDENING_2026-11-17.md](MATCHER_ACCURACY_HARDENING_2026-11-17.md) for cases, test evidence, and next candidate work.
+
+- [PR #2](https://github.com/channel9ch9-source/retronomad/pull/2), merge `c86f77b`, green CI: Default `Original / not flagged` no longer proves an original pressing; requires REVIEW for edition-specific hunts. Missing/blank/non-finite delivered prices no longer masquerade as £0 in matcher budget filters, Saved Hunts persistence or notifications. Clearly labelled unofficial copies are excluded.
+- [PR #3](https://github.com/channel9ch9-source/retronomad/pull/3), merge `d6234a2`, corrected green CI: Prevent 'incomplete', 'not complete' and 'complete - missing disc' from accidentally satisfying CIB via substring comparison. Preserve manual-optional policy and synthetic regression tests.
+- **Both changes merged to main but Cloudflare deployment was NOT run.** Do not claim that the live site already has the new logic. All tests/builds passed on PR branches. No IGDB/PriceCharting/retailer usage, feeds, catalogue flags, contract state or live publication changed.
+- Next recommended engineering step: targeted **offline** synthetic no-game/case-only, authenticity/provenance and ambiguity regressions, plus a review of provider `total` meaning before budget filters. Don't upgrade seller claims alone to MATCH and do not publish changes without owner approval.
+
+**External blockers unchanged:** IGDB commercial addendum remains unsigned / contracting party decision pending; inventory providers still require actual written permission. This work introduces no new data access. Re-check latest provider correspondence with owner before any outreach. Strict compliance guardrails still apply.
