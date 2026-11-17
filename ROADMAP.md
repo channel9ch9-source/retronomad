@@ -1855,3 +1855,13 @@ Owner has explicitly made **extremely careful IGDB/Twitch contract compliance** 
 - [ ] Do not record licence as fully executed until confirmed, or publicly commit contract/signature/ClientID/personal details.
 
 No website change or deployment is authorised by this documentation-only update.
+
+
+## 17 November 2026 — precision and defensive matching work merged; deploy pending
+
+- [x] Fix original-edition false positive: default PALScout `Original / not flagged` is only absence of a flag and now stays `REVIEW` for original/budget-allowed hunts. Explicit unofficial copy descriptions filtered. [PR #2](https://github.com/channel9ch9-source/retronomad/pull/2).
+- [x] Fix false £0 delivered cost: null/blank/invalid values no longer satisfy price ceilings or appear as zero in monitoring history. [PR #2](https://github.com/channel9ch9-source/retronomad/pull/2).
+- [x] Fix CIB false positive: `incomplete` and contradictory completeness wording cannot pass a CIB check because it contains `complete`; appropriate manual-optional policy preserved. [PR #3](https://github.com/channel9ch9-source/retronomad/pull/3).
+- [x] Synthetic regression tests and GitHub CI/build green. No live deploy, catalogue promotion or data-provider access was performed.
+- [ ] Owner-approved Cloudflare deploy **only after** reviewing public Search/Listing Checker/Saved Hunt behaviour and continuing compliance checks. This is NOT automatically authorised.
+- [ ] Next: offline authenticity/provenance and no-game/case-only contradiction benchmarks, plus adapter-specific verification of delivered price semantics. See [MATCHER_ACCURACY_HARDENING_2026-11-17.md](MATCHER_ACCURACY_HARDENING_2026-11-17.md).
