@@ -83,8 +83,8 @@ const CASES=ITEM_IDS.map((releaseId,index)=>{
  });
  if(packet.photoReview.status==="EVIDENCE_PACK_ASSEMBLED"&&
   ["SHARED_PAL_MARKET_REVIEW","RESEARCH_REFERENCE_CONSISTENT_UNVERIFIED"].includes(packet.releaseReview.status)){
-  add("REVIEW_STARTED");
   if(index===3){
+   add("REVIEW_STARTED");
    for(const check of PHYSICAL_COPY_REVIEW_CHECKS.slice(0,4))
     add("CHECK_RECORDED",{check,finding:"CONSISTENT"});
   }
