@@ -88,6 +88,30 @@ CREATE TABLE IF NOT EXISTS reviewer_case_assignments (
 CREATE INDEX IF NOT EXISTS idx_review_assignments_case
  ON reviewer_case_assignments(case_id,assigned_at DESC);
 
+-- An offline database invariant, NOT a substitute for an authenticated
+-- admin action. Assignment is valid only if it names an active reviewer grant,
+-- for an unexpired case not already invalidated.
+CREATE TRIGGER IF NOT EXISTS reviewer_assign_active_grant_guard
+ BEFORE INSERT ON reviewer_case_assignments
+ BEGIN
+  SELECT RAISE(ABORT,'ASSIGNMENT_NOT_AUTHORISED_BY_ACTIVE_GRANT')
+   WHERE NOT EXISTS(
+    SELECT 1 FROM reviewer_access_grants g
+    LEFT JOIN reviewer_access_revocations r ON r.grant_id=g.id
+    WHERE g.id=NEW.reviewer_grant_id
+      AND g.role IN ('REVIEWER','SENIOR_REVIEWER')
+      AND g.granted_at<=NEW.assigned_at AND g.expires_at>NEW.assigned_at
+      AND r.grant_id IS NULL
+   );
+  SELECT RAISE(ABORT,'ASSIGNMENT_CASE_INACTIVE')
+   WHERE NOT EXISTS(
+    SELECT 1 FROM reviewer_cases c
+    JOIN reviewer_case_heads h ON h.case_id=c.id
+    WHERE c.id=NEW.case_id AND c.expires_at>NEW.assigned_at
+      AND h.invalidated_at IS NULL
+   );
+ END;
+
 CREATE TABLE IF NOT EXISTS reviewer_case_unassignments (
  assignment_id TEXT PRIMARY KEY,
  unassigned_by_user_id TEXT NOT NULL,
