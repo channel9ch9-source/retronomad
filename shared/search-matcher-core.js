@@ -86,11 +86,13 @@ export function createSearchMatcher() {
   if(pref==="any")return{state:"ok"};
   const v=lower(c.completeness);
   if(!v||v==="unknown")return{state:"review",reason:"Completeness is not confirmed."};
-  const complete=v==="complete"||v==="cib"||v.includes("complete");
-  const noManual=v==="no_manual"||v==="missing manual"||v.includes("no manual");
-  const discOnly=v==="disc_only"||v==="loose"||v.includes("disc only")||v.includes("loose");
-  const caseOnly=v==="case_only"||v.includes("case only")||v.includes("artwork only");
-  const incomplete=v==="incomplete"||v.includes("missing disc");
+  const noManual=v==="no_manual"||v==="missing manual"||/\b(?:no manual|manual missing|missing manual|without (?:the )?manual|manual not included)\b/.test(v);
+  const discOnly=v==="disc_only"||v==="loose"||/\b(?:disc only|disk only|loose|no case)\b/.test(v);
+  const caseOnly=v==="case_only"||/\b(?:case only|box only|artwork only|cover only|empty case)\b/.test(v);
+  const incomplete=v==="incomplete"||/\b(?:incomplete|not complete|almost complete|missing (?:a |one )?(?:disc|disk|game)|no game|partial set)\b/.test(v);
+  // Negated or partial descriptions must never pass as complete merely
+  // because they contain the substring "complete".
+  const complete=!noManual&&!discOnly&&!caseOnly&&!incomplete&&(v==="cib"||/\bcomplete\b/.test(v));
   if(pref==="cib")return complete?{state:"ok"}:{state:"filter",reason:"Target requires a complete-in-box copy."};
   if(pref==="manual-optional"){
    if(complete||noManual)return{state:"ok"};
