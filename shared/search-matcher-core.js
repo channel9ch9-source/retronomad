@@ -21,6 +21,21 @@ export function createSearchMatcher() {
   return{state:"ok"};
  }
 
+ function copyEvidenceCheck(c){
+  // PALScout classifies supplier descriptions and identifiers; these are
+  // candidate evidence, not a first-party inspection of the actual copy.
+  if(c.physicalCopyEvidence==="SELLER_CLAIMS_UNVERIFIED")
+   return{state:"review",reason:"The seller's physical copy has not been independently verified."};
+  return{state:"ok"};
+ }
+ function itemTypeCheck(c){
+  const kind=String(c.itemType||"").trim().toUpperCase();
+  if(["CASE_ONLY","MANUAL_ONLY","ARTWORK_ONLY","BOX_ONLY","BOOKLET_ONLY","NO_GAME","MAGAZINE_DEMO"].includes(kind))
+   return{state:"filter",reason:"Listing is for a non-game item rather than a usable game copy."};
+  if(kind&&kind!=="GAME"&&kind!=="DISC_ONLY")
+   return{state:"review",reason:"Listing item type requires review."};
+  return{state:"ok"};
+ }
  function gameCheck(target,c){
   if(!c.game)return{state:"review",reason:"Game identity is not confirmed."};
   return norm(c.game)===norm(target.game)?{state:"ok"}:{state:"filter",reason:"Different game."};
@@ -83,8 +98,20 @@ export function createSearchMatcher() {
  }
  function completenessCheck(target,c){
   const pref=target.completeness;
-  if(pref==="any")return{state:"ok"};
-  const v=lower(c.completeness);
+  const v=lower(c.completeness).trim();
+  if(c.missingGameDisc===true)
+   return{state:"filter",reason:"Incomplete copy: a game disc is missing."};
+  // Even when the customer selects "any", a box-only offer or a
+  // game missing a required disc must not qualify as a usable copy.
+  if(v==="case_only"||/\b(?:case only|box only|artwork only|cover only|empty case|empty box|no game|game not included|without (?:the )?game|no (?:game )?(?:disc|disk)|(?:disc|disk) not included)\b/.test(v))
+   return{state:"filter",reason:"Listing does not contain a usable game copy."};
+  if(/\b(?:missing (?:a |one |the )?(?:disc|disk)(?:\s*\d+)?|(?:disc|disk)\s*\d+\s+missing)\b/.test(v))
+   return{state:"filter",reason:"Incomplete copy: a game disc is missing."};
+  if(pref==="any"){
+   if(/\b(?:incomplete|not complete|almost complete|partial set)\b/.test(v))
+    return{state:"review",reason:"Copy is described as incomplete; usability requires review."};
+   return{state:"ok"};
+  }
   if(!v||v==="unknown")return{state:"review",reason:"Completeness is not confirmed."};
   const noManual=v==="no_manual"||v==="missing manual"||/\b(?:no manual|manual missing|missing manual|without (?:the )?manual|manual not included)\b/.test(v);
   const discOnly=v==="disc_only"||v==="loose"||/\b(?:disc only|disk only|loose|no case)\b/.test(v);
@@ -183,6 +210,8 @@ export function createSearchMatcher() {
   const filtered=[],review=[],soft=[];
   const checks=[
    classifierReviewCheck(c),
+   copyEvidenceCheck(c),
+   itemTypeCheck(c),
    gameCheck(target,c),
    platformCheck(target,c),
    compatibilityCheck(target,c),

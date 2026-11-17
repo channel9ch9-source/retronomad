@@ -52,10 +52,12 @@ export function createPALScoutClassifier(releaseEvidence = []) {
 
  function detectCompletenessSignal(text){
   const n=norm(text);
-  if(/\b(case only|box only|artwork only|cover only|empty case|no game)\b/.test(n))return{value:"case_only",confidence:"High"};
+  if(/\b(case only|box only|artwork only|cover only|empty case|empty box|replacement case|no game|game not included|without (?:the )?game|no (?:game )?(?:disc|disk)|(?:disc|disk) not included)\b/.test(n))return{value:"case_only",confidence:"High"};
   if(/\b(disc only|disk only|loose disc|loose disk|loose copy|no case)\b/.test(n))return{value:"disc_only",confidence:"High"};
   if(/\b(no manual|without manual|manual missing|missing manual|manual not included|no booklets?|without booklets?)\b/.test(n))return{value:"no_manual",confidence:"High"};
-  if(/\b(missing (?:disc|disk) ?\d*|(?:disc|disk) ?\d+ missing|missing one (?:disc|disk)|missing a (?:disc|disk)|incomplete set)\b/.test(n))return{value:"incomplete",confidence:"High"};
+  if(/\b(missing (?:disc|disk) ?\d*|(?:disc|disk) ?\d+ missing|missing one (?:disc|disk)|missing a (?:disc|disk))\b/.test(n))
+   return{value:"incomplete",confidence:"High",missingGameDisc:true};
+  if(/\bincomplete set\b/.test(n))return{value:"incomplete",confidence:"High"};
   const strong=[/\bcomplete in box\b/,/\bcib\b/,/\bcomplete with (?:the )?(?:instruction )?manual\b/,/\bboxed (?:copy )?(?:(?:with|and) )?(?:the )?(?:instruction )?manuals?\b/,/\b(?:box|case) (?:(?:and|with) )?(?:the )?(?:instruction )?manuals?\b/,/\b(?:instruction )?manual included\b/,/\bincludes (?:the )?(?:instruction )?manual\b/];
   if(strong.some(r=>r.test(n)))return{value:"complete",confidence:"High"};
   if(!/\b(incomplete|not complete|missing|without)\b/.test(n)&&/\bcomplete\b/.test(n))return{value:"complete",confidence:"Medium"};
@@ -78,8 +80,8 @@ export function createPALScoutClassifier(releaseEvidence = []) {
  function detectItemType(text){
   const n=norm(text);
   if(/\b(official uk playstation magazine|playstation magazine|magazine)\b/.test(n)&&/\bdemo\b/.test(n))return"MAGAZINE_DEMO";
-  if(/\b(manual only|instruction manual only|booklet only)\b/.test(n))return"MANUAL_ONLY";
-  if(/\b(case only|box only|artwork only|cover only|empty case)\b/.test(n))return"CASE_ONLY";
+  if(/\b(manual only|instruction manual only|booklet only|instruction booklet only)\b/.test(n))return"MANUAL_ONLY";
+  if(/\b(case only|box only|artwork only|cover only|empty case|empty box|replacement case|no game|game not included|without (?:the )?game|no (?:game )?(?:disc|disk)|(?:disc|disk) not included)\b/.test(n))return"CASE_ONLY";
   return"GAME";
  }
  function detectCondition(text){
@@ -169,7 +171,7 @@ export function createPALScoutClassifier(releaseEvidence = []) {
   if(conflicts.length)review.push(...conflicts);
   let confidence=hit&&!conflicts.length?"High":game&&platform&&region.confidence!=="None"?"Medium":"Low";
   if(conflicts.length)confidence="Low";
-  return{game:game?.t||"",platform,itemType,compatibility:compat,regionSignal:region,marketBucket:market,catalogMarket:game?.s||"",edition,completeness:complete.value,completenessConfidence:complete.confidence,englishFriendly:english,isBundle:bundle.isBundle,bundleGames:bundle.games,isPromo:itemType==="MAGAZINE_DEMO"||/demo|promo/i.test(edition),majorDamage:condition.majorDamage,collectorQuality:condition.collectorQuality,conditionIssues:condition.issues,confidence,identifier:hit?.[4]||"",identifierType:hit?.[3]||"",evidenceMarket:hit?.[5]||"",detectedIdentifiers:uniqueIds,reviewReasons:[...new Set(review)],conflicts:[...new Set(conflicts)]};
+  return{game:game?.t||"",platform,itemType,physicalCopyEvidence:"SELLER_CLAIMS_UNVERIFIED",compatibility:compat,regionSignal:region,marketBucket:market,catalogMarket:game?.s||"",edition,completeness:complete.value,completenessConfidence:complete.confidence,missingGameDisc:complete.missingGameDisc===true,englishFriendly:english,isBundle:bundle.isBundle,bundleGames:bundle.games,isPromo:itemType==="MAGAZINE_DEMO"||/demo|promo/i.test(edition),majorDamage:condition.majorDamage,collectorQuality:condition.collectorQuality,conditionIssues:condition.issues,confidence,identifier:hit?.[4]||"",identifierType:hit?.[3]||"",evidenceMarket:hit?.[5]||"",detectedIdentifiers:uniqueIds,reviewReasons:[...new Set(review)],conflicts:[...new Set(conflicts)]};
  }
  function classifyMarketplaceListing(listing,options={}){return{...listing,classification:classifyListing(listing,options)};}
  return {classifyListing,classifyMarketplaceListing,catalogue,aliases,detectRegionSignal,detectPlatformSignal,detectCompletenessSignal,detectEdition,extractIdentifierCandidates,findEvidence};
