@@ -100,3 +100,34 @@ test("saved-hunt records and notifications preserve missing prices as unknown",(
  assert.equal(matchRecord(hunt.id,row).deliveredGbp,33.49);
  assert.equal(notificationPayload(hunt,row).listing.deliveredGbp,33.49);
 });
+
+test("incomplete copy cannot satisfy CIB, manual-optional or loose-allowed searches",()=>{
+ for(const description of ["incomplete", "Not complete", "Complete - missing disc 2", "Almost complete", "Complete with no game"]){
+  for(const completeness of ["cib","manual-optional","loose-ok"]){
+   const row=candidate("Original / black label",{classification:{
+    ...candidate().classification,completeness:description
+   }});
+   const result=matcher.evaluate(target({completeness}),row);
+   assert.equal(result.state,"FILTERED",`${description}: ${completeness}`);
+   assert.ok(result.reasons.some(reason=>/complete|usable game|loose/i.test(reason)),
+    `expected completeness rejection for ${description}`);
+  }
+ }
+});
+
+test("missing manual is not CIB but is allowed when the buyer accepts it",()=>{
+ const noManual=candidate("Original / black label",{classification:{
+  ...candidate().classification,completeness:"Complete with no manual"
+ }});
+ assert.equal(matcher.evaluate(target({completeness:"cib"}),noManual).state,"FILTERED");
+ assert.equal(matcher.evaluate(target({completeness:"manual-optional"}),noManual).state,"MATCH");
+ assert.equal(matcher.evaluate(target({completeness:"loose-ok"}),noManual).state,"MATCH");
+});
+
+test("clear complete-in-box evidence still passes the completeness gate",()=>{
+ for(const description of ["complete","CIB","complete in box"]){
+  assert.equal(matcher.evaluate(target(),candidate("Original / black label",{
+   classification:{...candidate().classification,completeness:description}
+  })).state,"MATCH",description);
+ }
+});
